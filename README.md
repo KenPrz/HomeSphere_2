@@ -1,5 +1,3 @@
-Certainly! Here's the README for HomeSphere 2 with Vue.js implementation prioritized:
-
 ## About HomeSphere 2
 
 HomeSphere 2 is an enhanced version of the HomeSphere project, focusing on Vue.js implementation for the frontend. It's a web-based home automation system built with Vue.js and Laravel. The project continues the legacy of HomeSphere by aiming to provide an even more seamless and intuitive home automation experience. This system utilizes ESP32 microcontrollers to connect and control various devices within a home environment.
