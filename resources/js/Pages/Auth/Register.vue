@@ -28,7 +28,7 @@ const submit = () => {
     <form @submit.prevent="submit">
         <div class="flex w-full">
             <div class="mr-4">
-                <InputLabel for="firstName" value="firstName" />
+                <InputLabel for="firstName" value="First Name" />
                 <TextInput
                     id="firstName"
                     type="text"
@@ -41,7 +41,7 @@ const submit = () => {
                 <InputError class="mt-2" :message="form.errors.name" />
             </div>
             <div>
-                <InputLabel for="lastName" value="lastName" />
+                <InputLabel for="lastName" value="Last Name" />
                 <TextInput
                     id="lastName"
                     type="text"
