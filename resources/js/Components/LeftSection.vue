@@ -7,7 +7,7 @@
             <p class="text-lg md:text-2xl text-gray-700 py-2">
                 A web-based home automation system using microcontrollers.
             </p>
-            <img class="h-auto md:max-h-96 w-auto mx-auto" src="{{asset('img-assets/login-vectors/home-main.svg')}}" alt="light">
+            <img class="h-auto md:max-h-96 w-auto mx-auto" :src="'/img-assets/login-vectors/home-main.svg'">
         </div>
     </div>
 </template>

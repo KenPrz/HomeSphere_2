@@ -19,14 +19,10 @@ const showingNavigationDropdown = ref(false);
                     <div class="flex justify-between h-16">
                         <div class="flex">
                             <!-- Logo -->
-                            <div class="shrink-0 flex items-center">
-                                <Link :href="route('dashboard')">
-                                    <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800"
-                                    />
-                                </Link>
-                            </div>
-
+                            <a :href="route('dashboard')"  class="text-xl font-bold md:text-center text-center flex items-center hover:text-blue-500 transition-colors">
+                                <img class="h-10 w-10 rounded-full p-1 mr-2 hover:scale-110 transition-transform" :src="'/img-assets/favicons/android-chrome-512x512.png'">
+                                <h1 class="ml-3">HomeSphere</h1>
+                            </a>
                             <!-- Navigation Links -->
                             <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
