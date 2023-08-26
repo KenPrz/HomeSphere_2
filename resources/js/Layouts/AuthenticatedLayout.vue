@@ -86,7 +86,9 @@ const showingNavigationDropdown = ref(false);
         <div class="md:flex">
             <!-- Sidebar -->
             <div class="fixed bottom-0 w-full md:w-1/6 bg-white shadow-md md:h-screen lg:pt-16">
-                <ImageContainer />
+                <div class=" lg:my-10 text-center pt-10 md:block hidden">
+                    <ImageContainer />
+                </div>
             </div>
             <!-- End Sidebar -->
             <!-- Main Content -->
