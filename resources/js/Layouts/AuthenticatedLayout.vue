@@ -6,6 +6,7 @@ import DropdownLink from "@/Components/DropdownLink.vue";
 import NavLink from "@/Components/NavLink.vue";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink.vue";
 import ImageContainer from "@/Components/ImageContainer.vue";
+import SideNavLink from "@/Components/SideNavLink.vue";
 import { Link } from "@inertiajs/vue3";
 
 const showingNavigationDropdown = ref(false);
@@ -13,9 +14,11 @@ const showingNavigationDropdown = ref(false);
 <template>
     <div class="grid grid-cols-1 min-h-screen">
         <!-- Navbar -->
-        <nav class="bg-white border-b shadow-sm border-gray-100 sticky top-0 z-50">
+        <nav
+            class="px-10 bg-white border-b shadow-sm border-gray-100 sticky top-0 z-50"
+        >
             <!-- Primary Navigation Menu -->
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mx-auto px-4 sm:px-6 lg:px-8">
                 <div class="flex justify-between h-16">
                     <div class="flex">
                         <!-- Logo -->
@@ -29,12 +32,6 @@ const showingNavigationDropdown = ref(false);
                             />
                             <h1 class="ml-3">HomeSphere</h1>
                         </a>
-                        <!-- Navigation Links -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
-                                    Dashboard
-                                </NavLink>
-                            </div>
                     </div>
                     <div class="hidden sm:flex sm:items-center sm:ml-6">
                         <!-- Settings Dropdown -->
@@ -85,14 +82,60 @@ const showingNavigationDropdown = ref(false);
         <!-- End Navbar -->
         <div class="md:flex">
             <!-- Sidebar -->
-            <div class="fixed bottom-0 w-full md:w-1/6 bg-white shadow-md md:h-screen lg:pt-16">
-                <div class=" lg:my-10 text-center pt-10 md:block hidden">
+            <div
+                class="fixed bottom-0 w-full md:w-1/6 bg-white shadow-md md:h-screen lg:pt-16"
+            >
+                <div class="lg:my-10 text-center pt-10 md:block hidden">
                     <ImageContainer />
+                    <div class="image-text mt-4">
+                        <h5 class="mb-1">Welcome Back!!</h5>
+                        <h2 class="font-extrabold text-xl">
+                            {{
+                                $page.props.auth.user.firstName +
+                                " " +
+                                $page.props.auth.user.lastName
+                            }}
+                        </h2>
+                    </div>
+                </div>
+                <div class="sm:mt-0 lg:mt-6">
+                    <ul class="flex flex-row md:flex-col items-start mx-3">
+                        <SideNavLink
+                            :href="route('dashboard')"
+                            :active="route().current('dashboard')"
+                        >
+                            <li
+                                class="flex p-2 py-4 hover:bg-slate-400  rounded-lg w-full item-center transition-colors duration-500 ease-in-out"
+                            >
+                                <img
+                                    :src="'/img-assets/nav-vectors/home.svg'"
+                                    alt="Home"
+                                    class="w-9 h-auto lg:mr-4 lg:ml-7"
+                                />
+                                <div class="hidden sm:block lg:text-xl mt-1">Home</div>
+                            </li>
+                        </SideNavLink>
+                        <SideNavLink
+                            :href="route('profile.edit')"
+                            :active="route().current('profile.edit')"
+                        >
+                            <li
+                                class="flex p-2 py-4 hover:bg-slate-400  rounded-lg w-full item-center transition-colors duration-500 ease-in-out"
+                            >
+                                <img
+                                    :src="'/img-assets/nav-vectors/account.svg'"
+                                    alt="Home"
+                                    class="w-9 h-auto lg:mr-4 lg:ml-7"
+                                />
+                                <div class="hidden sm:block lg:text-xl mt-1">Profile</div>
+                            </li>
+                        </SideNavLink>
+                    </ul>
                 </div>
             </div>
             <!-- End Sidebar -->
             <!-- Main Content -->
-            <div id="mainDiv" class="flex-1 min-h-screen bg-gray-100 overflow-x-hidden">
+            <div id="mainDiv" class="flex-1 min-h-screen bg-gray-100">
                 <!-- Page Content -->
                 <main class="py-8 px-4">
                     <slot />
@@ -102,13 +145,12 @@ const showingNavigationDropdown = ref(false);
     </div>
 </template>
 <style scoped>
+#mainDiv {
+    margin-left: calc(1 / 6 * 100%);
+}
+@media (max-width: 768px) {
     #mainDiv {
-        margin-left: calc(1/6 * 100%);
+        margin-left: 0;
     }
-    @media (max-width: 768px) {
-        #mainDiv {
-            margin-left:0;
-        }
-    }
+}
 </style>
-
