@@ -21,7 +21,7 @@
         <Modal :show="showUploadModal" @close="closeUploadModal">
             <div class="w-auto p-6 bg-white rounded-lg shadow-md">
                 <h1 class="text-2xl font-semibold mb-4">Upload an Image</h1>
-                <form class="w-auto" action="#" method="POST" enctype="multipart/form-data">
+                <form class="w-auto" action="#" method="#" enctype="multipart/form-data">
                     <div class="mb-4">
                         <label for="image" class="block text-sm font-medium text-gray-700">Select an image:</label>
                         <input type="file" id="image" name="image" accept="image/*" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md">

@@ -27,7 +27,7 @@
                                     <ImageContainer :imageSize="48" />
                                 </div>
                             </div>
-                            <DeleteImage />
+                            <DeleteAndUpload/>
                         </div>
                         <!-- End Profile Image Section -->
                         <!-- User Details Section -->
@@ -100,7 +100,7 @@ import Modal from "@/Components/Modal.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import DeleteUserForm from "./Partials/DeleteUserForm.vue";
 import UpdatePasswordForm from "./Partials/UpdatePasswordForm.vue";
-import DeleteImage from "./Partials/DeleteImage.vue";
+import DeleteAndUpload from "./Partials/DeleteAndUpload.vue";
 import EmailUpdate from "./Partials/EmailUpdate.vue";
 import ButtonLarge from "./Partials/ButtonLarge.vue";
 import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm.vue";
