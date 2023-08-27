@@ -94,7 +94,7 @@ const submit = () => {
             <InputError class="mt-2" :message="form.errors.password_confirmation" />
         </div>
 
-        <div class="flex flex-col items-center mt-2">
+        <div class="flex flex-col items-center mt-10">
             <SecondaryButton type='submit' class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Register
             </SecondaryButton>
