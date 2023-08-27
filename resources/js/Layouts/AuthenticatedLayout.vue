@@ -85,8 +85,10 @@ const showingNavigationDropdown = ref(false);
             <div
                 class="fixed bottom-0 w-full md:w-1/6 bg-white shadow-md md:h-screen lg:pt-16"
             >
-                <div class="lg:my-10 text-center pt-10 md:block hidden">
-                    <ImageContainer />
+                <div class="lg:my-10  text-center pt-10 md:block hidden items-center">
+                    <ImageContainer 
+                        :imageSize="48"
+                    />
                     <div class="image-text mt-4">
                         <h5 class="mb-1">Welcome Back!!</h5>
                         <h2 class="font-extrabold text-xl">

@@ -1,6 +1,9 @@
 <template>
-    <img :src="imageVal" alt="img" class="rounded-full w-32 h-32 mx-auto mb-2" />
+    <div class="w-full flex flex-col items-center justify-center">
+        <img :src="imageVal" :alt="imgAlt" :class="imageClass" />
+    </div>
 </template>
+
 <script setup>
 import { defineProps } from "vue";
 
@@ -9,5 +12,14 @@ const props = defineProps({
         type: String,
         default: "/img-assets/default_avatar.png",
     },
+    imageSize: {
+        type: Number,
+        default: 32, // Default image size in pixels
+    },
+    imgAlt: {
+        type: String,
+        default: "img",
+    },
 });
+const imageClass = `w-${props.imageSize} h-${props.imageSize} sm:w-${props.imageSize * 2} sm:h-${props.imageSize * 2} md:w-${props.imageSize * 3} md:h-${props.imageSize * 3} lg:w-${props.imageSize * 4} lg:h-${props.imageSize * 4}`;
 </script>
