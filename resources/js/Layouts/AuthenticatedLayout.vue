@@ -113,7 +113,7 @@ const showingNavigationDropdown = ref(false);
                                 <img
                                     :src="'/img-assets/nav-vectors/home.svg'"
                                     alt="Home"
-                                    class="w-9 h-auto lg:mr-4 lg:ml-7"
+                                    class="w-7 h-auto lg:mr-3 lg:ml-7"
                                 />
                                 <div class="hidden sm:block lg:text-xl mt-1">Home</div>
                             </li>
@@ -128,7 +128,7 @@ const showingNavigationDropdown = ref(false);
                                 <img
                                     :src="'/img-assets/nav-vectors/account.svg'"
                                     alt="Home"
-                                    class="w-9 h-auto lg:mr-4 lg:ml-7"
+                                    class="w-7 h-auto lg:mr-3 lg:ml-7"
                                 />
                                 <div class="hidden sm:block lg:text-xl mt-1">Profile</div>
                             </li>
@@ -140,7 +140,7 @@ const showingNavigationDropdown = ref(false);
             <!-- Main Content -->
             <div id="mainDiv" class="flex-1 min-h-screen bg-gray-100">
                 <!-- Page Content -->
-                <main class="py-8 px-4">
+                <main class="py-4 px-4">
                     <slot />
                 </main>
             </div>

@@ -33,4 +33,15 @@ class ImageHandlerController extends Controller
             'success' => true, // Pass the success state to the component
         ]);
     }
+    protected function deleteImage(){
+        // Delete the old profile picture if it exists
+        if (auth()->user()->profile_image) {
+            Storage::delete('public/' . auth()->user()->profile_image);
+        }
+        // Update the user's profile with the new image
+        auth()->user()->update(['profile_image' => null]);
+        return Inertia::render('Profile/Edit', [
+            'success' => true, // Pass the success state to the component
+        ]);
+    }
 }

@@ -35,8 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::post('/image', [ImageHandlerController::class, 'imageUpload'])->name('image.upload');
-    Route::delete('/image', [ImageHandlerController::class, 'deleteImage'])->name('image.delete');
+    Route::post('/profile', [ImageHandlerController::class, 'imageUpload'])->name('image.upload');
+    Route::delete('/profile', [ImageHandlerController::class, 'deleteImage'])->name('image.delete');
 });
 
 require __DIR__.'/auth.php';

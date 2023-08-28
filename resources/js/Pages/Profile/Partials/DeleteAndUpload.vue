@@ -8,13 +8,23 @@
             >
                 Upload
             </button>
-            <button
-                type="button"
-                class="opacity-50 cursor-not-allowed disabled:opacity-50 disabled:cursor-not-allowed @endif cursor-pointer rounded-lg bg-gray-600 px-3 py-1 text-white transition-colors duration-500 ease-in-out hover:bg-red-700"
-                @click="openDeleteModal"
-            >
-                Delete
-            </button>
+            <div v-if="$page.props.auth.user.profile_image">
+                <button
+                    type="button"
+                    class="opacity-50 disabled:opacity-50 disabled:cursor-not-allowed @endif cursor-pointer rounded-lg bg-gray-600 px-3 py-1 text-white transition-colors duration-500 ease-in-out hover:bg-red-700"
+                    @click="openDeleteModal"
+                >
+                    Delete
+                </button>
+            </div>
+            <div v-else>
+                <button
+                    type="button"
+                    class="opacity-50 cursor-not-allowed disabled:opacity-50 border-2 border-gray-600 disabled:cursor-not-allowed @endif rounded-lg bg-gray-600 px-3 py-1 text-white transition-colors duration-500 ease-in-out hover:bg-red-700"
+                >
+                    Delete
+                </button>
+            </div>
         </div>
 
         <!-- Upload Modal -->
@@ -25,9 +35,9 @@
         </Modal>
         <!-- Delete Modal -->
         <Modal :show="showDeleteModal" @close="closeDeleteModal">
-            <!-- <div class="p-6 bg-white rounded-lg shadow-md">
-                <DeleteImage />
-            </div> -->
+            <div class="p-6 bg-white rounded-lg shadow-md">
+                <DropImage/>
+            </div>
         </Modal>
     </div>
 </template>
@@ -35,6 +45,7 @@
 <script setup>
 import { ref } from "vue";
 import UploadImage from "@/Pages/Profile/Partials/UploadImage.vue";
+import DropImage from "@/Pages/Profile/Partials/DropImage.vue";
 import Modal from "@/Components/Modal.vue";
 
 const showUploadModal = ref(false);
