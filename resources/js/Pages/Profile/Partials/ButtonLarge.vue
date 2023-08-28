@@ -1,6 +1,6 @@
 <template>
     <li
-        class="flex items-center justify-between mb-2 rounded-lg bg-gray-600 p-4 transition duration-500 hover:bg-gray-700 hover:cursor-pointer"
+        class="lg:px-16 lg:py-6 flex items-center justify-between mb-2 rounded-lg bg-gray-600 p-4 transition duration-500 hover:bg-gray-700 hover:cursor-pointer"
     >
         <div>
             <span class="text-white text-xl font-bold">{{ label }}</span><br />
@@ -27,7 +27,7 @@ export default {
         text: {
             type: String,
             required: true,
-            default: "Text",
+            default: null,
         },
     },
 };

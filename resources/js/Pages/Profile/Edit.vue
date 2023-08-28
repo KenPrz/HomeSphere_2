@@ -20,9 +20,9 @@
                                     class="flex flex-col items-center justify-center"
                                 >
                                     <h1
-                                        class="font-black text-2xl md:text-3xl text-gray-800"
+                                        class="font-black lg:text-4xl md:text-3xl text-gray-800"
                                     >
-                                        Profile
+                                        My Profile
                                     </h1>
                                     <div class="mt-6 md:mt-10">
                                         <ImageContainer

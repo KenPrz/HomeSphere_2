@@ -13,7 +13,7 @@ const props = defineProps({
 });
 
 const baseClasses = "flex w-full items-center mb-2";
-const activeClasses = "bg-slate-200 transition-colors duration-500 ease-in-out rounded-lg ";
+const activeClasses = "bg-slate-200 transition-colors duration-500 ease-in-out rounded-md ";
 const inactiveClasses = "hover:bg-slate-400 transition-colors duration-500 ease-in-out rounded-lg";
 
 const classes = computed(() => {
