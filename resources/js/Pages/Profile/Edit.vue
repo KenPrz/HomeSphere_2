@@ -24,10 +24,17 @@
                                     Profile
                                 </h1>
                                 <div class="mt-6 md:mt-10">
-                                    <ImageContainer :imageSize="48" />
+                                    <ImageContainer
+                                        :imageSize="48"
+                                        :imageVal="
+                                            $page.props.auth.user.profile_image
+                                        "
+                                    />
                                 </div>
                             </div>
-                            <DeleteAndUpload/>
+                            <div class="mt-5">
+                                <DeleteAndUpload />
+                            </div>
                         </div>
                         <!-- End Profile Image Section -->
                         <!-- User Details Section -->

@@ -1,6 +1,7 @@
 <template>
     <div class="w-full flex flex-col items-center justify-center">
-        <img :src="imageVal" :alt="imgAlt" :class="imageClass" />
+        <img v-if="imageVal" :src="`storage/${imageVal}`" :alt="imgAlt" :class="imageClass" />
+        <img v-else :src="defaultAvatar" :alt="imgAlt" :class="imageClass" />
     </div>
 </template>
 
@@ -10,16 +11,18 @@ import { defineProps } from "vue";
 const props = defineProps({
     imageVal: {
         type: String,
-        default: "/img-assets/default_avatar.png",
+        default: null, // Change default to null
     },
     imageSize: {
         type: Number,
-        default: 32, // Default image size in pixels
+        default: 32,
     },
     imgAlt: {
         type: String,
         default: "img",
     },
 });
-const imageClass = `w-${props.imageSize} h-${props.imageSize} sm:w-${props.imageSize * 2} sm:h-${props.imageSize * 2} md:w-${props.imageSize * 3} md:h-${props.imageSize * 3} lg:w-${props.imageSize * 4} lg:h-${props.imageSize * 4}`;
+
+const imageClass = ` rounded-md w-${props.imageSize} h-${props.imageSize} sm:w-${props.imageSize * 2} sm:h-${props.imageSize * 2} md:w-${props.imageSize * 3} md:h-${props.imageSize * 3} lg:w-${props.imageSize * 4} lg:h-${props.imageSize * 4}`;
+const defaultAvatar = "/img-assets/default_avatar.png"; // Define the default avatar URL
 </script>

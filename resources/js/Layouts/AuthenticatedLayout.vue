@@ -88,6 +88,7 @@ const showingNavigationDropdown = ref(false);
                 <div class="lg:my-10  text-center pt-10 md:block hidden items-center">
                     <ImageContainer 
                         :imageSize="48"
+                        :imageVal= $page.props.auth.user.profile_image
                     />
                     <div class="image-text mt-4">
                         <h5 class="mb-1">Welcome Back!!</h5>
