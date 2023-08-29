@@ -1,7 +1,7 @@
 <template>
     <div
         @click="toggle"
-        class="w-14 transition-all duration-500 h-8 flex bg-slate-400 items-center rounded-full p-1"
+        class="w-14 transition-all duration-500 h-8 flex bg-slate-400 items-center rounded-full p-1 cursor-pointer"
     >
         <div
             :class="{ 'translate-x-6 bg-green-500': modelValue }"
@@ -25,5 +25,3 @@ function toggle() {
     emit("update:modelValue", !props.modelValue);
 }
 </script>
-
-<style scoped></style>
