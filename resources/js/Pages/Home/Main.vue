@@ -16,14 +16,14 @@
                         <div class="flex flex-col">
                             <h2>List of Modes</h2>
                             <div class="flex flex-wrap">
-                                <ModeCard />
-                                <ModeCard />
-                                <ModeCard />
-                                <ModeCard />
+                                <ModeCard/>
+                                <ModeCard/>
+                                <ModeCard/>
+                                <ModeCard/>
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-1 justify-end"><!--Right Upper Main Div-->
+                    <div class="hidden sm:flex sm:flex-1 sm:justify-end"><!--Right Upper Main Div-->
                         <div class="flex items-center w-1/2 flex-col bg-white p-7 rounded-lg shadow-md">
                             <div class="Title mb-2">
                                 <h1 class="text-xl font-black tracking-wide">Living Room</h1>
