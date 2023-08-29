@@ -22,6 +22,5 @@ function submit() {
 
 function cancel() {
     form.reset();
-    close();
 }
 </script>
