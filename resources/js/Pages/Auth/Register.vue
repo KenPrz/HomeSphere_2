@@ -38,7 +38,7 @@ const submit = () => {
                     autofocus
                     autocomplete="firstName"
                 />
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="mt-2" :message="form.errors.firstName" />
             </div>
             <div>
                 <InputLabel for="lastName" value="Last Name" />
@@ -51,7 +51,7 @@ const submit = () => {
                     autofocus
                     autocomplete="lastName"
                 />
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="mt-2" :message="form.errors.lastName" />
             </div>
         </div>
 

@@ -1,6 +1,7 @@
 <script setup>
 import RowContainer from '../Components/RowContainer.vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
+import { Head } from "@inertiajs/vue3";
 
 const props = defineProps({
     canLogin: Boolean,
@@ -11,6 +12,7 @@ const props = defineProps({
 </script>
 
 <template>
+<Head title="Login" />
 <div class="flex justify-center items-center min-h-screen bg-gray-100 font-poppins">
     <GuestLayout>
         <RowContainer/>

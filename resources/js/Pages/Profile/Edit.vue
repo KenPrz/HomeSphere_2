@@ -15,26 +15,28 @@
                     <div class="card lg:w-full">
                         <div class="flex flex-col md:flex-row">
                             <!-- Profile Image Section -->
-                            <div class="md:w-1/4">
+                            <div class="md:w-1/3">
                                 <div
                                     class="flex flex-col items-center justify-center"
                                 >
                                     <h1
-                                        class="font-black lg:text-4xl md:text-3xl text-gray-800"
+                                        class=" font-black lg:text-4xl md:text-3xl text-gray-800"
                                     >
                                         My Profile
                                     </h1>
-                                    <div class="mt-6 md:mt-10">
-                                        <ImageContainer
-                                            :imageSize="48"
-                                            :imageVal="
-                                                $page.props.auth.user.profile_image
-                                            "
-                                        />
+                                    <div class="flex flex-col p-5 justify-center items-center">
+                                        <div class="mt-6 md:mt-10">
+                                            <ImageContainer
+                                                :imageSize="48"
+                                                :imageVal="
+                                                    $page.props.auth.user.profile_image
+                                                "
+                                            />
+                                        </div>
+                                        <div class="mt-2">
+                                            <DeleteAndUpload />
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="mt-5">
-                                    <DeleteAndUpload />
                                 </div>
                             </div>
                             <!-- End Profile Image Section -->

@@ -35,31 +35,39 @@ const showingNavigationDropdown = ref(false);
                     </div>
                     <div class="hidden sm:flex sm:items-center sm:ml-6">
                         <!-- Settings Dropdown -->
-                        <div class="ml-3 relative">
+                        <div class="ml-3 relative flex items-center">
+                            <Dropdown>
+                                <template #trigger>
+                                    <img
+                                        class="h-9 p-2 rounded-full w-auto bg-gray-800 mr-2 transition duration-200 hover:scale-95 cursor-pointer"
+                                        :src="'/img-assets/nav-vectors/notification.svg'"
+                                        alt=""
+                                    />
+                                </template>
+                                <template #content>
+                                    <DropdownLink :href="route('profile.edit')">
+                                        Notification1
+                                    </DropdownLink>
+                                    <DropdownLink :href="route('profile.edit')">
+                                        Notification3
+                                    </DropdownLink>
+                                    <DropdownLink :href="route('profile.edit')">
+                                        Notification3
+                                    </DropdownLink>
+                                </template>
+                            </Dropdown>
                             <Dropdown align="right" width="48">
                                 <template #trigger>
-                                    <span class="inline-flex rounded-md">
-                                        <button
-                                            type="button"
-                                            class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-                                        >
-                                            {{
-                                                $page.props.auth.user.firstName
-                                            }}
-                                            <svg
-                                                class="ml-2 -mr-0.5 h-4 w-4"
-                                                xmlns="http://www.w3.org/2000/svg"
-                                                viewBox="0 0 20 20"
-                                                fill="currentColor"
-                                            >
-                                                <path
-                                                    fill-rule="evenodd"
-                                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                    clip-rule="evenodd"
-                                                />
-                                            </svg>
-                                        </button>
-                                    </span>
+                                    <ImageContainer
+                                        :imageSize="9"
+                                        :imageVal="
+                                            $page.props.auth.user.profile_image
+                                        "
+                                        borderRadius="rounded-full"
+                                        pointerType="cursor-pointer"
+                                        border="border-2 border-gray-800"
+                                    >
+                                    </ImageContainer>
                                 </template>
                                 <template #content>
                                     <DropdownLink :href="route('profile.edit')">
@@ -86,9 +94,9 @@ const showingNavigationDropdown = ref(false);
                 class="fixed bottom-0 w-full md:w-1/6 bg-white shadow-md md:h-screen lg:pt-16"
             >
                 <div class="text-center pt-10 md:block hidden items-center">
-                    <ImageContainer 
+                    <ImageContainer
                         :imageSize="48"
-                        :imageVal= $page.props.auth.user.profile_image
+                        :imageVal="$page.props.auth.user.profile_image"
                     />
                     <div class="image-text mt-4">
                         <h5 class="mb-1">Welcome Back!!</h5>
@@ -108,14 +116,16 @@ const showingNavigationDropdown = ref(false);
                             :active="route().current('dashboard')"
                         >
                             <li
-                                class="flex p-1 py-4 hover:bg-slate-400  rounded-md w-full item-center transition-colors duration-500 ease-in-out"
+                                class="flex p-1 py-4 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
                             >
                                 <img
                                     :src="'/img-assets/nav-vectors/home.svg'"
                                     alt="Home"
                                     class="w-7 h-auto lg:mr-3 lg:ml-5"
                                 />
-                                <div class="hidden sm:block lg:text-xl mt-1">Home</div>
+                                <div class="hidden sm:block lg:text-xl mt-1">
+                                    Home
+                                </div>
                             </li>
                         </SideNavLink>
                         <SideNavLink
@@ -123,62 +133,72 @@ const showingNavigationDropdown = ref(false);
                             :active="route().current('profile.edit')"
                         >
                             <li
-                                class="flex p-1 py-4 hover:bg-slate-400  rounded-md w-full item-center transition-colors duration-500 ease-in-out"
+                                class="flex p-1 py-4 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
                             >
                                 <img
                                     :src="'/img-assets/nav-vectors/account.svg'"
-                                    alt="Home"
+                                    alt="Profile"
                                     class="w-7 h-auto lg:mr-3 lg:ml-5"
                                 />
-                                <div class="hidden sm:block lg:text-xl mt-1">Profile</div>
+                                <div class="hidden sm:block lg:text-xl mt-1">
+                                    Profile
+                                </div>
                             </li>
                         </SideNavLink>
                         <a href="#" class="w-full">
                             <li
-                                class="flex p-1 py-4 hover:bg-slate-400  rounded-md w-full item-center transition-colors duration-500 ease-in-out"
+                                class="flex p-1 py-4 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
                             >
                                 <img
                                     :src="'/img-assets/nav-vectors/appliances.svg'"
-                                    alt="Home"
+                                    alt="Appliances"
                                     class="w-7 h-auto lg:mr-3 lg:ml-5"
                                 />
-                                <div class="hidden sm:block lg:text-xl mt-1">Appliances</div>
+                                <div class="hidden sm:block lg:text-xl mt-1">
+                                    Appliances
+                                </div>
                             </li>
                         </a>
                         <a href="#" class="w-full">
                             <li
-                                class="flex p-1 py-4 hover:bg-slate-400  rounded-md w-full item-center transition-colors duration-500 ease-in-out"
+                                class="flex p-1 py-4 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
                             >
                                 <img
                                     :src="'/img-assets/nav-vectors/rooms.svg'"
-                                    alt="Home"
+                                    alt="Rooms"
                                     class="w-7 h-auto lg:mr-3 lg:ml-5"
                                 />
-                                <div class="hidden sm:block lg:text-xl mt-1">Rooms</div>
+                                <div class="hidden sm:block lg:text-xl mt-1">
+                                    Rooms
+                                </div>
                             </li>
                         </a>
                         <a href="#" class="w-full">
                             <li
-                                class="flex p-1 py-4 hover:bg-slate-400  rounded-md w-full item-center transition-colors duration-500 ease-in-out"
+                                class="flex p-1 py-4 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
                             >
                                 <img
                                     :src="'/img-assets/nav-vectors/modes.svg'"
-                                    alt="Home"
+                                    alt="Modes"
                                     class="w-7 h-auto lg:mr-3 lg:ml-5"
                                 />
-                                <div class="hidden sm:block lg:text-xl mt-1">Modes</div>
+                                <div class="hidden sm:block lg:text-xl mt-1">
+                                    Modes
+                                </div>
                             </li>
                         </a>
                         <a href="#" class="w-full">
                             <li
-                                class="flex p-1 py-4 hover:bg-slate-400  rounded-md w-full item-center transition-colors duration-500 ease-in-out"
+                                class="flex p-1 py-4 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
                             >
                                 <img
                                     :src="'/img-assets/nav-vectors/settings.svg'"
-                                    alt="Home"
+                                    alt="Settings"
                                     class="w-7 h-auto lg:mr-3 lg:ml-5"
                                 />
-                                <div class="hidden sm:block lg:text-xl mt-1">Settings</div>
+                                <div class="hidden sm:block lg:text-xl mt-1">
+                                    Settings
+                                </div>
                             </li>
                         </a>
                     </ul>
