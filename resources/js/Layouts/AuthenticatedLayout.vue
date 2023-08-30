@@ -77,6 +77,7 @@ const showingNavigationDropdown = ref(false);
                                         :href="route('logout')"
                                         method="post"
                                         as="button"
+                                        class="transition duration-500 hover:text-red-500"
                                     >
                                         Log Out
                                     </DropdownLink>
