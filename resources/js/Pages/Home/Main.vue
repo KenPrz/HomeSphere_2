@@ -22,7 +22,6 @@
                     <div class="flex flex-wrap">
                         <ModeCard />
                         <ModeCard />
-                        <ModeCard />
                     </div>
                 </div>
                 <div class="col-span-1 lg:col-span-2 lg:col-start-5">
