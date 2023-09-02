@@ -1,4 +1,5 @@
 <template>
+        <Head title="Create Home" />
     <TopNav />
     <main class="flex items-center justify-center w-full h-screen bg-gray-100">
         <div class="bg-white p-8 w-8/12 rounded-lg shadow-md mx-auto">
@@ -45,7 +46,7 @@
                 <span class="text-md font-semibold text-black">Not Sure? </span>
                 <span
                     class="text-md font-semibold text-blue-600 hover:underline cursor-pointer transition duration-300 ease-in-out"
-                    >Learn More</span
+                    ><a href="https://github.com/KenPrz/HomeSphere_2/wiki">Learn More</a></span
                 >
             </div>
         </div>
@@ -64,6 +65,7 @@
 
 <script setup>
 import { ref } from "vue";
+import { Head } from "@inertiajs/vue3";
 import TopNav from "@/Layouts/TopNav.vue";
 import Modal from "@/Components/Modal.vue";
 import CreateHomeForm from "./Partials/CreateHomeForm.vue";

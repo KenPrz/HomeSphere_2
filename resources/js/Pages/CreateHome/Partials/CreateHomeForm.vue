@@ -6,13 +6,13 @@ import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
-    homeName: '',
-    numberOfRooms: '',
+    home_name: '',
+    number_of_rooms: '',
 });
 
 const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
+    form.post(route('new_home'), {
+        onFinish: () => form.reset('home_name', 'number_of_rooms'),
     });
 };
 </script>
@@ -26,28 +26,28 @@ const submit = () => {
             <div class="w-full flex-1 mb-5">
                 <TextInput
                     placeholder="Home Name"
-                    id="homeName"
+                    id="home_name"
                     type="text"
                     class="mt-1 block w-full"
-                    v-model="form.homeName"
+                    v-model="form.home_name"
                     required
                     autofocus
-                    autocomplete="homeName"
+                    autocomplete="home_name"
                 />
-                <InputError class="mt-2" :message="form.errors.homeName" />
+                <InputError class="mt-2" :message="form.errors.home_name" />
             </div>
             <div class="w-full flex-1">
                 <TextInput
                     placeholder="Number of Rooms"
-                    id="numberOfRooms"
+                    id="number_of_rooms"
                     type="number"
                     class="mt-1 block w-full"
-                    v-model="form.numberOfRooms"
+                    v-model="form.number_of_rooms"
                     required
                     autofocus
-                    autocomplete="numberOfRooms"
+                    autocomplete="number_of_rooms"
                 />
-                <InputError class="mt-2" :message="form.errors.numberOfRooms" />
+                <InputError class="mt-2" :message="form.errors.number_of_rooms" />
             </div>
         </div>
 

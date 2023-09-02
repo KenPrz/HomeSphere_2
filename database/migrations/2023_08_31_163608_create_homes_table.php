@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('home_name');
             $table->string('invite_code')->unique();
+            $table->integer('number_of_rooms');
             $table->unsignedBigInteger('owner_id');
             $table->timestamps();
 

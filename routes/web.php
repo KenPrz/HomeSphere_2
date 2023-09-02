@@ -29,16 +29,19 @@ Route::get('/', function () {
 Route::get('/welcome', fn() => Inertia::render('Welcome'))->name('welcome');
 
 Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
+    return redirect()->route('verify');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/create-home',[HomeCreationController::class, 'create_home'])->name('create_home');
+    Route::post('/create-home',[HomeCreationController::class, 'new_home'])->name('new_home');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile', [ImageHandlerController::class, 'imageUpload'])->name('image.upload');
     Route::delete('/profile', [ImageHandlerController::class, 'deleteImage'])->name('image.delete');
+
+    Route::get('/verify',[HomeCreationController::class, 'verify'])->name('verify');
 });
 
 require __DIR__.'/auth.php';

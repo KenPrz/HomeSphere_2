@@ -5,7 +5,7 @@ import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
-    homeCode:'',
+    home_code:'',
 });
 
 // const submit = () => {
@@ -27,12 +27,12 @@ const form = useForm({
                     id="homeName"
                     type="text"
                     class="mt-1 block w-full"
-                    v-model="form.homeCode"
+                    v-model="form.home_code"
                     required
                     autofocus
-                    autocomplete="homeCode"
+                    autocomplete="home_code"
                 />
-                <InputError class="mt-2" :message="form.errors.homeCode" />
+                <InputError class="mt-2" :message="form.errors.home_code" />
             </div>
         </div>
 
