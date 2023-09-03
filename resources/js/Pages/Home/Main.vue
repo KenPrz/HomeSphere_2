@@ -9,7 +9,7 @@
         <main class="lg:p-5 lg:ml-5 lg:mt-10">
             <div class="Title">
                 <h1 class="text-4xl font-black tracking-wider">
-                    Welcome to Dashboard
+                    Welcome to {{ $page.props.homeData.home_name }}
                 </h1>
             </div>
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-6 lg:grid-rows-1">

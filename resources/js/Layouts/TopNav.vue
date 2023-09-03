@@ -2,6 +2,7 @@
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
 import ImageContainer from "@/Components/ImageContainer.vue";
+import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
 </script>
 
 <template>
@@ -48,6 +49,7 @@ import ImageContainer from "@/Components/ImageContainer.vue";
                                     </template>
                                 </Dropdown>
                                 <Dropdown align="right" width="48">
+                                    <div class="w-"></div>
                                     <template #trigger>
                                         <ImageContainer
                                             :imageSize="9"
@@ -63,16 +65,31 @@ import ImageContainer from "@/Components/ImageContainer.vue";
                                     <template #content>
                                         <div v-if="$page.props.auth.user.profile_image != null">
                                             <DropdownLink :href="route('profile.edit')">
-                                                Profile
+                                                <NavbarProfile/>
                                             </DropdownLink>
                                         </div>
                                         <DropdownLink
                                             :href="route('logout')"
                                             method="post"
                                             as="button"
+                                            class="transition duration-500"
+                                        >
+                                        <div class="flex items-center">
+                                            <img class="h-6 w-auto me-2" :src="'img-assets/nav-vectors/settings_navbar.svg'" alt="">
+                                            <h1>Settings</h1>
+                                        </div>
+                                            
+                                        </DropdownLink>
+                                        <DropdownLink
+                                            :href="route('logout')"
+                                            method="post"
+                                            as="button"
                                             class="transition duration-500 hover:text-red-500"
                                         >
-                                            Log Out
+                                        <div class="flex items-center">
+                                            <img class="h-6 w-auto me-2" :src="'img-assets/nav-vectors/logout_navbar.svg'" alt="">
+                                            <h1>Logout</h1>
+                                        </div>
                                         </DropdownLink>
                                     </template>
                                 </Dropdown>

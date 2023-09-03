@@ -16,13 +16,15 @@ class HomeCreationController extends Controller
     public function verify()
     {
         $user = auth()->user();
-        $home = DB::table('homes')->where('owner_id', $user->id)->first();
-        if ($home) {
-            return Inertia::render('Dashboard');
+        $homeData = DB::table('homes')->where('owner_id', $user->id)->first();
+    
+        if ($homeData) {
+            return Inertia::render('Dashboard', ['homeData' => $homeData]);
         } else {
             return redirect()->route('create_home');
         }
     }
+    
 
     /**
      * Home Creation function.

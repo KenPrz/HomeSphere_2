@@ -7,3 +7,10 @@ import { Head } from '@inertiajs/vue3';
     <Head title="Dashboard" />
         <Main />
 </template>
+<script>
+export default {
+    props: {
+        homeData: Object,
+    }
+};
+</script>

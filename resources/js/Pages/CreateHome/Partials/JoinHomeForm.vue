@@ -36,8 +36,8 @@ const form = useForm({
             </div>
         </div>
 
-        <div class="flex flex-col items-center mt-10">
-            <SecondaryButton type='submit' class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+        <div class="flex flex-col items-center">
+            <SecondaryButton type='submit' class="w-24" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Request Access
             </SecondaryButton>
         </div>
