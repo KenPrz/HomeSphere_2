@@ -1,8 +1,7 @@
 <script setup>
 import { ref } from "vue";
-import Modal from "@/Components/Modal.vue";
-import SideCard from "@/Pages/Home/Partials/SideCard.vue";
-import Table from "@/Pages/Home/Partials/Table.vue";
+import Table from "@/Components/Table.vue";
+import ImageContainer from "@/Components/ImageContainer.vue";
 import ModeCard from "@/Pages/Home/Partials/ModeCard.vue";
 import ToggleSwitch from "@/Components/ToggleSwitch.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
@@ -45,7 +44,7 @@ defineProps({
                     </div>
                     <div class="Title">
                         <h2
-                            class=" bottom-0 text-2xl font-semibold tracking-wide lg:ml-4 lg:mt-10"
+                            class="bottom-0 text-2xl font-semibold tracking-wide lg:ml-4 lg:mt-10"
                         >
                             List of Appliances
                         </h2>
@@ -135,16 +134,58 @@ defineProps({
                     class="col-span-1 lg:col-span-2 lg:col-start-5 hidden lg:block"
                 >
                     <div class="col-span-2 col-start-5">
-                        <div class="flex justify-center">
+                        <div class="flex flex-col items-center">
                             <div
-                                class="p-6 mt-10 flex w-9/12 flex-col items-center bg-white shadow-lg rounded-xl"
+                                class="py-4 mt-7 flex w-9/12 flex-col bg-zinc-600 shadow-lg rounded-t-xl"
                             >
-                                Lorem ipsum dolor sit amet consectetur
-                                adipisicing elit. Quos porro dignissimos commodi
-                                qui deleniti sed maxime nostrum dolores? Ipsam
-                                eaque itaque necessitatibus dolorum et doloribus
-                                consectetur aspernatur voluptatem, est
-                                laudantium.
+                                <h1 class="text-md ps-5 font-bold text-white">
+                                    All Users
+                                </h1>
+                            </div>
+                            <div
+                                class="py-4 flex w-9/12 flex-col bg-white shadow-lg rounded-b-xl"
+                            >
+                                <div class="flex mx-5">
+                                    <div class="item">
+                                        <ImageContainer
+                                            :imageSize="14"
+                                            :imageVal="
+                                                $page.props.auth.user
+                                                    .profile_image
+                                            "
+                                            borderRadius="rounded-md"
+                                            pointerType="cursor-pointer"
+                                        >
+                                        </ImageContainer>
+                                    </div>
+                                    <div class="ms-6 flex flex-col">
+                                        <h1 class="text-xl font-bold">
+                                            {{
+                                                $page.props.auth.user.firstName.charAt(0).toUpperCase() +
+                                                $page.props.auth.user.firstName.slice(1).toLowerCase() +
+                                                ' ' +
+                                                $page.props.auth.user.lastName.charAt(0).toUpperCase() +
+                                                $page.props.auth.user.lastName.slice(1).toLowerCase()
+                                            }}
+                                            </h1>
+                                        <h2 class="text-md font-light">
+                                            <span class="text-green-600"
+                                                v-if="
+                                                    $page.props.auth.user
+                                                        .is_online === 1
+                                                "
+                                                >• online</span
+                                            >
+                                            <span class="text-slate-500"
+                                                v-else="
+                                                    $page.props.auth.user
+                                                        .is_online === 0
+                                                "
+                                                >• offline</span
+                                            >
+                                        </h2>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

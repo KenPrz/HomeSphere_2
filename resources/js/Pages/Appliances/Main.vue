@@ -23,33 +23,13 @@
                         </div>
                     </div>
 
-
-
-                    <div class="overflow-x-auto mx-10">
-                        <div class="min-w-full flex mx-2 mt-5 mb-2 text-base text-left text-white rounded-tl-lg rounded-tr-lg bg-zinc-600">
-                            <div class="w-1/5 py-4 pl-6 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">Room</div>
-                            <div class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">Type</div>
-                            <div class="w-1/5 py-4 pl-3 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">Appliance</div>
-                            <div class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">Name</div>
-                            <div class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">Status</div>
-                        </div>
-
-                        <div class="min-w-full flex mx-2 mb-2 text-sm text-left text-black bg-white hover:bg-gray-300 cursor-pointer">
-                            <div class="w-1/5 py-4 pl-6 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">Bathroom</div>
-                            <div class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">light</div>
-                            <div class="w-1/5 py-4 pl-3 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">light</div>
-                            <div class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">bathroom light</div>
-                            <div class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">ON</div>
-                        </div>
-                        <div class="min-w-full flex mx-2 mb-2 text-sm text-left text-black bg-white hover:bg-gray-300 cursor-pointer">
-                            <div class="w-1/5 py-4 pl-6 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">Bathroom</div>
-                            <div class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">light</div>
-                            <div class="w-1/5 py-4 pl-3 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">light</div>
-                            <div class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">bathroom light</div>
-                            <div class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">ON</div>
-                        </div>
+                    <div class="mx-10">
+                        <Table
+                            :tableHeaders="tableHeaders"
+                            :tableData="tableData"
+                            :maxHeight="maxHeight"
+                        />
                     </div>
-
 
                     <div class = "flex justify-between items-center">
 
@@ -67,6 +47,7 @@
 </template>
 <script setup>
 import { ref } from "vue";
+import Table from "@/Components/Table.vue";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
@@ -78,4 +59,99 @@ defineProps({
         type: String,
     },
 });
+</script>
+<script>
+export default {
+    components: {
+        Table,
+    },
+    data() {
+        return {
+            tableHeaders: [
+                {
+                    text: "Room",
+                },
+                {
+                    text: "Type",
+                },
+                {
+                    text: "Appliances",
+                },
+                {
+                    text: "Name",
+                },
+                {
+                    text: "Status",
+                },
+            ],
+            tableData: [
+                ["Room 101", "Living Room", "TV, Sofa", "John Doe", "Active"],
+                [
+                    "Room 102",
+                    "Bedroom",
+                    "Bed, Dresser",
+                    "Jane Smith",
+                    "Inactive",
+                ],
+                [
+                    "Room 102",
+                    "Bedroom",
+                    "Bed, Dresser",
+                    "Jane Smith",
+                    "Inactive",
+                ],
+                [
+                    "Room 102",
+                    "Bedroom",
+                    "Bed, Dresser",
+                    "Jane Smith",
+                    "Inactive",
+                ],
+                [
+                    "Room 102",
+                    "Bedroom",
+                    "Bed, Dresser",
+                    "Jane Smith",
+                    "Inactive",
+                ],
+                [
+                    "Room 102",
+                    "Bedroom",
+                    "Bed, Dresser",
+                    "Jane Smith",
+                    "Inactive",
+                ],
+                [
+                    "Room 102",
+                    "Bedroom",
+                    "Bed, Dresser",
+                    "Jane Smith",
+                    "Inactive",
+                ],
+                [
+                    "Room 102",
+                    "Bedroom",
+                    "Bed, Dresser",
+                    "Jane Smith",
+                    "Inactive",
+                ],
+                [
+                    "Room 102",
+                    "Bedroom",
+                    "Bed, Dresser",
+                    "Jane Smith",
+                    "Inactive",
+                ],
+                [
+                    "Room 102",
+                    "Bedroom",
+                    "Bed, Dresser",
+                    "Jane Smith",
+                    "Inactive",
+                ],
+            ],
+            maxHeight: "max-h-80",
+        };
+    },
+};
 </script>
