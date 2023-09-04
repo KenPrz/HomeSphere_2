@@ -2,30 +2,34 @@
     <div class="flex flex-col">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 inline-block w-full sm:px-6 lg:px-8">
-                <div class="table-wrp block max-h-96">
-                    <table class="w-full">
-                        <thead class="bg-white border-b sticky top-0">
-                            <tr class="bg-gray-600">
-                                <th
-                                    v-for="(header, index) in tableHeaders"
-                                    :key="index"
-                                    :class="header.class"
-                                >
-                                    {{ header.text }}
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody class="h-96 overflow-y-auto">
-                            <tr v-for="(row, index) in tableData" :key="index">
-                                <td
-                                    v-for="(item, colIndex) in row"
-                                    :key="colIndex"
-                                >
-                                    {{ item }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <!-- Add a container with a fixed height and overflow-y-auto -->
+                <div
+                    class="min-w-full flex mx-0 mt-5 mb-2 text-base text-left text-white rounded-tl-lg rounded-tr-lg bg-zinc-600"
+                >
+                    <div
+                        v-for="(header, index) in tableHeaders"
+                        :key="index"
+                        class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5"
+                    >
+                        {{ header.text }}
+                    </div>
+                </div>
+                <div class="overflow-y-auto" :class="maxHeight">
+                    <div class="mx-0">
+                        <div
+                            v-for="(row, rowIndex) in tableData"
+                            :key="rowIndex"
+                            class="min-w-full flex mb-2 text-sm text-left text-black bg-white hover:bg-gray-300 cursor-pointer"
+                        >
+                            <div
+                                v-for="(cell, cellIndex) in row"
+                                :key="cellIndex"
+                                class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5"
+                            >
+                                {{ cell }}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -34,40 +38,10 @@
 
 <script>
 export default {
-    data() {
-        return {
-            tableHeaders: [
-                {
-                    text: "Room",
-                    class: "text-md font-medium text-white px-6 py-4 text-left",
-                },
-                {
-                    text: "Type",
-                    class: "text-md font-medium text-white px-6 py-4 text-left",
-                },
-                {
-                    text: "Appliances",
-                    class: "text-md font-medium text-white px-6 py-4 text-left",
-                },
-                {
-                    text: "Name",
-                    class: "text-md font-medium text-white px-6 py-4 text-left",
-                },
-                {
-                    text: "Status",
-                    class: "text-md font-medium text-white px-6 py-4 text-left",
-                },
-            ],
-            tableData: [
-                // Your dynamic data for each row goes here
-                // Example: ["Room 101", "Living Room", "TV, Sofa", "John Doe", "Active"],
-                //          ["Room 102", "Bedroom", "Bed, Dresser", "Jane Smith", "Inactive"],
-            ],
-        };
+    props: {
+        tableHeaders: Array,
+        tableData: Array,
+        maxHeight: String,
     },
 };
 </script>
-
-<style scoped>
-/* Your CSS styles go here */
-</style>

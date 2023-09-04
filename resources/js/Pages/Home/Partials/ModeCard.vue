@@ -10,7 +10,7 @@
             <div class="flex flex-1">
                 <div class="flex-1">{{ logo }}</div>
                 <div class="flex-1">
-                    <div>
+                    <div class="ms-5 mt-1">
                         <ToggleSwitch v-model="toggleState" />
                     </div>
                 </div>

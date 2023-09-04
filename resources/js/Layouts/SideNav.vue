@@ -56,7 +56,11 @@ import SideNavLink from "@/Components/SideNavLink.vue";
                         </div>
                     </li>
                 </SideNavLink>
-                <a href="#" class="w-full">
+                
+                <SideNavLink
+                    :href="route('appliances.index')"
+                    :active="route().current('appliances.index')"
+                >
                     <li
                         class="flex p-1 py-4 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
                     >
@@ -69,7 +73,7 @@ import SideNavLink from "@/Components/SideNavLink.vue";
                             Appliances
                         </div>
                     </li>
-                </a>
+                </SideNavLink>
                 <a href="#" class="w-full">
                     <li
                         class="flex p-1 py-4 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"

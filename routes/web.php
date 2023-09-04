@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AppliancesController;
 use App\Http\Controllers\ImageHandlerController;
 use App\Http\Controllers\HomeCreationController;
 use Illuminate\Foundation\Application;
@@ -35,13 +36,14 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/create-home',[HomeCreationController::class, 'create_home'])->name('create_home');
     Route::post('/create-home',[HomeCreationController::class, 'new_home'])->name('new_home');
+    Route::get('/verify',[HomeCreationController::class, 'verify'])->name('verify');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile', [ImageHandlerController::class, 'imageUpload'])->name('image.upload');
     Route::delete('/profile', [ImageHandlerController::class, 'deleteImage'])->name('image.delete');
 
-    Route::get('/verify',[HomeCreationController::class, 'verify'])->name('verify');
+    Route::get('/appliances', [AppliancesController::class, 'index'])->name('appliances.index');
 });
 
 require __DIR__.'/auth.php';

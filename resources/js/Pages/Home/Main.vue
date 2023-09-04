@@ -1,3 +1,23 @@
+<script setup>
+import { ref } from "vue";
+import Modal from "@/Components/Modal.vue";
+import SideCard from "@/Pages/Home/Partials/SideCard.vue";
+import Table from "@/Pages/Home/Partials/Table.vue";
+import ModeCard from "@/Pages/Home/Partials/ModeCard.vue";
+import ToggleSwitch from "@/Components/ToggleSwitch.vue";
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import { Head } from "@inertiajs/vue3";
+const toggleState = ref(false);
+defineProps({
+    mustVerifyEmail: {
+        type: Boolean,
+    },
+    status: {
+        type: String,
+    },
+});
+</script>
+
 <template>
     <Head title="Dashboard" />
     <AuthenticatedLayout>
@@ -15,13 +35,20 @@
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-6 lg:grid-rows-1">
                 <div class="col-span-1 lg:col-span-4">
                     <h2
-                        class="text-xl font-semibold tracking-wide lg:ml-4 lg:mt-10"
+                        class="text-2xl font-semibold tracking-wide lg:ml-4 lg:mt-10"
                     >
                         List of Modes
                     </h2>
                     <div class="flex flex-wrap">
                         <ModeCard />
                         <ModeCard />
+                    </div>
+                    <div class="Title">
+                        <h2
+                            class=" bottom-0 text-2xl font-semibold tracking-wide lg:ml-4 lg:mt-10"
+                        >
+                            List of Appliances
+                        </h2>
                     </div>
                 </div>
                 <div class="col-span-1 lg:col-span-2 lg:col-start-5">
@@ -98,14 +125,15 @@
 
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-6 lg:grid-rows-1">
                 <div class="col-span-1 lg:col-span-4 hidden lg:block">
-                    <div class="Title">
-                        <h2 class="text-xl font-semibold tracking-wide mb-2">
-                            List of Appliances
-                        </h2>
-                    </div>
-                    <Table />
+                    <Table
+                        :tableHeaders="tableHeaders"
+                        :tableData="tableData"
+                        :maxHeight="maxHeight"
+                    />
                 </div>
-                <div class="col-span-1 lg:col-span-2 lg:col-start-5 hidden lg:block">
+                <div
+                    class="col-span-1 lg:col-span-2 lg:col-start-5 hidden lg:block"
+                >
                     <div class="col-span-2 col-start-5">
                         <div class="flex justify-center">
                             <div
@@ -126,22 +154,98 @@
     </AuthenticatedLayout>
 </template>
 
-<script setup>
-import { ref } from "vue";
-import Modal from "@/Components/Modal.vue";
-import SideCard from "@/Pages/Home/Partials/SideCard.vue";
-import Table from "@/Pages/Home/Partials/Table.vue";
-import ModeCard from "@/Pages/Home/Partials/ModeCard.vue";
-import ToggleSwitch from "@/Components/ToggleSwitch.vue";
-import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head } from "@inertiajs/vue3";
-const toggleState = ref(false);
-defineProps({
-    mustVerifyEmail: {
-        type: Boolean,
+<script>
+export default {
+    components: {
+        Table,
     },
-    status: {
-        type: String,
+    data() {
+        return {
+            tableHeaders: [
+                {
+                    text: "Room",
+                },
+                {
+                    text: "Type",
+                },
+                {
+                    text: "Appliances",
+                },
+                {
+                    text: "Name",
+                },
+                {
+                    text: "Status",
+                },
+            ],
+            tableData: [
+                ["Room 101", "Living Room", "TV, Sofa", "John Doe", "Active"],
+                [
+                    "Room 102",
+                    "Bedroom",
+                    "Bed, Dresser",
+                    "Jane Smith",
+                    "Inactive",
+                ],
+                [
+                    "Room 102",
+                    "Bedroom",
+                    "Bed, Dresser",
+                    "Jane Smith",
+                    "Inactive",
+                ],
+                [
+                    "Room 102",
+                    "Bedroom",
+                    "Bed, Dresser",
+                    "Jane Smith",
+                    "Inactive",
+                ],
+                [
+                    "Room 102",
+                    "Bedroom",
+                    "Bed, Dresser",
+                    "Jane Smith",
+                    "Inactive",
+                ],
+                [
+                    "Room 102",
+                    "Bedroom",
+                    "Bed, Dresser",
+                    "Jane Smith",
+                    "Inactive",
+                ],
+                [
+                    "Room 102",
+                    "Bedroom",
+                    "Bed, Dresser",
+                    "Jane Smith",
+                    "Inactive",
+                ],
+                [
+                    "Room 102",
+                    "Bedroom",
+                    "Bed, Dresser",
+                    "Jane Smith",
+                    "Inactive",
+                ],
+                [
+                    "Room 102",
+                    "Bedroom",
+                    "Bed, Dresser",
+                    "Jane Smith",
+                    "Inactive",
+                ],
+                [
+                    "Room 102",
+                    "Bedroom",
+                    "Bed, Dresser",
+                    "Jane Smith",
+                    "Inactive",
+                ],
+            ],
+            maxHeight: "max-h-52",
+        };
     },
-});
+};
 </script>

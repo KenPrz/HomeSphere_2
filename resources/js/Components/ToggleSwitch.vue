@@ -1,11 +1,12 @@
 <template>
     <div
         @click="toggle"
-        class="w-14 transition-all duration-500 h-8 flex bg-slate-400 items-center rounded-full p-1 cursor-pointer"
+        :class="[ modelValue ? 'bg-blue-400' : 'bg-slate-400' ]"
+        class="w-12 transition-all duration-500 h-5 flex items-center rounded-full p-1 cursor-pointer"
     >
         <div
-            :class="[ modelValue ? 'translate-x-6 bg-green-300': 'bg-white' ]"
-            class="w-6 h-6 transition-all duration-500 transform  rounded-full shadow-md"
+            :class="[ modelValue ? 'translate-x-6 bg-white' : 'bg-white' ]"
+            class="w-4 h-4 transition-all duration-500 transform  rounded-full shadow-md"
         ></div>
     </div>
 </template>
