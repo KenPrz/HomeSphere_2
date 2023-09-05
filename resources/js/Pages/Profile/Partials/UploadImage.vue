@@ -1,6 +1,9 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
+import { defineProps, defineEmits } from "vue";
+
+const emit = defineEmits(["close"]);
 
 const form = useForm({
     avatar: null,
@@ -11,10 +14,16 @@ const form = useForm({
 const submit = () => {
     if (validateForm()) {
         form.post(route('image.upload'), {
-            onFinish: () => form.reset('image'),
+            onFinish: () => {
+                form.reset('image');
+                close(); // Call the close function here
+            },
         });
     }
 };
+function close(){
+    emit("close");
+}
 
 const validateForm = () => {
     form.errors = {}; // Reset previous errors
@@ -40,7 +49,6 @@ const validateForm = () => {
         form.errors = errors;
         return false;
     }
-
     return true;
 };
 </script>

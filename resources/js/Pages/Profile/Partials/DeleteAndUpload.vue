@@ -34,11 +34,11 @@
 
         <!-- Upload Modal -->
         <Modal :show="showUploadModal" @close="closeUploadModal">
-            <UploadImage />
+            <UploadImage @close="closeUploadModal"/>
         </Modal>
         <!-- Delete Modal -->
         <Modal :show="showDeleteModal" @close="closeDeleteModal">
-            <DropImage />
+            <DropImage @close="closeDeleteModal" />
         </Modal>
     </div>
 </template>

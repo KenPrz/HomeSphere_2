@@ -148,7 +148,7 @@ defineProps({
                                 <div class="flex mx-5">
                                     <div class="item">
                                         <ImageContainer
-                                            :imageSize="14"
+                                            :imageSize="16"
                                             :imageVal="
                                                 $page.props.auth.user
                                                     .profile_image

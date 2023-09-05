@@ -15,9 +15,13 @@ import SideNavLink from "@/Components/SideNavLink.vue";
                 <h5 class="mb-1">Welcome Back!!</h5>
                 <h2 class="font-extrabold text-xl">
                     {{
-                        $page.props.auth.user.firstName +
+                        $page.props.auth.user.firstName
+                            .charAt(0)
+                            .toUpperCase() +
+                        $page.props.auth.user.firstName.slice(1).toLowerCase() +
                         " " +
-                        $page.props.auth.user.lastName
+                        $page.props.auth.user.lastName.charAt(0).toUpperCase() +
+                        $page.props.auth.user.lastName.slice(1).toLowerCase()
                     }}
                 </h2>
             </div>
@@ -56,7 +60,7 @@ import SideNavLink from "@/Components/SideNavLink.vue";
                         </div>
                     </li>
                 </SideNavLink>
-                
+
                 <SideNavLink
                     :href="route('appliances.index')"
                     :active="route().current('appliances.index')"
