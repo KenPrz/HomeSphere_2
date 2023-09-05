@@ -45,4 +45,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function ownedHome()
+    {
+        return $this->hasOne(Home::class, 'owner_id');
+    }
+
+    public function homes()
+    {
+        return $this->belongsToMany(Home::class, 'home_member', 'member_id', 'home_id');
+    }
+
 }

@@ -7,12 +7,12 @@ import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
     home_name: '',
-    number_of_rooms: '',
+    name_of_room: '',
 });
 
 const submit = () => {
     form.post(route('new_home'), {
-        onFinish: () => form.reset('home_name', 'number_of_rooms'),
+        onFinish: () => form.reset('home_name', 'name_of_room'),
     });
 };
 </script>
@@ -38,16 +38,16 @@ const submit = () => {
             </div>
             <div class="w-full flex-1">
                 <TextInput
-                    placeholder="Number of Rooms"
-                    id="number_of_rooms"
-                    type="number"
+                    placeholder="Name of your first Room"
+                    id="name_of_room"
+                    type="text"
                     class="mt-1 block w-full"
-                    v-model="form.number_of_rooms"
+                    v-model="form.name_of_room"
                     required
                     autofocus
-                    autocomplete="number_of_rooms"
+                    autocomplete="name_of_room"
                 />
-                <InputError class="mt-2" :message="form.errors.number_of_rooms" />
+                <InputError class="mt-2" :message="form.errors.name_of_room" />
             </div>
         </div>
 

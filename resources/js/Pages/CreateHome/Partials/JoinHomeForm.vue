@@ -8,11 +8,11 @@ const form = useForm({
     home_code:'',
 });
 
-// const submit = () => {
-//     form.post(route('register'), {
-//         onFinish: () => form.reset('password', 'password_confirmation'),
-//     });
-// };
+const submit = () => {
+    form.post(route('join_home'), {
+        onFinish: () => form.reset('home_code'),
+    });
+};
 </script>
 
 <template>
@@ -24,7 +24,7 @@ const form = useForm({
             <div class="w-full flex-1 mb-5">
                 <TextInput
                     placeholder="Enter your home code"
-                    id="homeName"
+                    id="home_code"
                     type="text"
                     class="mt-1 block w-full"
                     v-model="form.home_code"

@@ -69,7 +69,7 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                                             </DropdownLink>
                                         </div>
                                         <DropdownLink
-                                            :href="route('logout')"
+                                            :href="route('profile.edit')"
                                             method="post"
                                             as="button"
                                             class="transition duration-500"
