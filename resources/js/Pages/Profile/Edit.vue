@@ -31,6 +31,7 @@
                                                 :imageVal="
                                                     $page.props.auth.user.profile_image
                                                 "
+                                                :borderRadius="'rounded-full'"
                                             />
                                         </div>
                                         <div class="mt-2">

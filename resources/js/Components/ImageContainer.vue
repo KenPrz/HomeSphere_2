@@ -41,4 +41,5 @@ const props = defineProps({
 
 const imageClass = `${props.border} ${props.pointerType} ${props.borderRadius} w-${props.imageSize} h-${props.imageSize} sm:w-${props.imageSize * 2} sm:h-${props.imageSize * 2} md:w-${props.imageSize * 3} md:h-${props.imageSize * 3} lg:w-${props.imageSize * 4} lg:h-${props.imageSize * 4}`;
 const defaultAvatar = "/img-assets/default_avatar.png"; // Define the default avatar URL
+
 </script>

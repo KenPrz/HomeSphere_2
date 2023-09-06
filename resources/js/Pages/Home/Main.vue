@@ -3,6 +3,7 @@ import { ref } from "vue";
 import Table from "@/Components/Table.vue";
 import ImageContainer from "@/Components/ImageContainer.vue";
 import ModeCard from "@/Pages/Home/Partials/ModeCard.vue";
+import NavLink from "@/Components/NavLink.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import SwiperCard from "@/Pages/Home/Partials/SwiperCard.vue";
 import { Head } from "@inertiajs/vue3";
@@ -50,7 +51,7 @@ defineProps({
                     </div>
                 </div>
                 <div class="col-span-1 lg:col-span-2 lg:col-start-5">
-                    <SwiperCard/>
+                    <SwiperCard />
                 </div>
             </div>
 
@@ -61,6 +62,15 @@ defineProps({
                         :tableData="tableData"
                         :maxHeight="maxHeight"
                     />
+                    <div class="bg-white rounded-md w-full flex justify-end shadow-sm">
+                        <NavLink :href="route('appliances.index')">
+                            <button
+                                class="bg-zinc-600 hover:bg-zinc-700 text-white font-semibold py-2 my-2 mx-1 px-6 border border-gray-300 rounded-xl"
+                            >
+                                View List of Appliances
+                            </button>
+                        </NavLink>
+                    </div>
                 </div>
                 <div
                     class="col-span-1 lg:col-span-2 lg:col-start-5 hidden lg:block"
@@ -93,22 +103,32 @@ defineProps({
                                     <div class="ms-6 flex flex-col">
                                         <h1 class="text-xl font-bold">
                                             {{
-                                                $page.props.auth.user.firstName.charAt(0).toUpperCase() +
-                                                $page.props.auth.user.firstName.slice(1).toLowerCase() +
-                                                ' ' +
-                                                $page.props.auth.user.lastName.charAt(0).toUpperCase() +
-                                                $page.props.auth.user.lastName.slice(1).toLowerCase()
+                                                $page.props.auth.user.firstName
+                                                    .charAt(0)
+                                                    .toUpperCase() +
+                                                $page.props.auth.user.firstName
+                                                    .slice(1)
+                                                    .toLowerCase() +
+                                                " " +
+                                                $page.props.auth.user.lastName
+                                                    .charAt(0)
+                                                    .toUpperCase() +
+                                                $page.props.auth.user.lastName
+                                                    .slice(1)
+                                                    .toLowerCase()
                                             }}
-                                            </h1>
+                                        </h1>
                                         <h2 class="text-md font-light">
-                                            <span class="text-green-600"
+                                            <span
+                                                class="text-green-600"
                                                 v-if="
                                                     $page.props.auth.user
                                                         .is_online === 1
                                                 "
                                                 >• online</span
                                             >
-                                            <span class="text-slate-500"
+                                            <span
+                                                class="text-slate-500"
                                                 v-else="
                                                     $page.props.auth.user
                                                         .is_online === 0

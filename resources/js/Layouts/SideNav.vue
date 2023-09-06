@@ -8,7 +8,7 @@ import SideNavLink from "@/Components/SideNavLink.vue";
     >
         <div class="text-center pt-10 md:block hidden items-center">
             <ImageContainer
-                :imageSize="48"
+                :imageSize="44"
                 :imageVal="$page.props.auth.user.profile_image"
             />
             <div class="image-text mt-4">
