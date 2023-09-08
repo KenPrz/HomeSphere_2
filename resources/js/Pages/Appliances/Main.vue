@@ -18,7 +18,7 @@
                                 <div class="ml-5 self-center">
                                     <img src="img-assets/vectors/search.svg" alt="search">
                                 </div>
-                                <input id="search" placeholder="Search" class="ms-5 w-full border-0 focus:border-0">
+                                <input id="search" placeholder="Search" class="ms-5 w-full border-0 focus:ring-0">
                             </div>
                         </div>
                     </div>

@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('room_name');
             $table->unsignedBigInteger('home_id');
             $table->unsignedBigInteger('room_owner_id');
+            $table->float('temperature')->nullable();
+            $table->float('humidity')->nullable();
             $table->timestamps();
-
             $table->foreign('home_id')->references('id')->on('homes');
             $table->foreign('room_owner_id')->references('id')->on('users');
         });
