@@ -13,7 +13,7 @@ import SideNavLink from "@/Components/SideNavLink.vue";
             />
             <div class="image-text mt-4">
                 <h5 class="mb-1">Welcome Back!!</h5>
-                <h2 class="font-extrabold text-xl">
+                <h2 class="font-bold text-md">
                     {{
                         $page.props.auth.user.firstName
                             .charAt(0)
@@ -26,21 +26,21 @@ import SideNavLink from "@/Components/SideNavLink.vue";
                 </h2>
             </div>
         </div>
-        <div class="sm:mt-0 lg:mt-6">
+        <div class="sm:mt-0 lg:mt-4">
             <ul class="flex flex-row md:flex-col items-start mx-3">
                 <SideNavLink
                     :href="route('dashboard')"
-                    :active="route().current('dashboard')"
+                    :active="route().current('verify') || route().current('dashboard')"
                 >
                     <li
-                        class="flex p-1 py-4 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
+                        class="flex p-1 py-2 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
                     >
                         <img
                             :src="'/img-assets/nav-vectors/home.svg'"
                             alt="Home"
-                            class="w-7 h-auto lg:mr-3 lg:ml-5"
+                            class="w-5 h-auto lg:mr-3 lg:ml-5"
                         />
-                        <div class="hidden sm:block lg:text-xl mt-1">Home</div>
+                        <div class="hidden sm:block lg:text-md mt-1">Home</div>
                     </li>
                 </SideNavLink>
                 <SideNavLink
@@ -48,14 +48,14 @@ import SideNavLink from "@/Components/SideNavLink.vue";
                     :active="route().current('profile.edit')"
                 >
                     <li
-                        class="flex p-1 py-4 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
+                        class="flex p-1 py-2 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
                     >
                         <img
                             :src="'/img-assets/nav-vectors/account.svg'"
                             alt="Profile"
-                            class="w-7 h-auto lg:mr-3 lg:ml-5"
+                            class="w-5 h-auto lg:mr-3 lg:ml-5"
                         />
-                        <div class="hidden sm:block lg:text-xl mt-1">
+                        <div class="hidden sm:block lg:text-md mt-1">
                             Profile
                         </div>
                     </li>
@@ -66,52 +66,52 @@ import SideNavLink from "@/Components/SideNavLink.vue";
                     :active="route().current('appliances.index')"
                 >
                     <li
-                        class="flex p-1 py-4 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
+                        class="flex p-1 py-2 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
                     >
                         <img
                             :src="'/img-assets/nav-vectors/appliances.svg'"
                             alt="Appliances"
-                            class="w-7 h-auto lg:mr-3 lg:ml-5"
+                            class="w-5 h-auto lg:mr-3 lg:ml-5"
                         />
-                        <div class="hidden sm:block lg:text-xl mt-1">
+                        <div class="hidden sm:block lg:text-md mt-1">
                             Appliances
                         </div>
                     </li>
                 </SideNavLink>
                 <a href="#" class="w-full">
                     <li
-                        class="flex p-1 py-4 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
+                        class="flex p-1 py-2 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
                     >
                         <img
                             :src="'/img-assets/nav-vectors/rooms.svg'"
                             alt="Rooms"
-                            class="w-7 h-auto lg:mr-3 lg:ml-5"
+                            class="w-5 h-auto lg:mr-3 lg:ml-5"
                         />
-                        <div class="hidden sm:block lg:text-xl mt-1">Rooms</div>
+                        <div class="hidden sm:block lg:text-md mt-1">Rooms</div>
                     </li>
                 </a>
                 <a href="#" class="w-full">
                     <li
-                        class="flex p-1 py-4 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
+                        class="flex p-1 py-2 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
                     >
                         <img
                             :src="'/img-assets/nav-vectors/modes.svg'"
                             alt="Modes"
-                            class="w-7 h-auto lg:mr-3 lg:ml-5"
+                            class="w-5 h-auto lg:mr-3 lg:ml-5"
                         />
-                        <div class="hidden sm:block lg:text-xl mt-1">Modes</div>
+                        <div class="hidden sm:block lg:text-md mt-1">Modes</div>
                     </li>
                 </a>
                 <a href="#" class="w-full">
                     <li
-                        class="flex p-1 py-4 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
+                        class="flex p-1 py-2 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
                     >
                         <img
                             :src="'/img-assets/nav-vectors/settings.svg'"
                             alt="Settings"
-                            class="w-7 h-auto lg:mr-3 lg:ml-5"
+                            class="w-5 h-auto lg:mr-3 lg:ml-5"
                         />
-                        <div class="hidden sm:block lg:text-xl mt-1">
+                        <div class="hidden sm:block lg:text-md mt-1">
                             Settings
                         </div>
                     </li>

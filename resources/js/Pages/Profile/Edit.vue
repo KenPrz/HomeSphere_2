@@ -20,7 +20,7 @@
                                     class="flex flex-col items-center justify-center"
                                 >
                                     <h1
-                                        class=" font-black lg:text-4xl md:text-3xl text-gray-800"
+                                        class=" font-bold lg:text-4xl md:text-3xl text-gray-800"
                                     >
                                         My Profile
                                     </h1>

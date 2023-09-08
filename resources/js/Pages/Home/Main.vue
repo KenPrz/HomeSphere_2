@@ -25,120 +25,105 @@ defineProps({
                 Profile
             </h2>
         </template>
-        <main class="lg:p-5 lg:ml-5 lg:mt-10">
-            <div class="Title">
-                <h1 class="text-4xl font-black tracking-wider">
-                    Welcome to {{ $page.props.homeData.home_name }}
-                </h1>
-            </div>
-            <div class="grid grid-cols-1 gap-4 lg:grid-cols-6 lg:grid-rows-1">
-                <div class="col-span-1 lg:col-span-4">
-                    <h2
-                        class="text-2xl font-semibold tracking-wide lg:ml-4 lg:mt-10"
-                    >
-                        List of Modes
-                    </h2>
-                    <div class="flex flex-wrap">
-                        <ModeCard />
-                        <ModeCard />
-                    </div>
-                    <div class="Title">
-                        <h2
-                            class="bottom-0 text-2xl font-semibold tracking-wide lg:ml-4 lg:mt-10"
-                        >
-                            List of Appliances
-                        </h2>
-                    </div>
-                </div>
-                <div class="col-span-1 lg:col-span-2 lg:col-start-5">
-                    <SwiperCard />
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 gap-4 lg:grid-cols-6 lg:grid-rows-1">
-                <div class="col-span-1 lg:col-span-4 hidden lg:block">
-                    <Table
-                        :tableHeaders="tableHeaders"
-                        :tableData="tableData"
-                        :maxHeight="maxHeight"
-                    />
-                    <div class="bg-white rounded-md w-full flex justify-end shadow-sm">
-                        <NavLink :href="route('appliances.index')">
-                            <button
-                                class="bg-zinc-600 hover:bg-zinc-700 text-white font-semibold py-2 my-2 mx-1 px-6 border border-gray-300 rounded-xl"
-                            >
-                                View List of Appliances
-                            </button>
-                        </NavLink>
-                    </div>
-                </div>
-                <div
-                    class="col-span-1 lg:col-span-2 lg:col-start-5 hidden lg:block"
-                >
-                    <div class="col-span-2 col-start-5">
-                        <div class="flex flex-col items-center">
-                            <div
-                                class="py-4 mt-7 flex w-9/12 flex-col bg-zinc-600 shadow-lg rounded-t-xl"
-                            >
-                                <h1 class="text-md ps-5 font-bold text-white">
-                                    All Users
-                                </h1>
-                            </div>
-                            <div
-                                class="py-4 flex w-9/12 flex-col bg-white shadow-lg rounded-b-xl"
-                            >
-                                <div class="flex mx-5">
-                                    <div class="item">
-                                        <ImageContainer
-                                            :imageSize="16"
-                                            :imageVal="
-                                                $page.props.auth.user
-                                                    .profile_image
-                                            "
-                                            borderRadius="rounded-md"
-                                            pointerType="cursor-pointer"
-                                        >
-                                        </ImageContainer>
-                                    </div>
-                                    <div class="ms-6 flex flex-col">
-                                        <h1 class="text-xl font-bold">
-                                            {{
-                                                $page.props.auth.user.firstName
-                                                    .charAt(0)
-                                                    .toUpperCase() +
-                                                $page.props.auth.user.firstName
-                                                    .slice(1)
-                                                    .toLowerCase() +
-                                                " " +
-                                                $page.props.auth.user.lastName
-                                                    .charAt(0)
-                                                    .toUpperCase() +
-                                                $page.props.auth.user.lastName
-                                                    .slice(1)
-                                                    .toLowerCase()
-                                            }}
-                                        </h1>
-                                        <h2 class="text-md font-light">
-                                            <span
-                                                class="text-green-600"
-                                                v-if="
-                                                    $page.props.auth.user
-                                                        .is_online === 1
-                                                "
-                                                >• online</span
-                                            >
-                                            <span
-                                                class="text-slate-500"
-                                                v-else="
-                                                    $page.props.auth.user
-                                                        .is_online === 0
-                                                "
-                                                >• offline</span
-                                            >
-                                        </h2>
+        <main>
+            <div class="flex">
+                <div class="child-main w-8/12">
+                    <div class="flex flex-col">
+                        <div class="flex flex-col">
+                            <div class="mx-3">
+                                <div class="Title">
+                                    <h1 class="text-3xl mb-2 font-bold tracking-wide">
+                                        Welcome to {{ $page.props.homeData.home_name }}
+                                    </h1>
+                                </div>
+                                <div class="mx-3">
+                                    <h1 class="text-md font-medium">List of Modes</h1>
+                                    <div class="flex flex-wrap">
+                                        <ModeCard />
+                                        <ModeCard />
+                                        <ModeCard />
+                                        <ModeCard />
                                     </div>
                                 </div>
                             </div>
+                            <div class="mx-3">
+                                <h1 class="text-md font-medium">List of Appliances</h1>
+                                <Table
+                                    :tableHeaders="tableHeaders"
+                                    :tableData="tableData"
+                                    :maxHeight="maxHeight"
+                                />
+                                <div class="bg-white rounded-md w-full flex justify-end shadow-sm">
+                                    <NavLink :href="route('appliances.index')">
+                                        <button
+                                            class="bg-zinc-600 hover:bg-zinc-700 text-white font-semibold py-2 my-1 mx-1 px-6 border border-gray-300 rounded-xl"
+                                        >
+                                            View List of Appliances
+                                        </button>
+                                    </NavLink>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="child-main w-2/6">
+                    <div class="flex flex-col h-full">
+                        <div class="flex-1">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda fuga ipsum dolore officiis veniam qui blanditiis. Laudantium numquam quos, rem veritatis neque ducimus ad nam itaque quia officiis quam facere!
+                        </div>
+                        <div class="flex-1">
+                            <div class="flex mx-5">
+                            <div class="item">
+                                <ImageContainer
+                                    :imageSize="16"
+                                    :imageVal="
+                                        $page.props.auth.user
+                                            .profile_image
+                                    "
+                                    borderRadius="rounded-md"
+                                    pointerType="cursor-pointer"
+                                >
+                                </ImageContainer>
+                            </div>
+                            <div class="ms-6 flex flex-col justify-center">
+                                <h1 class="text-md font-semibold">
+                                    {{
+                                        $page.props.auth.user.firstName
+                                            .charAt(0)
+                                            .toUpperCase() +
+                                        $page.props.auth.user.firstName
+                                            .slice(1)
+                                            .toLowerCase() +
+                                        " " +
+                                        $page.props.auth.user.lastName
+                                            .charAt(0)
+                                            .toUpperCase() +
+                                        $page.props.auth.user.lastName
+                                            .slice(1)
+                                            .toLowerCase()
+                                    }}
+                                </h1>
+                                <h2 class="text-md font-light">
+                                    <span
+                                        class="text-green-600"
+                                        v-if="
+                                            $page.props.auth.user
+                                                .is_online === 1
+                                        "
+                                        >• online</span
+                                    >
+                                    <span
+                                        class="text-slate-500"
+                                        v-else="
+                                            $page.props.auth.user
+                                                .is_online === 0
+                                        "
+                                        >• offline</span
+                                    >
+                                </h2>
+                            </div>
+                        </div>
                         </div>
                     </div>
                 </div>

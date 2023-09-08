@@ -4,7 +4,7 @@
             <div class="py-2 inline-block w-full sm:px-6 lg:px-8">
                 <!-- Add a container with a fixed height and overflow-y-auto -->
                 <div
-                    class="min-w-full flex mx-0 mt-5 mb-2 text-base text-left text-white rounded-tl-lg rounded-tr-lg bg-zinc-600"
+                    class="min-w-full flex mx-0 mb-2 text-base text-left text-white rounded-tl-lg rounded-tr-lg bg-zinc-600"
                 >
                     <div
                         v-for="(header, index) in tableHeaders"

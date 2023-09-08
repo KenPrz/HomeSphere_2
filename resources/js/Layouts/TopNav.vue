@@ -16,7 +16,7 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                         <!-- Logo -->
                         <a
                             :href="route('dashboard')"
-                            class="text-xl font-bold md:text-center text-center flex items-center hover:text-blue-500 transition-colors"
+                            class="text-md font-semibold md:text-center text-center flex items-center hover:text-blue-500 transition-colors"
                         >
                             <img
                                 class="h-10 w-10 rounded-full p-1 mr-2 hover:scale-110 transition-transform"
