@@ -76,6 +76,12 @@ class HomeCreationController extends Controller
             'member_id' => $owner_id,
             'created_at' => now(),
         ]);
+
+        DB::table('home_api_keys')->insert([
+            'home_id' => DB::table('homes')->where('invite_code', $invite_code)->first()->id,
+            'api_key' => Str::random(64),
+            'created_at' => now(),
+        ]);
         User::where('id', Auth::id())->update(['is_online' => true]);
         return redirect()->route('dashboard');
     }
