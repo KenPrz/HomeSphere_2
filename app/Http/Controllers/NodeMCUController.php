@@ -17,17 +17,25 @@ class NodeMCUController extends Controller
             return response()->json(['errors' => $validationResult->errors()], 422);
         }
 
-        $data = $validationResult->validated();
+        $home_id = DB::table('home_api_keys')->where('api_key', $request->key)->value('home_id');
 
-        $room = $this->findRoomByName($data['room_name']);
-        $apiKey = $this->findApiKeyByKey($data['key']);
-
-        if ($apiKey && $room) {
-            $this->updateRoomData($room, $data['sensor_data']);
-            return response()->json(['message' => 'Data received successfully', 'data' => $data], 200);
-        } else {
-            return response()->json(['message' => 'BAD API'], 401);
+        if (!$home_id) {
+            return response()->json(['errors' => ['key' => ['Invalid API key']]], 422);
         }
+
+        $room_id = DB::table('rooms')
+        ->where('home_id', $home_id)
+        ->where('room_name', $request->room_name)
+        ->value('id');
+
+        if (!$room_id) {
+            return response()->json(['errors' => ['room_name' => ['Invalid room name']]], 422);
+        }
+
+        $sensorData = $request->sensor_data;
+        $this->updateRoomData($room_id, $sensorData);
+
+        return response()->json(['message' => 'Data received successfully'], 200);
     }
 
     private function validateData(Request $request)
@@ -46,22 +54,11 @@ class NodeMCUController extends Controller
         return Validator::make($request->all(), $rules);
     }
 
-    private function findRoomByName($roomName)
+    private function updateRoomData($room_id, $sensorData)
     {
-        return DB::table('rooms')->where('room_name', $roomName)->first();
-    }
-
-    private function findApiKeyByKey($apiKey)
-    {
-        return DB::table('home_api_keys')->where('api_key', $apiKey)->first();
-    }
-
-    private function updateRoomData($room, $sensorData)
-    {
-        DB::table('rooms')->where('room_name', $room->room_name)->update([
+        DB::table('rooms')->where('id', $room_id)->update([
             'temperature' => $sensorData['temperature'],
             'humidity' => $sensorData['humidity'],
-            'updated_at' => now(),
         ]);
     }
 }
