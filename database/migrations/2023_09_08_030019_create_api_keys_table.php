@@ -9,26 +9,24 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
-        Schema::create('rooms', function (Blueprint $table) {
+        Schema::create('home_api_keys', function (Blueprint $table) {
             $table->id();
-            $table->string('room_name');
             $table->unsignedBigInteger('home_id');
-            $table->unsignedBigInteger('room_owner_id');
-            $table->float('temperature')->nullable();
-            $table->float('humidity')->nullable();
+            $table->string('api_key', 64)->unique();
             $table->timestamps();
+    
             $table->foreign('home_id')->references('id')->on('homes');
-            $table->foreign('room_owner_id')->references('id')->on('users');
         });
     }
-
+    
+    
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('rooms');
+        Schema::dropIfExists('api_keys');
     }
 };

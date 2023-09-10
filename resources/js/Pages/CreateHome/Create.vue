@@ -15,7 +15,7 @@
                     class="h-44 child flex-1 bg-green-500 m-2 rounded-3xl transition-colors duration-200 hover:bg-green-400 cursor-pointer"
                 >
                     <div class="h-full w-full flex items-center justify-center">
-                        <h1 class="text-2xl text-white font-black mr-4">
+                        <h1 class="text-2xl text-white font-semibold mr-4">
                             Create Home
                         </h1>
                         <img
@@ -30,7 +30,7 @@
                     class="h-44 child flex-1 bg-blue-900 m-2 rounded-3xl transition-colors duration-200 hover:bg-blue-600 cursor-pointer"
                 >
                     <div class="h-full w-full flex items-center justify-center">
-                        <h1 class="text-2xl text-white font-black mr-4">
+                        <h1 class="text-2xl text-white font-semibold mr-4">
                             Join Home
                         </h1>
                         <img
