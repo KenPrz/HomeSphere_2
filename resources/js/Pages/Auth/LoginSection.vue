@@ -4,7 +4,7 @@
             <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
                 {{ status }}
             </div>
-            <h2 class="text-2xl py-4 font-extrabold">Login</h2>
+            <h2 class="text-2xl py-4 font-semibold">Login</h2>
             <form @submit.prevent="submit">
                 <div>
                     <InputLabel for="email" value="Email" />

@@ -40,7 +40,6 @@ class HomeCreationController extends Controller
                 $homeData = DB::table('homes')->where('id', $homeMember->home_id)->first();
             }
         }
-
         return $homeData;
     }
 
@@ -76,6 +75,12 @@ class HomeCreationController extends Controller
             'member_id' => $owner_id,
             'created_at' => now(),
         ]);
+
+        DB::table('home_api_keys')->insert([
+            'home_id' => DB::table('homes')->where('invite_code', $invite_code)->first()->id,
+            'api_key' => Str::random(64),
+            'created_at' => now(),
+        ]);
         User::where('id', Auth::id())->update(['is_online' => true]);
         return redirect()->route('dashboard');
     }
@@ -89,17 +94,18 @@ class HomeCreationController extends Controller
         ]);
 
         $invite_code = $request->home_code;
+        $home = DB::table('homes')->where('invite_code', $invite_code)->first();
+    
+        // Check if the home with the given invite code exists
+        if (!$home) {
+            return redirect()->route('create_home')->with('error', 'Home with the given invite code does not exist.');
+        }
+
         $user_id = auth()->user()->id;
         $home_id = DB::table('homes')->where('invite_code', $invite_code)->first()->id;
         DB::table('home_member')->insert([
             'home_id' => $home_id,
             'member_id' => $user_id,
-            'created_at' => now(),
-        ]);
-        DB::table('rooms')->insert([
-            'room_name' => 'Default Room',
-            'home_id' => $home_id,
-            'room_owner_id' => $user_id,
             'created_at' => now(),
         ]);
         User::where('id', Auth::id())->update(['is_online' => true]);
