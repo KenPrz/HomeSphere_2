@@ -35,15 +35,15 @@ export default {
                 },
                 {
                     id: 2,
-                    name: "Living Room",
+                    name: "Bathroom",
                     appliances: 2,
                     temperature: "25°C",
                     humidity: "60%",
                     toggleState: ref(false),
                 },
                 {
-                    id: 1,
-                    name: "Living Room",
+                    id: 3,
+                    name: "Ken's Room",
                     appliances: 2,
                     temperature: "25°C",
                     humidity: "60%",
@@ -59,20 +59,20 @@ export default {
     <swiper
         :cssMode="true"
         :navigation="true"
-        :pagination="true"
+        :pagination="false"
         :mousewheel="true"
         :keyboard="true"
         :modules="modules"
-        class="mySwiper"
+        class="mySwiper w-full h-full"
     >
         <swiper-slide v-for="room in rooms" :key="room.id">
             <div class="flex flex-col items-center justify-center">
                 <div class="w-3/4 mt-5">
                     <div class="title">
-                        <div class="text-xl font-medium">
+                        <div class="text-md font-medium">
                             {{ room.name }}
                         </div>
-                        <div class="text-sm mt-1">
+                        <div class="text-xs mt-1">
                             ({{ room.appliances }}) Appliances
                         </div>
                         <div class="box">
@@ -94,7 +94,7 @@ export default {
                         <div class="box">
                             <div class="box-child-1">
                                 <img
-                                    class="h-9 w-auto"
+                                    class="h-6 w-auto"
                                     :src="'/img-assets/vectors/temperature.svg'"
                                     alt=""
                                 />
@@ -104,7 +104,7 @@ export default {
                                     <div class="text-sm font-medium">
                                         Temperature
                                     </div>
-                                    <div class="text-xs">
+                                    <div class="text-xs text-start">
                                         {{ room.temperature }}
                                     </div>
                                 </div>
@@ -113,17 +113,17 @@ export default {
                         <div class="box">
                             <div class="box-child-1">
                                 <img
-                                    class="h-9 w-auto"
-                                    :src="'/img-assets/vectors/temperature.svg'"
+                                    class="h-5 w-auto"
+                                    :src="'/img-assets/vectors/humidity.svg'"
                                     alt=""
                                 />
                             </div>
                             <div class="box-child">
-                                <div class="text">
+                                <div class="text flex flex-col">
                                     <div class="text-sm font-medium">
                                         Humidity
                                     </div>
-                                    <div class="text-xs">
+                                    <div class="text-xs text-start">
                                         {{ room.humidity }}
                                     </div>
                                 </div>
@@ -137,14 +137,6 @@ export default {
 </template>
 
 <style scoped>
-/* Your existing CSS styles can remain as is */
-body {
-    background: #eee;
-    font-size: 14px;
-    color: #000;
-    margin: 0;
-    padding: 0;
-}
 
 .swiper {
     display: flex;
@@ -160,10 +152,14 @@ body {
     background: #fff;
     border-radius: 10px;
 }
-
+.title{
+    margin-top: .5em;
+    margin-bottom: 3em;
+}
 .box {
-    padding: 0.7em 0 0.7em 0;
+    padding: 0.4em 0 0.3em 0;
     margin-top: 0.5em;
+    margin-bottom: 0.5em;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -171,6 +167,9 @@ body {
     height: 100%;
     border: 1px solid gray;
     border-radius: 10px;
+}
+.box img{
+    margin-right: .7em;
 }
 .box-child-1 {
     width: 40%;
@@ -184,7 +183,5 @@ body {
     width: 60%;
     height: 100%;
     display: flex;
-    justify-content: start;
-    align-items: center;
 }
 </style>

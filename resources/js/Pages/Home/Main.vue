@@ -21,31 +21,33 @@ defineProps({
     <Head title="Dashboard" />
     <AuthenticatedLayout>
         <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            <h2 class="font-semibold text-xl text-gray-800 space-y-6 leading-tight">
                 Profile
             </h2>
         </template>
         <main>
-            <div class="flex">
-                <div class="child-main w-8/12">
-                    <div class="flex flex-col">
-                        <div class="flex flex-col">
+            <div class="grid grid-cols-1 md:grid-cols-7 grid-rows-7 gap-2">
+                <!-- Left Column -->
+                <div class="col-span-1 md:col-span-5 row-span-7">
+                    <div class="grid grid-cols-5 grid-rows-7 gap-2">
+                        <div class="col-span-5 row-span-4">
+                            <div class="Title">
+                                <h1 class="text-3xl mb-2 font-bold tracking-wide">
+                                    Welcome to {{ $page.props.homeData.home_name }}
+                                </h1>
+                            </div>
                             <div class="mx-3">
-                                <div class="Title">
-                                    <h1 class="text-3xl mb-2 font-bold tracking-wide">
-                                        Welcome to {{ $page.props.homeData.home_name }}
-                                    </h1>
-                                </div>
-                                <div class="mx-3">
-                                    <h1 class="text-md font-medium">List of Modes</h1>
-                                    <div class="flex flex-wrap">
-                                        <ModeCard />
-                                        <ModeCard />
-                                        <ModeCard />
-                                        <ModeCard />
-                                    </div>
+                                <h1 class="text-md font-medium">
+                                    List of Modes
+                                </h1>
+                                <div class="flex flex-wrap">
+                                    <ModeCard />
+                                    <ModeCard />
+                                    <ModeCard />
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-span-5 row-span-3 row-start-5">
                             <div class="mx-3">
                                 <h1 class="text-md font-medium">List of Appliances</h1>
                                 <Table
@@ -64,15 +66,16 @@ defineProps({
                                 </div>
                             </div>
                         </div>
-                        
                     </div>
                 </div>
-                <div class="child-main w-2/6">
-                    <div class="flex flex-col h-full">
-                        <div class="flex-1">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda fuga ipsum dolore officiis veniam qui blanditiis. Laudantium numquam quos, rem veritatis neque ducimus ad nam itaque quia officiis quam facere!
+
+                <!-- Right Column -->
+                <div class="col-span-1 md:col-span-2 row-span-7 md:col-start-6">
+                    <div class="grid grid-cols-2 grid-rows-6 gap-2">
+                        <div class="col-span-2 md:col-span-2 row-span-3">
+                            <SwiperCard />
                         </div>
-                        <div class="flex-1">
+                        <div class="col-span-2 md:col-span-2 row-span-3 row-start-4">
                             <div class="flex mx-5">
                             <div class="item">
                                 <ImageContainer

@@ -31,7 +31,7 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                                 <Dropdown>
                                     <template #trigger>
                                         <img
-                                            class="h-9 p-2 rounded-full w-auto bg-gray-800 mr-2 transition duration-200 hover:scale-95 cursor-pointer"
+                                            class="h-9 p-2 rounded-full w-auto bg-slate-500 mr-2 transition duration-200 hover:scale-95 cursor-pointer"
                                             :src="'/img-assets/nav-vectors/notification.svg'"
                                             alt=""
                                         />
