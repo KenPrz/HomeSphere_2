@@ -1,11 +1,10 @@
 <script setup>
-import { ref } from "vue";
 import Table from "@/Components/Table.vue";
-import ImageContainer from "@/Components/ImageContainer.vue";
 import ModeCard from "@/Pages/Home/Partials/ModeCard.vue";
 import NavLink from "@/Components/NavLink.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import SwiperCard from "@/Pages/Home/Partials/SwiperCard.vue";
+import UserList from "@/Pages/Home/Partials/UserList.vue";
 import { Head } from "@inertiajs/vue3";
 defineProps({
     mustVerifyEmail: {
@@ -76,57 +75,9 @@ defineProps({
                             <SwiperCard />
                         </div>
                         <div class="col-span-2 md:col-span-2 row-span-3 row-start-4">
-                            <div class="flex mx-5">
-                            <div class="item">
-                                <ImageContainer
-                                    :imageSize="16"
-                                    :imageVal="
-                                        $page.props.auth.user
-                                            .profile_image
-                                    "
-                                    borderRadius="rounded-md"
-                                    pointerType="cursor-pointer"
-                                >
-                                </ImageContainer>
+                            <div class="flex item-center p-3 my-2 mx-2">
+                                <UserList/>
                             </div>
-                            <div class="ms-6 flex flex-col justify-center">
-                                <h1 class="text-md font-semibold">
-                                    {{
-                                        $page.props.auth.user.firstName
-                                            .charAt(0)
-                                            .toUpperCase() +
-                                        $page.props.auth.user.firstName
-                                            .slice(1)
-                                            .toLowerCase() +
-                                        " " +
-                                        $page.props.auth.user.lastName
-                                            .charAt(0)
-                                            .toUpperCase() +
-                                        $page.props.auth.user.lastName
-                                            .slice(1)
-                                            .toLowerCase()
-                                    }}
-                                </h1>
-                                <h2 class="text-md font-light">
-                                    <span
-                                        class="text-green-600"
-                                        v-if="
-                                            $page.props.auth.user
-                                                .is_online === 1
-                                        "
-                                        >• online</span
-                                    >
-                                    <span
-                                        class="text-slate-500"
-                                        v-else="
-                                            $page.props.auth.user
-                                                .is_online === 0
-                                        "
-                                        >• offline</span
-                                    >
-                                </h2>
-                            </div>
-                        </div>
                         </div>
                     </div>
                 </div>

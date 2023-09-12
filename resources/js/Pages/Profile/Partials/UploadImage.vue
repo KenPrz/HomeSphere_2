@@ -1,6 +1,7 @@
 <script setup>
 import { useForm } from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
+import ImageContainer from "@/Components/ImageContainer.vue";
 import { defineProps, defineEmits } from "vue";
 
 const emit = defineEmits(["close"]);
@@ -61,12 +62,10 @@ const validateForm = () => {
             </div>
             <div class="flex flex-col items-center">
                 <!-- Render the user's image if it exists, or a placeholder if it doesn't -->
-                <div v-if="$page.props.auth.user.profile_image" class="mt-4">
-                    <img :src="$page.props.auth.user.profile_image" alt="Profile Picture" class="w-40 h-40 rounded-full" />
-                </div>
-                <div v-else class="mt-4">
-                    <img :src="'img-assets/default_avatar.png'" alt="Default Placeholder" class="w-40 h-40 rounded-full" />
-                </div>
+                <ImageContainer :imageSize="24" 
+                    :imageVal="$page.props.auth.user.profile_image" 
+                    borderRadius="rounded-full" pointerType="cursor-pointer">
+                </ImageContainer>
                 <form @submit.prevent="submit" class="flex flex-col gap-4" id="image">
                     <input type="file" @input="form.avatar = $event.target.files[0]" class="border p-2 rounded-md" />
                     <button type="submit"

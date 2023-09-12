@@ -34,8 +34,10 @@ class NodeMCUController extends Controller
 
         $sensorData = $request->sensor_data;
         $this->updateRoomData($room_id, $sensorData);
+        
 
-        return response()->json(['message' => 'Data received successfully'], 200);
+    
+        return response()->json(['message' => 'Data received successfully', 'data' => $request->all()], 200);  
     }
 
     private function validateData(Request $request)
@@ -54,6 +56,7 @@ class NodeMCUController extends Controller
         return Validator::make($request->all(), $rules);
     }
 
+    
     private function updateRoomData($room_id, $sensorData)
     {
         DB::table('rooms')->where('id', $room_id)->update([

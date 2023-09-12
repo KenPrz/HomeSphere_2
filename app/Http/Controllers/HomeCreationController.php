@@ -20,6 +20,7 @@ class HomeCreationController extends Controller
     public function verify()
     {
         $user = auth()->user();
+        
         $homeData = $this->findHomeData($user);
 
         if ($homeData) {
@@ -32,7 +33,6 @@ class HomeCreationController extends Controller
     private function findHomeData($user)
     {
         $homeData = DB::table('homes')->where('owner_id', $user->id)->first();
-
         if (!$homeData) {
             $homeMember = DB::table('home_member')->where('member_id', $user->id)->first();
 
