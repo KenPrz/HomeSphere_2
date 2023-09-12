@@ -59,9 +59,8 @@
                                         :text="$page.props.auth.user.email"
                                     />
                                     <ButtonLarge
-                                        @click="openPasswordEditModal"
-                                        label="Password"
-                                        text="Update"
+                                        @click="openPasswordAndSecurityModal"
+                                        label="Password and Security"
                                     />
                                 </ul>
                             </div>
@@ -92,13 +91,14 @@
                             </div>
                         </Modal>
                         <Modal
-                            :show="showPasswordEditModal"
-                            @close="closePasswordEditModal"
+                            :show="showPasswordAndSecurityModal"
+                            @close="closePasswordAndSecurityModal"
                         >
                             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                                <UpdatePasswordForm class="max-w-xl" />
+                                <PasswordAndSecurity />
                             </div>
                         </Modal>
+                        
                     </div>
                 </div>
             </div>
@@ -110,14 +110,13 @@
 import { ref } from "vue";
 import Modal from "@/Components/Modal.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import DeleteUserForm from "./Partials/DeleteUserForm.vue";
-import UpdatePasswordForm from "./Partials/UpdatePasswordForm.vue";
 import DeleteAndUpload from "./Partials/DeleteAndUpload.vue";
 import EmailUpdate from "./Partials/EmailUpdate.vue";
-import ButtonLarge from "./Partials/ButtonLarge.vue";
+import ButtonLarge from "@/Components/ButtonLarge.vue";
 import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm.vue";
 import ImageContainer from "@/Components/ImageContainer.vue";
 import { Head } from "@inertiajs/vue3";
+import PasswordAndSecurity from "./Partials/PasswordAndSecurity.vue";
 
 defineProps({
     mustVerifyEmail: {
@@ -127,23 +126,22 @@ defineProps({
         type: String,
     },
 });
-
+const showPasswordAndSecurityModal = ref(false);
 const showEmailEditModal = ref(false);
 const showNameEditModal = ref(false);
-const showPasswordEditModal = ref(false);
+
+const closePasswordAndSecurityModal = () => {
+    showPasswordAndSecurityModal.value = false;
+};
+const openPasswordAndSecurityModal = () => {
+    showPasswordAndSecurityModal.value = true;
+};
 
 const openEmailEditModal = () => {
     showEmailEditModal.value = true;
 };
 const closeEmailEditModal = () => {
     showEmailEditModal.value = false;
-};
-
-const openPasswordEditModal = () => {
-    showPasswordEditModal.value = true;
-};
-const closePasswordEditModal = () => {
-    showPasswordEditModal.value = false;
 };
 
 const openNameEditModal = () => {

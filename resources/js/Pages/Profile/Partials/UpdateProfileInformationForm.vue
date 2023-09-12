@@ -65,8 +65,9 @@ const form = useForm({
 
                     <InputError class="mt-2" :message="form.errors.lastName" />
                 </div>
-                <div class="flex flex-col items-center gap-4">
-                    <PrimaryButton :disabled="form.processing">Save</PrimaryButton>
+                <div class="flex flex-col items-center gap-4 w-full">
+                    <PrimaryButton
+                    :disabled="form.processing">Change Name</PrimaryButton>
                     <Transition
                         enter-active-class="transition ease-in-out"
                         enter-from-class="opacity-0"
