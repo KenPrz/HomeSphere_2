@@ -7,5 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Api_key extends Model
 {
-    use HasFactory;
+    public function home(){
+        return $this->hasOne(Home::class);
+    }
 }
