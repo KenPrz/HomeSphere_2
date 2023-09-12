@@ -34,7 +34,7 @@ class HomeCreationController extends Controller
     {
         $homeData = DB::table('homes')->where('owner_id', $user->id)->first();
         if (!$homeData) {
-            $homeMember = DB::table('home_member')->where('member_id', $user->id)->first();
+            $homeMember = DB::table('home_members')->where('member_id', $user->id)->first();
 
             if ($homeMember) {
                 $homeData = DB::table('homes')->where('id', $homeMember->home_id)->first();
@@ -70,9 +70,10 @@ class HomeCreationController extends Controller
             'created_at' => now(),
         ]);
 
-        DB::table('home_member')->insert([
+        DB::table('home_members')->insert([
             'home_id' => DB::table('homes')->where('invite_code', $invite_code)->first()->id,
             'member_id' => $owner_id,
+            'is_owner' => true,
             'created_at' => now(),
         ]);
 
@@ -103,9 +104,10 @@ class HomeCreationController extends Controller
 
         $user_id = auth()->user()->id;
         $home_id = DB::table('homes')->where('invite_code', $invite_code)->first()->id;
-        DB::table('home_member')->insert([
+        DB::table('home_members')->insert([
             'home_id' => $home_id,
             'member_id' => $user_id,
+            'is_owner' => false,
             'created_at' => now(),
         ]);
         User::where('id', Auth::id())->update(['is_online' => true]);

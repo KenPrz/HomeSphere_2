@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('home_member', function (Blueprint $table) {
+        Schema::create('home_members', function (Blueprint $table) {
             $table->unsignedBigInteger('home_id');
             $table->unsignedBigInteger('member_id');
             $table->primary(['home_id', 'member_id']);
+            $table->boolean('is_owner');
             
             $table->foreign('home_id')->references('id')->on('homes');
             $table->foreign('member_id')->references('id')->on('users');

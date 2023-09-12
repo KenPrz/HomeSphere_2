@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('api_key', 64)->unique();
             $table->timestamps();
     
-            $table->foreign('home_id')->references('id')->on('homes');
+            $table->foreign('home_id')->references('id')->on('homes')->onDelete('cascade');
         });
     }
     

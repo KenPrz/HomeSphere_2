@@ -39,7 +39,7 @@
                         <!-- Close button with an "X" icon -->
                         <button
                             @click="close"
-                            class="absolute top-2 right-2 text-gray-600 hover:text-gray-800"
+                            class="absolute pt-2 mr-2 top-2 right-2 text-gray-600 hover:text-gray-800"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
