@@ -19,7 +19,7 @@
                         <div
                             v-for="(row, rowIndex) in tableData"
                             :key="rowIndex"
-                            class="min-w-full flex mb-2 text-sm text-left text-black bg-white hover:bg-gray-300 cursor-pointer"
+                            class="min-w-full flex mb-2 rounded-md text-sm text-left text-black bg-white hover:bg-gray-300 cursor-pointer"
                         >
                             <div
                                 v-for="(cell, cellIndex) in row"

@@ -28,7 +28,7 @@ defineProps({
             <div class="grid grid-cols-1 md:grid-cols-7 grid-rows-7 gap-2">
                 <!-- Left Column -->
                 <div class="col-span-1 md:col-span-5 row-span-7">
-                    <div class="grid grid-cols-5 grid-rows-7 gap-2">
+                    <div    class="grid grid-cols-5 grid-rows-7 gap-2">
                         <div class="col-span-5 row-span-4">
                             <div class="Title">
                                 <h1 class="text-3xl mb-2 font-bold tracking-wide">
@@ -71,7 +71,7 @@ defineProps({
                 <!-- Right Column -->
                 <div class="col-span-1 md:col-span-2 row-span-7 md:col-start-6">
                     <div class="grid grid-cols-2 grid-rows-6 gap-2">
-                        <div class="col-span-2 md:col-span-2 row-span-3">
+                        <div class="col-span-2 md:col-span-2 row-span-3">2
                             <SwiperCard />
                         </div>
                         <div class="col-span-2 md:col-span-2 row-span-3 row-start-4">

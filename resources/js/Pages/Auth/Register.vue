@@ -24,7 +24,7 @@ const submit = () => {
 <template>
     <Head title="Register" />
     <div class="flex flex-col justify-center items-center p-5">
-    <h2 class="text-2xl py-4 font-extrabold">Register</h2>
+    <h2 class="text-2xl py-4 font-semibold">Register</h2>
     <form @submit.prevent="submit">
         <div class="flex w-full">
             <div class="mr-4">
@@ -95,7 +95,7 @@ const submit = () => {
         </div>
 
         <div class="flex flex-col items-center mt-10">
-            <SecondaryButton type='submit' class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+            <SecondaryButton type='submit' :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                 Register
             </SecondaryButton>
         </div>

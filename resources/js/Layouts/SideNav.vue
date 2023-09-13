@@ -78,8 +78,11 @@ import SideNavLink from "@/Components/SideNavLink.vue";
                         </div>
                     </li>
                 </SideNavLink>
-                <a href="#" class="w-full">
-                    <li
+                <SideNavLink
+                    :href="route('rooms.index')"
+                    :active="route().current('rooms.index')"
+                >
+                <li
                         class="flex p-1 py-2 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
                     >
                         <img
@@ -89,7 +92,7 @@ import SideNavLink from "@/Components/SideNavLink.vue";
                         />
                         <div class="hidden sm:block lg:text-md mt-1">Rooms</div>
                     </li>
-                </a>
+                </SideNavLink>
                 <a href="#" class="w-full">
                     <li
                         class="flex p-1 py-2 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"

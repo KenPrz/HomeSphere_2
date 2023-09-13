@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AppliancesController;
 use App\Http\Controllers\ImageHandlerController;
 use App\Http\Controllers\HomeCreationController;
+use App\Http\Controllers\HomeDataController;
+use App\Http\Controllers\RoomsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -38,6 +40,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/create_home',[HomeCreationController::class, 'create_home'])->name('create_home');
     Route::post('/create_home',[HomeCreationController::class, 'new_home'])->name('new_home');
     Route::post('/join_home',[HomeCreationController::class, 'join_home'])->name('join_home');
+    
+    Route::get('/home',[HomeDataController::class, 'getHomeData'])->name('getData');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -46,6 +50,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ImageHandlerController::class, 'deleteImage'])->name('image.delete');
 
     Route::get('/appliances', [AppliancesController::class, 'index'])->name('appliances.index');
+
+    Route::get('/rooms', [RoomsController::class, 'index'])->name('rooms.index');
 });
 
 require __DIR__.'/auth.php';
