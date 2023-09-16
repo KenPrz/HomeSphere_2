@@ -49,9 +49,9 @@ class NodeMCUController extends Controller
             'room_name' => ['required', 'string', 'max:255'],
             'sensor_data.temperature' => ['numeric'],
             'sensor_data.humidity' => ['numeric'],
-            'devices.lights.*.name' => 'required|string',
+            'devices.lights.*.name' => 'required|string|distinct:strict',
             'devices.lights.*.is_active' => 'required|boolean',
-            'devices.plugs.*.name' => 'required|string',
+            'devices.plugs.*.name' => 'required|string|distinct:strict',
             'devices.plugs.*.is_active' => 'required|boolean',
         ];
             //TODO prevent duplication in request
@@ -97,6 +97,7 @@ private function updateOrInsertDevice($deviceData, $room_id, $type)
             'is_active' => $deviceData['is_active'],
             // Add other properties to update here if necessary
         ]);
+        //Remove this soon
     } else {
         Device::create([
             'room_id' => $room_id,
