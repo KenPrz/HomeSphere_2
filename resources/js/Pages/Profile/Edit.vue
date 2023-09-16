@@ -20,12 +20,12 @@
                                     class="flex flex-col items-center justify-center"
                                 >
                                     <h1
-                                        class=" font-bold lg:text-4xl md:text-3xl mt-2 text-gray-800"
+                                        class=" font-bold lg:text-4xl md:text-3xl text-gray-800"
                                     >
                                         My Profile
                                     </h1>
-                                    <div class="flex flex-col p-5 justify-center items-center">
-                                        <div class="mt-6 md:mt-10">
+                                    <div class="flex flex-col p-3 justify-center items-center">
+                                        <div class="mt-6 md:mt-6">
                                             <ImageContainer
                                                 :imageSize="48"
                                                 :imageVal="

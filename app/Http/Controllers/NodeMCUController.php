@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Device;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
 
 class NodeMCUController extends Controller
@@ -32,12 +32,14 @@ class NodeMCUController extends Controller
             return response()->json(['errors' => ['room_name' => ['Invalid room name']]], 422);
         }
 
+
         $sensorData = $request->sensor_data;
         $this->updateRoomData($room_id, $sensorData);
-        
+        $myData = $request->all();
 
-    
-        return response()->json(['message' => 'Data received successfully', 'data' => $request->all()], 200);  
+        $this->deviceUpdate($myData, $room_id);
+        //Final Reply to the node.
+        return $this->responseBuilder($room_id);
     }
 
     private function validateData(Request $request)
@@ -52,7 +54,7 @@ class NodeMCUController extends Controller
             'devices.plugs.*.name' => 'required|string',
             'devices.plugs.*.is_active' => 'required|boolean',
         ];
-
+            //TODO prevent duplication in request
         return Validator::make($request->all(), $rules);
     }
 
@@ -64,4 +66,70 @@ class NodeMCUController extends Controller
             'humidity' => $sensorData['humidity'],
         ]);
     }
+
+private function deviceUpdate($data, $room_id)
+{
+    $lights = $data['devices']['lights'];
+    $plugs = $data['devices']['plugs'];
+
+    // Update or insert lights
+    foreach ($lights as $lightData) {
+        $this->updateOrInsertDevice($lightData, $room_id, 'light');
+    }
+
+    // Update or insert plugs
+    foreach ($plugs as $plugData) {
+        $this->updateOrInsertDevice($plugData, $room_id, 'plug');
+    }
+}
+
+private function updateOrInsertDevice($deviceData, $room_id, $type)
+{
+    $deviceName = $deviceData['name'];
+
+    $device = Device::where('room_id', $room_id)
+        ->where('device_type', $type)
+        ->where('device_name', $deviceName)
+        ->first();
+
+    if ($device) {
+        $device->update([
+            'is_active' => $deviceData['is_active'],
+            // Add other properties to update here if necessary
+        ]);
+    } else {
+        Device::create([
+            'room_id' => $room_id,
+            'device_type' => $type,
+            'device_name' => $deviceName,
+            'is_active' => $deviceData['is_active'],
+            // Add other properties to insert here if necessary
+        ]);
+    }
+}
+    //Todo Create a response builder for the API
+    private function responseBuilder($room_id)
+    {
+        $data = DB::table('devices')->where('room_id', $room_id)
+            ->get([
+                "device_name",
+                "device_type",
+                "is_active"
+            ]);
+    
+        $lights = $data->filter(function ($device) {
+            return $device->device_type === 'light';
+        });
+    
+        $plugs = $data->filter(function ($device) {
+            return $device->device_type === 'plug';
+        });
+    
+        return response()->json([
+            'message' => 'reply',
+            'lights' => $lights,
+            'plugs' => $plugs
+        ], 200);
+    }
+    
 }

@@ -71,7 +71,7 @@ defineProps({
                 <!-- Right Column -->
                 <div class="col-span-1 md:col-span-2 row-span-7 md:col-start-6">
                     <div class="grid grid-cols-2 grid-rows-6 gap-2">
-                        <div class="col-span-2 md:col-span-2 row-span-3">2
+                        <div class="col-span-2 md:col-span-2 row-span-3">
                             <SwiperCard />
                         </div>
                         <div class="col-span-2 md:col-span-2 row-span-3 row-start-4">
