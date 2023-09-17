@@ -40,8 +40,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/create_home',[HomeCreationController::class, 'create_home'])->name('create_home');
     Route::post('/create_home',[HomeCreationController::class, 'new_home'])->name('new_home');
     Route::post('/join_home',[HomeCreationController::class, 'join_home'])->name('join_home');
-    
-    Route::get('/home',[HomeDataController::class, 'getHomeData'])->name('getData');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

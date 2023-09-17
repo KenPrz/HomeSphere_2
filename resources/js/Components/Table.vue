@@ -4,7 +4,7 @@
             <div class="py-2 inline-block w-full sm:px-6 lg:px-8">
                 <!-- Add a container with a fixed height and overflow-y-auto -->
                 <div
-                    class="min-w-full flex mx-0 mb-2 text-base text-left text-white rounded-tl-lg rounded-tr-lg bg-zinc-600"
+                    class="min-w-full justify-between flex mx-0 mb-2 text-base text-left text-white rounded-tl-lg rounded-tr-lg bg-zinc-600"
                 >
                     <div
                         v-for="(header, index) in tableHeaders"
@@ -19,7 +19,7 @@
                         <div
                             v-for="(row, rowIndex) in tableData"
                             :key="rowIndex"
-                            class="min-w-full flex mb-2 rounded-md text-sm text-left text-black bg-white hover:bg-gray-300 cursor-pointer"
+                            class="min-w-full flex  justify-between mb-2 rounded-md text-sm text-left text-black bg-white hover:bg-gray-300 cursor-pointer"
                         >
                             <div
                                 v-for="(cell, cellIndex) in row"
@@ -40,7 +40,7 @@
 export default {
     props: {
         tableHeaders: Array,
-        tableData: Array,
+        tableData: Object,
         maxHeight: String,
     },
 };
