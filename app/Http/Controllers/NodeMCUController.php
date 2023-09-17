@@ -35,11 +35,16 @@ class NodeMCUController extends Controller
 
         $sensorData = $request->sensor_data;
         $this->updateRoomData($room_id, $sensorData);
-        $myData = $request->all();
 
-        $this->deviceUpdate($myData, $room_id);
-        //Final Reply to the node.
-        return $this->responseBuilder($room_id);
+        $myData = $request->all();
+        if (isset($myData['devices'])) {
+            $this->deviceUpdate($myData, $room_id);
+            // Final Reply to the node.//
+            return $this->responseBuilder($room_id);
+        } else {
+            return response()->json(['message' => 'Room Data Updated'], 200);
+        }
+        
     }
 
     private function validateData(Request $request)
@@ -61,11 +66,21 @@ class NodeMCUController extends Controller
     
     private function updateRoomData($room_id, $sensorData)
     {
-        DB::table('rooms')->where('id', $room_id)->update([
-            'temperature' => $sensorData['temperature'],
-            'humidity' => $sensorData['humidity'],
-        ]);
+        $updateData = [];
+    
+        if (isset($sensorData['temperature'])) {
+            $updateData['temperature'] = $sensorData['temperature'];
+        }
+    
+        if (isset($sensorData['humidity'])) {
+            $updateData['humidity'] = $sensorData['humidity'];
+        }
+    
+        if (!empty($updateData)) {
+            DB::table('rooms')->where('id', $room_id)->update($updateData);
+        }
     }
+    
 
 private function deviceUpdate($data, $room_id)
 {
@@ -92,45 +107,42 @@ private function updateOrInsertDevice($deviceData, $room_id, $type)
         ->where('device_name', $deviceName)
         ->first();
 
-    if ($device) {
-        $device->update([
-            'is_active' => $deviceData['is_active'],
-            // Add other properties to update here if necessary
-        ]);
-        //Remove this soon
-    } else {
+    if (!$device) {
         Device::create([
             'room_id' => $room_id,
             'device_type' => $type,
             'device_name' => $deviceName,
-            'is_active' => $deviceData['is_active'],
-            // Add other properties to insert here if necessary
+            'is_active' => $deviceData['is_active']
         ]);
     }
 }
     //Todo Create a response builder for the API
     private function responseBuilder($room_id)
     {
-        $data = DB::table('devices')->where('room_id', $room_id)
+        $lights = DB::table('devices')
+            ->where('room_id', $room_id)
+            ->where('device_type', 'light')
             ->get([
                 "device_name",
-                "device_type",
+                "device_type" ,
                 "is_active"
             ]);
-    
-        $lights = $data->filter(function ($device) {
-            return $device->device_type === 'light';
-        });
-    
-        $plugs = $data->filter(function ($device) {
-            return $device->device_type === 'plug';
-        });
-    
+
+        $plugs = DB::table('devices')
+            ->where('room_id', $room_id)
+            ->where('device_type', 'plug')
+            ->get([
+                "device_name",
+                "device_type" ,
+                "is_active"
+            ]);
+        
+        // gettype($lights),
+        // gettype($plugs)
         return response()->json([
-            'message' => 'reply',
+
             'lights' => $lights,
             'plugs' => $plugs
         ], 200);
     }
-    
 }
