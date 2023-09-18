@@ -32,7 +32,7 @@ defineProps({
                         <div class="col-span-5 row-span-4">
                             <div class="Title">
                                 <h1 class="text-3xl mb-2 font-bold tracking-wide">
-                                    Welcome to {{ $page.props.homeData.home_name }}
+                                    Welcome to {{ $page.props.userData.home_name }}
                                 </h1>
                             </div>
                             <div class="mx-3">
@@ -49,6 +49,7 @@ defineProps({
                         <div class="col-span-5 row-span-3 row-start-5">
                             <div class="mx-3">
                                 <h1 class="text-md font-medium">List of Appliances</h1>
+                                {{ $page.props.appliances  }}
                                 <Table
                                     :tableHeaders="tableHeaders"
                                     :tableData="tableData"
@@ -90,6 +91,13 @@ defineProps({
 export default {
     components: {
         Table,
+        UserList,
+        ModeCard,
+    },
+    props: {
+        userData: Object,
+        userList: Object,
+        appliances: Object,
     },
     data() {
         return {
@@ -101,81 +109,13 @@ export default {
                     text: "Type",
                 },
                 {
-                    text: "Appliances",
-                },
-                {
                     text: "Name",
                 },
                 {
                     text: "Status",
                 },
             ],
-            tableData: [
-                ["Room 101", "Living Room", "TV, Sofa", "John Doe", "Active"],
-                [
-                    "Room 102",
-                    "Bedroom",
-                    "Bed, Dresser",
-                    "Jane Smith",
-                    "Inactive",
-                ],
-                [
-                    "Room 102",
-                    "Bedroom",
-                    "Bed, Dresser",
-                    "Jane Smith",
-                    "Inactive",
-                ],
-                [
-                    "Room 102",
-                    "Bedroom",
-                    "Bed, Dresser",
-                    "Jane Smith",
-                    "Inactive",
-                ],
-                [
-                    "Room 102",
-                    "Bedroom",
-                    "Bed, Dresser",
-                    "Jane Smith",
-                    "Inactive",
-                ],
-                [
-                    "Room 102",
-                    "Bedroom",
-                    "Bed, Dresser",
-                    "Jane Smith",
-                    "Inactive",
-                ],
-                [
-                    "Room 102",
-                    "Bedroom",
-                    "Bed, Dresser",
-                    "Jane Smith",
-                    "Inactive",
-                ],
-                [
-                    "Room 102",
-                    "Bedroom",
-                    "Bed, Dresser",
-                    "Jane Smith",
-                    "Inactive",
-                ],
-                [
-                    "Room 102",
-                    "Bedroom",
-                    "Bed, Dresser",
-                    "Jane Smith",
-                    "Inactive",
-                ],
-                [
-                    "Room 102",
-                    "Bedroom",
-                    "Bed, Dresser",
-                    "Jane Smith",
-                    "Inactive",
-                ],
-            ],
+            tableData: test,
             maxHeight: "max-h-52",
         };
     },

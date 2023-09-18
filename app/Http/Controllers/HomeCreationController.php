@@ -12,6 +12,7 @@ use Inertia\Inertia;
 
 class HomeCreationController extends Controller
 {
+
     public function create_home()
     {
         return Inertia::render('CreateHome/Create');
@@ -24,7 +25,20 @@ class HomeCreationController extends Controller
         $homeData = $this->findHomeData($user);
 
         if ($homeData) {
-            return Inertia::render('Dashboard', ['homeData' => $homeData]);
+            $appliances = DB::table('devices')
+            ->select(
+                'rooms.room_name',
+                'devices.device_type',
+                'devices.device_name',
+                DB::raw('CASE WHEN devices.is_active = 1 THEN "Active" ELSE "Inactive" END AS is_active')
+            )
+            ->join('rooms', 'devices.room_id', '=', 'rooms.id')
+            ->get();
+            $userList = DB::table('home_members')->where('home_id', $homeData->id)
+                ->join('users', 'home_members.member_id', '=', 'users.id')
+                ->get(['users.firstName', 'users.lastName','users.profile_image', 'users.is_online']);
+                // dd($appliances);
+                return Inertia::render('Dashboard', ['userData' => $homeData,'userList' => $userList, 'appliances' => $appliances]);
         }
 
         return redirect()->route('create_home');

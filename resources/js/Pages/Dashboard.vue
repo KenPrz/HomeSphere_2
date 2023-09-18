@@ -11,6 +11,7 @@ import { Head } from '@inertiajs/vue3';
 export default {
     props: {
         homeData: Object,
+        userList:Object,
     }
 };
 </script>

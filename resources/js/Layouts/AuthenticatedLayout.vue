@@ -2,8 +2,6 @@
 import { ref } from "vue";
 import TopNav from "@/Layouts/TopNav.vue";
 import SideNav from "@/Layouts/SideNav.vue";
-
-const showingNavigationDropdown = ref(false);
 </script>
 <template>
     <div class="grid grid-cols-1 min-h-screen">

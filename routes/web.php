@@ -36,7 +36,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/verify',[HomeCreationController::class, 'verify'])->name('verify');
+    Route::get('/home',[HomeCreationController::class, 'verify'])->name('verify');
+
     Route::get('/create_home',[HomeCreationController::class, 'create_home'])->name('create_home');
     Route::post('/create_home',[HomeCreationController::class, 'new_home'])->name('new_home');
     Route::post('/join_home',[HomeCreationController::class, 'join_home'])->name('join_home');
