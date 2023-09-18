@@ -21,7 +21,7 @@
                             </div>
                         </div>
                     </div>
-
+                    
                     <div class="mx-10">
                         <Table
                             :tableHeaders="tableHeaders"

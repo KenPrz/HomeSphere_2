@@ -49,7 +49,6 @@ defineProps({
                         <div class="col-span-5 row-span-3 row-start-5">
                             <div class="mx-3">
                                 <h1 class="text-md font-medium">List of Appliances</h1>
-                                {{ $page.props.appliances  }}
                                 <Table
                                     :tableHeaders="tableHeaders"
                                     :tableData="tableData"
@@ -88,6 +87,7 @@ defineProps({
 </template>
 
 <script>
+
 export default {
     components: {
         Table,
@@ -115,7 +115,7 @@ export default {
                     text: "Status",
                 },
             ],
-            tableData: test,
+            tableData: this.$page.props.appliances,
             maxHeight: "max-h-52",
         };
     },
