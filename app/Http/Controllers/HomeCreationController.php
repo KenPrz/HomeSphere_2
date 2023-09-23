@@ -23,7 +23,6 @@ class HomeCreationController extends Controller
         $user = auth()->user();
         
         $homeData = $this->findHomeData($user);
-
         if ($homeData) {
             $appliances = DB::table('devices')
             ->select(
@@ -31,16 +30,20 @@ class HomeCreationController extends Controller
                 'devices.device_type',
                 'devices.device_name',
                 DB::raw('CASE WHEN devices.is_active = 1 THEN "Active" ELSE "Inactive" END AS is_active')
-            )
+            )->where('rooms.home_id', $homeData->id)
             ->join('rooms', 'devices.room_id', '=', 'rooms.id')
             ->get();
+            
             $userList = DB::table('home_members')->where('home_id', $homeData->id)
                 ->join('users', 'home_members.member_id', '=', 'users.id')
                 ->get(['users.firstName', 'users.lastName','users.profile_image', 'users.is_online']);
                 // dd($appliances);
-                return Inertia::render('Dashboard', ['userData' => $homeData,'userList' => $userList, 'appliances' => $appliances]);
+                return Inertia::render('Dashboard', 
+                [   'userData' => $homeData,
+                    'userList' => $userList, 
+                    'appliances' => $appliances
+                ]);
         }
-
         return redirect()->route('create_home');
     }
 

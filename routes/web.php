@@ -51,6 +51,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/appliances', [AppliancesController::class, 'index'])->name('appliances.index');
 
     Route::get('/rooms', [RoomsController::class, 'index'])->name('rooms.index');
+    Route::post('/rooms',[RoomsController::class, 'addRoom'])->name('rooms.addRoom');
+
 });
 
 require __DIR__.'/auth.php';

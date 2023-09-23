@@ -21,9 +21,11 @@ return new class extends Migration
             $table->timestamps();
             $table->foreign('home_id')->references('id')->on('homes');
             $table->foreign('room_owner_id')->references('id')->on('users');
-        });
+        
+            // Add a unique constraint for room_name and home_id
+            $table->unique(['room_name', 'home_id']);
+        });        
     }
-
     /**
      * Reverse the migrations.
      */

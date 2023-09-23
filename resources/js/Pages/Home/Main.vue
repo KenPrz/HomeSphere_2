@@ -37,6 +37,7 @@ defineProps({
                             </div>
                             <div class="mx-3">
                                 <h1 class="text-md font-medium">
+                                    {{ $page.props.userData }}
                                     List of Modes
                                 </h1>
                                 <div class="flex flex-wrap">
@@ -52,9 +53,10 @@ defineProps({
                                 <Table
                                     :tableHeaders="tableHeaders"
                                     :tableData="tableData"
-                                    :maxHeight="maxHeight"
-                                />
-                                <div class="bg-white rounded-md w-full flex justify-end shadow-sm">
+                                    :Pagenated="true"
+                                    :itemsPerPage="4"
+                                >
+                                <div class="bg-white rounded-md w-full flex justify-end shadow-sm mb-1">
                                     <NavLink :href="route('appliances.index')">
                                         <button
                                             class="bg-zinc-600 hover:bg-zinc-700 text-white font-semibold py-2 my-1 mx-1 px-6 border border-gray-300 rounded-xl"
@@ -63,6 +65,7 @@ defineProps({
                                         </button>
                                     </NavLink>
                                 </div>
+                                </Table>
                             </div>
                         </div>
                     </div>
@@ -115,8 +118,7 @@ export default {
                     text: "Status",
                 },
             ],
-            tableData: this.$page.props.appliances,
-            maxHeight: "max-h-52",
+            tableData: this.$page.props.appliances, 
         };
     },
 };

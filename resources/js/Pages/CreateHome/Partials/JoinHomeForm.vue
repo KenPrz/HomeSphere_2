@@ -10,27 +10,10 @@ const form = useForm({
     isLoading: false,
 });
 
-const submit = async () => {
-    form.isLoading = true;
-    form.error = null; 
-
-    try {
-        const response = await form.post(route('join_home'));
-
-        // Check if the response indicates success (you can customize this based on your API response structure)
-        if (response.status === 'success') {
-            // Do something on success, e.g., reset the form
-            form.reset('home_code');
-        } else {
-            // Handle server-side errors
-            form.error = response.message; // Assuming your Laravel response has a 'message' field
-        }
-    } catch (error) {
-
-        form.error = 'Invalid home code. Please try again.';
-    } finally {
-        form.isLoading = false; // Set loading state back to false, whether the request was successful or not
-    }
+const submit = () => {
+    form.post(route('join_home'), {
+        onFinish: () => form.reset('home_code'),
+    });
 };
 </script>
 
@@ -61,7 +44,7 @@ const submit = async () => {
             </div>
 
             <!-- Display server-side errors, if any -->
-            <div v-if="form.error" class="text-red-500 mt-2 text-center">{{ form.error }}</div>
+            <InputError :message="form.error" class="mt-4" />
         </form>
     </div>
 </template>
