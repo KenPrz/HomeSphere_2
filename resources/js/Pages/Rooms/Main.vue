@@ -3,6 +3,7 @@ import { ref } from "vue";
 import { Head } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Modal from "@/Components/Modal.vue";
+import Room from "./Partials/Room.vue";
 import RoomCard from "./Partials/RoomCard.vue";
 import AddRoomForm from "./Partials/AddRoomForm.vue";
 </script>
@@ -15,7 +16,6 @@ import AddRoomForm from "./Partials/AddRoomForm.vue";
             </h2>
         </template>
         <main>
-
             <div class="container">
                 <div class="flex-row w-full">
                     <div class="w-full font-semibold text-2xl">
@@ -38,23 +38,9 @@ import AddRoomForm from "./Partials/AddRoomForm.vue";
                                 </span>
                         </button>
                     </div>
-                    <div class="flex flex-row">
-                            <div class="container">
-                                <div class="flex flex-wrap">
-                                    <div class="w-1/2 p-2" v-for="room in rooms" :key="room.id">
-                                        <RoomCard
-                                            :temperature="room.temperature"
-                                            :humidity="room.humidity"
-                                            :roomName="room.room_name"
-                                            :deviceCount="room.device_count"
-                                        />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <Room />
                 </div>
             </div>
-
             <Modal :show="showAddRoomModal" @close="closeAddRoomModal">
                 <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                     <AddRoomForm @close="closeAddRoomModal" />
