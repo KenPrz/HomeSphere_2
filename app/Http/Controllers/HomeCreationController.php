@@ -110,7 +110,6 @@ class HomeCreationController extends Controller
         $request->validate([
             'home_code' => ['required', 'string', 'max:255'],
         ]);
-
         $invite_code = $request->home_code;
         $home = DB::table('homes')->where('invite_code', $invite_code)->first();
     

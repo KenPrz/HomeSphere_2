@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import { Head } from "@inertiajs/vue3";
-import RoomCard from "./Partials/RoomCard.vue";
+import RoomCard from "./RoomCard.vue";
 defineProps({
     rooms: {
         type: Object,

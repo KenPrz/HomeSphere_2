@@ -18,6 +18,7 @@
         "vue": "^3.2.41"
     },
     "dependencies": {
-        "swiper": "^10.2.0"
+        "swiper": "^10.2.0",
+        "vue3-circle-progress": "^1.0.7"
     }
 }

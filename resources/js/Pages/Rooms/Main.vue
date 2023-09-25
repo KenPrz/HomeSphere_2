@@ -4,8 +4,8 @@ import { Head } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Modal from "@/Components/Modal.vue";
 import Room from "./Partials/Room.vue";
-import RoomCard from "./Partials/RoomCard.vue";
 import AddRoomForm from "./Partials/AddRoomForm.vue";
+import AllRooms from "./Partials/AllRooms.vue";
 </script>
 <template>
     <Head title="Rooms" />
@@ -21,7 +21,7 @@ import AddRoomForm from "./Partials/AddRoomForm.vue";
                     <div class="w-full font-semibold text-2xl">
                         List of Rooms
                     </div>
-                    <div class="flex p-2 bg-white rounded-md shadow-md h-16 text-sm md:text-md mb-4">
+                    <div class="flex p-2 bg-white flex-wrap rounded-md shadow-md h-16 text-sm md:text-md mb-4">
                         <button type="button"
                             class="flex justify-center items-center rounded-2xl w-auto px-6 bg-zinc-600 text-white mx-1">
                             All Rooms
@@ -38,7 +38,16 @@ import AddRoomForm from "./Partials/AddRoomForm.vue";
                                 </span>
                         </button>
                     </div>
-                    <Room />
+                    <!-- <AllRooms 
+                        :rooms="rooms"
+                    /> -->
+                    <Room
+                        :roomName="'Living Room'" 
+                        :deviceCount="5" 
+                        :initialChecked="false" 
+                        :temperature="36.2" 
+                        :humidity="70" 
+                    />
                 </div>
             </div>
             <Modal :show="showAddRoomModal" @close="closeAddRoomModal">

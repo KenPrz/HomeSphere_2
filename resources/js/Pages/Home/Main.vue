@@ -37,7 +37,6 @@ defineProps({
                             </div>
                             <div class="mx-3">
                                 <h1 class="text-md font-medium">
-                                    {{ $page.props.userData }}
                                     List of Modes
                                 </h1>
                                 <div class="flex flex-wrap">
