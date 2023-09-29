@@ -38,12 +38,12 @@ import AllRooms from "./Partials/AllRooms.vue";
                                 </span>
                         </button>
                     </div>
-                    <!-- <AllRooms 
+                    <AllRooms 
                         :rooms="rooms"
-                    /> -->
+                    />
                     <Room
                         :roomName="'Living Room'" 
-                        :deviceCount="5" 
+                        :deviceCount="5"
                         :initialChecked="false" 
                         :temperature="36.2" 
                         :humidity="70" 

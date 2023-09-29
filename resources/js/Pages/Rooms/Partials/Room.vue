@@ -11,6 +11,13 @@ const props = defineProps({
     temperature: Number,
     humidity: Number,
 });
+
+// const temperature = ref(20);
+// const humidity = ref(50);
+// setInterval(() => {
+//     temperature.value = Math.floor(Math.random() * 7) + 18;
+//     humidity.value = Math.floor(Math.random() * 7) + 18;
+// }, 1000); // update temperature every 5 seconds
     
 </script>
 <template>
@@ -53,12 +60,16 @@ const props = defineProps({
                             Temperature
                         </div>
                         <div class="flex w-full justify-center">
-                            <CircleProgress
-                                :class="'text wrapper'"
-                                :show-percent="true"
-                                :percent="temperature"
-                                :viewport="true"
-                            />
+                            <v-progress-circular
+                                :size="150"
+                                :width="15"
+                                :rotate="0"
+                                :model-value="temperature"
+                                color="white"
+                                background-color="rgba(255, 255, 255, 0.2)"
+                            >
+                                <span class="text">{{ temperature }}°C</span>
+                            </v-progress-circular>
                         </div>
                     </div>
                     <div class="flex-col border-white border-2 rounded-md p-3 items-center justify-center w-full">
@@ -66,9 +77,16 @@ const props = defineProps({
                             Humidity
                         </div>
                         <div class="flex w-full justify-center">
-                            <CircleProgress
-                                :class="'text wrapper'"  unit='%' :show-percent="true" :percent="humidity" :viewport="true" 
-                            />
+                            <v-progress-circular
+                                :size="150"
+                                :width="15"
+                                :rotate="0"
+                                :model-value="humidity"
+                                color="white"
+                                background-color="rgba(255, 255, 255, 0.2)"
+                            >
+                                <span class="text">{{ humidity }}%</span>
+                            </v-progress-circular>
                         </div>
                     </div>
                 </div>

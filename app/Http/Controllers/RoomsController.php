@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\room;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -65,5 +66,19 @@ class RoomsController extends Controller
             }
         }
         return $homeData;
+    }
+
+    public function openRoom($roomID){
+        $user = auth()->user();
+
+        $homeData = $this->findHomeData($user);
+
+        $roomData = DB::table('rooms')->where('id', $roomID)->first();
+        $deviceData = DB::table('devices')->where('room_id', $roomID)->get();
+        // return Inertia::render('Rooms/Room', [
+        //     'room' => $roomData,
+        //     'devices' => $deviceData,
+        // ]);
+            return $deviceData;
     }
 }

@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/rooms', [RoomsController::class, 'index'])->name('rooms.index');
     Route::post('/rooms',[RoomsController::class, 'addRoom'])->name('rooms.addRoom');
-
+    Route::get('/rooms/{room}',[RoomsController::class, 'openRoom'])->name('rooms.getRoom');
 });
 
 require __DIR__.'/auth.php';
