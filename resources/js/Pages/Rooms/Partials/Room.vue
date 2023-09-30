@@ -4,20 +4,14 @@ import "vue3-circle-progress/dist/circle-progress.css";
 import CircleProgress from "vue3-circle-progress";
 import ToggleSwitch from '@/Components/ToggleSwitch.vue';
 
-const props = defineProps({
-    roomName: String,
-    deviceCount: String,
-    initialChecked: Boolean,
-    temperature: Number,
-    humidity: Number,
+defineProps({
+    room: {
+        type: Object,
+    },
+    devices: {
+        type: Object,
+    },
 });
-
-// const temperature = ref(20);
-// const humidity = ref(50);
-// setInterval(() => {
-//     temperature.value = Math.floor(Math.random() * 7) + 18;
-//     humidity.value = Math.floor(Math.random() * 7) + 18;
-// }, 1000); // update temperature every 5 seconds
     
 </script>
 <template>
@@ -41,7 +35,7 @@ const props = defineProps({
                         </div>
                     </div>
                     <div class="container flex flex-wrap">
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Porro maiores asperiores ea dolorum illo blanditiis laborum rerum necessitatibus expedita. Numquam asperiores error libero necessitatibus eum accusamus quo aut consequatur tempora.
+                        {{ room }}
                     </div>
                 </div>
             </div>

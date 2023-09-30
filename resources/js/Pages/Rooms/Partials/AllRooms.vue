@@ -10,12 +10,14 @@ defineProps({
 });
 </script>
 <template>
-    <div class="flex flex-row">
-        <div class="container">
+    <div class="flex flex-col"> <!-- Use a column layout for mobile -->
+        <div class="container mx-auto">
             <div class="flex flex-wrap">
-                <div class="w-1/2 p-2 relative" v-for="room in rooms" :key="room.id">
-                        <RoomCard :roomId="room.id" :temperature="room.temperature" :humidity="room.humidity" :roomName="room.room_name"
-                            :deviceCount="room.device_count" />
+                <div class="w-full sm:w-1/2 p-2 relative" v-for="room in rooms" :key="room.id">
+                    
+                    <!-- Use full width on small screens and half width on larger screens -->
+                    <RoomCard :roomId="room.id" :temperature="room.temperature" :humidity="room.humidity"
+                        :roomName="room.room_name" :deviceCount="room.device_count" />
                 </div>
             </div>
         </div>

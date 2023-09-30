@@ -1,7 +1,7 @@
 <script setup>
 import Table from "@/Components/Table.vue";
 import ModeCard from "@/Pages/Home/Partials/ModeCard.vue";
-import NavLink from "@/Components/NavLink.vue";
+import { Link } from '@inertiajs/vue3';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import SwiperCard from "@/Pages/Home/Partials/SwiperCard.vue";
 import UserList from "@/Pages/Home/Partials/UserList.vue";
@@ -56,13 +56,13 @@ defineProps({
                                     :itemsPerPage="4"
                                 >
                                 <div class="bg-white rounded-md w-full flex justify-end shadow-sm mb-1">
-                                    <NavLink :href="route('appliances.index')">
+                                    <Link :href="route('appliances.index')">
                                         <button
                                             class="bg-zinc-600 hover:bg-zinc-700 text-white font-semibold py-2 my-1 mx-1 px-6 border border-gray-300 rounded-xl"
                                         >
                                             View List of Appliances
                                         </button>
-                                    </NavLink>
+                                    </Link>
                                 </div>
                                 </Table>
                             </div>

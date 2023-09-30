@@ -11,50 +11,49 @@ class RoomsController extends Controller
     public function index()
     {
         $user = auth()->user();
-
         $homeData = $this->findHomeData($user);
-
-        $roomData = DB::table('rooms')
-            ->leftJoin('devices', 'rooms.id', '=', 'devices.room_id')
-            ->select('rooms.*', DB::raw('count(devices.id) as device_count'))
-            ->where('rooms.home_id', $homeData->id)
-            ->groupBy('rooms.id')
-            ->get();
+        $roomData = $this->getRoomData($homeData->id);
 
         return Inertia::render('Rooms/Main', [
             'rooms' => $roomData,
         ]);
     }
-    public function addRoom(Request $request){
-        $user = auth()->user();
 
+    public function addRoom(Request $request)
+    {
+        $user = auth()->user();
         $homeData = $this->findHomeData($user);
 
-        $roomData = DB::table('rooms')->where('home_id', $homeData->id)->get();
         $roomName = $request->input('room_name');
-        $roomData = DB::table('rooms')->insert([
-            'room_name' => $roomName,
-            'home_id' => $homeData->id,
-            'room_owner_id' => $user->id,
-            'created_at' => now(),
-        ]);
-        if($roomData){
-            return redirect()->back();
-        }
-        else{
-            return redirect()->back()->with('error', 'Something went wrong');
-        }
-    }
-    public function deleteRoom(Request $request){
-        $user = auth()->user();
+        $this->createRoom($roomName, $homeData->id, $user->id);
 
-        $homeData = $this->findHomeData($user);
-
-        $roomData = DB::table('rooms')->where('home_id', $homeData->id)->get();
-        $roomID = $request->input('roomID');
-        $roomData = DB::table('rooms')->where('id', $roomID)->delete();
         return redirect()->back();
     }
+
+    public function deleteRoom(Request $request)
+    {
+        $user = auth()->user();
+        $homeData = $this->findHomeData($user);
+
+        $roomID = $request->input('roomID');
+        $this->deleteRoomByID($roomID);
+
+        return redirect()->back();
+    }
+
+    public function openRoom($roomID)
+    {
+        $user = auth()->user();
+        $roomData = $this->getRoomByID($roomID);
+        $deviceData = $this->getDevicesInRoom($roomID);
+
+        return Inertia::render('Rooms/Room', [
+            'activeComponent' => 'Room ' . $roomData->id,
+            'room' => $roomData,
+            'devices' => $deviceData,
+        ]);
+    }
+
     private function findHomeData($user)
     {
         $homeData = DB::table('homes')->where('owner_id', $user->id)->first();
@@ -68,17 +67,38 @@ class RoomsController extends Controller
         return $homeData;
     }
 
-    public function openRoom($roomID){
-        $user = auth()->user();
+    private function getRoomData($homeID)
+    {
+        return DB::table('rooms')
+            ->leftJoin('devices', 'rooms.id', '=', 'devices.room_id')
+            ->select('rooms.*', DB::raw('count(devices.id) as device_count'))
+            ->where('rooms.home_id', $homeID)
+            ->groupBy('rooms.id')
+            ->get();
+    }
 
-        $homeData = $this->findHomeData($user);
+    private function createRoom($roomName, $homeID, $roomOwnerID)
+    {
+        DB::table('rooms')->insert([
+            'room_name' => $roomName,
+            'home_id' => $homeID,
+            'room_owner_id' => $roomOwnerID,
+            'created_at' => now(),
+        ]);
+    }
 
-        $roomData = DB::table('rooms')->where('id', $roomID)->first();
-        $deviceData = DB::table('devices')->where('room_id', $roomID)->get();
-        // return Inertia::render('Rooms/Room', [
-        //     'room' => $roomData,
-        //     'devices' => $deviceData,
-        // ]);
-            return $deviceData;
+    private function deleteRoomByID($roomID)
+    {
+        DB::table('rooms')->where('id', $roomID)->delete();
+    }
+
+    private function getRoomByID($roomID)
+    {
+        return DB::table('rooms')->where('id', $roomID)->first();
+    }
+
+    private function getDevicesInRoom($roomID)
+    {
+        return DB::table('devices')->where('room_id', $roomID)->get();
     }
 }
