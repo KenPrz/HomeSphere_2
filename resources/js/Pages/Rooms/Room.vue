@@ -20,7 +20,7 @@ const setActiveComponent = (componentName) => {
 };
 </script>
 <template>
-    <Head title="Rooms" />
+    <Head title="Room" />
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -49,13 +49,7 @@ const setActiveComponent = (componentName) => {
                             </span>
                         </button>
                     </div>
-                    
-                    <div v-if="activeComponent === 'AllRooms'">
-                        <AllRooms :rooms="rooms" />
-                    </div>
-                    <div v-else>
                         <Room :room="room" />
-                    </div>
                 </div>
             </div>
             <Modal :show="showAddRoomModal" @close="closeAddRoomModal">
@@ -66,17 +60,3 @@ const setActiveComponent = (componentName) => {
         </main>
     </AuthenticatedLayout>
 </template>
-<script>
-const showAddRoomModal = ref(false);
-const openAddRoomModal = () => {
-    showAddRoomModal.value = true;
-}
-const closeAddRoomModal = () => {
-    showAddRoomModal.value = false;
-}
-export default {
-    props: {
-        rooms: Object,
-    },
-};
-</script>
