@@ -23,7 +23,7 @@ const submit = () => {
         <h2 class="text-3xl py-4 font-semibold">Join a home</h2>
         <form class="w-full" @submit.prevent="submit">
             <div class="flex flex-col w-full h-full">
-                <div class="w-full flex-1 mb-5">
+                <div class="w-full flex-1">
                     <TextInput
                         placeholder="Enter your home code"
                         id="home_code"
@@ -35,6 +35,7 @@ const submit = () => {
                         autocomplete="home_code"
                     />
                 </div>
+                <InputError :message="$page.props.error" class="my-2 ms-2" />
             </div>
 
             <div class="flex flex-col items-center">
@@ -42,9 +43,6 @@ const submit = () => {
                     Request Access
                 </SecondaryButton>
             </div>
-
-            <!-- Display server-side errors, if any -->
-            <InputError :message="form.error" class="mt-4" />
         </form>
     </div>
 </template>

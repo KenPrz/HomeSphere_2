@@ -39,7 +39,8 @@ class HomeCreationController extends Controller
                 ->get(['users.firstName', 'users.lastName','users.profile_image', 'users.is_online']);
                 // dd($appliances);
                 return Inertia::render('Dashboard', 
-                [   'userData' => $homeData,
+                [   
+                    'userData' => $homeData,
                     'userList' => $userList, 
                     'appliances' => $appliances
                 ]);
@@ -115,7 +116,9 @@ class HomeCreationController extends Controller
     
         // Check if the home with the given invite code exists
         if (!$home) {
-            return redirect()->route('create_home')->with('error', 'Home with the given invite code does not exist.');
+            return inertia()->render('CreateHome/Create',[
+                'error' => 'Home with the given invite code does not exist.',
+            ]);
         }
 
         $user_id = auth()->user()->id;
