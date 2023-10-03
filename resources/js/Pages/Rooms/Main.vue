@@ -38,7 +38,7 @@ const setActiveComponent = (componentName, room) => {
                             :active="activeComponent === 'AllRooms'">
                             All Rooms
                         </NavLink>
-                        <button class="w-10 bg-red-200 m-2" v-for="room in rooms"
+                        <button class="w-auto px-4 mx-2 border-black border-2 rounded-2xl hover:bg-zinc-500 hover:text-white transition duration-300" v-for="room in rooms"
                             @click="setActiveComponent(room.room_name + ' ' + room.id, room)"
                             :active="activeComponent === room.room_name + ' ' + room.id">
                             {{ room.room_name }}
