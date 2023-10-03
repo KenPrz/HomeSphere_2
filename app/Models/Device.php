@@ -16,7 +16,8 @@ class Device extends Model
         'is_active',
     ];
 
-    public function room(){
-        $this -> hasOne(Room::class,'room_id');
+    public function room()
+    {
+        return $this->belongsTo(Room::class);
     }
 }

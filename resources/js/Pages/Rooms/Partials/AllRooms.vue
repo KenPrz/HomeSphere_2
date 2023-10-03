@@ -14,10 +14,8 @@ defineProps({
         <div class="container mx-auto">
             <div class="flex flex-wrap">
                 <div class="w-full sm:w-1/2 p-2 relative" v-for="room in rooms" :key="room.id">
-                    
                     <!-- Use full width on small screens and half width on larger screens -->
-                    <RoomCard :roomId="room.id" :temperature="room.temperature" :humidity="room.humidity"
-                        :roomName="room.room_name" :deviceCount="room.device_count" />
+                    <RoomCard :room="room"/>
                 </div>
             </div>
         </div>

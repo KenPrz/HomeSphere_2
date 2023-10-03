@@ -7,10 +7,7 @@ import ToggleSwitch from '@/Components/ToggleSwitch.vue';
 defineProps({
     room: {
         type: Object,
-    },
-    devices: {
-        type: Object,
-    },
+    }
 });
     
 </script>
@@ -21,7 +18,7 @@ defineProps({
                 <div class="flex flex-col">
                     <div class="flex justify-between w-full pb-3 px-1 border-gray-500 border-b-2">
                         <div class="text-2xl font-semibold">
-                            Appliances in {{ roomName }}
+                            Appliances in {{ room.room_name }}
                         </div>
                         <div class="flex">
                             <button class="flex items-center justify-center border-gray-500 border rounded-full px-3 mx-2">
@@ -58,11 +55,12 @@ defineProps({
                                 :size="150"
                                 :width="15"
                                 :rotate="0"
-                                :model-value="temperature"
+                                :model-value="room.temperature"
                                 color="white"
                                 background-color="rgba(255, 255, 255, 0.2)"
-                            >
-                                <span class="text">{{ temperature }}°C</span>
+                            >   
+                                <span v-if="!room.temperature" class="text">no data</span>
+                                <span v-else class="text">{{ room.temperature }}°C</span>
                             </v-progress-circular>
                         </div>
                     </div>
@@ -75,11 +73,12 @@ defineProps({
                                 :size="150"
                                 :width="15"
                                 :rotate="0"
-                                :model-value="humidity"
+                                :model-value="room.humidity"
                                 color="white"
                                 background-color="rgba(255, 255, 255, 0.2)"
-                            >
-                                <span class="text">{{ humidity }}%</span>
+                            >   
+                                <span v-if="!room.humidity" class="text">no data</span>
+                                <span class="text">{{ room.humidity }}%</span>
                             </v-progress-circular>
                         </div>
                     </div>

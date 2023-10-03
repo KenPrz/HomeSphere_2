@@ -13,7 +13,6 @@ class RoomsController extends Controller
         $user = auth()->user();
         $homeData = $this->findHomeData($user);
         $roomData = $this->getRoomData($homeData->id);
-
         return Inertia::render('Rooms/Main', [
             'rooms' => $roomData,
         ]);
@@ -43,7 +42,6 @@ class RoomsController extends Controller
 
     public function openRoom($roomID)
     {
-        $user = auth()->user();
         $roomData = $this->getRoomByID($roomID);
         $deviceData = $this->getDevicesInRoom($roomID);
 
@@ -69,12 +67,11 @@ class RoomsController extends Controller
 
     private function getRoomData($homeID)
     {
-        return DB::table('rooms')
-            ->leftJoin('devices', 'rooms.id', '=', 'devices.room_id')
-            ->select('rooms.*', DB::raw('count(devices.id) as device_count'))
-            ->where('rooms.home_id', $homeID)
-            ->groupBy('rooms.id')
-            ->get();
+        return Room::with('devices')
+        ->where('home_id', $homeID)
+        ->select(['rooms.*'])
+        ->addSelect(DB::raw('(SELECT COUNT(*) FROM devices WHERE devices.room_id = rooms.id) as device_count'))
+        ->get();
     }
 
     private function createRoom($roomName, $homeID, $roomOwnerID)

@@ -14,9 +14,9 @@ const activeComponent = ref("AllRooms");
 
 const selectedRoom = ref(null);
 
-// Function to update the active component
-const setActiveComponent = (componentName) => {
+const setActiveComponent = (componentName, room) => {
     activeComponent.value = componentName;
+    selectedRoom.value = room;
 };
 </script>
 <template>
@@ -34,13 +34,15 @@ const setActiveComponent = (componentName) => {
                         List of Rooms
                     </div>
                     <div class="flex p-2 bg-white flex-wrap rounded-md shadow-md h-16 min-h-full text-sm md:text-md mb-4">
-                        <NavLink @click="setActiveComponent('AllRooms')" href="/rooms" :active="activeComponent === 'AllRooms'">
+                        <NavLink @click="setActiveComponent('AllRooms')" href="/rooms"
+                            :active="activeComponent === 'AllRooms'">
                             All Rooms
                         </NavLink>
-                        
-                        <SecondaryNavLink v-for="room in rooms" @click="setActiveComponent(room.room_name +' '+ room.id)" :href="'/room/' + room.id" :active="activeComponent === room.room_name +' '+ room.id">
-                            {{ room.room_name  }}
-                        </SecondaryNavLink>
+                        <button class="w-10 bg-red-200 m-2" v-for="room in rooms"
+                            @click="setActiveComponent(room.room_name + ' ' + room.id, room)"
+                            :active="activeComponent === room.room_name + ' ' + room.id">
+                            {{ room.room_name }}
+                        </button>
                         <button @click="openAddRoomModal" type="button"
                             class="flex justify-center items-center rounded-2xl w-auto px-4 bg-zinc-600 text-white mx-1">
                             <img :src="'img-assets/vectors/plus-circle.svg'" alt="add" class="me-2 fill-white">
@@ -49,13 +51,14 @@ const setActiveComponent = (componentName) => {
                             </span>
                         </button>
                     </div>
-                    {{ $page.props.rooms }}
+                    {{ activeComponent }}
                     <div v-if="activeComponent === 'AllRooms'">
                         <AllRooms :rooms="rooms" />
                     </div>
                     <div v-else>
-                        <Room :room="room" />
+                        <Room :room="selectedRoom" />
                     </div>
+
                 </div>
             </div>
             <Modal :show="showAddRoomModal" @close="closeAddRoomModal">

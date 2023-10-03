@@ -4,29 +4,18 @@ import { ref, defineProps } from 'vue';
 import { Link } from "@inertiajs/vue3";
 
 const props = defineProps({
-    // Define props here
-    roomName: String,
-    deviceCount: Number,
-    initialChecked: Boolean,
-    temperature: Number,
-    humidity: Number,
-    roomId: Number,
-    roomImage: String,
+    room: {
+        type: Object,
+    },
 });
-
-const temperature = ref(30);
-const humidity = ref(50);
-setInterval(() => {
-    temperature.value = Math.floor(Math.random() * 7) + 18;
-    humidity.value = Math.floor(Math.random() * 7) + 18;
-}, 2500); // update temperature every 5 seconds
 
 </script>
 <template>
     <div
         class="wrapper cursor-pointer shadow-md rounded-lg hover:scale-[1.01] transition duration-500 ease-in-out relative">
-        <Link :href="`/room/${roomId}`" class="absolute w-full h-full ">
-        </Link>
+        <a class="absolute w-full h-full" @click="setActiveComponent(room.room_name + ' ' + room.id, room)"
+                            :active="activeComponent === room.room_name + ' ' + room.id">">
+        </a>
         <div class="flex flex-col text-center">
             <div class="living-room-card rounded-lg bg-white p-8 shadow-md ">
                 <div class="living-room-settings flex">
@@ -34,8 +23,8 @@ setInterval(() => {
                         <div id="bedroom">
                             <img v-if="!roomImage" :src="'img-assets/vectors/Room Vectors/bathroom.svg'" alt="">
                         </div>
-                        <h1 class="mt-4 text-xl font-medium">{{ roomName }}</h1>
-                        <p class="mt-1 text-sm">{{ deviceCount + ' Appliance(s)' }}</p>
+                        <h1 class="mt-4 text-xl font-medium">{{ room.room_name }}</h1>
+                        <p class="mt-1 text-sm">{{ room.device_count + ' Appliance(s)' }}</p>
                     </div>
                     <div class="right-section ml-4 flex-grow mr-2">
                         <div class="flex justify-end">
@@ -52,10 +41,10 @@ setInterval(() => {
                             </div>
                             <div class="flex w-full border border-gray-600 mt-1 h-6 rounded-full relative mb-2">
                                 <span class="z-30 absolute right-1 pe-2">
-                                    {{ temperature + '°C' }}
+                                    {{ room.temperature + '°C' }}
                                 </span>
                                 <div class="rounded-full z-0 transition-width duration-500 ease-in-out"
-                                    :style="{ width: temperature + '%', backgroundColor: '#A9A9A9' }">
+                                    :style="{ width: room.temperature + '%', backgroundColor: '#A9A9A9' }">
                                 </div>
                             </div>
 
@@ -64,10 +53,10 @@ setInterval(() => {
                             </div>
                             <div class="flex w-full border border-gray-600 mt-1 h-6 rounded-full relative mb-2">
                                 <span class="z-30 absolute right-1 pe-2">
-                                    {{ humidity + '%' }}
+                                    {{ room.humidity + '%' }}
                                 </span>
                                 <div class="rounded-full z-0 transition-width duration-500 ease-in-out"
-                                    :style="{ width: humidity + '%', backgroundColor: '#A9A9A9' }">
+                                    :style="{ width: room.humidity + '%', backgroundColor: '#A9A9A9' }">
                                 </div>
                             </div>
                         </div>
