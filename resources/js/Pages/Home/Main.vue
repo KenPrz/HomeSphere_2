@@ -38,7 +38,6 @@ defineProps({
                             <div class="mx-3">
                                 <h1 class="text-md font-medium">
                                     List of Modes
-                                    {{ $page.props }}
                                 </h1>
                                 <div class="flex flex-wrap">
                                     <ModeCard />

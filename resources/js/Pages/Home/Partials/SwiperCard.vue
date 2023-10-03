@@ -24,32 +24,6 @@ export default {
         const toggleState = ref(false);
         return {
             modules: [Navigation, Pagination, Mousewheel, Keyboard],
-            rooms: [
-                {
-                    id: 1,
-                    name: "Living Room",
-                    appliances: 2,
-                    temperature: "25°C",
-                    humidity: "60%",
-                    toggleState: true,
-                },
-                {
-                    id: 2,
-                    name: "Bathroom",
-                    appliances: 2,
-                    temperature: "25°C",
-                    humidity: "60%",
-                    toggleState: ref(false),
-                },
-                {
-                    id: 3,
-                    name: "Ken's Room",
-                    appliances: 2,
-                    temperature: "25°C",
-                    humidity: "60%",
-                    toggleState: ref(false),
-                },
-            ],
             toggleState,
         };
     },
@@ -65,15 +39,17 @@ export default {
         :modules="modules"
         class="mySwiper w-full h-full"
     >
-        <swiper-slide v-for="room in rooms" :key="room.id">
+        <swiper-slide v-for="room in $page.props.rooms" :key="room.id">
             <div class="flex flex-col items-center justify-center">
                 <div class="w-3/4 mt-5">
                     <div class="title">
                         <div class="text-md font-medium">
-                            {{ room.name }}
+                            {{ 
+                                room.room_name.charAt(0).toUpperCase() + room.room_name.slice(1).toLowerCase() 
+                            }}
                         </div>
                         <div class="text-xs mt-1">
-                            ({{ room.appliances }}) Appliances
+                            ({{ room.device_count }}) Appliances
                         </div>
                         <div class="box">
                             <div
@@ -104,8 +80,11 @@ export default {
                                     <div class="text-sm font-medium">
                                         Temperature
                                     </div>
-                                    <div class="text-xs text-start">
-                                        {{ room.temperature }}
+                                    <div v-if="room.temperature" class="text-xs text-start">
+                                        {{ room.temperature + ' °C' }}
+                                    </div>
+                                    <div v-else class="text-xs text-start">
+                                        No Data
                                     </div>
                                 </div>
                             </div>
@@ -123,8 +102,11 @@ export default {
                                     <div class="text-sm font-medium">
                                         Humidity
                                     </div>
-                                    <div class="text-xs text-start">
+                                    <div v-if="room.humidity" class="text-xs text-start">
                                         {{ room.humidity }}
+                                    </div>
+                                    <div v-else class="text-xs text-start">
+                                        No Data
                                     </div>
                                 </div>
                             </div>

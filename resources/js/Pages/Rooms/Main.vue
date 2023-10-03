@@ -49,7 +49,7 @@ const setActiveComponent = (componentName) => {
                             </span>
                         </button>
                     </div>
-                    
+                    {{ $page.props.rooms }}
                     <div v-if="activeComponent === 'AllRooms'">
                         <AllRooms :rooms="rooms" />
                     </div>

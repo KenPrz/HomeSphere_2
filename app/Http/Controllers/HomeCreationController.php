@@ -24,6 +24,12 @@ class HomeCreationController extends Controller
         
         $homeData = $this->findHomeData($user);
         if ($homeData) {
+            $rooms = DB::table('rooms')
+                ->leftJoin('devices', 'rooms.id', '=', 'devices.room_id')
+                ->select('rooms.*', DB::raw('count(devices.id) as device_count'))
+                ->where('rooms.home_id', $homeData -> id)
+                ->groupBy('rooms.id')
+                ->get();
             $appliances = DB::table('devices')
             ->select(
                 'rooms.room_name',
@@ -42,7 +48,8 @@ class HomeCreationController extends Controller
                 [   
                     'userData' => $homeData,
                     'userList' => $userList, 
-                    'appliances' => $appliances
+                    'appliances' => $appliances,
+                    'rooms' => $rooms
                 ]);
         }
         return redirect()->route('create_home');
