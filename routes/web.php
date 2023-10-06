@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeCreationController;
 use App\Http\Controllers\HomeDataController;
 use App\Http\Controllers\ModesController;
 use App\Http\Controllers\RoomsController;
+use App\Http\Controllers\SettingsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -56,6 +57,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/room/{room}',[RoomsController::class, 'openRoom'])->name('rooms.getRoom');
 
     Route::get('/modes',[ModesController::class, 'index'])->name('modes.index');
+
+    Route::get('/settings',[SettingsController::class, 'index'])->name('settings.index');
 });
 
 require __DIR__.'/auth.php';

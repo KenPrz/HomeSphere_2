@@ -30,7 +30,7 @@ const setActiveComponent = (componentName, room) => {
         <main>
             <div class="container">
                 <div class="flex-row w-full">
-                    <div class="w-full font-semibold text-2xl">
+                    <div class="w-full font-bold text-3xl">
                         List of Rooms
                     </div>
                     <div class="flex p-2 bg-white flex-wrap rounded-md shadow-md h-16 min-h-full text-sm md:text-md mb-4">
