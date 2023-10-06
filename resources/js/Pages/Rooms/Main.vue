@@ -2,13 +2,13 @@
 import { ref } from "vue";
 import { Head } from "@inertiajs/vue3";
 import NavLink from "@/Components/NavLink.vue";
-import SecondaryNavLink from "@/Components/SecondaryNavLink.vue";
+// import SecondaryNavLink from "@/Components/SecondaryNavLink.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Modal from "@/Components/Modal.vue";
 import Room from "./Partials/Room.vue";
 import AddRoomForm from "./Partials/AddRoomForm.vue";
 import AllRooms from "./Partials/AllRooms.vue";
-
+import NavButton from "./Partials/NavButton.vue";
 // Add a state variable to track the active component
 const activeComponent = ref("AllRooms");
 
@@ -38,11 +38,11 @@ const setActiveComponent = (componentName, room) => {
                             :active="activeComponent === 'AllRooms'">
                             All Rooms
                         </NavLink>
-                        <button class="w-auto px-4 mx-2 border-black border-2 rounded-2xl hover:bg-zinc-500 hover:text-white transition duration-300" v-for="room in rooms"
+                        <NavButton v-for="room in rooms" class="w-auto px-4 mx-2 border-black border-2 rounded-2xl hover:bg-zinc-500 hover:text-white transition duration-300"
                             @click="setActiveComponent(room.room_name + ' ' + room.id, room)"
                             :active="activeComponent === room.room_name + ' ' + room.id">
                             {{ room.room_name }}
-                        </button>
+                        </NavButton>
                         <button @click="openAddRoomModal" type="button"
                             class="flex justify-center items-center rounded-2xl w-auto px-4 bg-zinc-600 text-white mx-1">
                             <img :src="'img-assets/vectors/plus-circle.svg'" alt="add" class="me-2 fill-white">
@@ -51,9 +51,8 @@ const setActiveComponent = (componentName, room) => {
                             </span>
                         </button>
                     </div>
-                    {{ activeComponent }}
                     <div v-if="activeComponent === 'AllRooms'">
-                        <AllRooms :rooms="rooms" />
+                        <AllRooms :rooms="rooms" :setActiveComponent="setActiveComponent" />
                     </div>
                     <div v-else>
                         <Room :room="selectedRoom" />

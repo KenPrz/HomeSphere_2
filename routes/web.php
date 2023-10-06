@@ -5,6 +5,7 @@ use App\Http\Controllers\AppliancesController;
 use App\Http\Controllers\ImageHandlerController;
 use App\Http\Controllers\HomeCreationController;
 use App\Http\Controllers\HomeDataController;
+use App\Http\Controllers\ModesController;
 use App\Http\Controllers\RoomsController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +54,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/rooms', [RoomsController::class, 'index'])->name('rooms.index');
     Route::post('/rooms',[RoomsController::class, 'addRoom'])->name('rooms.addRoom');
     Route::get('/room/{room}',[RoomsController::class, 'openRoom'])->name('rooms.getRoom');
+
+    Route::get('/modes',[ModesController::class, 'index'])->name('modes.index');
 });
 
 require __DIR__.'/auth.php';

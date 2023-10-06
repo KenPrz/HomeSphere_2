@@ -13,9 +13,6 @@ const props = defineProps({
 <template>
     <div
         class="wrapper cursor-pointer shadow-md rounded-lg hover:scale-[1.01] transition duration-500 ease-in-out relative">
-        <a class="absolute w-full h-full" @click="setActiveComponent(room.room_name + ' ' + room.id, room)"
-                            :active="activeComponent === room.room_name + ' ' + room.id">">
-        </a>
         <div class="flex flex-col text-center">
             <div class="living-room-card rounded-lg bg-white p-8 shadow-md ">
                 <div class="living-room-settings flex">
@@ -67,7 +64,6 @@ const props = defineProps({
     </div>
 </template>
 <style scoped>
-/* Define the custom transition class */
 .transition-width {
     transition-property: width;
 }</style>

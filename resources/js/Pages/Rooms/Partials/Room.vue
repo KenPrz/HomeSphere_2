@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import "vue3-circle-progress/dist/circle-progress.css";
 import CircleProgress from "vue3-circle-progress";
 import ToggleSwitch from '@/Components/ToggleSwitch.vue';
-
+import Device from '@/Pages/Rooms/Partials/Device.vue';
 defineProps({
     room: {
         type: Object,
@@ -13,6 +13,9 @@ defineProps({
 </script>
 <template>
     <div class="container">
+        <!-- <div v-for="device in room.devices" :key="device.id">
+            {{ device.is_active }}
+        </div> -->
         <div class="grid grid-cols-1 md:grid-cols-6 grid-rows-5 gap-2">
             <div class="col-span-1 md:col-span-4 row-span-1 md:row-span-5 bg-white rounded-xl p-4">
                 <div class="flex flex-col">
@@ -32,7 +35,11 @@ defineProps({
                         </div>
                     </div>
                     <div class="container flex flex-wrap">
-                        {{ room }}
+                        <!-- {{ room }} -->
+                        <Device v-for="device in room.devices"
+                            :key="device.id" 
+                            :device="device"
+                        />
                     </div>
                 </div>
             </div>

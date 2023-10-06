@@ -69,7 +69,6 @@ defineProps({
                         </div>
                     </div>
                 </div>
-
                 <!-- Right Column -->
                 <div class="col-span-1 md:col-span-2 row-span-7 md:col-start-6">
                     <div class="grid grid-cols-2 grid-rows-6 gap-2">

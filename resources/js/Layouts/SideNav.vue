@@ -93,7 +93,10 @@ import SideNavLink from "@/Components/SideNavLink.vue";
                         <div class="hidden sm:block lg:text-md mt-1">Rooms</div>
                     </li>
                 </SideNavLink>
-                <a href="#" class="w-full">
+                <SideNavLink
+                    :href="route('modes.index')"
+                    :active="route().current('modes.index')"
+                >
                     <li
                         class="flex p-1 py-2 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
                     >
@@ -104,7 +107,7 @@ import SideNavLink from "@/Components/SideNavLink.vue";
                         />
                         <div class="hidden sm:block lg:text-md mt-1">Modes</div>
                     </li>
-                </a>
+                </SideNavLink>
                 <a href="#" class="w-full">
                     <li
                         class="flex p-1 py-2 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out"
