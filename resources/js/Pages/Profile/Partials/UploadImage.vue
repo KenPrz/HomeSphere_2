@@ -78,10 +78,3 @@ const validateForm = () => {
         </div>
     </div>
 </template>
-<!-- <div class="p-6">
-    <form @submit.prevent="submit" class="flex flex-col gap-4" id="image">
-        <input type="file" @input="form.avatar = $event.target.files[0]" class="border p-2 rounded-md" />
-        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300">Upload</button>
-        <InputError class="mt-2" :message="form.errors.avatar" />
-    </form>
-</div> -->

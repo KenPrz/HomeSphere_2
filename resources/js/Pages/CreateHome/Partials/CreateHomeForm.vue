@@ -20,7 +20,7 @@ const submit = () => {
 <template>
     <Head title="Create Home" />
     <div class="flex flex-col justify-center items-start p-5">
-    <h2 class="text-3xl py-4 font-black">Create your Home</h2>
+    <h2 class="text-3xl py-4 font-semibold">Create your Home</h2>
     <form class="w-full" @submit.prevent="submit">
         <div class="flex flex-col w-full h-full">
             <div class="w-full flex-1 mb-5">
