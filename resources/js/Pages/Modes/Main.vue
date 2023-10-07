@@ -2,6 +2,8 @@
 import { Head } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import ModeCard from "../Home/Partials/ModeCard.vue";
+import Modal from "@/Components/Modal.vue";
+import AddAppliance from "./Partials/AddAppliance.vue";
 </script>
 <template>
     <Head title="Dashboard" />
@@ -34,12 +36,12 @@ import ModeCard from "../Home/Partials/ModeCard.vue";
                             </form>
                         </div>
                         <div class="flex">
-                            <button class="flex items-center justify-center border-gray-500 border rounded-full px-3 mx-2">
-                                <img class="h-4 w-auto" :src="'img-assets/vectors/Edit.svg'" />
+                            <button class=" me-1 flex items-center justify-center border-gray-500 border rounded-full px-3 hover:bg-slate-500 hover:text-white transition-colors duration-200">
+                                <img class="h-4 w-auto me-1" :src="'img-assets/vectors/Edit.svg'" />
                                 <span>Edit</span>
                             </button>
-                            <button class="flex items-center justify-center border-gray-500 border rounded-full px-3">
-                                <img class="h-4 w-auto" :src="'img-assets/vectors/add.svg'" />
+                            <button @click="" class="flex items-center justify-center border-gray-500 border rounded-full px-3 hover:bg-slate-500 hover:text-white transition-colors duration-200">
+                                <img class="h-4 w-auto me-1" :src="'img-assets/vectors/add.svg'" />
                                 <span>Add</span>
                             </button>
                         </div>
@@ -49,5 +51,11 @@ import ModeCard from "../Home/Partials/ModeCard.vue";
                 </div>
             </div>
         </main>
+        <Modal>
+            <AddAppliance />
+        </Modal>
     </AuthenticatedLayout>
 </template>
+<script>
+
+</script>
