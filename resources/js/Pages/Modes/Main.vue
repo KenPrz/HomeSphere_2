@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from "vue";
 import { Head } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import ModeCard from "../Home/Partials/ModeCard.vue";
@@ -40,7 +41,7 @@ import AddAppliance from "./Partials/AddAppliance.vue";
                                 <img class="h-4 w-auto me-1" :src="'img-assets/vectors/Edit.svg'" />
                                 <span>Edit</span>
                             </button>
-                            <button @click="" class="flex items-center justify-center border-gray-500 border rounded-full px-3 hover:bg-slate-500 hover:text-white transition-colors duration-200">
+                            <button @click="openAddApplianceModal" class="flex items-center justify-center border-gray-500 border rounded-full px-3 hover:bg-slate-500 hover:text-white transition-colors duration-200">
                                 <img class="h-4 w-auto me-1" :src="'img-assets/vectors/add.svg'" />
                                 <span>Add</span>
                             </button>
@@ -51,11 +52,21 @@ import AddAppliance from "./Partials/AddAppliance.vue";
                 </div>
             </div>
         </main>
-        <Modal>
-            <AddAppliance />
+        <Modal
+            :show="showAddApplianceModal"
+            @close="closeAddApplianceModal"
+            :maxWidth="'md'"
+        >
+            <AddAppliance @close="closeAddApplianceModal"/>
         </Modal>
     </AuthenticatedLayout>
 </template>
 <script>
-
+    const showAddApplianceModal = ref(false);
+    const openAddApplianceModal = () => {
+        showAddApplianceModal.value = true;
+    };
+    const closeAddApplianceModal = () => {
+        showAddApplianceModal.value = false;
+    };
 </script>

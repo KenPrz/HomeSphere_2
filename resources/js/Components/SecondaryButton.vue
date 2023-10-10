@@ -2,7 +2,7 @@
 defineProps({
     buttonWidth: {
         type: String,
-        default: 'w-full',
+        default: 'w-auto',
     },
     type: {
         type: String,

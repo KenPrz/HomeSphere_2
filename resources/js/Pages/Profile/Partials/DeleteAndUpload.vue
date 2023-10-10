@@ -33,11 +33,11 @@
         </div>
 
         <!-- Upload Modal -->
-        <Modal :show="showUploadModal" @close="closeUploadModal">
+        <Modal :maxWidth="'sm'" :show="showUploadModal" @close="closeUploadModal">
             <UploadImage @close="closeUploadModal"/>
         </Modal>
         <!-- Delete Modal -->
-        <Modal :show="showDeleteModal" @close="closeDeleteModal">
+        <Modal :maxWidth="'md'" :show="showDeleteModal" @close="closeDeleteModal">
             <DropImage @close="closeDeleteModal" />
         </Modal>
     </div>
