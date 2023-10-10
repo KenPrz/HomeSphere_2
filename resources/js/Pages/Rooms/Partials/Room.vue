@@ -1,7 +1,5 @@
 <script setup>
 import { ref } from 'vue';
-import "vue3-circle-progress/dist/circle-progress.css";
-import CircleProgress from "vue3-circle-progress";
 import ToggleSwitch from '@/Components/ToggleSwitch.vue';
 import Device from '@/Pages/Rooms/Partials/Device.vue';
 defineProps({
@@ -95,9 +93,6 @@ defineProps({
     </div>
 </template>
 <script>
-export default {
-    components: {CircleProgress}
-}
 </script>
 <style scoped>
 .text {
