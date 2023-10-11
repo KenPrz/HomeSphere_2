@@ -1,13 +1,3 @@
-<template>
-    <div class="flex w-full items-center justify-center">
-        <SecondaryButton @click="toggleModal"> Register </SecondaryButton>
-    </div>
-
-    <Modal :show="isModalVisible" @close="closeModal">
-        <Register />
-    </Modal>
-</template>
-
 <script setup>
 import { ref } from "vue";
 import Modal from "@/Components/Modal.vue";
@@ -24,3 +14,14 @@ const closeModal = () => {
     isModalVisible.value = false;
 };
 </script>
+<template>
+    <div class="flex w-full items-center justify-center">
+        <SecondaryButton @click="toggleModal"> Register </SecondaryButton>
+    </div>
+
+    <Modal
+        :maxWidth="'md'"
+        :show="isModalVisible" @close="closeModal">
+        <Register />
+    </Modal>
+</template>

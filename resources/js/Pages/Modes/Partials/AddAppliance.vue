@@ -1,6 +1,6 @@
 <script setup>
 import { ref } from "vue";
-import { defineProps, defineEmits } from "vue";
+import { defineEmits } from "vue";
 const emit = defineEmits(["close"]);
 function cancel() {
     emit("close");
