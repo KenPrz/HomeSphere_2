@@ -44,12 +44,15 @@ class HomeCreationController extends Controller
                 ->join('users', 'home_members.member_id', '=', 'users.id')
                 ->get(['users.firstName', 'users.lastName','users.profile_image', 'users.is_online']);
                 // dd($appliances);
+            
+                $api_key = DB::table('home_api_keys')->where('home_id', $homeData->id)->first();
                 return Inertia::render('Dashboard', 
                 [   
                     'userData' => $homeData,
                     'userList' => $userList, 
                     'appliances' => $appliances,
-                    'rooms' => $rooms
+                    'rooms' => $rooms,
+                    'api_key' => $api_key,
                 ]);
         }
         return redirect()->route('create_home');
