@@ -5,6 +5,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import ModeCard from "../Home/Partials/ModeCard.vue";
 import Modal from "@/Components/Modal.vue";
 import AddAppliance from "./Partials/AddAppliance.vue";
+import EditMode from "./Partials/EditMode.vue";
 </script>
 <template>
     <Head title="Dashboard" />
@@ -37,7 +38,7 @@ import AddAppliance from "./Partials/AddAppliance.vue";
                             </form>
                         </div>
                         <div class="flex">
-                            <button class=" me-1 flex items-center justify-center border-gray-500 border rounded-full px-3 hover:bg-slate-500 hover:text-white transition-colors duration-200">
+                            <button @click="openEditModeModal" class=" me-1 flex items-center justify-center border-gray-500 border rounded-full px-3 hover:bg-slate-500 hover:text-white transition-colors duration-200">
                                 <img class="h-4 w-auto me-1" :src="'img-assets/vectors/Edit.svg'" />
                                 <span>Edit</span>
                             </button>
@@ -59,14 +60,28 @@ import AddAppliance from "./Partials/AddAppliance.vue";
         >
             <AddAppliance @close="closeAddApplianceModal"/>
         </Modal>
+        <Modal
+            :maxWidth="'md'"
+            :show="showEditModeModal"
+            @close="closeEditModeModal"
+        >
+            <EditMode @close="closeEditModeModal"/>
+        </Modal>
     </AuthenticatedLayout>
 </template>
 <script>
+    const showEditModeModal = ref(false);
     const showAddApplianceModal = ref(false);
     const openAddApplianceModal = () => {
         showAddApplianceModal.value = true;
     };
     const closeAddApplianceModal = () => {
         showAddApplianceModal.value = false;
+    };
+    const openEditModeModal = () => {
+        showEditModeModal.value = true;
+    };
+    const closeEditModeModal = () => {
+        showEditModeModal.value = false;
     };
 </script>
