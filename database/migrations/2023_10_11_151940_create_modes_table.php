@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('mode_name', 50)->unique();
             $table->enum('mode_type', ['schedule', 'environment']);
             $table->boolean('is_active')->default(false);
+            $table->foreignId('home_id')->constrained('homes')->onDelete('cascade');
         });
     }
 
