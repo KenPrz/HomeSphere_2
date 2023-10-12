@@ -16,7 +16,7 @@ import { defineProps, defineEmits } from "vue";
 
 const props = defineProps({
     modelValue: {
-        type: Number,
+        type: Boolean,
     },
 });
 

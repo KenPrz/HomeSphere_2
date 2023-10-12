@@ -1,8 +1,7 @@
 <script setup>
-import ToggleSwitch from '@/Components/ToggleSwitch.vue';
 import { ref, defineProps } from 'vue';
 import { Link } from "@inertiajs/vue3";
-
+import ToggleSwitch from '@/Components/ToggleSwitch.vue';
 const props = defineProps({
     room: {
         type: Object,
@@ -25,12 +24,9 @@ const props = defineProps({
                     </div>
                     <div class="right-section ml-4 flex-grow mr-2">
                         <div class="flex justify-end">
-                            <label class="relative inline-flex cursor-pointer">
-                                <input type="checkbox" value="" class="sr-only peer">
-                                <div
-                                    class="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 dark:bg-gray-700 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
-                                </div>
-                            </label>
+                            <ToggleSwitch
+                                v-model="room.is_active"
+                            />
                         </div>
                         <div class="flex flex-col items-start">
                             <div class="mt-3">
