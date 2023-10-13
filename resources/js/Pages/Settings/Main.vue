@@ -19,9 +19,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
                 </div>
                 <div class="flex flex-col text-md font-semibold">
                     <div class="flex">
-                        <div class="text-md font-light">
-                            
-                            {{ 'Your Api Key: '+$page.props.api_key.api_key }}
+                        <div v-if="$page.props.homeData.is_owner = 1" class="text-md font-light">
+                            {{ 'Your Api Key: ' + $page.props.api_key.api_key }}
                         </div>
                     </div>
                     <div class="flex">

@@ -29,7 +29,7 @@ class ImageHandlerController extends Controller
             // Update the user's profile with the new image
             auth()->user()->update(['profile_image' => 'images/' . $imageName]);
         }
-        return Inertia::render('Profile/Edit', [
+        return Inertia::render('Profile/Main', [
             'success' => true, // Pass the success state to the component
         ]);
     }
@@ -40,7 +40,7 @@ class ImageHandlerController extends Controller
         }
         // Update the user's profile with the new image
         auth()->user()->update(['profile_image' => null]);
-        return Inertia::render('Profile/Edit', [
+        return Inertia::render('Profile/Main', [
             'success' => true, // Pass the success state to the component
         ]);
     }

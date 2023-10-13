@@ -38,8 +38,6 @@ defineProps({
                             <div class="mx-3">
                                 <h1 class="text-md font-medium">
                                     List of Modes
-                                    Your Api Key: {{ $page.props.api_key.api_key }} <br>
-                                    Your Invite Code: {{ $page.props.userData.invite_code }}
                                 </h1>
                                 <div class="flex flex-wrap">
                                     <ModeCard />

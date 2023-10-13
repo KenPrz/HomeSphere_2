@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\room;
+use App\Http\Controllers\AppUtilities;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -10,10 +11,12 @@ class RoomsController extends Controller
 {
     public function index()
     {
+        $appUtilities = New AppUtilities;
         $user = auth()->user();
-        $homeData = $this->findHomeData($user);
+        $homeData = $appUtilities->findHomeData($user);
         $roomData = $this->getRoomData($homeData->id);
         return Inertia::render('Rooms/Main', [
+            'homeData' => $homeData,
             'rooms' => $roomData,
         ]);
     }
@@ -50,19 +53,6 @@ class RoomsController extends Controller
             'room' => $roomData,
             'devices' => $deviceData,
         ]);
-    }
-
-    private function findHomeData($user)
-    {
-        $homeData = DB::table('homes')->where('owner_id', $user->id)->first();
-        if (!$homeData) {
-            $homeMember = DB::table('home_members')->where('member_id', $user->id)->first();
-
-            if ($homeMember) {
-                $homeData = DB::table('homes')->where('id', $homeMember->home_id)->first();
-            }
-        }
-        return $homeData;
     }
 
     private function getRoomData($homeID)

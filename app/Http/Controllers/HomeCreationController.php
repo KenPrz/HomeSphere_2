@@ -47,7 +47,7 @@ class HomeCreationController extends Controller
                 ->get(['users.firstName', 'users.lastName','users.profile_image', 'users.is_online']);
                 // dd($appliances);
             
-                $api_key = DB::table('home_api_keys')->where('home_id', $homeData->id)->first();
+                $api_key = $appUtilities->getApiKey($homeData);
                 return Inertia::render('Dashboard', 
                 [   
                     'userData' => $homeData,
