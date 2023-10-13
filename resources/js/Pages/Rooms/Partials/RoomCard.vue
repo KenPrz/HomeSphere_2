@@ -17,7 +17,7 @@ const props = defineProps({
                 <div class="living-room-settings flex">
                     <div class="left-section mx-7">
                         <div id="bedroom">
-                            <img v-if="!roomImage" :src="'img-assets/vectors/Room Vectors/bathroom.svg'" alt="">
+                            <img :src="'img-assets/vectors/Room Vectors/bathroom.svg'" alt="">
                         </div>
                         <h1 class="mt-4 text-xl font-medium">{{ room.room_name }}</h1>
                         <p class="mt-1 text-sm">{{ room.device_count + ' Appliance(s)' }}</p>

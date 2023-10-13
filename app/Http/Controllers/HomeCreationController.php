@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Controllers\AppUtilities;
 
+use App\Http\Controllers\AppliancesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -21,6 +22,8 @@ class HomeCreationController extends Controller
 
     public function verify()
     {
+        $getAppliances = new AppliancesController();
+
         $user = auth()->user();
         $appUtilities = New AppUtilities;
         
@@ -32,16 +35,7 @@ class HomeCreationController extends Controller
                 ->where('rooms.home_id', $homeData -> id)
                 ->groupBy('rooms.id')
                 ->get();
-            $appliances = DB::table('devices')
-            ->select(
-                'rooms.room_name',
-                'devices.device_type',
-                'devices.device_name',
-                DB::raw('CASE WHEN devices.is_active = 1 THEN "Active" ELSE "Inactive" END AS is_active')
-            )->where('rooms.home_id', $homeData->id)
-            ->join('rooms', 'devices.room_id', '=', 'rooms.id')
-            ->get();
-            
+            $appliances = $getAppliances->getAppliances($homeData);
             $userList = DB::table('home_members')->where('home_id', $homeData->id)
                 ->join('users', 'home_members.member_id', '=', 'users.id')
                 ->get(['users.firstName', 'users.lastName','users.profile_image', 'users.is_online']);
@@ -58,19 +52,6 @@ class HomeCreationController extends Controller
                 ]);
         }
         return redirect()->route('create_home');
-    }
-
-    private function findHomeData($user)
-    {
-        $homeData = DB::table('homes')->where('owner_id', $user->id)->first();
-        if (!$homeData) {
-            $homeMember = DB::table('home_members')->where('member_id', $user->id)->first();
-
-            if ($homeMember) {
-                $homeData = DB::table('homes')->where('id', $homeMember->home_id)->first();
-            }
-        }
-        return $homeData;
     }
 
 
@@ -112,7 +93,7 @@ class HomeCreationController extends Controller
             'api_key' => Str::random(64),
             'created_at' => now(),
         ]);
-        User::where('id', Auth::id())->update(['is_online' => true]);
+        User::where('id', Auth::id())->update(['is_online' => true, 'has_home' => true]);
         return redirect()->route('dashboard');
     }
     /**
@@ -141,7 +122,7 @@ class HomeCreationController extends Controller
             'is_owner' => false,
             'created_at' => now(),
         ]);
-        User::where('id', Auth::id())->update(['is_online' => true]);
+        User::where('id', Auth::id())->update(['is_online' => true, 'has_home' => true]);
         return redirect()->route('dashboard');
     }
 }

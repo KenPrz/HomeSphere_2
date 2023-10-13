@@ -63,14 +63,14 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                                         </ImageContainer>
                                     </template>
                                     <template #content>
-                                        <div v-if="$page.props.auth.user.profile_image != null">
+                                        <div>
                                             <DropdownLink :href="route('profile.edit')">
                                                 <NavbarProfile/>
                                             </DropdownLink>
                                         </div>
-                                        <DropdownLink
-                                            :href="route('profile.edit')"
-                                            method="post"
+                                        <DropdownLink v-if="$page.props.auth.user.has_home === 1"
+                                            :href="route('settings.index')"
+                                            method="get"
                                             as="button"
                                             class="transition duration-500"
                                         >

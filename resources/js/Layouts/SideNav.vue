@@ -61,7 +61,7 @@ import SideNavLink from "@/Components/SideNavLink.vue";
                     </li>
                 </SideNavLink>
 
-                <SideNavLink
+                <SideNavLink v-if="$page.props.auth.user.has_home === 1"
                     :href="route('appliances.index')"
                     :active="route().current('appliances.index')"
                 >
@@ -78,7 +78,7 @@ import SideNavLink from "@/Components/SideNavLink.vue";
                         </div>
                     </li>
                 </SideNavLink>
-                <SideNavLink
+                <SideNavLink v-if="$page.props.auth.user.has_home === 1"
                     :href="route('rooms.index')"
                     :active="route().current('rooms.index')"
                 >
@@ -93,7 +93,7 @@ import SideNavLink from "@/Components/SideNavLink.vue";
                         <div class="hidden sm:block lg:text-md mt-1">Rooms</div>
                     </li>
                 </SideNavLink>
-                <SideNavLink
+                <SideNavLink v-if="$page.props.auth.user.has_home === 1"
                     :href="route('modes.index')"
                     :active="route().current('modes.index')"
                 >
@@ -108,7 +108,7 @@ import SideNavLink from "@/Components/SideNavLink.vue";
                         <div class="hidden sm:block lg:text-md mt-1">Modes</div>
                     </li>
                 </SideNavLink>
-                <SideNavLink
+                <SideNavLink v-if="$page.props.auth.user.has_home === 1"
                     :href="route('settings.index')"
                     :active="route().current('settings.index')"
                 >

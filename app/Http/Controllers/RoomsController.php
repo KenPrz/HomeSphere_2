@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 class RoomsController extends Controller
-{
+{   
     public function index()
     {
         $appUtilities = New AppUtilities;
@@ -23,8 +23,9 @@ class RoomsController extends Controller
 
     public function addRoom(Request $request)
     {
+        $appUtilities = new AppUtilities;
         $user = auth()->user();
-        $homeData = $this->findHomeData($user);
+        $homeData = $appUtilities->findHomeData($user);
 
         $roomName = $request->input('room_name');
         $this->createRoom($roomName, $homeData->id, $user->id);
@@ -33,9 +34,10 @@ class RoomsController extends Controller
     }
 
     public function deleteRoom(Request $request)
-    {
+    {   
+        $appUtilities = new AppUtilities;
         $user = auth()->user();
-        $homeData = $this->findHomeData($user);
+        $homeData = $appUtilities->findHomeData($user);
 
         $roomID = $request->input('roomID');
         $this->deleteRoomByID($roomID);

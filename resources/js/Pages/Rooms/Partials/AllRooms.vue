@@ -1,15 +1,17 @@
 <script setup>
 import { defineProps, defineEmits } from "vue";
 import RoomCard from "./RoomCard.vue";
+
 defineProps({
     rooms: {
         type: Object,
     },
 });
+
 const emits = defineEmits(["roomSelected"]);
 
-const setActiveComponent = (room) => {
-    emits("roomSelected", room);
+const setActiveComponent = (componentName, room) => {
+    emits("roomSelected", componentName, room);
 };
 </script>
 <template>
@@ -17,8 +19,7 @@ const setActiveComponent = (room) => {
         <div class="container mx-auto">
             <div class="flex flex-wrap">
                 <div class="w-full sm:w-1/2 p-2 relative" v-for="room in rooms" :key="room.id">
-                    <a @click="setActiveComponent(room.room_name + ' ' + room.id, room)"
-                        :active="activeComponent === room.room_name + ' ' + room.id">
+                    <a @click="setActiveComponent(room.room_name + ' ' + room.id, room)">
                         <RoomCard :room="room" />
                     </a>
                 </div>
@@ -26,3 +27,4 @@ const setActiveComponent = (room) => {
         </div>
     </div>
 </template>
+<!-- :active="activeComponent === room.room_name + ' ' + room.id"> -->

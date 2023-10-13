@@ -52,12 +52,11 @@ const setActiveComponent = (componentName, room) => {
                         </button>
                     </div>
                     <div v-if="activeComponent === 'AllRooms'">
-                        <AllRooms :rooms="rooms" :setActiveComponent="setActiveComponent" />
+                        <AllRooms :rooms="rooms" @roomSelected="setActiveComponent" />
                     </div>
                     <div v-else>
                         <Room :room="selectedRoom" />
                     </div>
-
                 </div>
             </div>
             <Modal :show="showAddRoomModal" @close="closeAddRoomModal">
@@ -79,6 +78,6 @@ const closeAddRoomModal = () => {
 export default {
     props: {
         rooms: Object,
-    },
+    }
 };
 </script>
