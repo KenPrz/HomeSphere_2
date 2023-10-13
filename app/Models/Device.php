@@ -20,4 +20,10 @@ class Device extends Model
     {
         return $this->belongsTo(Room::class);
     }
+
+    public function modes()
+    {
+        return $this->belongsToMany(Mode::class);
+    }
+
 }

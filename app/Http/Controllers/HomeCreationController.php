@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Http\Controllers\AppUtilities;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -21,8 +22,9 @@ class HomeCreationController extends Controller
     public function verify()
     {
         $user = auth()->user();
+        $appUtilities = New AppUtilities;
         
-        $homeData = $this->findHomeData($user);
+        $homeData = $appUtilities->findHomeData($user);
         if ($homeData) {
             $rooms = DB::table('rooms')
                 ->leftJoin('devices', 'rooms.id', '=', 'devices.room_id')
@@ -44,12 +46,15 @@ class HomeCreationController extends Controller
                 ->join('users', 'home_members.member_id', '=', 'users.id')
                 ->get(['users.firstName', 'users.lastName','users.profile_image', 'users.is_online']);
                 // dd($appliances);
+            
+                $api_key = $appUtilities->getApiKey($homeData);
                 return Inertia::render('Dashboard', 
                 [   
                     'userData' => $homeData,
                     'userList' => $userList, 
                     'appliances' => $appliances,
-                    'rooms' => $rooms
+                    'rooms' => $rooms,
+                    'api_key' => $api_key,
                 ]);
         }
         return redirect()->route('create_home');

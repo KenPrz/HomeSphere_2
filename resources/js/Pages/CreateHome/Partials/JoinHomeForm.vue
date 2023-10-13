@@ -38,7 +38,7 @@ const submit = () => {
                 <InputError :message="$page.props.error" class="my-2 ms-2" />
             </div>
 
-            <div class="flex flex-col items-center">
+            <div class="flex flex-col items-center mt-2">
                 <SecondaryButton type="submit" class="w-24" :class="{ 'opacity-25': form.isLoading }" :disabled="form.isLoading">
                     Request Access
                 </SecondaryButton>
