@@ -49,7 +49,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile', [ImageHandlerController::class, 'imageUpload'])->name('image.upload');
     Route::delete('/profile', [ImageHandlerController::class, 'deleteImage'])->name('image.delete');
-    
+});
+
+Route::middleware('auth', 'checkHasHome')->group(function () {
     Route::get('/appliances', [AppliancesController::class, 'index'])->name('appliances.index');
 
     Route::get('/rooms', [RoomsController::class, 'index'])->name('rooms.index');
@@ -61,5 +63,4 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/settings',[SettingsController::class, 'index'])->name('settings.index');
 });
-
 require __DIR__.'/auth.php';
