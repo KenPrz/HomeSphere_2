@@ -1,6 +1,3 @@
-<script setup>
-import ImageContainer from "@/Components/ImageContainer.vue";
-</script>
 <template>
     <div class="flex flex-col w-full mx-2">
         <div class="p-3 rounded-t-xl flex items-center bg-zinc-600 w-full">
@@ -9,8 +6,20 @@ import ImageContainer from "@/Components/ImageContainer.vue";
         <div class="flex flex-col p-3 bg-white h-48 rounded-b-xl shadow-md overflow-auto">
             <div class="flex h-20 items-center w-full p-3" v-for="user in $page.props.userList" :key="user.id">
                 <div class="self">
-                    <ImageContainer :imageSize="16" :imageVal="user.profile_image" borderRadius="rounded-md"
-                        pointerType="cursor-pointer"></ImageContainer>
+                        <v-img v-if="user.profile_image"
+                            class="rounded-md mx-auto"
+                            width="60"
+                            :aspect-ratio="1"
+                            :src="'storage/' + user.profile_image"
+                            cover
+                        ></v-img>
+                        <v-img v-else
+                            class="rounded-md mx-auto"
+                            width="60"
+                            :aspect-ratio="1"
+                            src="/img-assets/default_avatar.png"
+                            cover
+                        ></v-img>
                 </div>
                 <div class="ms-4 flex flex-col justify-center">
                     <h1 class="text-md font-semibold">
@@ -33,17 +42,9 @@ import ImageContainer from "@/Components/ImageContainer.vue";
 </template>
 <script>
 export default {
-    components: {
-        ImageContainer,
-    },
     props: {
         filters: Object,
         users: Object,
-    },
-    data() {
-        return {
-
-        };
-    },
+    }
 };
 </script>

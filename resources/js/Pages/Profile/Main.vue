@@ -17,32 +17,36 @@
                             <!-- Profile Image Section -->
                             <div class="md:w-1/3">
                                 <div
-                                    class="flex flex-col items-center justify-center"
+                                    class="flex flex-col items-center justify-center mt-7"
                                 >
                                     <h1
-                                        class=" font-bold lg:text-4xl md:text-3xl text-gray-800"
+                                        class="font-bold lg:text-4xl md:text-3xl text-gray-800 mb-4"
                                     >
                                         My Profile
                                     </h1>
-                                    <div class="flex flex-col p-3 justify-center items-center">
-                                        <div class="mt-6 md:mt-6">
-                                            <ImageContainer
-                                                :imageSize="48"
-                                                :imageVal="
-                                                    $page.props.auth.user.profile_image
-                                                "
-                                                :borderRadius="'rounded-full'"
-                                            />
-                                        </div>
+                                            <v-img v-if="$page.props.auth.user.profile_image"
+                                                class="rounded-full mx-auto"
+                                                width="200"
+                                                :aspect-ratio="1"
+                                                :src="'storage/' + $page.props.auth.user.profile_image"
+                                                cover
+                                            ></v-img>
+                                            <v-img v-else
+                                                class="rounded-full mx-auto"
+                                                width="200"
+                                                :aspect-ratio="1"
+                                                src="/img-assets/default_avatar.png"
+                                                cover
+                                            ></v-img>
                                         <div class="mt-2">
                                             <DeleteAndUpload />
                                         </div>
-                                    </div>
+                                    <!-- </div> -->
                                 </div>
                             </div>
                             <!-- End Profile Image Section -->
                             <!-- User Details Section -->
-                            <div class="md:w-3/4 md:mt-0 mt-6 md:mt-16">
+                            <div class="md:w-3/4 mt-6 md:mt-16">
                                 <ul class="flex flex-col md:mr-10">
                                     <ButtonLarge
                                         @click="openNameEditModal"

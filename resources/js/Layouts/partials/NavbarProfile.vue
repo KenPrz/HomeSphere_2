@@ -6,14 +6,20 @@ import ImageContainer from "@/Components/ImageContainer.vue";
         <div class="flex flex-col rounded-md hover:shadow-lg p-3">
             <div class="flex items-center p-2 border-b-2 border-slate-400">
                 <div>
-                    <ImageContainer
-                        :imageSize="7"
-                        :imageVal="$page.props.auth.user.profile_image"
-                        borderRadius="rounded-full"
-                        pointerType="cursor-pointer"
-                        border="border-2 border-gray-800"
-                    >
-                    </ImageContainer>
+                    <v-img v-if="$page.props.auth.user.profile_image"
+                        class="rounded-full mx-auto"
+                        width="30"
+                        :aspect-ratio="1"
+                        :src="'storage/' + $page.props.auth.user.profile_image"
+                        cover
+                    ></v-img>
+                    <v-img v-else
+                        class="rounded-full mx-auto"
+                        width="30"
+                        :aspect-ratio="1"
+                        src="/img-assets/default_avatar.png"
+                        cover
+                    ></v-img>
                 </div>
                 <div>
                     <h1 class="ml-2">

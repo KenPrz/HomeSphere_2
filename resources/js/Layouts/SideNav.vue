@@ -6,11 +6,22 @@ import SideNavLink from "@/Components/SideNavLink.vue";
     <div
         class="fixed bottom-0 w-full md:w-1/6 bg-white shadow-md md:h-screen lg:pt-16 z-40"
     >
-        <div class="text-center md:pt-10 pt-8 md:block hidden items-center">
-            <ImageContainer
-                :imageSize="44"
-                :imageVal="$page.props.auth.user.profile_image"
-            />
+        <div class="text-center md:block hidden items-center mt-8">
+                <v-img v-if="$page.props.auth.user.profile_image"
+                    class="rounded-md mx-auto"
+                    width="150"
+                    :aspect-ratio="1"
+                    :src="'storage/' + $page.props.auth.user.profile_image"
+                    cover
+                ></v-img>
+                <v-img v-else
+                    class="rounded-md mx-auto"
+                    width="150"
+                    :aspect-ratio="1"
+                    src="/img-assets/default_avatar.png"
+                    cover
+                ></v-img>
+            
             <div class="image-text mt-4">
                 <h5 class="mb-1">Welcome Back!!</h5>
                 <h2 class="font-bold text-md">

@@ -51,16 +51,20 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                                 <Dropdown align="right" width="48">
                                     <div class="w-"></div>
                                     <template #trigger>
-                                        <ImageContainer
-                                            :imageSize="9"
-                                            :imageVal="
-                                                $page.props.auth.user.profile_image
-                                            "
-                                            borderRadius="rounded-full"
-                                            pointerType="cursor-pointer"
-                                            border="border-2 border-gray-800"
-                                        >
-                                        </ImageContainer>
+                                        <v-img v-if="$page.props.auth.user.profile_image"
+                                                class="rounded-full mx-auto transition duration-200 hover:scale-95 cursor-pointer"
+                                                width="38"
+                                                :aspect-ratio="1"
+                                                :src="'storage/' + $page.props.auth.user.profile_image"
+                                                cover
+                                            ></v-img>
+                                            <v-img v-else
+                                                class="rounded-full mx-auto transition duration-200 hover:scale-95 cursor-pointer"
+                                                width="38"
+                                                :aspect-ratio="1"
+                                                src="/img-assets/default_avatar.png"
+                                                cover
+                                            ></v-img>
                                     </template>
                                     <template #content>
                                         <div>
