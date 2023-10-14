@@ -1,51 +1,61 @@
 <script setup>
+import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
 import ImageContainer from "@/Components/ImageContainer.vue";
-import { defineProps, defineEmits } from "vue";
+import { defineEmits } from "vue";
 
 const emit = defineEmits(["close"]);
 
 const form = useForm({
     avatar: null,
     success: false,
-    errors: {}, // Added errors state
+    errors: {},
 });
+
+const imagePreview = ref(null);
 
 const submit = () => {
     if (validateForm()) {
-        form.post(route('image.upload'), {
+        form.post(route("image.upload"), {
             onFinish: () => {
-                form.reset('image');
-                close(); // Call the close function here
+                form.reset("avatar");
+                close();
+                imagePreview.value = null;
             },
         });
     }
 };
+
 function close() {
     emit("close");
 }
 
+const onFileChange = () => {
+    const file = event.target.files[0];
+    form.avatar = file;
+    imagePreview.value = URL.createObjectURL(file);
+};
+
 const validateForm = () => {
-    form.errors = {}; // Reset previous errors
+    form.errors = {};
 
     const errors = {};
 
-    // Perform manual validation
     if (!form.avatar) {
-
-        errors.avatar = ['The avatar field is required.'];
+        errors.avatar = ["The avatar field is required."];
     } else {
-        const allowedFormats = ['jpeg', 'png', 'jpg'];
-        const maxFileSize = 2048; // Max file size in kilobytes
+        const allowedFormats = ["jpeg", "png", "jpg"];
+        const maxFileSize = 2048;
 
-        const fileExtension = form.avatar.name.split('.').pop().toLowerCase();
+        const fileExtension = form.avatar.name.split(".").pop().toLowerCase();
         if (!allowedFormats.includes(fileExtension)) {
-            errors.avatar = ['Invalid file format. Only JPEG, PNG, and JPG are allowed.'];
+            errors.avatar = ["Invalid file format. Only JPEG, PNG, and JPG are allowed."];
         } else if (form.avatar.size / 1024 > maxFileSize) {
             errors.avatar = [`File size exceeds ${maxFileSize} KB.`];
         }
     }
+
     if (Object.keys(errors).length > 0) {
         form.errors = errors;
         return false;
@@ -61,13 +71,17 @@ const validateForm = () => {
                 <h1>Profile Picture</h1>
             </div>
             <div class="flex flex-col items-center">
-                <!-- Render the user's image if it exists, or a placeholder if it doesn't -->
-                <ImageContainer :imageSize="24" 
-                    :imageVal="$page.props.auth.user.profile_image" 
-                    borderRadius="rounded-full" pointerType="cursor-pointer">
-                </ImageContainer>
+                <div v-if="!imagePreview">
+                    <ImageContainer :imageSize="24" :imageVal="$page.props.auth.user.profile_image"
+                        borderRadius="rounded-full" pointerType="cursor-pointer"></ImageContainer>
+                </div>
                 <form @submit.prevent="submit" class="flex flex-col gap-4" id="image">
-                    <input type="file" @input="form.avatar = $event.target.files[0]" class="border p-2 rounded-md" />
+                    <div class="mt-2" v-if="imagePreview">
+                        <div class="flex flex-col items-center">
+                            <img :src="imagePreview" alt="Selected Image" class="rounded-full w-24 h-24" />
+                        </div>
+                    </div>
+                    <input type="file" @change="onFileChange" class="border p-2 rounded-md" />
                     <button type="submit"
                         class="bg-cyan-900 text-white px-4 py-2 rounded-3xl hover:bg-blue-600 transition duration-300">
                         <span class="text-sm font-light">Upload</span>

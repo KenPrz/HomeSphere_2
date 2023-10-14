@@ -32,7 +32,7 @@ defineProps({
                             </button>
                         </div>
                     </div>
-                    <div class="container flex flex-wrap">
+                    <div class="mt-3 container flex flex-wrap sm:justify-around md:justify-between">
                         <!-- {{ room }} -->
                         <Device v-for="device in room.devices"
                             :key="device.id" 
@@ -63,7 +63,7 @@ defineProps({
                                 :model-value="room.temperature"
                                 color="white"
                                 background-color="rgba(255, 255, 255, 0.2)"
-                            >   
+                            >
                                 <span v-if="!room.temperature" class="text">no data</span>
                                 <span v-else class="text">{{ room.temperature }}°C</span>
                             </v-progress-circular>

@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full flex flex-col items-center justify-center">
+    <div class="w-full flex flex-col items-center justify-center sm:flex-row lg:flex-row">
         <img v-if="imageVal" :src="`storage/${imageVal}`" :alt="imgAlt" :class="imageClass" />
         <img v-else :src="defaultAvatar" :alt="imgAlt" :class="imageClass" />
     </div>
@@ -11,7 +11,7 @@ import { defineProps } from "vue";
 const props = defineProps({
     imageVal: {
         type: String,
-        default: null, // Change default to null
+        default: null,
     },
     imageSize: {
         type: Number,
@@ -33,7 +33,7 @@ const props = defineProps({
         type: String,
         default: "rounded-md",
     },
-    border:{
+    border: {
         type: String,
         default: "",
     },

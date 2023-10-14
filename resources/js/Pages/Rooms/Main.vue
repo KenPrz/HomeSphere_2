@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import { Head } from "@inertiajs/vue3";
 import NavLink from "@/Components/NavLink.vue";
-// import SecondaryNavLink from "@/Components/SecondaryNavLink.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import Modal from "@/Components/Modal.vue";
 import Room from "./Partials/Room.vue";

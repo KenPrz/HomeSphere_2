@@ -4,9 +4,9 @@ import SideNavLink from "@/Components/SideNavLink.vue";
 </script>
 <template>
     <div
-        class="fixed bottom-0 w-full md:w-1/6 bg-white shadow-md md:h-screen lg:pt-16"
+        class="fixed bottom-0 w-full md:w-1/6 bg-white shadow-md md:h-screen lg:pt-16 z-40"
     >
-        <div class="text-center pt-10 md:block hidden items-center">
+        <div class="text-center md:pt-10 pt-8 md:block hidden items-center">
             <ImageContainer
                 :imageSize="44"
                 :imageVal="$page.props.auth.user.profile_image"
