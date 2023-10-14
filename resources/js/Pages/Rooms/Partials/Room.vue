@@ -83,7 +83,7 @@ defineProps({
                                 background-color="rgba(255, 255, 255, 0.2)"
                             >   
                                 <span v-if="!room.humidity" class="text">no data</span>
-                                <span class="text">{{ room.humidity }}%</span>
+                                <span v-else class="text">{{ room.humidity }}%</span>
                             </v-progress-circular>
                         </div>
                     </div>
