@@ -26,10 +26,6 @@ defineProps({
                                 <img class="h-4 w-auto" :src="'img-assets/vectors/Edit.svg'" />
                                 <span>Edit</span>
                             </button>
-                            <button class="flex items-center justify-center border-gray-500 border rounded-full px-3">
-                                <img class="h-4 w-auto" :src="'img-assets/vectors/add.svg'" />
-                                <span>Add</span>
-                            </button>
                         </div>
                     </div>
                     <div class="mt-3 container flex flex-wrap sm:justify-around md:justify-between">
