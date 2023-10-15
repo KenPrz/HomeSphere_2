@@ -40,7 +40,6 @@ class HomeCreationController extends Controller
                 ->join('users', 'home_members.member_id', '=', 'users.id')
                 ->get(['users.firstName', 'users.lastName','users.profile_image', 'users.is_online']);
                 // dd($appliances);
-            
                 $api_key = $appUtilities->getApiKey($homeData);
                 return Inertia::render('Dashboard', 
                 [   

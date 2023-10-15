@@ -37,15 +37,7 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                                         />
                                     </template>
                                     <template #content>
-                                        <DropdownLink :href="route('profile.edit')">
-                                            Notification1
-                                        </DropdownLink>
-                                        <DropdownLink :href="route('profile.edit')">
-                                            Notification3
-                                        </DropdownLink>
-                                        <DropdownLink :href="route('profile.edit')">
-                                            Notification3
-                                        </DropdownLink>
+                                        
                                     </template>
                                 </Dropdown>
                                 <Dropdown align="right" width="48">
