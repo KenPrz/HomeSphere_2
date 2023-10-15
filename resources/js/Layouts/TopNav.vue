@@ -1,7 +1,7 @@
 <script setup>
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
-import ImageContainer from "@/Components/ImageContainer.vue";
+import NotificationMain from "@/Layouts/Notifications/NotificationMain.vue";
 import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
 </script>
 
@@ -27,8 +27,8 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                     </div>
                         <div v-if="$page.props.auth.user" class="hidden sm:flex sm:items-center sm:ml-6">
                             <!-- Settings Dropdown -->
-                            <div class="ml-3 relative flex items-center">
-                                <Dropdown>
+                            <div class="w-full relative flex items-center ">
+                                <Dropdown align="right" :width="'72'">
                                     <template #trigger>
                                         <img
                                             class="h-9 p-2 rounded-full w-auto bg-slate-500 mr-2 transition duration-200 hover:scale-95 cursor-pointer"
@@ -37,19 +37,10 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                                         />
                                     </template>
                                     <template #content>
-                                        <DropdownLink :href="route('profile.edit')">
-                                            Notification1
-                                        </DropdownLink>
-                                        <DropdownLink :href="route('profile.edit')">
-                                            Notification3
-                                        </DropdownLink>
-                                        <DropdownLink :href="route('profile.edit')">
-                                            Notification3
-                                        </DropdownLink>
+                                        <NotificationMain/>
                                     </template>
                                 </Dropdown>
-                                <Dropdown align="right" width="48">
-                                    <div class="w-"></div>
+                                <Dropdown align="right" :width="'64'">
                                     <template #trigger>
                                         <v-img v-if="$page.props.auth.user.profile_image"
                                                 class="rounded-full mx-auto transition duration-200 hover:scale-95 cursor-pointer"
