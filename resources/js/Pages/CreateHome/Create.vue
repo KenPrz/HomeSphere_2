@@ -46,7 +46,7 @@
                 <span class="text-md font-semibold text-black">Not Sure? </span>
                 <span
                     class="text-md font-semibold text-blue-600 hover:underline cursor-pointer transition duration-300 ease-in-out"
-                    ><a href="https://github.com/KenPrz/HomeSphere_2/wiki">Learn More</a></span
+                    ><a href="https://github.com/KenPrz/HomeSphere_2/wiki" target="_blank">Learn More</a></span
                 >
             </div>
         </div>

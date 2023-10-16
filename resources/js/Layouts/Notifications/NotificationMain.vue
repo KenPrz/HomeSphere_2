@@ -8,24 +8,16 @@ import NotificationCard from "./Partials/NotificationCard.vue";
                 Notifications
             </div>
             <div class="flex mb-2">
-                <button class="p-1 px-3 text-sm font-medium tracking-wide me-2 bg-slate-300 rounded-2xl text-slate-600 hover:text-slate-50 hover:bg-slate-500 transition-colors duration-200">
+                <button class="p-1 px-3 text-sm font-medium tracking-wide me-2 bg-slate-200 rounded-2xl text-slate-600 hover:text-slate-50 hover:bg-slate-500 transition-colors duration-200">
                     All
                 </button>
-                <button class="p-1 px-3 text-sm font-medium bg-slate-300 rounded-2xl text-slate-600 hover:text-slate-50 hover:bg-slate-500 transition-colors duration-200">
+                <button class="p-1 px-3 text-sm font-medium bg-slate-200 rounded-2xl text-slate-600 hover:text-slate-50 hover:bg-slate-500 transition-colors duration-200">
                     Unread
                 </button>
             </div>
         </div>
         <div class="w-auto mx-1 max-h-72 overflow-y-scroll">
             <NotificationCard/>
-            <NotificationCard/>
-            <NotificationCard/>
-            <NotificationCard/>
-            <NotificationCard/>
-            <NotificationCard/>
-            <NotificationCard/>
-            <NotificationCard/>
-
         </div>
 
     </div>
@@ -42,7 +34,8 @@ import NotificationCard from "./Partials/NotificationCard.vue";
 }
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #888; 
+    background: #888;
+    border-radius: 10px; 
 }
 
 /* Handle on hover */
