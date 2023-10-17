@@ -28,7 +28,7 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                         <div v-if="$page.props.auth.user" class="hidden sm:flex sm:items-center sm:ml-6">
                             <!-- Settings Dropdown -->
                             <div class="w-full relative flex items-center ">
-                                <Dropdown align="right" :width="'72'">
+                                <Dropdown align="right" :width="'64'">
                                     <template #trigger>
                                         <img
                                             class="h-9 p-2 rounded-full w-auto bg-slate-500 mr-2 transition duration-200 hover:scale-95 cursor-pointer"
@@ -88,6 +88,7 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                                         </DropdownLink>
                                     </template>
                                 </Dropdown>
+                                
                             </div>
                     </div>
                 </div>

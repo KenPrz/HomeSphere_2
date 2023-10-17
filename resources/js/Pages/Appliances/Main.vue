@@ -17,7 +17,7 @@
                         <div class="ml-5 self-center">
                             <img src="img-assets/vectors/search.svg" alt="search">
                         </div>
-                        <input v-model="searchInput" id="search" placeholder="Search" class="ms-5 w-full border-0 focus:ring-0">
+                        <input id="search" placeholder="Search" class="ms-5 w-full border-0 focus:ring-0">
                         </div>
                     </div>
                     </div>
@@ -35,7 +35,6 @@
     </AuthenticatedLayout>
 </template>
 <script setup>
-import { ref } from "vue";
 import Table from "@/Components/Table.vue";
 
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";

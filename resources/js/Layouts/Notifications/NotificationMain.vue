@@ -16,7 +16,18 @@ import NotificationCard from "./Partials/NotificationCard.vue";
                 </button>
             </div>
         </div>
-        <div class="w-auto mx-1 max-h-72 overflow-y-scroll">
+        
+        <div class="mx-1 max-h-72 overflow-y-scroll">
+            <section class="py-1
+            ">
+
+            </section>
+            <NotificationCard/>
+            <NotificationCard/>
+            <NotificationCard/>
+            <NotificationCard/>
+            <NotificationCard/>
+            <NotificationCard/>
             <NotificationCard/>
         </div>
 
