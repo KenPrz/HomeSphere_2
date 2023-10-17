@@ -37,7 +37,7 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                                         />
                                     </template>
                                     <template #content>
-                                        
+                                        <NotificationMain/>
                                     </template>
                                 </Dropdown>
                                 <Dropdown align="right" width="48">
