@@ -17,18 +17,19 @@
                         <div class="ml-5 self-center">
                             <img src="img-assets/vectors/search.svg" alt="search">
                         </div>
-                        <input id="search" placeholder="Search" class="ms-5 w-full border-0 focus:ring-0">
+                            <input v-model="form.search" id="search" placeholder="Search" class="ms-5 w-full border-0 focus:ring-0">
                         </div>
                     </div>
                     </div>
                     <div class="mx-10 mt-5">
                         <Table
                             :tableHeaders="tableHeaders"
-                            :tableData="tableData"
+                            :tableData="this.$page.props.appliances"
                             :maxHeight="maxHeight"
-                            :itemsPerPage="6"
+                            :itemsPerPage="7"
                             :Pagenated="true"
-                        />
+                        >
+                    </Table>
                     </div>
             </div>
         </main>
@@ -36,7 +37,7 @@
 </template>
 <script setup>
 import Table from "@/Components/Table.vue";
-
+import throttle from 'lodash/throttle'
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 defineProps({
@@ -46,6 +47,10 @@ defineProps({
     status: {
         type: String,
     },
+    filters: {
+        type: Object, // Ensure filters is an object
+        default: () => ({ search: '' }) // Set a default value
+    },
 });
 </script>
 <script>
@@ -53,12 +58,11 @@ export default {
     components: {
         Table,
     },
-    props: {
-    filters: Object,
-    appliances: Object,
-    },
     data() {
         return {
+            form: {
+                search: this.filters.search,
+            },
             tableHeaders: [
                 {
                     text: "Room",
@@ -73,9 +77,16 @@ export default {
                     text: "Status",
                 },
             ],
-            tableData: this.$page.props.appliances,
-            maxHeight: "max-h-80",
+            maxHeight: "max-h-92",
         };
     },
+    watch: {
+        'form.search': {
+            handler: throttle(function () {
+                this.$inertia.get('/appliances', { search: this.form.search }, { preserveState: true });
+            }, 250),
+        },
+    },
+    
 };
 </script>
