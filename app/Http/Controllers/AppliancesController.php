@@ -16,7 +16,7 @@ class AppliancesController extends Controller
     $homeData = $appUtilities->findHomeData($user);
     $appliances = $this->getAppliances($homeData);
 
-    return Inertia::render('Appliances/Main', [
+    return Inertia::render('Appliances/Main', [   
         'appliances' => $appliances,
     ])->withViewData(['appliances' => $appliances]);
 }

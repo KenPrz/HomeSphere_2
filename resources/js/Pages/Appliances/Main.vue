@@ -80,7 +80,7 @@ export default {
     appliances: Object,
     },
     data() {
-        return {
+        return {   
             tableHeaders: [
                 {
                     text: "Room",
