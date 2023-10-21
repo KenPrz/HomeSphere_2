@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\room;
 use App\Models\User;
 use App\Http\Controllers\AppUtilities;
-
+use App\Models\humidity_sensor;
+use App\Models\temp_sensor;
 use App\Http\Controllers\AppliancesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -29,11 +31,10 @@ class HomeCreationController extends Controller
         
         $homeData = $appUtilities->findHomeData($user);
         if ($homeData) {
-            $rooms = DB::table('rooms')
-                ->leftJoin('devices', 'rooms.id', '=', 'devices.room_id')
-                ->select('rooms.*', DB::raw('count(devices.id) as device_count'))
-                ->where('rooms.home_id', $homeData -> id)
-                ->groupBy('rooms.id')
+            $rooms = Room::with('devices', 'tempSensor', 'humiditySensor', 'motionSensor')
+                ->where('home_id', $homeData->id)
+                ->select(['rooms.*'])
+                ->addSelect(DB::raw('(SELECT COUNT(*) FROM devices WHERE devices.room_id = rooms.id) as device_count'))
                 ->get();
             $appliances = $getAppliances->getAppliances($homeData);
             $userList = DB::table('home_members')->where('home_id', $homeData->id)
@@ -73,11 +74,28 @@ class HomeCreationController extends Controller
             'created_at' => now(),
         ]);
 
-        DB::table('rooms')->insert([
+        // $room = DB::table('rooms')->insert([
+        //     'room_name' => $request->name_of_room,
+        //     'home_id' => DB::table('homes')->where('invite_code', $invite_code)->first()->id,
+        //     'room_owner_id' => $owner_id,
+        //     'created_at' => now(),
+        // ]);
+
+        $room = Room::create([
             'room_name' => $request->name_of_room,
             'home_id' => DB::table('homes')->where('invite_code', $invite_code)->first()->id,
             'room_owner_id' => $owner_id,
             'created_at' => now(),
+        ]);
+
+        temp_sensor::create([
+            'room_id' => $room->id,
+            'temperature' => null,
+        ]);
+    
+        humidity_sensor::create([
+            'room_id' => $room->id,
+            'humidity' => null,
         ]);
 
         DB::table('home_members')->insert([

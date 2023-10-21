@@ -5,7 +5,7 @@ import ToggleSwitch from '@/Components/ToggleSwitch.vue';
 const props = defineProps({
     room: {
         type: Object,
-    },
+    }
 });
 
 </script>
@@ -34,10 +34,10 @@ const props = defineProps({
                             </div>
                             <div class="flex w-full border border-gray-600 mt-1 h-6 rounded-full relative mb-2">
                                 <span class="z-30 absolute right-1 pe-2">
-                                    {{ room.temperature + '°C' }}
+                                    {{ room.temp_sensor.temperature + '°C' }}
                                 </span>
                                 <div class="rounded-full z-0 transition-width duration-500 ease-in-out"
-                                    :style="{ width: room.temperature + '%', backgroundColor: '#A9A9A9' }">
+                                    :style="{ width: room.temp_sensor.temperature + '%', backgroundColor: '#A9A9A9' }">
                                 </div>
                             </div>
 
@@ -46,10 +46,10 @@ const props = defineProps({
                             </div>
                             <div class="flex w-full border border-gray-600 mt-1 h-6 rounded-full relative mb-2">
                                 <span class="z-30 absolute right-1 pe-2">
-                                    {{ room.humidity + '%' }}
+                                    {{ room.humidity_sensor.humidity + '%' }}
                                 </span>
                                 <div class="rounded-full z-0 transition-width duration-500 ease-in-out"
-                                    :style="{ width: room.humidity + '%', backgroundColor: '#A9A9A9' }">
+                                    :style="{ width: room.humidity_sensor.humidity + '%', backgroundColor: '#A9A9A9' }">
                                 </div>
                             </div>
                         </div>

@@ -16,12 +16,10 @@ return new class extends Migration
             $table->string('room_name');
             $table->unsignedBigInteger('home_id');
             $table->unsignedBigInteger('room_owner_id');
-            $table->float('temperature')->nullable();
-            $table->float('humidity')->nullable();
-            $table->timestamps();
+            
             $table->foreign('home_id')->references('id')->on('homes');
             $table->foreign('room_owner_id')->references('id')->on('users');
-        
+            $table->timestamps();
             // Add a unique constraint for room_name and home_id
             $table->unique(['room_name', 'home_id']);
         });        

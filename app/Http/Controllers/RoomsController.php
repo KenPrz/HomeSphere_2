@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\motion_sensor;
 use App\Models\room;
 use App\Http\Controllers\AppUtilities;
+use App\Models\humidity_sensor;
+use App\Models\temp_sensor;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -11,10 +14,17 @@ class RoomsController extends Controller
 {   
     public function index()
     {
-        $appUtilities = New AppUtilities;
+        $appUtilities = new AppUtilities;
         $user = auth()->user();
         $homeData = $appUtilities->findHomeData($user);
-        $roomData = $this->getRoomData($homeData->id);
+        
+        // Retrieve the rooms and their sensor data
+        $roomData = Room::with('devices', 'tempSensor', 'humiditySensor', 'motionSensor')
+            ->where('home_id', $homeData->id)
+            ->select(['rooms.*'])
+            ->addSelect(DB::raw('(SELECT COUNT(*) FROM devices WHERE devices.room_id = rooms.id) as device_count'))
+            ->get();
+    
         return Inertia::render('Rooms/Main', [
             'homeData' => $homeData,
             'rooms' => $roomData,
@@ -57,22 +67,36 @@ class RoomsController extends Controller
         ]);
     }
 
-    private function getRoomData($homeID)
-    {
-        return Room::with('devices')
-        ->where('home_id', $homeID)
-        ->select(['rooms.*'])
-        ->addSelect(DB::raw('(SELECT COUNT(*) FROM devices WHERE devices.room_id = rooms.id) as device_count'))
-        ->get();
-    }
+    // private function getRoomData($homeID)
+    // {
+    //     return Room::with('devices')
+    //     ->where('home_id', $homeID)
+    //     ->select(['rooms.*'])
+    //     ->addSelect(DB::raw('(SELECT COUNT(*) FROM devices WHERE devices.room_id = rooms.id) as device_count'))
+    //     ->get();
+    // }
 
     private function createRoom($roomName, $homeID, $roomOwnerID)
     {
-        DB::table('rooms')->insert([
+        $room = Room::create([
             'room_name' => $roomName,
             'home_id' => $homeID,
             'room_owner_id' => $roomOwnerID,
             'created_at' => now(),
+        ]);
+        temp_sensor::create([
+            'room_id' => $room->id,
+            'temperature' => null,
+        ]);
+    
+        humidity_sensor::create([
+            'room_id' => $room->id,
+            'humidity' => null,
+        ]);
+        motion_sensor::create([
+            'room_id' => $room->id,
+            'is_active' => false,
+            'motion_detected' => false
         ]);
     }
 
