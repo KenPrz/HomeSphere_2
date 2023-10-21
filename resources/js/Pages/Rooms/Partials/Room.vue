@@ -44,7 +44,8 @@ defineProps({
                             Motion Sensor
                         </div>
                         <div class="flex items-center justify-center">
-                            <ToggleSwitch/>
+                            <ToggleSwitch
+                            />
                         </div>
                     </div>
                     <div class="flex-col border-white border-2 rounded-md p-3 items-center justify-center w-full mb-3">

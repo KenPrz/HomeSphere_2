@@ -38,4 +38,8 @@ class room extends Model
     {
         return $this->hasOne(humidity_sensor::class, 'room_id');
     }
+    
+    public function motionSensor(){
+        return $this->hasOne(motion_sensor::class, 'room_id');
+    }
 }

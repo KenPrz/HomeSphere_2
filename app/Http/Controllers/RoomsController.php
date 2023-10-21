@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\motion_sensor;
 use App\Models\room;
 use App\Http\Controllers\AppUtilities;
 use App\Models\humidity_sensor;
@@ -18,7 +19,7 @@ class RoomsController extends Controller
         $homeData = $appUtilities->findHomeData($user);
         
         // Retrieve the rooms and their sensor data
-        $roomData = Room::with('devices', 'tempSensor', 'humiditySensor')
+        $roomData = Room::with('devices', 'tempSensor', 'humiditySensor', 'motionSensor')
             ->where('home_id', $homeData->id)
             ->select(['rooms.*'])
             ->addSelect(DB::raw('(SELECT COUNT(*) FROM devices WHERE devices.room_id = rooms.id) as device_count'))
@@ -66,14 +67,14 @@ class RoomsController extends Controller
         ]);
     }
 
-    private function getRoomData($homeID)
-    {
-        return Room::with('devices')
-        ->where('home_id', $homeID)
-        ->select(['rooms.*'])
-        ->addSelect(DB::raw('(SELECT COUNT(*) FROM devices WHERE devices.room_id = rooms.id) as device_count'))
-        ->get();
-    }
+    // private function getRoomData($homeID)
+    // {
+    //     return Room::with('devices')
+    //     ->where('home_id', $homeID)
+    //     ->select(['rooms.*'])
+    //     ->addSelect(DB::raw('(SELECT COUNT(*) FROM devices WHERE devices.room_id = rooms.id) as device_count'))
+    //     ->get();
+    // }
 
     private function createRoom($roomName, $homeID, $roomOwnerID)
     {
@@ -91,6 +92,11 @@ class RoomsController extends Controller
         humidity_sensor::create([
             'room_id' => $room->id,
             'humidity' => null,
+        ]);
+        motion_sensor::create([
+            'room_id' => $room->id,
+            'is_active' => false,
+            'motion_detected' => false
         ]);
     }
 

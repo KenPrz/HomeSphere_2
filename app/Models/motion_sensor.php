@@ -10,6 +10,7 @@ class motion_sensor extends Model
     use HasFactory;
 
     protected $fillable = [
+        'room_id',
         'is_active',
         'motion_detected'
     ];

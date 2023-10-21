@@ -31,11 +31,10 @@ class HomeCreationController extends Controller
         
         $homeData = $appUtilities->findHomeData($user);
         if ($homeData) {
-            $rooms = DB::table('rooms')
-                ->leftJoin('devices', 'rooms.id', '=', 'devices.room_id')
-                ->select('rooms.*', DB::raw('count(devices.id) as device_count'))
-                ->where('rooms.home_id', $homeData -> id)
-                ->groupBy('rooms.id')
+            $rooms = Room::with('devices', 'tempSensor', 'humiditySensor', 'motionSensor')
+                ->where('home_id', $homeData->id)
+                ->select(['rooms.*'])
+                ->addSelect(DB::raw('(SELECT COUNT(*) FROM devices WHERE devices.room_id = rooms.id) as device_count'))
                 ->get();
             $appliances = $getAppliances->getAppliances($homeData);
             $userList = DB::table('home_members')->where('home_id', $homeData->id)

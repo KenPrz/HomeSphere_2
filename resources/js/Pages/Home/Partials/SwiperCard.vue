@@ -80,8 +80,8 @@ export default {
                                     <div class="text-sm font-medium">
                                         Temperature
                                     </div>
-                                    <div v-if="room.temperature" class="text-xs text-start">
-                                        {{ room.temperature + ' °C' }}
+                                    <div v-if="room.temp_sensor.temperature" class="text-xs text-start">
+                                        {{ room.temp_sensor.temperature + ' °C' }}
                                     </div>
                                     <div v-else class="text-xs text-start">
                                         No Data
@@ -102,8 +102,8 @@ export default {
                                     <div class="text-sm font-medium">
                                         Humidity
                                     </div>
-                                    <div v-if="room.humidity" class="text-xs text-start">
-                                        {{ room.humidity }}
+                                    <div v-if="room.humidity_sensor.humidity" class="text-xs text-start">
+                                        {{ room.humidity_sensor.humidity }}
                                     </div>
                                     <div v-else class="text-xs text-start">
                                         No Data
