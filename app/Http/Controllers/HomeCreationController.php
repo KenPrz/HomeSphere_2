@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\room;
 use App\Models\User;
 use App\Http\Controllers\AppUtilities;
-
+use App\Models\humidity_sensor;
+use App\Models\temp_sensor;
 use App\Http\Controllers\AppliancesController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -73,11 +75,28 @@ class HomeCreationController extends Controller
             'created_at' => now(),
         ]);
 
-        DB::table('rooms')->insert([
+        // $room = DB::table('rooms')->insert([
+        //     'room_name' => $request->name_of_room,
+        //     'home_id' => DB::table('homes')->where('invite_code', $invite_code)->first()->id,
+        //     'room_owner_id' => $owner_id,
+        //     'created_at' => now(),
+        // ]);
+
+        $room = Room::create([
             'room_name' => $request->name_of_room,
             'home_id' => DB::table('homes')->where('invite_code', $invite_code)->first()->id,
             'room_owner_id' => $owner_id,
             'created_at' => now(),
+        ]);
+
+        temp_sensor::create([
+            'room_id' => $room->id,
+            'temperature' => null,
+        ]);
+    
+        humidity_sensor::create([
+            'room_id' => $room->id,
+            'humidity' => null,
         ]);
 
         DB::table('home_members')->insert([

@@ -9,6 +9,12 @@ class room extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'room_name',
+        'home_id',
+        'room_owner_id'
+    ];
+
     public function home()
     {
         return $this->belongsTo(Home::class, 'home_id');
@@ -23,4 +29,13 @@ class room extends Model
         return $this->hasMany(Device::class);
     }
 
+    public function tempSensor()
+    {
+        return $this->hasOne(temp_sensor::class, 'room_id');
+    }
+
+    public function humiditySensor()
+    {
+        return $this->hasOne(humidity_sensor::class, 'room_id');
+    }
 }

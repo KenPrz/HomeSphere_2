@@ -56,12 +56,12 @@ defineProps({
                                 :size="150"
                                 :width="15"
                                 :rotate="0"
-                                :model-value="room.temperature"
+                                :model-value="room.temp_sensor.temperature"
                                 color="white"
                                 background-color="rgba(255, 255, 255, 0.2)"
                             >
-                                <span v-if="!room.temperature" class="text">no data</span>
-                                <span v-else class="text">{{ room.temperature }}°C</span>
+                                <span v-if="!room.temp_sensor.temperature" class="text">no data</span>
+                                <span v-else class="text">{{ room.temp_sensor.temperature }}°C</span>
                             </v-progress-circular>
                         </div>
                     </div>
@@ -74,12 +74,12 @@ defineProps({
                                 :size="150"
                                 :width="15"
                                 :rotate="0"
-                                :model-value="room.humidity"
+                                :model-value="room.humidity_sensor.humidity"
                                 color="white"
                                 background-color="rgba(255, 255, 255, 0.2)"
                             >   
-                                <span v-if="!room.humidity" class="text">no data</span>
-                                <span v-else class="text">{{ room.humidity }}%</span>
+                                <span v-if="!room.humidity_sensor.humidity" class="text">no data</span>
+                                <span v-else class="text">{{ room.humidity_sensor.humidity }}%</span>
                             </v-progress-circular>
                         </div>
                     </div>

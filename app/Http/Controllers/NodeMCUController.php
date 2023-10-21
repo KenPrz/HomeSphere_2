@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Device;
+use App\Models\humidity_sensor;
+use App\Models\temp_sensor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -66,20 +68,21 @@ class NodeMCUController extends Controller
     
     private function updateRoomData($room_id, $sensorData)
     {
-        $updateData = [];
-    
         if (isset($sensorData['temperature'])) {
-            $updateData['temperature'] = $sensorData['temperature'];
+            temp_sensor::updateOrInsert(
+                ['room_id' => $room_id],
+                ['temperature' => $sensorData['temperature']]
+            );
         }
     
         if (isset($sensorData['humidity'])) {
-            $updateData['humidity'] = $sensorData['humidity'];
-        }
-    
-        if (!empty($updateData)) {
-            DB::table('rooms')->where('id', $room_id)->update($updateData);
+            humidity_sensor::updateOrInsert(
+                ['room_id' => $room_id],
+                ['humidity' => $sensorData['humidity']]
+            );
         }
     }
+    
     
 
 private function deviceUpdate($data, $room_id)
