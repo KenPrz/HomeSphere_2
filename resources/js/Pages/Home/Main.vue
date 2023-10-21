@@ -6,14 +6,6 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import SwiperCard from "@/Pages/Home/Partials/SwiperCard.vue";
 import UserList from "@/Pages/Home/Partials/UserList.vue";
 import { Head } from "@inertiajs/vue3";
-defineProps({
-    mustVerifyEmail: {
-        type: Boolean,
-    },
-    status: {
-        type: String,
-    },
-});
 </script>
 
 <template>

@@ -34,11 +34,10 @@
     </div>
 </template>
 <script setup>
-
 import ToggleSwitch from "@/Components/ToggleSwitch.vue";
-defineProps({
-    device:{
-        type: Object,
-    }
-})
+
+const { device, customClass } = defineProps({
+    device: Object,
+    customClass: String,
+});
 </script>

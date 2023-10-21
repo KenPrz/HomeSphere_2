@@ -25,21 +25,23 @@ class AppliancesController extends Controller
     }
 
     public function getFilteredAppliances($homeData, $searchData) {
-        
         $data = DB::table('devices')
             ->select(
                 'rooms.room_name',
                 'devices.device_type',
                 'devices.device_name',
-                DB::raw('CASE WHEN devices.is_active = 1 THEN "Active" ELSE "Inactive" END AS is_active')
+                DB::raw('CASE WHEN devices.is_active = 1 THEN "true" ELSE "false" END AS is_active')
             )
             ->where('devices.room_id', $homeData->id)
             ->when($searchData['search'], function ($query, $search) {
-                return $query->where('devices.device_name', 'like', "%$search%");
+                return $query->where(function($subquery) use ($search) {
+                    $subquery->where('devices.device_name', 'like', "%$search%")
+                        ->orWhere('rooms.room_name', 'like', "%$search%")
+                        ->orWhere('devices.device_type', 'like', "%$search%");
+                });
             })
             ->join('rooms', 'devices.room_id', '=', 'rooms.id')
             ->get();
-
         return $data;
     }
 
@@ -49,7 +51,7 @@ class AppliancesController extends Controller
                     'rooms.room_name',
                     'devices.device_type',
                     'devices.device_name',
-                    DB::raw('CASE WHEN devices.is_active = 1 THEN "Active" ELSE "Inactive" END AS is_active')
+                    DB::raw('CASE WHEN devices.is_active = 1 THEN "true" ELSE "false" END AS is_active')
                 )->where('rooms.home_id', $homeData->id)
                 ->join('rooms', 'devices.room_id', '=', 'rooms.id')
                 ->get();
