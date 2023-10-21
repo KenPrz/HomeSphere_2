@@ -67,24 +67,35 @@ const validateForm = () => {
 <template>
     <div class="container bg-white">
         <div class="flex flex-col p-5">
-            <div class="text-xl font-semibold">
+            <div class="text-center text-2xl font-bold">
                 <h1>Profile Picture</h1>
             </div>
             <div class="flex flex-col items-center">
                 <div v-if="!imagePreview">
-                    <ImageContainer :imageSize="24" :imageVal="$page.props.auth.user.profile_image"
-                        borderRadius="rounded-full" pointerType="cursor-pointer"></ImageContainer>
+                    <v-img 
+                        class="rounded-full mx-auto"
+                        width="300"
+                        :aspect-ratio="1"
+                        :src="`storage/${$page.props.auth.user.profile_image}`"
+                        cover
+                        >
+                    </v-img>
                 </div>
                 <form @submit.prevent="submit" class="flex flex-col gap-4" id="image">
                     <div class="mt-2" v-if="imagePreview">
-                        <div class="flex flex-col items-center">
-                            <img :src="imagePreview" alt="Selected Image" class="rounded-full w-24 h-24" />
-                        </div>
+                        <v-img 
+                            class="rounded-full mx-auto"
+                            width="300"
+                            :aspect-ratio="1"
+                            :src="imagePreview"
+                            cover
+                        >
+                        </v-img>
                     </div>
                     <input type="file" @change="onFileChange" class="border p-2 rounded-md" />
                     <button type="submit"
                         class="bg-cyan-900 text-white px-4 py-2 rounded-3xl hover:bg-blue-600 transition duration-300">
-                        <span class="text-sm font-light">Upload</span>
+                        <span class="text-md font-medium">Upload</span>
                     </button>
                     <InputError class="mt-2" :message="form.errors.avatar" />
                 </form>
