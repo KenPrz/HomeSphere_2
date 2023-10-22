@@ -1,3 +1,12 @@
+<script setup>
+import ToggleSwitch from "@/Components/ToggleSwitch.vue";
+
+const { device, customClass } = defineProps({
+    device: Object,
+    customClass: String,
+});
+</script>
+
 <template>
     <div>
         <div
@@ -33,11 +42,19 @@
         </div>
     </div>
 </template>
-<script setup>
-import ToggleSwitch from "@/Components/ToggleSwitch.vue";
-
-const { device, customClass } = defineProps({
-    device: Object,
-    customClass: String,
-});
+<script>
+    export default {
+        props: {
+            device: Object,
+            customClass: String,
+        },
+        watch:{
+            'device.is_active': function(){
+                this.inertia.post(`/devices/${this.device.id}`, {
+                    is_active: this.device.is_active,
+                });
+                // TODO USE API
+            }
+        }
+    };
 </script>

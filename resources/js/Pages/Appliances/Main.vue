@@ -32,6 +32,7 @@
                     </Table>
                     </div>
             </div>
+            
         </main>
     </AuthenticatedLayout>
 </template>
@@ -85,6 +86,11 @@ export default {
             handler: throttle(function () {
                 this.$inertia.get('/appliances', { search: this.form.search }, { preserveState: true });
             }, 250),
+        },
+    },
+    methods: {
+        reset() {
+            this.form.search = '';
         },
     },
     
