@@ -16,6 +16,10 @@ class Device extends Model
         'is_active',
     ];
 
+    public function find(){
+        return $this->hasOne(Device::class,'id','');
+    }
+
     public function room()
     {
         return $this->belongsTo(Room::class);
@@ -25,5 +29,4 @@ class Device extends Model
     {
         return $this->belongsToMany(Mode::class);
     }
-
 }

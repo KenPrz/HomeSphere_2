@@ -62,5 +62,6 @@ Route::middleware('auth', 'checkHasHome')->group(function () {
     Route::post('/modes',[ModesController::class, 'editMode'])->name('modes.editMode');
 
     Route::get('/settings',[SettingsController::class, 'index'])->name('settings.index');
+
 });
 require __DIR__.'/auth.php';
