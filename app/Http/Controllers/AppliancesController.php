@@ -23,10 +23,11 @@ class AppliancesController extends Controller
     public function getFilteredAppliances($homeData, $searchData) {
         $query = DB::table('devices')
             ->select(
+                'devices.id',
                 'rooms.room_name',
                 'devices.device_type',
                 'devices.device_name',
-                DB::raw('CASE WHEN devices.is_active = 1 THEN "true" ELSE "false" END AS is_active')
+                'devices.is_active'
             )
             ->where('rooms.home_id', $homeData->id)
             ->join('rooms', 'devices.room_id', '=', 'rooms.id');
@@ -49,9 +50,10 @@ class AppliancesController extends Controller
         return DB::table('devices')
                 ->select(
                     'rooms.room_name',
+                    'devices.id',
                     'devices.device_type',
                     'devices.device_name',
-                    DB::raw('CASE WHEN devices.is_active = 1 THEN "true" ELSE "false" END AS is_active')
+                    'devices.is_active'
                 )->where('rooms.home_id', $homeData->id)
                 ->join('rooms', 'devices.room_id', '=', 'rooms.id')
                 ->get();

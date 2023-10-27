@@ -1,7 +1,7 @@
 <script setup>
 defineProps({
     message: {
-        type: String,
+        type: Array,
     },
 });
 </script>

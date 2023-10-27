@@ -72,14 +72,26 @@ const validateForm = () => {
             </div>
             <div class="flex flex-col items-center">
                 <div v-if="!imagePreview">
-                    <v-img 
-                        class="rounded-full mx-auto"
-                        width="300"
-                        :aspect-ratio="1"
-                        :src="`storage/${$page.props.auth.user.profile_image}`"
-                        cover
-                        >
-                    </v-img>
+                    <div v-if="$page.props.auth.user.profile_image">
+                        <v-img 
+                            class="rounded-full mx-auto"
+                            width="300"
+                            :aspect-ratio="1"
+                            :src="`storage/${$page.props.auth.user.profile_image}`"
+                            cover
+                            >
+                        </v-img>
+                    </div>
+                    <div v-else>
+                        <v-img 
+                            class="rounded-full mx-auto"
+                            width="300"
+                            :aspect-ratio="1"
+                            :src="`img-assets/default_avatar.png`"
+                            cover
+                            >
+                        </v-img>
+                    </div>
                 </div>
                 <form @submit.prevent="submit" class="flex flex-col gap-4" id="image">
                     <div class="mt-2" v-if="imagePreview">

@@ -20,44 +20,49 @@ import Modal from './Modal.vue';
                             class="min-w-full flex justify-between mb-2 rounded-md text-sm text-left text-black bg-white hover:bg-gray-300 cursor-pointer">
                             <div v-for="(cell, cellIndex) in row" :key="cellIndex"
                                 class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">
-                                {{ cell }}
+                                <div v-if="cellIndex === 'is_active'">
+                                    {{ cell ? "Active" : "Inactive" }}
+                                </div>
+                                <div v-else>
+                                    {{ cell }}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <slot />
-                <div v-if="Pagenated" class="flex justify-between items-center">
-                    <span class="text-gray-800 text-xs"> showing <b class="text-black">{{ currentPage }}</b> of <b
-                            class="text-black"> {{ totalPages }}</b> entries</span>
-                    <!-- Previous Page Button -->
-                    <div class="flex items-center bg-white rounded-md border-2">
-                        <button @click="currentPage -= 1" :disabled="currentPage === 1"
-                            class="px-2 py-1 border-slate hover:bg-slate-200 duration-200 cursor-pointer transition-colors">
-                            Previous
-                        </button>
-                        <!-- Page Numbers -->
-                        <div>
-                            <button v-for="pageNumber in totalPages" :key="pageNumber" @click="goToPage(pageNumber)"
-                                class="px-3 py-1 border-slate "
-                                :class="{ 'bg-gray-500 text-white': pageNumber === currentPage, 'bg-gray-100 text-gray-700': pageNumber !== currentPage }">
-                                {{ pageNumber }}
+                    <slot />
+                    <div v-if="Pagenated" class="flex justify-between items-center">
+                        <span class="text-gray-800 text-xs"> showing <b class="text-black">{{ currentPage }}</b> of <b
+                                class="text-black"> {{ totalPages }}</b> entries</span>
+                        <!-- Previous Page Button -->
+                        <div class="flex items-center bg-white rounded-md border-2">
+                            <button @click="currentPage -= 1" :disabled="currentPage === 1"
+                                class="px-2 py-1 border-slate hover:bg-slate-200 duration-200 cursor-pointer transition-colors">
+                                Previous
+                            </button>
+                            <!-- Page Numbers -->
+                            <div>
+                                <button v-for="pageNumber in totalPages" :key="pageNumber" @click="goToPage(pageNumber)"
+                                    class="px-3 py-1 border-slate "
+                                    :class="{ 'bg-gray-500 text-white': pageNumber === currentPage, 'bg-gray-100 text-gray-700': pageNumber !== currentPage }">
+                                    {{ pageNumber }}
+                                </button>
+                            </div>
+                            <!-- Next Page Button -->
+                            <button @click="currentPage += 1" :disabled="currentPage === totalPages"
+                                class="px-2  py-1 border-slate rounded-r-md bg-zinc-600 text-white">
+                                Next
                             </button>
                         </div>
-                        <!-- Next Page Button -->
-                        <button @click="currentPage += 1" :disabled="currentPage === totalPages"
-                            class="px-2  py-1 border-slate rounded-r-md bg-zinc-600 text-white">
-                            Next
-                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-        <Modal :maxWidth="'sm'" :show="isDeviceModalVisible" @close="closeDeviceModal">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <DeviceModal :device="selectedRow" />
-            </div>
-        </Modal>
+    <Modal :maxWidth="'sm'" :show="isDeviceModalVisible" @close="closeDeviceModal">
+        <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+            <DeviceModal :device="selectedRow" />
+        </div>
+    </Modal>
 </template>
 <script>
 import DeviceModal from './DeviceModal.vue';
@@ -110,6 +115,25 @@ export default {
         },
         closeDeviceModal() {
             this.isDeviceModalVisible = false;
+        },
+        submit() {
+            axios.post(`/api/toggle`, {
+                device_id: this.device.id,
+                is_active: this.device.is_active,
+            })
+                .then(response => {
+                    // Handle the response as needed.
+
+                    console.log(response);
+                })
+                .catch(error => {
+                    // Handle the error as needed.
+
+                    console.log(error);
+                });
+        },
+        'device.is_active': function () {
+            this.submit();
         },
     },
 };

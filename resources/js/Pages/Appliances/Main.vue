@@ -66,6 +66,9 @@ export default {
             },
             tableHeaders: [
                 {
+                    text: "ID",
+                },
+                {
                     text: "Room",
                 },
                 {

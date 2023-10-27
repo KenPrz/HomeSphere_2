@@ -9,25 +9,23 @@
 <template>
     <div class="container">
         <div class="flex flex-col">
-            <div class="text-md font-semibold">
+            <div class="text-xl text-center font-semibold">
                 {{ device.device_name }}
             </div>
-            <div class="flex flex-row">
-                <div class="flex flex-col">
-                    <div class="text-sm font-semibold">
-                        Device Type
-                    </div>
-                    <div class="text-sm">
-                        {{ device.device_type }}
-                    </div>
+            <div class="text-md">
+                <div class="font md">
+                    Type: <span class="fond-semibold">{{ device.device_type }}</span>
                 </div>
-                <div class="flex flex-col">
-                    <div class="text-sm font-semibold">
-                        Device Status: {{ device.is_active }}
-                    </div>
-                    <div class="text-sm">
-                        <ToggleSwitch v-model="device.is_active" />
-                    </div>
+                
+                <div class="font md">
+                    Room: <span class="fond-semibold">{{ device.room_name }}</span>
+                </div>
+                
+                <div class="font md flex">
+                    State:  <span class="fond-semibold ms-2">
+                                <ToggleSwitch v-model:modelValue="device.is_active"/>
+                                {{ device.is_active }}
+                            </span>
                 </div>
             </div>
         </div>
