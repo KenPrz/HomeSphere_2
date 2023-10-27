@@ -24,7 +24,7 @@ import { defineProps, defineEmits } from "vue";
 import { useForm } from "@inertiajs/vue3";
 
 const props = defineProps({
-    show: Boolean, // Assuming you receive a 'show' prop from the parent modal component.
+    show: Boolean,
 });
 
 const emit = defineEmits(["close"]);

@@ -60,7 +60,7 @@ import Modal from './Modal.vue';
     </div>
     <Modal :maxWidth="'sm'" :show="isDeviceModalVisible" @close="closeDeviceModal">
         <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-            <DeviceModal :device="selectedRow" />
+            <DeviceModal @close="closeDeviceModal" :device="selectedRow" />
         </div>
     </Modal>
 </template>
@@ -115,25 +115,6 @@ export default {
         },
         closeDeviceModal() {
             this.isDeviceModalVisible = false;
-        },
-        submit() {
-            axios.post(`/api/toggle`, {
-                device_id: this.device.id,
-                is_active: this.device.is_active,
-            })
-                .then(response => {
-                    // Handle the response as needed.
-
-                    console.log(response);
-                })
-                .catch(error => {
-                    // Handle the error as needed.
-
-                    console.log(error);
-                });
-        },
-        'device.is_active': function () {
-            this.submit();
         },
     },
 };
