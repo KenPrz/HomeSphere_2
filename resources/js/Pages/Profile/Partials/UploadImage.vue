@@ -2,7 +2,6 @@
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
 import InputError from "@/Components/InputError.vue";
-import ImageContainer from "@/Components/ImageContainer.vue";
 import { defineEmits } from "vue";
 
 const emit = defineEmits(["close"]);
@@ -104,7 +103,7 @@ const validateForm = () => {
                         >
                         </v-img>
                     </div>
-                    <input type="file" @change="onFileChange" class="border p-2 rounded-md" />
+                    <input type="file" @change="onFileChange" class="border p-2 rounded-md">
                     <button type="submit"
                         class="bg-cyan-900 text-white px-4 py-2 rounded-3xl hover:bg-blue-600 transition duration-300">
                         <span class="text-md font-medium">Upload</span>

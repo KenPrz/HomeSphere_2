@@ -23,11 +23,6 @@ const props = defineProps({
                         <p class="mt-1 text-sm">{{ room.device_count + ' Appliance(s)' }}</p>
                     </div>
                     <div class="right-section ml-4 flex-grow mr-2">
-                        <div class="flex justify-end">
-                            <ToggleSwitch
-                                v-model="room.is_active"
-                            />
-                        </div>
                         <div class="flex flex-col items-start">
                             <div class="mt-3">
                                 <h1 class="text-sm font-semibold">Temperature</h1>
