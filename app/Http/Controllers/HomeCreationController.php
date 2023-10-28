@@ -30,7 +30,7 @@ class HomeCreationController extends Controller
         $appUtilities = New AppUtilities;
         
         $homeData = $appUtilities->findHomeData($user);
-        if ($homeData) {
+        if ($homeData->role == 'member' || $homeData->role == 'owner') {
             $rooms = Room::with('devices', 'tempSensor', 'humiditySensor', 'motionSensor')
                 ->where('home_id', $homeData->id)
                 ->select(['rooms.*'])
@@ -51,7 +51,18 @@ class HomeCreationController extends Controller
                     'api_key' => $api_key,
                 ]);
         }
-        return redirect()->route('create_home');
+        else if ($homeData->role == 'pending') {
+            return Inertia::render('Dashboard',[
+                'userData' => $homeData,
+                'userList' => null, 
+                'appliances' => null,
+                'rooms' => null,
+                'api_key' => null,
+            ]);
+        }
+        else {
+            return redirect()->route('create_home');
+        }
     }
 
 
@@ -101,7 +112,8 @@ class HomeCreationController extends Controller
         DB::table('home_members')->insert([
             'home_id' => DB::table('homes')->where('invite_code', $invite_code)->first()->id,
             'member_id' => $owner_id,
-            'is_owner' => true,
+            'role' => 'owner',
+            'joined_on' => now(),
             'created_at' => now(),
         ]);
 
@@ -136,10 +148,10 @@ class HomeCreationController extends Controller
         DB::table('home_members')->insert([
             'home_id' => $home_id,
             'member_id' => $user_id,
-            'is_owner' => false,
+            'role' => 'pending',
             'created_at' => now(),
         ]);
-        User::where('id', Auth::id())->update(['is_online' => true, 'has_home' => true]);
+        User::where('id', Auth::id())->update(['is_online' => true, 'has_home' => false]);
         return redirect()->route('dashboard');
     }
 }

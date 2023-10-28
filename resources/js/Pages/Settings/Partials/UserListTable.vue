@@ -1,7 +1,3 @@
-<script setup>
-import DeviceModal from './DeviceModal.vue';
-import Modal from './Modal.vue';
-</script>
 <template>
     <div class="flex flex-col">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -58,11 +54,6 @@ import Modal from './Modal.vue';
             </div>
         </div>
     </div>
-    <Modal :maxWidth="'sm'" :show="isDeviceModalVisible" @close="closeDeviceModal">
-        <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-            <DeviceModal @close="closeDeviceModal" :device="selectedRow" />
-        </div>
-    </Modal>
 </template>
 <script>
 

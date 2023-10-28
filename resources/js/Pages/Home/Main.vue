@@ -2,6 +2,7 @@
 import Table from "@/Components/Table.vue";
 import ModeCard from "@/Pages/Home/Partials/ModeCard.vue";
 import { Link } from '@inertiajs/vue3';
+import WaitingForVerification from "./Partials/WaitingForVerification.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import SwiperCard from "@/Pages/Home/Partials/SwiperCard.vue";
 import UserList from "@/Pages/Home/Partials/UserList.vue";
@@ -17,7 +18,7 @@ import { Head } from "@inertiajs/vue3";
             </h2>
         </template>
         <main>
-            <div class="grid grid-cols-1 md:grid-cols-7 grid-rows-7 gap-2">
+            <div v-if="$page.props.auth.user.has_home" class="grid grid-cols-1 md:grid-cols-7 grid-rows-7 gap-2">
                 <!-- Left Column -->
                 <div class="col-span-1 md:col-span-5 row-span-7">
                     <div    class="grid grid-cols-5 grid-rows-7 gap-2">
@@ -74,6 +75,9 @@ import { Head } from "@inertiajs/vue3";
                         </div>
                     </div>
                 </div>
+            </div>
+            <div v-else>
+                <WaitingForVerification />
             </div>
         </main>
     </AuthenticatedLayout>

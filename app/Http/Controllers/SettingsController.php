@@ -15,9 +15,10 @@ class SettingsController extends Controller
         $user = auth()->user();
         $homeData = $appUtilities->findHomeData($user);
         $apiKey = $appUtilities->getApiKey($homeData);
-
+        $homeMembers = $appUtilities->getHomeMembers($homeData->id);
         return Inertia::render('Settings/Main',[
             'homeData' => $homeData,
+            'homeMembers' => $homeMembers,
             'api_key' => $apiKey
         ]);
     }

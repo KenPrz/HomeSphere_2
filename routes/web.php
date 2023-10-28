@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AppliancesController;
+use App\Http\Controllers\CancelRequest;
 use App\Http\Controllers\ImageHandlerController;
 use App\Http\Controllers\HomeCreationController;
 use App\Http\Controllers\HomeDataController;
@@ -49,6 +50,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile', [ImageHandlerController::class, 'imageUpload'])->name('image.upload');
     Route::delete('/profile', [ImageHandlerController::class, 'deleteImage'])->name('image.delete');
+
+    Route::delete('/cancel',[CancelRequest::class, 'cancel'])->name('cancel.request');
 });
 
 Route::middleware('auth', 'checkHasHome')->group(function () {

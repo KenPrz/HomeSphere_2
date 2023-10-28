@@ -1,5 +1,6 @@
 <script setup>
 import { Head } from "@inertiajs/vue3";
+import UserListTable from "./Partials/UserListTable.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 </script>
 <template>
@@ -12,24 +13,88 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
         </template>
         <main>
             <div class="container">
-                <div class="flex-row w-full">
-                    <div class="w-full font-semibold text-2xl">
-                        Settings
-                    </div>
-                </div>
-                <div class="flex flex-col text-md font-semibold">
-                    <div class="flex">
-                        <div v-if="$page.props.homeData.is_owner == 1" class="text-md font-light">
-                            {{ 'Your Api Key: ' + $page.props.api_key.api_key }}
-                        </div>
-                    </div>
-                    <div class="flex">
-                        <div class="text-md font-light">
-                            {{ 'Your Invite Code: ' + $page.props.homeData.invite_code }}
-                        </div>
-                    </div>
-                </div>
+                <h1 class="text-3xl mb-2 font-bold tracking-wide">
+                    Settings
+                </h1>
+                <v-card>
+                    <v-tabs v-model="tab" class="custom-tabs">
+                        <v-tab value="user">Users</v-tab>
+                        <v-tab value="codes">Codes</v-tab>
+                        <v-tab value="delete">Delete Home</v-tab>
+                    </v-tabs>
+                    <v-card-text>
+                        <v-window v-model="tab">
+                            <v-window-item value="user"> 
+                                <div class="mx-3">
+                                    <h1 class="text-md font-medium">List of Users</h1>
+                                </div>
+                                <v-container>
+                                    <UserListTable
+                                        :tableHeaders="tableHeaders"
+                                        :tableData="$page.props.homeMembers"
+                                        :maxHeight="maxHeight"
+                                        :itemsPerPage="7"
+                                        :Pagenated="true"
+                                    />
+                                </v-container>
+                            </v-window-item>
+
+                            <v-window-item value="codes"> 
+                                <div class="mx-3">
+                                    <h1 class="text-md font-medium">Home Codes</h1>
+                                </div>
+                                <v-container>
+                                    <v-card>
+                                        {{ "Invite Code:" + $page.props.homeData.invite_code }}
+                                    </v-card>
+                                    <v-card>
+                                        {{ "API Key:" + $page.props.api_key.api_key }}
+                                    </v-card>
+                                </v-container>
+                            </v-window-item>
+
+                            <v-window-item value="delete"> 
+                                <div class="mx-3">
+                                    <h1 class="text-md font-medium text-red-600">
+                                        Delete Home
+                                    </h1>
+                                </div>
+                            </v-window-item>
+                        </v-window>
+                    </v-card-text>
+                </v-card>
             </div>
         </main>
     </AuthenticatedLayout>
 </template>
+<script>
+export default {
+    data: () => ({
+        tab: null,
+        tableHeaders: [
+                {
+                    text: "First Name",
+                },
+                {
+                    text: "Last Name",
+                },
+                {
+                    text: "Role",
+                },
+                {
+                    text: "Join Date",
+                },
+            ],
+            maxHeight: "max-h-92",
+    }),
+}
+</script>
+<style scoped>
+.custom-tabs {
+    background-color: white;
+}
+
+.custom-tabs v-tab {
+    color: white;
+}
+</style>
