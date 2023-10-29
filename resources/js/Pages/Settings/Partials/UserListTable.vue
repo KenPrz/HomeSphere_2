@@ -1,110 +1,104 @@
+<script setup>
+import { defineProps, ref } from 'vue';
+import Modal from '@/Components/Modal.vue';
+import UserSettingModal from './UserSettingModal.vue';
+import { router } from '@inertiajs/vue3'
+defineProps({
+    homeMembers: {
+        type: Array,
+        required: true,
+    },
+    headerText: {
+        type: Array,
+        required: true,
+    }
+});
+</script>
 <template>
-    <div class="flex flex-col">
-        <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div class="py-2 inline-block w-full sm:px-6 lg:px-8">
-                <!-- Add a container with a fixed height and overflow-y-auto -->
-                <div
-                    class="min-w-full justify-between flex mx-0 mb-2 text-base text-left text-white rounded-tl-lg rounded-tr-lg bg-zinc-600">
-                    <div v-for="(header, index) in tableHeaders" :key="index"
-                        class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">
-                        {{ header.text }}
-                    </div>
-                </div>
-                <div class="overflow-y-auto" :class="maxHeight">
-                    <div class="mx-0">
-                        <div @click="showDeviceModal(row)" v-for="(row, rowIndex) in paginatedData" :key="rowIndex"
-                            class="min-w-full flex justify-between mb-2 rounded-md text-sm text-left text-black bg-white hover:bg-gray-300 cursor-pointer">
-                            <div v-for="(cell, cellIndex) in row" :key="cellIndex"
-                                class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">
-                                <div v-if="cellIndex === 'is_active'">
-                                    {{ cell ? "Active" : "Inactive" }}
-                                </div>
-                                <div v-else>
-                                    {{ cell }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <slot />
-                    <div v-if="Pagenated" class="flex justify-between items-center">
-                        <span class="text-gray-800 text-xs"> showing <b class="text-black">{{ currentPage }}</b> of <b
-                                class="text-black"> {{ totalPages }}</b> entries</span>
-                        <!-- Previous Page Button -->
-                        <div class="flex items-center bg-white rounded-md border-2">
-                            <button @click="currentPage -= 1" :disabled="currentPage === 1"
-                                class="px-2 py-1 border-slate hover:bg-slate-200 duration-200 cursor-pointer transition-colors">
-                                Previous
-                            </button>
-                            <!-- Page Numbers -->
-                            <div>
-                                <button v-for="pageNumber in totalPages" :key="pageNumber" @click="goToPage(pageNumber)"
-                                    class="px-3 py-1 border-slate "
-                                    :class="{ 'bg-gray-500 text-white': pageNumber === currentPage, 'bg-gray-100 text-gray-700': pageNumber !== currentPage }">
-                                    {{ pageNumber }}
-                                </button>
-                            </div>
-                            <!-- Next Page Button -->
-                            <button @click="currentPage += 1" :disabled="currentPage === totalPages"
-                                class="px-2  py-1 border-slate rounded-r-md bg-zinc-600 text-white">
-                                Next
-                            </button>
-                        </div>
-                    </div>
+    <table class="min-w-full">
+        <thead>
+            <tr>
+                <th v-for="item in headerText" class="px-6 py-3 text-left">{{ item.text }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            <template v-if="$page.props.homeData.role == 'owner'">
+                <tr @click="showUserSettingModal(member)" v-for="member in $page.props.homeMembers"
+                    :key="`owner-${member.id}`" class="odd:bg-gray-100 even:bg-white hover:bg-gray-200 cursor-pointer">
+                    <td class="px-6 py-4">{{ member.firstName }}</td>
+                    <td class="px-6 py-4">{{ member.lastName }}</td>
+                    <td class="px-6 py-4">{{ member.role }}</td>
+                    <td class="px-6 py-4">{{ member.joined_on }}</td>
+                </tr>
+            </template>
+            <template v-else>
+                <tr v-for="member in $page.props.homeMembers" :key="`non-owner-${member.id}`"
+                    class="odd:bg-gray-100 even:bg-white hover:bg-gray-200 cursor-pointer">
+                    <td class="px-6 py-4">{{ member.firstName }}</td>
+                    <td class="px-6 py-4">{{ member.lastName }}</td>
+                    <td class="px-6 py-4">{{ member.role }}</td>
+                    <td class="px-6 py-4">{{ member.joined_on }}</td>
+                </tr>
+            </template>
+        </tbody>
+
+    </table>
+    <Modal maxWidth="sm" :show="showUserSetting" @close="hideUserSettingModal">
+        <div v-if="member.role == 'member' || member.role == 'owner'">
+            <UserSettingModal :userData="member" />
+        </div>
+        <div v-else-if="member.role == 'pending'">
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Approve User Membership Request?</h2>
+                <p class="text-gray-600 mb-4 text-md">Do you want to approve this user's request to become a member?</p>
+                <div class="flex justify-end">
+                    <button @click="approveUser(member)"
+                        class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg mr-4 hover:bg-gray-400 transition duration-300">
+                        Yes, approve
+                    </button>
+                    <button @click="rejectUser(member)"
+                        class="flex-1 bg-red-500 text-white mr-6 px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300">
+                        No, Reject
+                    </button>
                 </div>
             </div>
         </div>
-    </div>
+    </Modal>
 </template>
 <script>
 
 export default {
-    props: {
-        tableHeaders: Array,
-        tableData: Array,
-        maxHeight: String,
-        itemsPerPage: {
-            type: Number,
-            default: 5,
-        },
-        Pagenated: {
-            type: Boolean,
-            default: true,
-        }
-    },
     data() {
         return {
-            currentPage: 1,
-            isDeviceModalVisible: false,
-            selectedRow: null,
+            user: null,
+            showUserSetting: false,
         };
     },
-    computed: {
-        startIndex() {
-            return (this.currentPage - 1) * this.itemsPerPage;
-        },
-        endIndex() {
-            return this.currentPage * this.itemsPerPage;
-        },
-        paginatedData() {
-            return this.tableData.slice(this.startIndex, this.endIndex);
-        },
-        totalPages() {
-            return Math.ceil(this.tableData.length / this.itemsPerPage);
-        },
-    },
     methods: {
-        goToPage(pageNumber) {
-            if (pageNumber >= 1 && pageNumber <= this.totalPages) {
-                this.currentPage = pageNumber;
-            }
+        showUserSettingModal(row) {
+            this.member = row;
+            this.showUserSetting = true;
         },
-        showDeviceModal(row) {
-            this.selectedRow = row;
-            this.isDeviceModalVisible = true;
+        hideUserSettingModal() {
+            this.showUserSetting = false;
         },
-        closeDeviceModal() {
-            this.isDeviceModalVisible = false;
+        approveUser(member) {
+            this.$inertia.post(route('member.approve', {member}), {
+                onSuccess: () => {
+                    this.hideUserSettingModal();
+                    router.go(0);
+                }
+            });
+            this.hideUserSettingModal();
         },
+        rejectUser(member) {
+            this.$inertia.post(route('member.reject', {member}), {
+                onSuccess: () => {
+                    this.hideUserSettingModal();
+                    router.go(0);
+                }
+            });
+        }
     },
-};
+}
 </script>

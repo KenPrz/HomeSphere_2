@@ -8,7 +8,7 @@
             <a target="_blank" href="https://github.com/KenPrz/HomeSphere_2/wiki">Read the Documentation</a>
         </button>
         <button @click="confirmDelete()" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-4 rounded-full mt-4 w-64">
-            <Link>Cancel Request</Link>
+            Cancel Request
         </button>
     </div>
     <!-- {{ $page.props }} -->

@@ -7,13 +7,25 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy/dist/vue.m';
 
 // import 'vuetify/styles'
-import {createVuetify} from 'vuetify'
+import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
+import colors from 'vuetify/lib/util/colors'
 
 const vuetify = createVuetify({
     components,
     directives,
+    theme: {
+        themes: {
+            light: {
+                dark: false,
+                colors: {
+                    primary: colors.grey.darken3,
+                    secondary: colors.grey.lighten2,
+                }
+            },
+        },
+    },
 })
 
 
@@ -28,7 +40,7 @@ createInertiaApp({
             .use(plugin)
             .use(ZiggyVue, Ziggy)
             .mount(el);
-            
+
     },
     progress: {
         color: '#4B5563',

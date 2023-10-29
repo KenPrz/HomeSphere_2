@@ -6,6 +6,7 @@ use App\Http\Controllers\CancelRequest;
 use App\Http\Controllers\ImageHandlerController;
 use App\Http\Controllers\HomeCreationController;
 use App\Http\Controllers\HomeDataController;
+use App\Http\Controllers\HomeMemberController;
 use App\Http\Controllers\ModesController;
 use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\SettingsController;
@@ -65,6 +66,9 @@ Route::middleware('auth', 'checkHasHome')->group(function () {
     Route::post('/modes',[ModesController::class, 'editMode'])->name('modes.editMode');
 
     Route::get('/settings',[SettingsController::class, 'index'])->name('settings.index');
+
+    Route::post('/approve',[HomeMemberController::class,'approveUser'])->name('member.approve');
+    Route::post('/reject',[HomeMemberController::class, 'rejectUser'])->name('member.reject');
 
 });
 require __DIR__.'/auth.php';

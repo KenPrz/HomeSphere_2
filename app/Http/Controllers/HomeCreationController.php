@@ -30,7 +30,10 @@ class HomeCreationController extends Controller
         $appUtilities = New AppUtilities;
         
         $homeData = $appUtilities->findHomeData($user);
-        if ($homeData->role == 'member' || $homeData->role == 'owner') {
+        if(!$homeData) {
+            return redirect()->route('create_home');
+        }
+        else if ($homeData->role == 'member' || $homeData->role == 'owner') {
             $rooms = Room::with('devices', 'tempSensor', 'humiditySensor', 'motionSensor')
                 ->where('home_id', $homeData->id)
                 ->select(['rooms.*'])
@@ -59,9 +62,6 @@ class HomeCreationController extends Controller
                 'rooms' => null,
                 'api_key' => null,
             ]);
-        }
-        else {
-            return redirect()->route('create_home');
         }
     }
 

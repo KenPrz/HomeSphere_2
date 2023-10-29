@@ -16,11 +16,17 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
                 <h1 class="text-3xl mb-2 font-bold tracking-wide">
                     Settings
                 </h1>
-                <v-card>
-                    <v-tabs v-model="tab" class="custom-tabs">
-                        <v-tab value="user">Users</v-tab>
-                        <v-tab value="codes">Codes</v-tab>
-                        <v-tab value="delete">Delete Home</v-tab>
+                <v-card >
+                    <v-tabs bg-color="primary" color="secondary" v-model="tab">
+                        <v-tab value="user">
+                            Users
+                        </v-tab>
+                        <v-tab value="codes">
+                            Codes
+                        </v-tab>
+                        <v-tab value="delete">
+                            Home Settings
+                        </v-tab>
                     </v-tabs>
                     <v-card-text>
                         <v-window v-model="tab">
@@ -29,12 +35,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
                                     <h1 class="text-md font-medium">List of Users</h1>
                                 </div>
                                 <v-container>
-                                    <UserListTable
-                                        :tableHeaders="tableHeaders"
-                                        :tableData="$page.props.homeMembers"
-                                        :maxHeight="maxHeight"
-                                        :itemsPerPage="7"
-                                        :Pagenated="true"
+                                    <UserListTable 
+                                    :homeMembers="$page.props.homeMembers"
+                                    :headerText="tableHeaders"
                                     />
                                 </v-container>
                             </v-window-item>
@@ -43,12 +46,28 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
                                 <div class="mx-3">
                                     <h1 class="text-md font-medium">Home Codes</h1>
                                 </div>
-                                <v-container>
-                                    <v-card>
-                                        {{ "Invite Code:" + $page.props.homeData.invite_code }}
+                                <v-container class="flex flex-col">
+                                    <v-card class="my-3">
+                                        <v-card-title>
+                                            <h1 class="text-md font-medium">Invite Code</h1>
+                                        </v-card-title>
+                                        <v-card-subtitle>
+                                            <h1 class="text-md font-medium">This is your unique invite code</h1>
+                                            <v-card-text>
+                                                {{$page.props.homeData.invite_code }}
+                                            </v-card-text>
+                                        </v-card-subtitle>
                                     </v-card>
-                                    <v-card>
-                                        {{ "API Key:" + $page.props.api_key.api_key }}
+                                    <v-card v-if="$page.props.api_key">
+                                        <v-card-title>
+                                            <h1 class="text-md font-medium">Api Key</h1>
+                                        </v-card-title>
+                                        <v-card-subtitle>
+                                            <h1 class="text-md font-medium">Invite Code</h1>
+                                            <v-card-text>
+                                                {{$page.props.api_key.api_key }}
+                                            </v-card-text>
+                                        </v-card-subtitle>
                                     </v-card>
                                 </v-container>
                             </v-window-item>
@@ -89,12 +108,5 @@ export default {
     }),
 }
 </script>
-<style scoped>
-.custom-tabs {
-    background-color: white;
-}
 
-.custom-tabs v-tab {
-    color: white;
-}
-</style>
+

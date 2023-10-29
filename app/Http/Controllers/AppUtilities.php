@@ -9,18 +9,12 @@ class AppUtilities extends Controller
 {
     public function findHomeData($user)
     {
+        //this is for the owner
         $homeData = DB::table('homes')
-            ->where('owner_id', $user->id)
-            ->select('*', DB::raw('1 as is_owner'))
-            ->first();
-    
-        if (!$homeData) {
-            $homeData = DB::table('homes')
                 ->join('home_members', 'homes.id', '=', 'home_members.home_id')
                 ->where('home_members.member_id', $user->id)
                 ->select('homes.*', 'home_members.role')
                 ->first();
-        }
 
         return $homeData;
     }
@@ -33,7 +27,7 @@ class AppUtilities extends Controller
     public function getHomeMembers($homeId){
         $homeMembers = DB::table('home_members')
                 ->join('users', 'home_members.member_id', '=', 'users.id')
-                ->select('users.firstName', 'users.lastName', 'home_members.role', 'home_members.joined_on')
+                ->select('users.id', 'users.firstName', 'users.lastName', 'home_members.role', 'home_members.joined_on')
                 ->where('home_members.home_id', $homeId)
                 ->orderBy('home_members.role','asc')
                 ->get();
