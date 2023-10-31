@@ -37,7 +37,8 @@ defineProps({
                     <td class="px-6 py-4">{{ member.firstName }}</td>
                     <td class="px-6 py-4">{{ member.lastName }}</td>
                     <td class="px-6 py-4">{{ member.role }}</td>
-                    <td class="px-6 py-4">{{ member.joined_on }}</td>
+                    <td class="px-6 py-4" v-if="member.joined_on==null">----------</td>
+                    <td class="px-6 py-4" v-else>{{ member.joined_on }}</td>
                 </tr>
             </template>
         </tbody>
