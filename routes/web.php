@@ -68,7 +68,8 @@ Route::middleware('auth', 'checkHasHome')->group(function () {
     Route::get('/settings',[SettingsController::class, 'index'])->name('settings.index');
 
     Route::post('/approve',[HomeMemberController::class,'approveUser'])->name('member.approve');
-    Route::post('/reject',[HomeMemberController::class, 'rejectUser'])->name('member.reject');
+    Route::delete('/reject',[HomeMemberController::class, 'rejectUser'])->name('member.reject');
+    Route::delete('/kick',[HomeMemberController::class,'kickUser'])->name('member.kick');
 
 });
 require __DIR__.'/auth.php';

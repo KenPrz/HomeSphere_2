@@ -51,10 +51,7 @@
                                     <ButtonLarge
                                         @click="openNameEditModal"
                                         label="Name"
-                                        :text="
-                                            $page.props.auth.user.firstName +
-                                            ' ' +
-                                            $page.props.auth.user.lastName
+                                        :text="capitalizeFirstLetter($page.props.auth.user.firstName) + ' ' + capitalizeFirstLetter($page.props.auth.user.lastName)
                                         "
                                     />
                                     <ButtonLarge
@@ -155,4 +152,15 @@ const openNameEditModal = () => {
 const closeNameEditModal = () => {
     showNameEditModal.value = false;
 };
+
+</script>
+<script>
+    export default {
+        methods:{
+            capitalizeFirstLetter(str) {
+            if (!str) return "";
+            return str.charAt(0).toUpperCase() + str.slice(1);
+            },
+        }
+    }
 </script>

@@ -86,7 +86,7 @@ import Modal from "@/Components/Modal.vue";
                     </li>
                 </SideNavLink>
             </ul>
-            <div class="h-full w-auto">
+            <div class="hidden sm:block lg:text-md h-full w-auto">
                 <a @click="openLogoutModal"  href="#" class="absolute bottom-0">
                     <li class="flex mb-4 ms-4">
                         <img :src="'/img-assets/nav-vectors/logout.svg'" alt="Settings" class="w-5 h-auto lg:mr-3 lg:ml-5" />
@@ -105,13 +105,13 @@ import Modal from "@/Components/Modal.vue";
         <div class="flex">
             <button
                 @click="closeLogoutModal"
-                class="flex-1 bg-gray-300 text-gray-700 px-4 py-2 rounded-lg mr-4 hover:bg-gray-400 transition duration-300"
+                class="flex-1 text-sm bg-gray-300 text-gray-700 px-4 py-2 rounded-lg mr-4 hover:bg-gray-400 transition duration-300"
             >
                 No, cancel
             </button>
             <Link :href="route('logout')"
                 method="post" as="button"
-                class="flex-1 bg-red-500 text-white mr-6 px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300"
+                class="flex-1 text-sm bg-red-500 text-white mr-6 px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300"
             >
                 Yes, logout
             </Link>

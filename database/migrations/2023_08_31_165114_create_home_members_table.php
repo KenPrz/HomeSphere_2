@@ -17,6 +17,7 @@ return new class extends Migration
             $table->primary(['home_id', 'member_id']);
             $table->enum('role', ['owner', 'member', 'pending']);
             $table->date('joined_on')->nullable();
+            $table->date('applied_on')->nullable();
             $table->foreign('home_id')->references('id')->on('homes');
             $table->foreign('member_id')->references('id')->on('users');
             //make user wait to be approved by owner
