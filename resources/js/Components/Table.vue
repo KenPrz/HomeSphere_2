@@ -6,7 +6,6 @@ import Modal from './Modal.vue';
     <div class="flex flex-col">
         <div class="overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 inline-block w-full sm:px-6 lg:px-8">
-                <!-- Add a container with a fixed height and overflow-y-auto -->
                 <div
                     class="min-w-full justify-between flex mx-0 mb-2 text-base text-left text-white rounded-tl-lg rounded-tr-lg bg-zinc-600">
                     <div v-for="(header, index) in tableHeaders" :key="index"
@@ -16,16 +15,20 @@ import Modal from './Modal.vue';
                 </div>
                 <div class="overflow-y-auto" :class="maxHeight">
                     <div class="mx-0">
-                        <div @click="showDeviceModal(row)" v-for="(row, rowIndex) in paginatedData" :key="rowIndex"
+                        <!-- {{ paginatedData }} -->
+                        <div @click="showDeviceModal(item)" v-for="item in paginatedData" :key="item.id"
                             class="min-w-full flex justify-between mb-2 rounded-md text-sm text-left text-black bg-white hover:bg-gray-300 cursor-pointer">
-                            <div v-for="(cell, cellIndex) in row" :key="cellIndex"
-                                class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">
-                                <div v-if="cellIndex === 'is_active'">
-                                    {{ cell ? "Active" : "Inactive" }}
-                                </div>
-                                <div v-else>
-                                    {{ cell }}
-                                </div>
+                            <div class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">
+                                {{ item.room_name }}
+                            </div>
+                            <div class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">
+                                {{ item.device_type }}
+                            </div>
+                            <div class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">
+                                {{ item.device_name }}
+                            </div>
+                            <div class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">
+                                {{ item.is_active ? "Active" : "Inactive" }}
                             </div>
                         </div>
                     </div>

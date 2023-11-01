@@ -1,18 +1,17 @@
 <script setup>
-    import ToggleSwitch from './ToggleSwitch.vue';
-    import SecondaryButton from '@/Components/SecondaryButton.vue';
-    import { defineProps, defineEmits } from "vue";
+import ToggleSwitch from './ToggleSwitch.vue';
+import SecondaryButton from '@/Components/SecondaryButton.vue';
+import { defineEmits } from "vue";
 
-    const emit = defineEmits(["close"]);
-    defineProps({
-        device: {
-            type: Object,
-        },
-    });
+const { device } = defineProps({
+    device: Object
+});
 
-    function cancel() {
-        emit("close");
-    }
+const emit = defineEmits(["close"]);
+
+function cancel() {
+    emit("close");
+}
 </script>
 <template>
     <div class="container">
@@ -28,14 +27,11 @@
                     Room: <span class="fond-semibold">{{ device.room_name }}</span>
                 </div>
                 <div class="font md flex">
-                    State:  <span class="fond-semibold ms-2">
-                                <ToggleSwitch v-model:modelValue="device.is_active"/>
-                            </span>
+                    State: <span class="fond-semibold ms-2">
+                        <ToggleSwitch v-model:modelValue="device.is_active" />
+                    </span>
                 </div>
-                <SecondaryButton
-                    class="mt-4"
-                    @click="cancel"
-                >
+                <SecondaryButton class="mt-4" @click="cancel">
                     <span class="text-sm font-semibold">Close</span>
                 </SecondaryButton>
             </div>
@@ -43,9 +39,35 @@
     </div>
 </template>
 <script>
+    import axios from 'axios';
     export default {
-        components: {
-            ToggleSwitch,
+    props: {
+        device: Object,
+    },
+    methods: {
+        submit() {
+            axios.post(`/api/toggle`, {
+                device_id: this.device.id,
+                is_active: this.device.is_active,
+            })
+                .then(response => {
+                    // Handle the response as needed.
+
+                    console.log(response);
+                })
+                .catch(error => {
+                    // Handle the error as needed.
+
+                    console.log(error);
+                });
         },
-    };
+    },
+    watch: {
+        'device.is_active': function () {
+            this.submit();
+        },
+    }
+}
 </script>
+
+

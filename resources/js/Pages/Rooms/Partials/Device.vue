@@ -1,5 +1,4 @@
 <script setup>
-import { router } from '@inertiajs/vue3'
 import ToggleSwitch from "@/Components/ToggleSwitch.vue";
 
 const { device, customClass } = defineProps({
@@ -60,12 +59,12 @@ export default {
                 .then(response => {
                     // Handle the response as needed.
 
-                    console.log(response);
+                    console.log(response); //for debugging only remove at prod
                 })
                 .catch(error => {
                     // Handle the error as needed.
 
-                    console.log(error);
+                    console.log(error); //for debugging only remove at prod
                 });
         },
     },
