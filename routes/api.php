@@ -28,7 +28,3 @@ Route::get('/test', function(){
 Route::post('/post-data', [NodeMCUController::class, 'receiveData']);
 
 Route::post('/toggle', [toggleController::class, 'toggle'])->name('toggleState');
-
-// Route::post('/toggle', function (){
-//     return response()->json(['message' => 'Device state updated successfully'], 200);
-// })->name('toggleState');

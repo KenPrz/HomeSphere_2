@@ -1,7 +1,9 @@
 <script setup>
 import { Head } from "@inertiajs/vue3";
-import UserListTable from "./Partials/UserListTable.vue";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
+import UsersTab from "./Partials/UsersTab.vue";
+import CodesTab from "./Partials/CodesTab.vue";
+import HomeSettingsTab from "./Partials/HomeSettingsTab.vue";
 </script>
 <template>
     <Head title="Settings" />
@@ -24,61 +26,25 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
                         <v-tab value="codes">
                             Codes
                         </v-tab>
-                        <v-tab value="delete">
+                        <v-tab value="Settings">
                             Home Settings
                         </v-tab>
                     </v-tabs>
                     <v-card-text>
                         <v-window v-model="tab">
+
                             <v-window-item value="user"> 
-                                <div class="mx-3">
-                                    <h1 class="text-md font-medium">List of Users</h1>
-                                </div>
-                                <v-container>
-                                    <UserListTable 
-                                    :homeMembers="$page.props.homeMembers"
-                                    :headerText="tableHeaders"
-                                    />
-                                </v-container>
+                                <UsersTab/>
                             </v-window-item>
 
                             <v-window-item value="codes"> 
-                                <div class="mx-3">
-                                    <h1 class="text-md font-medium">Home Codes</h1>
-                                </div>
-                                <v-container class="flex flex-col">
-                                    <v-card class="my-3">
-                                        <v-card-title>
-                                            <h1 class="text-md font-medium">Invite Code</h1>
-                                        </v-card-title>
-                                        <v-card-subtitle>
-                                            <h1 class="text-md font-medium">This is your unique invite code</h1>
-                                            <v-card-text>
-                                                {{$page.props.homeData.invite_code }}
-                                            </v-card-text>
-                                        </v-card-subtitle>
-                                    </v-card>
-                                    <v-card v-if="$page.props.api_key">
-                                        <v-card-title>
-                                            <h1 class="text-md font-medium">Api Key</h1>
-                                        </v-card-title>
-                                        <v-card-subtitle>
-                                            <h1 class="text-md font-medium">Invite Code</h1>
-                                            <v-card-text>
-                                                {{$page.props.api_key.api_key }}
-                                            </v-card-text>
-                                        </v-card-subtitle>
-                                    </v-card>
-                                </v-container>
+                                <CodesTab/>
                             </v-window-item>
 
-                            <v-window-item value="delete"> 
-                                <div class="mx-3">
-                                    <h1 class="text-md font-medium text-red-600">
-                                        Delete Home
-                                    </h1>
-                                </div>
+                            <v-window-item value="Settings">
+                                <HomeSettingsTab/>
                             </v-window-item>
+
                         </v-window>
                     </v-card-text>
                 </v-card>
@@ -90,23 +56,7 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 export default {
     data: () => ({
         tab: null,
-        tableHeaders: [
-                {
-                    text: "First Name",
-                },
-                {
-                    text: "Last Name",
-                },
-                {
-                    text: "Role",
-                },
-                {
-                    text: "Join Date",
-                },
-            ],
-            maxHeight: "max-h-92",
     }),
 }
 </script>
-
 

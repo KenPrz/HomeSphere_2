@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Api_key;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\apiKeyController;
 class AppUtilities extends Controller
 {
     public function findHomeData($user)
@@ -20,8 +21,9 @@ class AppUtilities extends Controller
     }
     
     public function getApiKey($homeData){
-        $api_key = DB::table('home_api_keys')->where('home_id', $homeData->id)->first();
-        return $api_key;
+        $apiKey = New apiKeyController;
+        $key = $apiKey->getMyKey($homeData);
+        return $key;
     }
 
     public function getHomeMembers($homeId){
