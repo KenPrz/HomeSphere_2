@@ -1,5 +1,4 @@
 <script setup>
-import { router } from '@inertiajs/vue3';
 import { defineEmits } from 'vue';
 
 const emit = defineEmits(['close']);

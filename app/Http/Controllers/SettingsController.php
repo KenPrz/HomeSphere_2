@@ -2,44 +2,47 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\apiKeyController;
-use App\Http\Controllers\AppUtilities;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Http\Controllers\ApiKeyController;
+use App\Http\Controllers\AppUtilities;
+
 class SettingsController extends Controller
 {
-    public function index(){
+    private $appUtilities;
+    private $apiKeyController;
 
-        $appUtilities = New AppUtilities;
-
-        $user = auth()->user();
-        $homeData = $appUtilities->findHomeData($user);
-        $homeMembers = $appUtilities->getHomeMembers($homeData->id);
-        if($user->id == $homeData->owner_id){
-            $apiKey = $appUtilities->getApiKey($homeData);
-            return Inertia::render('Settings/Main',[
-                'homeData' => $homeData,
-                'homeMembers' => $homeMembers,
-                'api_key' => $apiKey
-            ]);
-        }
-        else{
-            return Inertia::render('Settings/Main',[
-                'homeData' => $homeData,
-                'homeMembers' => $homeMembers,
-                'api_key' => null,
-            ]);
-        }
-
+    public function __construct(AppUtilities $appUtilities, ApiKeyController $apiKeyController)
+    {
+        $this->appUtilities = $appUtilities;
+        $this->apiKeyController = $apiKeyController;
     }
 
-    public function generateNewKey(Request $request){
-        $api_key = New apiKeyController;
-        $appUtilities = New AppUtilities;
+    public function index()
+    {
         $user = auth()->user();
-        $homeData = $appUtilities->findHomeData($user);
+        $homeData = $this->appUtilities->findHomeData($user);
+        $homeMembers = $this->appUtilities->getHomeMembers($homeData->id);
+        $api_key = ($user->id == $homeData->owner_id) ? $this->appUtilities->getApiKey($homeData) : null;
 
-        $newKey = $appUtilities->generateNewKey($user, $api_key);
+        return Inertia::render('Settings/Main', [
+            'homeData' => $homeData,
+            'homeMembers' => $homeMembers,
+            'api_key' => $api_key,
+        ]);
+    }
+
+    public function generateNewKey(Request $request)
+    {   
+        $validated = $request->validate([
+            'oldApiKey' => 'required|string',
+            'password' => 'required|confirmed',
+        ]);
+        
+        $user = auth()->user();
+        $homeData = $this->appUtilities->findHomeData($user);
+        $oldKey = $this->apiKeyController->getMyKey($homeData);
+        // work in this tonight
+        dd($oldKey);
     }
 }
