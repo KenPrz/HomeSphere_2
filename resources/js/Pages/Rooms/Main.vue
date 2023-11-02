@@ -27,7 +27,6 @@ const setActiveComponent = (componentName, room) => {
             </h2>
         </template>
         <main>
-            {{ $page.props }}
             <div class="container">
                 <div class="flex-row w-full">
                     <div class="w-full font-bold text-3xl">
