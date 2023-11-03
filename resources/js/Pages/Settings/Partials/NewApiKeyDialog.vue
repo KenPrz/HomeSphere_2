@@ -25,7 +25,7 @@ const emit = defineEmits(["close"]);
         </div>
     </div>
     <Modal maxWidth="md" :show="showNewApiForm" @close="closeRegenerateApiForm">
-        <NewApiKeyForm/>
+        <NewApiKeyForm @close="close"/>
     </Modal>
 </template>
 <script>

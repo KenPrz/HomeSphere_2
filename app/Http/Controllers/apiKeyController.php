@@ -26,5 +26,3 @@ class apiKeyController extends Controller
         }
     }
 }
-//auua7k8fVrwLwnC957zDmCknwGUS2tkJ1VYxYPcOEPVvL6NQnWu6F1BTJqdA6wm7
-//ciIlhWCFojFVxv2MPv44okQ7p0jIK08FFBdPbCcOc0zEhJZaGwE4py4yRjzL9Ruk

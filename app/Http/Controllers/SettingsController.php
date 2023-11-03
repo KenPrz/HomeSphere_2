@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\Settings\NewKeyRequest;
 use Inertia\Inertia;
 use App\Http\Controllers\ApiKeyController;
 use App\Http\Controllers\AppUtilities;
-
+use Illuminate\Support\Facades\Hash;
 class SettingsController extends Controller
 {
     private $appUtilities;
@@ -32,17 +33,14 @@ class SettingsController extends Controller
         ]);
     }
 
-    public function generateNewKey(Request $request)
+    public function generateNewKey(NewKeyRequest $request)
     {   
-        $validated = $request->validate([
-            'oldApiKey' => 'required|string',
-            'password' => 'required|confirmed',
-        ]);
-        
-        $user = auth()->user();
-        $homeData = $this->appUtilities->findHomeData($user);
-        $oldKey = $this->apiKeyController->getMyKey($homeData);
-        // work in this tonight
-        dd($oldKey);
+        $validated = $request->validated();
+        if($validated){
+            $user = auth()->user();
+            $homeData = $this->appUtilities->findHomeData($user);
+            $this->apiKeyController->generateNewKey($homeData);
+        }
     }
 }
+//0CQ3jK10Kp6h7Fy7W9q9b52u60TZHtY8VBWhgixZPULsisirQOBXfU92j54j3Zca

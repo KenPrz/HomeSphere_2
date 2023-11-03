@@ -1,20 +1,24 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
+import { defineEmits } from 'vue';
 // import { router } from '@inertiajs/inertia-vue3';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import TextInput from '@/Components/TextInput.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-
+const emit = defineEmits(["close"]);
 const form = useForm({
     oldApiKey: '',
     password: '',
     password_confirmation: '',
 });
 const submit = () => {
-    form.post(route('generate.newKey'), {
-        onFinish: () => form.reset('oldApiKey','password', 'password_confirmation'),
-    });
+    form.post(route('generate.newKey'), 
+        {
+            onSuccess: () =>
+                emit('close'),
+        }
+    )
 };
 </script>
 <template>
@@ -55,3 +59,12 @@ const submit = () => {
         </div>
     </form>
 </template>
+<script>
+    export default {
+        methods:{
+            close() {
+                this.$emit('close');
+            },
+        }
+    }
+</script>
