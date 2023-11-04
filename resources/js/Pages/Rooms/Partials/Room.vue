@@ -1,5 +1,8 @@
 <script setup>
 import { ref } from 'vue';
+import Modal from '@/Components/Modal.vue';
+import EditRoomForm from './EditRoomForm.vue';
+import DeleteRoomDialog from './DeleteRoomDialog.vue';
 import ToggleSwitch from '@/Components/ToggleSwitch.vue';
 import Device from '@/Pages/Rooms/Partials/Device.vue';
 defineProps({
@@ -19,12 +22,16 @@ defineProps({
                 <div class="flex flex-col">
                     <div class="flex justify-between w-full pb-3 px-1 border-gray-500 border-b-2">
                         <div class="text-2xl font-semibold">
-                            Appliances in {{ room.room_name }}
+                            Appliances
                         </div>
-                        <div class="flex">
-                            <button class="flex items-center justify-center border-gray-500 border rounded-full px-3 mx-2">
+                        <div v-if="room.room_owner_id == $page.props.auth.id || $page.props.homeData.role == 'owner'" class="flex">
+                            <button @click="openEditRoomForm" class="flex items-center justify-center border-gray-500 border rounded-full px-3 mx-2">
                                 <img class="h-4 w-auto" :src="'img-assets/vectors/Edit.svg'" />
                                 <span>Edit</span>
+                            </button>
+                            <button @click="openDeleteRoomDialog" class="flex items-center justify-center border-gray-500 border rounded-full px-3 mx-2">
+                                <img class="h-4 w-auto" :src="'img-assets/vectors/Edit.svg'" />
+                                <span>Delete</span>
                             </button>
                         </div>
                     </div>
@@ -88,8 +95,39 @@ defineProps({
             </div>
         </div>
     </div>
+    <Modal maxWidth="md" :show="showEditRoomForm" @close="closeEditRoomForm">
+        <EditRoomForm :roomID="room.id" @close="closeEditRoomForm"/>
+    </Modal>
+    <Modal maxWidth="sm" :show="showDeleteRoomDialog" @close="closeDeleteRoomDialog">
+        <DeleteRoomDialog :roomID="room.id" @close="closeDeleteRoomDialog"/>
+    </Modal>
 </template>
 <script>
+export default {
+    data(){
+        return {
+            showEditRoomForm: false,
+            showDeleteRoomDialog:false,
+        }
+    },
+    methods: {
+        close() {
+            this.$emit('close');
+        },
+        openEditRoomForm(){
+            this.showEditRoomForm = true;
+        },
+        closeEditRoomForm(){
+            this.showEditRoomForm = false;
+        },
+        openDeleteRoomDialog(){
+            this.showDeleteRoomDialog = true;
+        },
+        closeDeleteRoomDialog(){
+            this.showDeleteRoomDialog = false;
+        },
+    }
+}
 </script>
 <style scoped>
 .text {

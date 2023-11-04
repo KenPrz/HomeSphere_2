@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Room\EditRoomRequest;
 use App\Models\motion_sensor;
 use App\Models\room;
 use App\Http\Controllers\AppUtilities;
@@ -43,6 +44,20 @@ class RoomsController extends Controller
         $this->createRoom($roomName, $homeData->id, $user->id);
 
         return redirect()->back();
+    }
+
+    public function editRoom(EditRoomRequest $request)
+    {   
+        $validated = $request->validated();
+        $appUtilities = new AppUtilities;
+        $user = auth()->user();
+        $homeData = $appUtilities->findHomeData($user);
+
+        DB::table('rooms')
+            ->where('home_id', $homeData->id)
+            ->where('id', $validated['room_id'])
+            ->update(['room_name'=> $validated['roomName']]);
+        
     }
 
     public function deleteRoom(Request $request)

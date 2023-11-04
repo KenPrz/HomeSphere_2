@@ -60,7 +60,9 @@ Route::middleware('auth', 'checkHasHome')->group(function () {
 
     Route::get('/rooms', [RoomsController::class, 'index'])->name('rooms.index');
     Route::post('/rooms',[RoomsController::class, 'addRoom'])->name('rooms.addRoom');
-    Route::get('/room/{room}',[RoomsController::class, 'openRoom'])->name('rooms.getRoom');
+    Route::post('/roomedit', [RoomsController::class,'editRoom'])->name('rooms.edit');
+    Route::delete('/deleteroom', [RoomsController::class,'deleteRoom'])->name('rooms.delete');
+    // Route::get('/room/{room}',[RoomsController::class, 'openRoom'])->name('rooms.getRoom');
 
     Route::get('/modes',[ModesController::class, 'index'])->name('modes.index');
     Route::post('/modes',[ModesController::class, 'editMode'])->name('modes.editMode');
