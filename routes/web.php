@@ -68,6 +68,7 @@ Route::middleware('auth', 'checkHasHome')->group(function () {
     Route::post('/modes',[ModesController::class, 'editMode'])->name('modes.editMode');
 
     Route::get('/settings',[SettingsController::class, 'index'])->name('settings.index');
+    Route::delete('/leave', [SettingsController::class,'leaveHome'])->name('settings.leave');
 
     Route::post('/approve',[HomeMemberController::class,'approveUser'])->name('member.approve');
     Route::delete('/reject',[HomeMemberController::class, 'rejectUser'])->name('member.reject');
@@ -75,5 +76,6 @@ Route::middleware('auth', 'checkHasHome')->group(function () {
 
     Route::post('/regenerate',[SettingsController::class, 'generateNewKey'])->name('generate.newKey');
 
+    Route::delete('/deletehome',[SettingsController::class,'deleteHome'])->name('home.delete');
 });
 require __DIR__.'/auth.php';

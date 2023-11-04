@@ -17,7 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('home_id');
             $table->unsignedBigInteger('room_owner_id');
             
-            $table->foreign('home_id')->references('id')->on('homes');
+            $table->foreign('home_id')->references('id')->on('homes')->onDelete('cascade');
             $table->foreign('room_owner_id')->references('id')->on('users');
             $table->timestamps();
             // Add a unique constraint for room_name and home_id

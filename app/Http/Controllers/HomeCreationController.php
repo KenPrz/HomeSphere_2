@@ -150,6 +150,7 @@ class HomeCreationController extends Controller
                 'role' => 'pending',
                 'applied_on' => now(),
                 'created_at' => now(),
+                'updated_at' => now(),
             ]);
             User::where('id', Auth::id())->update(['is_online' => true, 'has_home' => false]);
             return redirect()->route('dashboard');

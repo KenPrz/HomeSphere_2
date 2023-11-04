@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\ApiKeyController;
 use App\Http\Controllers\AppUtilities;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\DB;
 class SettingsController extends Controller
 {
     private $appUtilities;
@@ -42,5 +43,31 @@ class SettingsController extends Controller
             $this->apiKeyController->generateNewKey($homeData);
         }
     }
+
+    /**
+     * Leave the user's home and remove them from the home_members table.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function leaveHome(Request $request){
+        $request ->validate([
+                'user'=> 'required',
+            ]);
+        DB::table('users')->where('id', $request->user) -> update(['has_home' => false]);
+        DB::table('home_members')->where('member_id', $request->user )->delete();
+        
+        return redirect()->route('verify')->with('success','test');
+    }
+
+    public function deleteHome(Request $request){
+        $request ->validate([
+            'user'=> 'required',
+        ]);
+        DB::table('users')->where('id', $request->user) -> update(['has_home' => false]);
+        DB::table('homes')->where('owner_id', $request->user )->delete();
+        
+        return redirect()->route('verify')->with('success','test');
+    }
+
 }
-//0CQ3jK10Kp6h7Fy7W9q9b52u60TZHtY8VBWhgixZPULsisirQOBXfU92j54j3Zca
