@@ -13,7 +13,7 @@ const form = useForm({
 
 const submit = () => {
     form.post(route('rooms.addRoom'), {
-        onFinish: () => {
+        onSuccess: () => {
             form.reset('room_name'),
             close();
         }

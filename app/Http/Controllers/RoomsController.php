@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\motion_sensor;
 use App\Models\room;
 use App\Http\Controllers\AppUtilities;
+use App\Http\Requests\Room\CreateRoomRequest;
 use App\Models\humidity_sensor;
 use App\Models\temp_sensor;
 use Illuminate\Support\Facades\DB;
@@ -31,13 +32,14 @@ class RoomsController extends Controller
         ]);
     }
 
-    public function addRoom(Request $request)
-    {
+    public function addRoom(CreateRoomRequest $request)
+    {   
+        $validated = $request->validated();
         $appUtilities = new AppUtilities;
         $user = auth()->user();
         $homeData = $appUtilities->findHomeData($user);
 
-        $roomName = $request->input('room_name');
+        $roomName = $validated['room_name'];
         $this->createRoom($roomName, $homeData->id, $user->id);
 
         return redirect()->back();
@@ -66,15 +68,6 @@ class RoomsController extends Controller
             'devices' => $deviceData,
         ]);
     }
-
-    // private function getRoomData($homeID)
-    // {
-    //     return Room::with('devices')
-    //     ->where('home_id', $homeID)
-    //     ->select(['rooms.*'])
-    //     ->addSelect(DB::raw('(SELECT COUNT(*) FROM devices WHERE devices.room_id = rooms.id) as device_count'))
-    //     ->get();
-    // }
 
     private function createRoom($roomName, $homeID, $roomOwnerID)
     {
