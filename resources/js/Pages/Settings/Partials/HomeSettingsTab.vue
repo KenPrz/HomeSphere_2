@@ -1,15 +1,63 @@
 <script setup>
+import { defineEmits } from 'vue';
+import LeaveHomeDialog from './LeaveHomeDialog.vue';
+import DeleteHomeDialog from './DeleteHomeDialog.vue'
+import Modal from '@/Components/Modal.vue';
+const emit = defineEmits(['close']);
 </script>
 <template>
     <v-card-subtitle>
         <div class="mx-3 flex flex-col w-1/2">
-            <button class="w-32 my-2 text-white bg-red-600 hover:bg-red-700 py-2 px-3 rounded-md text-md font-medium">
+            <button @click="showDialog" v-if="$page.props.homeData.role == 'owner'"
+                class="w-32 my-2 text-white bg-red-600 hover:bg-red-700 py-2 px-3 rounded-md text-md font-medium">
                 Delete Home
             </button>
-            <button
+            <button @click="showDialog" v-else
                 class="w-32 bg-zinc-950 hover:bg-zinc-800 transition-colors duration-200 text-white text-md p-2 rounded-md mb-4">
                 Leave Home
             </button>
         </div>
     </v-card-subtitle>
+    <Modal maxWidth="sm" :show="homeSettingsDialog" @close="closeDialog">
+        <template v-if="$page.props.homeData.role == 'owner'">
+            <DeleteHomeDialog/>
+        </template>
+        <template v-else>
+            <LeaveHomeDialog/>
+        </template>
+    </Modal>
 </template>
+<script>
+export default {
+    data() {
+        return {
+            homeSettingsDialog: false,
+        }
+    },
+    methods: {
+        close(){
+            this.$emit('close');
+        },
+        showDialog() {
+            this.homeSettingsDialog = true;
+        },
+        closeDialog() {
+            this.homeSettingsDialog = false;
+        },
+        leaveHome(user) {
+            this.$inertia.delete(route('settings.leave', { user }), {
+                onSuccess: () => {
+                    close();
+                },
+            });
+        },
+        deleteHome(user) {
+            this.$inertia.delete(route('home.delete', { user }), {
+                onSuccess: () => {
+                    close();
+                },
+            });
+        },
+    }
+}
+</script>
