@@ -85,14 +85,7 @@ class HomeCreationController extends Controller
             'owner_id' => $owner_id,
             'created_at' => now(),
         ]);
-
-        // $room = DB::table('rooms')->insert([
-        //     'room_name' => $request->name_of_room,
-        //     'home_id' => DB::table('homes')->where('invite_code', $invite_code)->first()->id,
-        //     'room_owner_id' => $owner_id,
-        //     'created_at' => now(),
-        // ]);
-
+        
         $room = Room::create([
             'room_name' => $request->name_of_room,
             'home_id' => DB::table('homes')->where('invite_code', $invite_code)->first()->id,

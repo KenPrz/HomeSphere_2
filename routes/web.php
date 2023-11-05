@@ -74,7 +74,8 @@ Route::middleware('auth', 'checkHasHome')->group(function () {
     Route::delete('/reject',[HomeMemberController::class, 'rejectUser'])->name('member.reject');
     Route::delete('/kick',[HomeMemberController::class,'kickUser'])->name('member.kick');
 
-    Route::post('/regenerate',[SettingsController::class, 'generateNewKey'])->name('generate.newKey');
+    Route::post('/regenerate',[SettingsController::class, 'generateNewApiKey'])->name('generate.newApiKey');
+    Route::post('/generate-invite-code',[SettingsController::class,'generateNewInviteKey'])->name('generate.newInviteKey');
 
     Route::delete('/deletehome',[SettingsController::class,'deleteHome'])->name('home.delete');
 });

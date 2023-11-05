@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\Settings\NewKeyRequest;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use App\Http\Controllers\ApiKeyController;
 use App\Http\Controllers\AppUtilities;
@@ -51,7 +52,7 @@ class SettingsController extends Controller
      * @return void
      */
 
-    public function generateNewKey(NewKeyRequest $request)
+    public function generateNewApiKey(NewKeyRequest $request)
     {   
         $validated = $request->validated();
         if($validated){
@@ -59,6 +60,18 @@ class SettingsController extends Controller
             $homeData = $this->appUtilities->findHomeData($user);
             $this->apiKeyController->generateNewKey($homeData);
         }
+    }
+
+    /**
+     * Generate a new invite key for a home and update it in the database.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    public function generateNewInviteKey(Request $request){
+        $new_invite_code = Str::random(16);
+        DB::table('homes')->where('id', $request->homeData['id'])
+            ->update(['invite_code'=>$new_invite_code,'updated_at'=>now()]);
     }
 
     /**

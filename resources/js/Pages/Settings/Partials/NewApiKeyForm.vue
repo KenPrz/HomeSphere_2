@@ -13,7 +13,7 @@ const form = useForm({
     password_confirmation: '',
 });
 const submit = () => {
-    form.post(route('generate.newKey'), 
+    form.post(route('generate.newApiKey'), 
         {
             onSuccess: () =>
                 emit('close'),
