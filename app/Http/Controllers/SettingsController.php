@@ -71,33 +71,33 @@ class SettingsController extends Controller
         $request ->validate([
                 'user'=> 'required',
             ]);
-        DB::table('users')->where('id', $request->user) -> update(['has_home' => false]);
-        DB::table('home_members')->where('member_id', $request->user )->delete();
-        
+        DB::transaction(function () use ($request) {
+            DB::table('users')->where('id', $request->user['id']) -> update(['has_home' => false]);
+            DB::table('home_members')->where('member_id', $request->user['id'] )->delete();
+        });
         return redirect()->route('verify')->with('success','test');
     }
 
     /**
      * Delete a home and its members from the database.
      *
-     * @param  \App\Http\Requests\HomeDeleteRequest  $request
+     * @param  \App\Http\Requests\Settings\HomeDeleteRequest;  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function deleteHome(HomeDeleteRequest $request){
         $validated = $request->validated();
-        if( $validated ){
-            if($validated){
-                $user = auth()->user();
-                $homeData = $this->appUtilities->findHomeData($user);
-                DB::transaction(function() use($homeData){
-                    DB::table('homes')->where('id', $homeData->id)->delete();
-                    DB::table('home_members')->where('home_id',$homeData->id)->delete();
-                });
-                return redirect()->route('verify')->with('success','test');
-            }
-        }else{
-            return redirect()->back()->with('error','error validation');
+        if ($validated) {
+            $user = auth()->user();
+            $homeData = $this->appUtilities->findHomeData($user);
+            DB::transaction(function() use($homeData){
+                DB::table('homes')->where('id', $homeData->id)->delete();
+                DB::table('home_members')->where('home_id', $homeData->id)->delete();
+            });
+            return redirect()->route('verify')->with('success', 'home deleted');
+        } else {
+            return redirect()->back()->with('error', 'error validation');
         }
     }
+    
 
 }

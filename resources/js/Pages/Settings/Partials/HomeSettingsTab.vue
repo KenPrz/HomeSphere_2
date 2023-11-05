@@ -23,7 +23,7 @@ const emit = defineEmits(['close']);
             <DeleteHomeDialog :homeID="$page.props.homeData.id"/>
         </template>
         <template v-else>
-            <LeaveHomeDialog/>
+            <LeaveHomeDialog :userData="$page.props.auth" @close="closeDialog"/>
         </template>
     </Modal>
 </template>
@@ -43,13 +43,6 @@ export default {
         },
         closeDialog() {
             this.homeSettingsDialog = false;
-        },
-        leaveHome(user) {
-            this.$inertia.delete(route('settings.leave', { user }), {
-                onSuccess: () => {
-                    close();
-                },
-            });
         },
         deleteHome(user) {
             this.$inertia.delete(route('home.delete', { user }), {

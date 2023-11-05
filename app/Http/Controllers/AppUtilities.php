@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\apiKeyController;
 class AppUtilities extends Controller
 {
+    /**
+     * Find home data for a given user.
+     *
+     * @param  $user
+     * @return mixed
+     */
     public function findHomeData($user)
     {
         //this is for the owner
@@ -20,12 +26,24 @@ class AppUtilities extends Controller
         return $homeData;
     }
     
+    /**
+     * Returns the API key for the given home data.
+     *
+     * @param mixed $homeData The data of the home.
+     * @return string The API key.
+     */
     public function getApiKey($homeData){
         $apiKey = New apiKeyController;
         $key = $apiKey->getMyKey($homeData);
         return $key;
     }
 
+    /**
+     * Retrieve all members of a home.
+     *
+     * @param int $homeId The ID of the home to retrieve members for.
+     * @return \Illuminate\Support\Collection A collection of home members, each containing the member's ID, first name, last name, profile image, role, and join date.
+     */
     public function getHomeMembers($homeId){
         $homeMembers = DB::table('home_members')
                 ->join('users', 'home_members.member_id', '=', 'users.id')
