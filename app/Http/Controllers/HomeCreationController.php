@@ -8,6 +8,7 @@ use App\Http\Controllers\AppUtilities;
 use App\Models\humidity_sensor;
 use App\Models\temp_sensor;
 use App\Http\Controllers\AppliancesController;
+use App\Http\Requests\HomeCreation\JoinHomeRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -125,35 +126,36 @@ class HomeCreationController extends Controller
         User::where('id', Auth::id())->update(['is_online' => true, 'has_home' => true]);
         return redirect()->route('dashboard');
     }
-    /**
-     * Join Home function.
-     */
-    public function join_home(Request $request)
-    {
-        $request->validate([
-            'home_code' => ['required', 'string', 'max:255'],
-        ]);
-        $invite_code = $request->home_code;
-        $home = DB::table('homes')->where('invite_code', $invite_code)->first();
     
-        // Check if the home with the given invite code exists
-        if (!$home) {
-            return inertia()->render('CreateHome/Create',[
-                'error' => 'Home with the given invite code does not exist.',
-            ]);
-        }else{
+    /**
+     * Non member join function
+     * @param JoinHomeRequest $request
+     * @return mixed
+     */
+    public function join_home(JoinHomeRequest $request)
+    {
+        $validated = $request->validated();
+        if ($validated) {
+            $invite_code = $validated['home_code'];
             $user_id = auth()->user()->id;
             $home_id = DB::table('homes')->where('invite_code', $invite_code)->first()->id;
-            DB::table('home_members')->insert([
-                'home_id' => $home_id,
-                'member_id' => $user_id,
-                'role' => 'pending',
-                'applied_on' => now(),
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
-            User::where('id', Auth::id())->update(['is_online' => true, 'has_home' => false]);
-            return redirect()->route('dashboard');
+            try {
+                DB::transaction(function () use ($home_id, $user_id) {
+                    DB::table('home_members')->insert([
+                        'home_id' => $home_id,
+                        'member_id' => $user_id,
+                        'role' => 'pending',
+                        'applied_on' => now(),
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                    ]);
+                    User::where('id', Auth::id())->update(['is_online' => true, 'has_home' => false]);
+                });
+                return redirect()->route('dashboard');
+            } catch (\Exception $e) {
+                // Handle the exception here
+                return back()->route('/welcome')->with('error', 'An error occurred while joining the home. Please try again later.');
+            }
         }
     }
 }

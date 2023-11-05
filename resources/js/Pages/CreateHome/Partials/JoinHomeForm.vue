@@ -6,13 +6,11 @@ import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
     home_code: '',
-    error: null,
-    isLoading: false,
 });
 
 const submit = () => {
     form.post(route('join_home'), {
-        onFinish: () => form.reset('home_code'),
+        onSuccess: () => form.reset('home_code'),
     });
 };
 </script>
@@ -35,7 +33,7 @@ const submit = () => {
                         autocomplete="home_code"
                     />
                 </div>
-                <InputError :message="$page.props.error" class="my-2 ms-2" />
+                <InputError class="mt-2 ms-1" :message="form.errors.home_code"/>
             </div>
 
             <div class="flex flex-col items-center mt-4">
