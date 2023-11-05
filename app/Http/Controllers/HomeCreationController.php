@@ -19,9 +19,24 @@ class HomeCreationController extends Controller
 {
 
     public function create_home()
-    {
+    {   
+        $user = auth()->user();
+        $userRole = DB::table('home_members')
+            ->where('member_id', $user->id)
+            ->pluck('role')
+            ->first();
+    
+        if (!$userRole) {
+            return Inertia::render('CreateHome/Create');
+        }
+    
+        if ($user->has_home || in_array($userRole, ['member', 'owner', 'pending'])) {
+            return redirect("/");
+        }
+    
         return Inertia::render('CreateHome/Create');
     }
+    
 
     public function verify()
     {
