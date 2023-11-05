@@ -11,7 +11,6 @@ class CheckHasHome
         if (auth()->check() && !auth()->user()->has_home) {
             return redirect('/'); // Redirect to the home page or any other page you prefer
         }
-
         return $next($request);
     }
 }

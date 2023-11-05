@@ -18,6 +18,12 @@ use Inertia\Inertia;
 class HomeCreationController extends Controller
 {
 
+    /**
+     * 
+     * Create a new home for the authenticated user.
+     *
+     * @return \Inertia\Response
+     */
     public function create_home()
     {   
         $user = auth()->user();
@@ -37,7 +43,15 @@ class HomeCreationController extends Controller
         return Inertia::render('CreateHome/Create');
     }
     
-
+    /**
+     * 
+     * Verify if the authenticated user has a home and the role of the user in the home.
+     * If the user has no home, redirect to the create home page.
+     * If the user has a role of 'member' or 'owner', retrieve the rooms, devices, sensors, appliances, and user list of the home.
+     * If the user has a role of 'pending', render the dashboard without the user list, appliances, rooms, and api key.
+     *
+     * @return \Inertia\Response
+     */
     public function verify()
     {
         $getAppliances = new AppliancesController();
@@ -79,11 +93,17 @@ class HomeCreationController extends Controller
                 'api_key' => null,
             ]);
         }
+        else{
+            return redirect()->back();
+        }
     }
 
 
     /**
-     * Home Creation function.
+     * Create a new home and associated room, sensors, members, and API keys.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function new_home(Request $request)
     {

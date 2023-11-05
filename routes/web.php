@@ -55,7 +55,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/cancel',[CancelRequest::class, 'cancel'])->name('cancel.request');
 });
 
-Route::middleware('auth', 'checkHasHome')->group(function () {
+Route::middleware(['auth','checkHasHome'])->group(function () {
     Route::get('/appliances', [AppliancesController::class, 'index'])->name('appliances.index');
 
     Route::get('/rooms', [RoomsController::class, 'index'])->name('rooms.index');
