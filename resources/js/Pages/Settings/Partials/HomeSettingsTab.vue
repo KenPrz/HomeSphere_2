@@ -20,7 +20,7 @@ const emit = defineEmits(['close']);
     </v-card-subtitle>
     <Modal maxWidth="sm" :show="homeSettingsDialog" @close="closeDialog">
         <template v-if="$page.props.homeData.role == 'owner'">
-            <DeleteHomeDialog/>
+            <DeleteHomeDialog :homeID="$page.props.homeData.id"/>
         </template>
         <template v-else>
             <LeaveHomeDialog/>

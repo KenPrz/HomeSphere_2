@@ -7,6 +7,7 @@ use App\Http\Requests\Settings\NewKeyRequest;
 use Inertia\Inertia;
 use App\Http\Controllers\ApiKeyController;
 use App\Http\Controllers\AppUtilities;
+use App\Http\Requests\Settings\HomeDeleteRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 class SettingsController extends Controller
@@ -60,14 +61,22 @@ class SettingsController extends Controller
         return redirect()->route('verify')->with('success','test');
     }
 
-    public function deleteHome(Request $request){
-        $request ->validate([
-            'user'=> 'required',
-        ]);
-        DB::table('users')->where('id', $request->user) -> update(['has_home' => false]);
-        DB::table('homes')->where('owner_id', $request->user )->delete();
-        
-        return redirect()->route('verify')->with('success','test');
+    public function deleteHome(HomeDeleteRequest $request){
+        $validated = $request->validated();
+        if( $validated ){
+            if($validated){
+                $user = auth()->user();
+                $homeData = $this->appUtilities->findHomeData($user);
+                DB::transaction(function() use($homeData){
+                    DB::table('homes')->where('id', $homeData->id)->delete();
+                    DB::table('home_members')->where('home_id',$homeData->id)->delete();
+                    return redirect()->route('verify')->with('success','test');
+                });
+                return redirect()->route('verify')->with('success','test');
+            }
+        }else{
+            return redirect()->back()->with('error','error validation');
+        }
     }
 
 }
