@@ -8,10 +8,15 @@ use Inertia\Inertia;
 use App\Http\Controllers\ApiKeyController;
 use App\Http\Controllers\AppUtilities;
 use App\Http\Requests\Settings\HomeDeleteRequest;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 class SettingsController extends Controller
 {
+    /**
+     * SettingsController constructor.
+     *
+     * @param AppUtilities $appUtilities
+     * @param ApiKeyController $apiKeyController
+     */
     private $appUtilities;
     private $apiKeyController;
 
@@ -21,6 +26,11 @@ class SettingsController extends Controller
         $this->apiKeyController = $apiKeyController;
     }
 
+    /**
+     * Display the settings page.
+     *
+     * @return \Inertia\Response
+     */
     public function index()
     {
         $user = auth()->user();
@@ -34,6 +44,12 @@ class SettingsController extends Controller
             'api_key' => $api_key,
         ]);
     }
+    /**
+     * Generate a new API key for the authenticated user's home data.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
 
     public function generateNewKey(NewKeyRequest $request)
     {   
@@ -61,6 +77,12 @@ class SettingsController extends Controller
         return redirect()->route('verify')->with('success','test');
     }
 
+    /**
+     * Delete a home and its members from the database.
+     *
+     * @param  \App\Http\Requests\HomeDeleteRequest  $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function deleteHome(HomeDeleteRequest $request){
         $validated = $request->validated();
         if( $validated ){
@@ -70,7 +92,6 @@ class SettingsController extends Controller
                 DB::transaction(function() use($homeData){
                     DB::table('homes')->where('id', $homeData->id)->delete();
                     DB::table('home_members')->where('home_id',$homeData->id)->delete();
-                    return redirect()->route('verify')->with('success','test');
                 });
                 return redirect()->route('verify')->with('success','test');
             }
