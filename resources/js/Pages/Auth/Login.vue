@@ -1,13 +1,10 @@
 <script setup>
 import Checkbox from '@/Components/Checkbox.vue';
-import RightSection from '@/Components/RightSection.vue'
-import RegisterModal from '@/Components/RegisterModal.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import RightSectionVue from '@/Components/RightSection.vue';
 
 defineProps({
     canResetPassword: {
@@ -31,7 +28,7 @@ const submit = () => {
 </script>
 
 <template>
-    <RightSection>
+    <div>
         <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
             {{ status }}
         </div>
@@ -88,5 +85,5 @@ const submit = () => {
                 </PrimaryButton>
             </div>
         </form>
-    </RightSection>
+    </div>
 </template>
