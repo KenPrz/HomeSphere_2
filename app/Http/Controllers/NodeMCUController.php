@@ -49,6 +49,12 @@ class NodeMCUController extends Controller
         
     }
 
+    /**
+     * Validates the data from the request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
     private function validateData(Request $request)
     {
         $rules = [
@@ -143,7 +149,6 @@ private function updateOrInsertDevice($deviceData, $room_id, $type)
         // gettype($lights),
         // gettype($plugs)
         return response()->json([
-
             'lights' => $lights,
             'plugs' => $plugs
         ], 200);
