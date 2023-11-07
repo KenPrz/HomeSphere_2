@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('profile_image')->nullable();
             $table->boolean('has_home')->default(false);
             $table->boolean('is_online')->default(false);
+            $table->dateTime('name_updated_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
