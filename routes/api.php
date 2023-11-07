@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\toggleController;
+use App\Http\Controllers\ToggleController;
 
 use App\Http\Controllers\NodeMCUController;
 /*
@@ -27,4 +27,4 @@ Route::get('/test', function(){
 
 Route::post('/post-data', [NodeMCUController::class, 'receiveData']);
 
-Route::post('/toggle', [toggleController::class, 'toggle'])->name('toggleState');
+Route::post('/toggle', [ToggleController::class, 'toggle'])->name('toggleState');
