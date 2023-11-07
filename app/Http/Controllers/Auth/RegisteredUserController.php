@@ -43,6 +43,7 @@ class RegisteredUserController extends Controller
             'lastName' => strtolower($request->lastName),
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'name_updated_at'=> null,
         ]);
 
         event(new Registered($user));

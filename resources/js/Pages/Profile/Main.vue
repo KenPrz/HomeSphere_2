@@ -68,6 +68,7 @@
                             <!-- End User Details Section -->
                         </div>
                         <Modal
+                            :maxWidth="'xl'"
                             :show="showNameEditModal"
                             @close="closeNameEditModal"
                         >

@@ -24,6 +24,7 @@ class User extends Authenticatable
         'password',
         'profile_image',
         'is_online',
+        'name_updated_at'
     ];
 
     /**

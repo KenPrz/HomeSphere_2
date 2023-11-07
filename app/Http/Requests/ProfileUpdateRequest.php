@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use App\Models\User;
+use App\Rules\Profile\CheckChangeDate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -17,7 +18,7 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'firstName' => ['string', 'max:255'],
-            'lastName' => ['string', 'max:255'],
+            'lastName' => ['string', 'max:255', New CheckChangeDate],
             'email' => ['email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
         ];
     }
