@@ -11,6 +11,12 @@ use Illuminate\Support\Facades\Validator;
 
 class NodeMCUController extends Controller
 {
+    /**
+     * Receive data from NodeMCU and update room data accordingly.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function receiveData(Request $request)
     {
         $validationResult = $this->validateData($request);
@@ -26,9 +32,9 @@ class NodeMCUController extends Controller
         }
 
         $room_id = DB::table('rooms')
-        ->where('home_id', $home_id)
-        ->where('room_name', $request->room_name)
-        ->value('id');
+            ->where('home_id', $home_id)
+            ->where('room_name', $request->room_name)
+            ->value('id');
 
         if (!$room_id) {
             return response()->json(['errors' => ['room_name' => ['Invalid room name']]], 422);
@@ -62,16 +68,23 @@ class NodeMCUController extends Controller
             'room_name' => ['required', 'string', 'max:255'],
             'sensor_data.temperature' => ['numeric'],
             'sensor_data.humidity' => ['numeric'],
+            'sensor_data.motion_sensor' => ['boolean'],
             'devices.lights.*.name' => 'required|string|distinct:strict',
             'devices.lights.*.is_active' => 'required|boolean',
             'devices.plugs.*.name' => 'required|string|distinct:strict',
             'devices.plugs.*.is_active' => 'required|boolean',
         ];
-            //TODO prevent duplication in request
         return Validator::make($request->all(), $rules);
     }
 
     
+    /**
+     * Update the temperature and humidity data for a given room.
+     *
+     * @param int $room_id The ID of the room to update.
+     * @param array $sensorData An array containing the temperature and humidity data.
+     * @return void
+     */
     private function updateRoomData($room_id, $sensorData)
     {
         if (isset($sensorData['temperature'])) {
@@ -91,6 +104,13 @@ class NodeMCUController extends Controller
     
     
 
+/**
+ * Update or insert devices for a given room.
+ *
+ * @param array $data The data containing the devices to update or insert.
+ * @param int $room_id The ID of the room to update or insert the devices for.
+ * @return void
+ */
 private function deviceUpdate($data, $room_id)
 {
     $lights = $data['devices']['lights'];
@@ -107,6 +127,14 @@ private function deviceUpdate($data, $room_id)
     }
 }
 
+/**
+ * Update or insert a device into the database.
+ *
+ * @param array $deviceData The data of the device to be updated or inserted.
+ * @param int $room_id The ID of the room where the device is located.
+ * @param string $type The type of the device.
+ * @return void
+ */
 private function updateOrInsertDevice($deviceData, $room_id, $type)
 {
     $deviceName = $deviceData['name'];
@@ -125,7 +153,12 @@ private function updateOrInsertDevice($deviceData, $room_id, $type)
         ]);
     }
 }
-    //Todo Create a response builder for the API
+    /**
+     * Builds a JSON response containing the list of lights and plugs for a given room.
+     *
+     * @param int $room_id The ID of the room to retrieve the devices from.
+     * @return // JSON response containing the list of lights and plugs.
+     */
     private function responseBuilder($room_id)
     {
         $lights = DB::table('devices')
@@ -145,12 +178,17 @@ private function updateOrInsertDevice($deviceData, $room_id, $type)
                 "device_type" ,
                 "is_active"
             ]);
+        if(($plugs && $lights)){
+            return response()->json([
+                'lights' => $lights,
+                'plugs' => $plugs
+            ], 200);
+        }
+        else{
+            return response()->json([
+                'error' => 'internal server error'
+            ],500);
+        }
         
-        // gettype($lights),
-        // gettype($plugs)
-        return response()->json([
-            'lights' => $lights,
-            'plugs' => $plugs
-        ], 200);
     }
 }
