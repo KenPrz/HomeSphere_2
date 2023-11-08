@@ -13,13 +13,13 @@ use Illuminate\Queue\SerializesModels;
 class TestEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+    public $sensorData;
+    public $home_id;
 
-    /**
-     * Create a new event instance.
-     */
-    public function __construct()
+    public function __construct($sensorData, $home_id)
     {
-        //
+        $this->sensorData = $sensorData;
+        $this->home_id = $home_id;
     }
 
     /**
@@ -30,18 +30,21 @@ class TestEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('public.test.1'),
+            new PrivateChannel('home.'.$this->home_id),
         ];
     }
 
     public function broadcastAs(){
-        return 'myEvent';
+        return 'sensor_update';
     }
 
     public function broadcastWith(): array
     {
         return [
-            'test' => '123',
+            'sensor_data' => [
+                'temperature' => $this->sensorData['temperature'],
+                'humidity' => $this->sensorData['humidity'],
+            ]
         ];
     }
 }

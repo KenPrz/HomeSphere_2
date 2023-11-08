@@ -25,10 +25,10 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/test-event',function(){
-    event(new \App\Events\TestEvent());
-return null;
-});
+// Route::get('/test-event',function(){
+//     event(new \App\Events\TestEvent());
+// return null;
+// });
 
 Route::get('/', function () {
     if (auth()->check()) {

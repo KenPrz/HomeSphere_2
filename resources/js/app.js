@@ -12,14 +12,6 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import colors from 'vuetify/lib/util/colors'
 
-const channel = window.Echo.channel('public.test.1');
-
-channel.subscribed(()=>{
-    console.log('XD');
-}).listen('.myEvent',(event)=>{
-    console.log(event);
-});
-
 const vuetify = createVuetify({
     components,
     directives,

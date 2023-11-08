@@ -42,7 +42,7 @@ class NodeMCUController extends Controller
 
 
         $sensorData = $request->sensor_data;
-        $this->updateSensorData($room_id, $sensorData);
+        $this->updateSensorData($room_id, $sensorData,$home_id);
 
         $myData = $request->all();
         if (isset($myData['devices'])) {
@@ -85,7 +85,7 @@ class NodeMCUController extends Controller
      * @param array $sensorData An array containing the temperature and humidity data.
      * @return void
      */
-    private function updateSensorData($room_id, $sensorData)
+    private function updateSensorData($room_id, $sensorData, $home_id)
     {
         if (isset($sensorData['temperature'])) {
             temp_sensor::updateOrInsert(
@@ -100,6 +100,7 @@ class NodeMCUController extends Controller
                 ['humidity' => $sensorData['humidity']]
             );
         }
+        event(new \App\Events\TestEvent($sensorData,$home_id));
     }
     
     
@@ -179,6 +180,7 @@ private function updateOrInsertDevice($deviceData, $room_id, $type)
                 "is_active"
             ]);
         if(($plugs && $lights)){
+
             return response()->json([
                 'lights' => $lights,
                 'plugs' => $plugs
