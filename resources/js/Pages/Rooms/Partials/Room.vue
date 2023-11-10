@@ -13,7 +13,7 @@ import Device from '@/Pages/Rooms/Partials/Device.vue';
                 <div class="flex flex-col">
                     <div class="flex justify-between w-full pb-3 px-1 border-gray-500 border-b-2">
                         <div class="text-2xl font-semibold">
-                            Appliances {{ humidityData.sensor_data }}
+                            Appliances in {{ room.room_name }}
                         </div>
                         <div v-if="room.room_owner_id == $page.props.auth.id || $page.props.homeData.role == 'owner'"
                             class="flex">
@@ -51,9 +51,8 @@ import Device from '@/Pages/Rooms/Partials/Device.vue';
                             Temperature
                         </div>
                         <div v-if="tempData.sensor_data !== null" class="flex w-full justify-center">
-                            <v-progress-circular :size="150" :width="15" :rotate="0"
-                                :model-value="tempData.sensor_data" color="white"
-                                background-color="rgba(255, 255, 255, 0.2)">
+                            <v-progress-circular :size="150" :width="15" :rotate="0" :model-value="tempData.sensor_data"
+                                color="white" background-color="rgba(255, 255, 255, 0.2)">
                                 <span v-if="!tempData.sensor_data" class="text">no data</span>
                                 <span v-else class="text">{{ tempData.sensor_data }}°C</span>
                             </v-progress-circular>
@@ -71,10 +70,9 @@ import Device from '@/Pages/Rooms/Partials/Device.vue';
                         <div class="text-xl text-white text-center mb-2">
                             Humidity
                         </div>
-                        <div v-if="humidityData.sensor_data !==null" class="flex w-full justify-center">
-                            <v-progress-circular :size="150" :width="15" :rotate="0"
-                                :model-value="humidityData.sensor_data" color="white"
-                                background-color="rgba(255, 255, 255, 0.2)">
+                        <div v-if="humidityData.sensor_data !== null" class="flex w-full justify-center">
+                            <v-progress-circular :size="150" :width="15" :rotate="0" :model-value="humidityData.sensor_data"
+                                color="white" background-color="rgba(255, 255, 255, 0.2)">
                                 <span v-if="!humidityData.sensor_data" class="text">no data</span>
                                 <span v-else class="text">{{ humidityData.sensor_data }}%</span>
                             </v-progress-circular>
@@ -100,8 +98,8 @@ import Device from '@/Pages/Rooms/Partials/Device.vue';
     </Modal>
 </template>
 <script>
-    const tempData = ref({ sensor_data: null });
-    const humidityData = ref({ sensor_data: null })
+import { ref, watch } from 'vue';
+
 export default {
     props: {
         room: {
@@ -113,20 +111,41 @@ export default {
         return {
             tempData: { sensor_data: null },
             humidityData: { sensor_data: null },
+            roomId: { sensor_data: null },
             showEditRoomForm: false,
             showDeleteRoomDialog: false,
-        }
+            roomChannel: null,
+        };
     },
     mounted() {
-        const roomChannel = window.Echo.private('home.'+this.room.home_id);
-        roomChannel.subscribed(() => {
-            console.log('connected to room channel!');
-        }).listen('.sensor_update', (eventData) => {
-            tempData.value.sensor_data = eventData.sensor_data.temperature;
-            humidityData.value.sensor_data = eventData.sensor_data.humidity;
-        });
+        this.subscribeToRoomChannel(this.room.id);
+        watch(
+            () => this.room.id,
+            (newVal, oldVal) => {
+                // Log the old and new values
+                // console.log('Room ID changed:', 'oldValue:', oldVal, 'newValue:', newVal);
+                this.unsubscribeFromRoomChannel(oldVal);
+
+                this.subscribeToRoomChannel(newVal);
+            }
+        );
     },
     methods: {
+        subscribeToRoomChannel(room_id) {
+            // Subscribe to the new channel
+            this.roomChannel = window.Echo.private(`room.${room_id}`);
+            this.roomChannel.subscribed(() => {
+            }).listen('.sensor_update', (eventData) => {
+                this.roomId.sensor_data = eventData.sensor_data.room_id;
+                this.tempData.sensor_data = eventData.sensor_data.temperature;
+                this.humidityData.sensor_data = eventData.sensor_data.humidity;
+            });
+        },
+        unsubscribeFromRoomChannel(room_id) {
+            window.Echo.leave(`room.${room_id}`);
+            this.tempData.sensor_data = null;
+            this.humidityData.sensor_data = null;
+        },
         close() {
             this.$emit('close');
         },
@@ -142,8 +161,8 @@ export default {
         closeDeleteRoomDialog() {
             this.showDeleteRoomDialog = false;
         },
-    }
-}
+    },
+};
 </script>
 
 <style scoped>

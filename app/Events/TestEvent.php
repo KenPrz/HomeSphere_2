@@ -13,13 +13,14 @@ use Illuminate\Queue\SerializesModels;
 class TestEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    public $sensorData;
-    public $home_id;
-
-    public function __construct($sensorData, $home_id)
+    public $room_id;
+    public $sensor_data;
+    public $device_data;
+    public function __construct($room_id,$sensor_data, $device_data)
     {
-        $this->sensorData = $sensorData;
-        $this->home_id = $home_id;
+        $this->room_id = $room_id;
+        $this->sensor_data = $sensor_data;
+        $this->device_data = $device_data;
     }
 
     /**
@@ -30,7 +31,7 @@ class TestEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('home.'.$this->home_id),
+            new PrivateChannel('room.'.$this->room_id),
         ];
     }
 
@@ -42,8 +43,9 @@ class TestEvent implements ShouldBroadcast
     {
         return [
             'sensor_data' => [
-                'temperature' => $this->sensorData['temperature'],
-                'humidity' => $this->sensorData['humidity'],
+                'room_id' => $this->room_id,
+                'temperature' => $this->sensor_data['temperature'],
+                'humidity' => $this->sensor_data['humidity'],
             ]
         ];
     }
