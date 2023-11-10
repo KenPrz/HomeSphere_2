@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Device;
 use App\Models\humidity_sensor;
 use App\Models\temp_sensor;
+use App\Events\SensorUpdateEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -47,7 +48,7 @@ class NodeMCUController extends Controller
         $device_data = $request->all();
         if (isset($device_data['devices'])) {
             $this->deviceUpdate($device_data, $room_id);
-            event(new \App\Events\TestEvent($room_id, $sensorData,$device_data['devices']));
+            event(new SensorUpdateEvent($room_id));
             // Final Reply to the node.//
             return $this->responseBuilder($room_id);
         } else {

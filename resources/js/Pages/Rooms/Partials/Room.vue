@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue';
 import Modal from '@/Components/Modal.vue';
 import EditRoomForm from './EditRoomForm.vue';
 import DeleteRoomDialog from './DeleteRoomDialog.vue';
@@ -12,7 +11,7 @@ import Device from '@/Pages/Rooms/Partials/Device.vue';
             <div class="col-span-1 md:col-span-4 row-span-1 md:row-span-5 bg-white rounded-xl p-4">
                 <div class="flex flex-col">
                     <div class="flex justify-between w-full pb-3 px-1 border-gray-500 border-b-2">
-                        <div class="text-2xl font-semibold">
+                        <div class="sm:text-md md:text-2xl font-semibold">
                             Appliances in {{ room.room_name }}
                         </div>
                         <div v-if="room.room_owner_id == $page.props.auth.id || $page.props.homeData.role == 'owner'"
@@ -29,9 +28,43 @@ import Device from '@/Pages/Rooms/Partials/Device.vue';
                             </button>
                         </div>
                     </div>
-                    <div class="mt-3 container flex flex-wrap sm:justify-around md:justify-between">
-                        <!-- {{ room }} -->
-                        <Device v-for="device in room.devices" :key="device.id" :device="device" />
+                    <div class="md:hidden flex justify-around">
+                        <div class="flex flex-col mt-1">
+                            <div class="text-md font-semibold">
+                                Temperature
+                            </div>
+                            <div class="text-sm font-light text-center">
+                                <span v-if="tempData.data !== null">
+                                    {{ tempData.data }}
+                                </span>
+                                <span v-else>
+                                    {{ room.temp_sensor.temperature }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="flex flex-col mt-1">
+                            <div class="text-md font-semibold">
+                                Humidity
+                            </div>
+                            <div class="text-sm font-light text-center">
+                                <span v-if="humidityData.data !== null">
+                                    {{ humidityData.data }}
+                                </span>
+                                <span v-else>
+                                    {{ room.humidity_sensor.humidity }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div v-if="devices.data !== null">
+                        <div class="mt-3 container flex flex-wrap sm:justify-around md:justify-between">
+                            <Device v-for="device in devices.data" :key="device.id" :device="device" />
+                        </div>
+                    </div>
+                    <div v-else>
+                        <div class="mt-3 container flex flex-wrap sm:justify-around md:justify-between">
+                            <Device v-for="device in room.devices" :key="device.id" :device="device" />
+                        </div>
                     </div>
                 </div>
             </div>
@@ -50,11 +83,11 @@ import Device from '@/Pages/Rooms/Partials/Device.vue';
                         <div class="text-xl text-white text-center mb-2">
                             Temperature
                         </div>
-                        <div v-if="tempData.sensor_data !== null" class="flex w-full justify-center">
-                            <v-progress-circular :size="150" :width="15" :rotate="0" :model-value="tempData.sensor_data"
+                        <div v-if="tempData.data !== null" class="flex w-full justify-center">
+                            <v-progress-circular :size="150" :width="15" :rotate="0" :model-value="tempData.data"
                                 color="white" background-color="rgba(255, 255, 255, 0.2)">
-                                <span v-if="!tempData.sensor_data" class="text">no data</span>
-                                <span v-else class="text">{{ tempData.sensor_data }}°C</span>
+                                <span v-if="!tempData.data" class="text">no data</span>
+                                <span v-else class="text">{{ tempData.data }}°C</span>
                             </v-progress-circular>
                         </div>
                         <div v-else class="flex w-full justify-center">
@@ -70,11 +103,11 @@ import Device from '@/Pages/Rooms/Partials/Device.vue';
                         <div class="text-xl text-white text-center mb-2">
                             Humidity
                         </div>
-                        <div v-if="humidityData.sensor_data !== null" class="flex w-full justify-center">
-                            <v-progress-circular :size="150" :width="15" :rotate="0" :model-value="humidityData.sensor_data"
+                        <div v-if="humidityData.data !== null" class="flex w-full justify-center">
+                            <v-progress-circular :size="150" :width="15" :rotate="0" :model-value="humidityData.data"
                                 color="white" background-color="rgba(255, 255, 255, 0.2)">
-                                <span v-if="!humidityData.sensor_data" class="text">no data</span>
-                                <span v-else class="text">{{ humidityData.sensor_data }}%</span>
+                                <span v-if="!humidityData.data" class="text">no data</span>
+                                <span v-else class="text">{{ humidityData.data }}%</span>
                             </v-progress-circular>
                         </div>
                         <div v-else class="flex w-full justify-center">
@@ -98,8 +131,7 @@ import Device from '@/Pages/Rooms/Partials/Device.vue';
     </Modal>
 </template>
 <script>
-import { ref, watch } from 'vue';
-
+import { watch } from 'vue';
 export default {
     props: {
         room: {
@@ -109,9 +141,10 @@ export default {
     },
     data() {
         return {
-            tempData: { sensor_data: null },
-            humidityData: { sensor_data: null },
-            roomId: { sensor_data: null },
+            roomId: { ID: null },
+            tempData: { data: null },
+            humidityData: { data: null },
+            devices:{data: null},
             showEditRoomForm: false,
             showDeleteRoomDialog: false,
             roomChannel: null,
@@ -122,10 +155,7 @@ export default {
         watch(
             () => this.room.id,
             (newVal, oldVal) => {
-                // Log the old and new values
-                // console.log('Room ID changed:', 'oldValue:', oldVal, 'newValue:', newVal);
                 this.unsubscribeFromRoomChannel(oldVal);
-
                 this.subscribeToRoomChannel(newVal);
             }
         );
@@ -136,15 +166,18 @@ export default {
             this.roomChannel = window.Echo.private(`room.${room_id}`);
             this.roomChannel.subscribed(() => {
             }).listen('.sensor_update', (eventData) => {
-                this.roomId.sensor_data = eventData.sensor_data.room_id;
-                this.tempData.sensor_data = eventData.sensor_data.temperature;
-                this.humidityData.sensor_data = eventData.sensor_data.humidity;
+                this.roomId.ID = eventData.sensor_data[0].id;
+                this.tempData.data = eventData.sensor_data[0].temp_sensor.temperature;
+                this.humidityData.data = eventData.sensor_data[0].humidity_sensor.humidity;
+            }).listen('.device_update',(eventData)=>{
+                this.devices.data = eventData.device_data[0].devices;
             });
         },
         unsubscribeFromRoomChannel(room_id) {
             window.Echo.leave(`room.${room_id}`);
-            this.tempData.sensor_data = null;
-            this.humidityData.sensor_data = null;
+            this.tempData.data = null;
+            this.humidityData.data = null;
+            this.devices.data = null;
         },
         close() {
             this.$emit('close');
@@ -164,11 +197,3 @@ export default {
     },
 };
 </script>
-
-<style scoped>
-.text {
-    font-size: 1.5rem;
-    font-weight: 200;
-    color: #fff;
-}
-</style>

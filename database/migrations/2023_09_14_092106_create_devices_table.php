@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('device_name');
             $table->enum('device_type',['plug','light']);
             $table->boolean('is_active');
-
             $table->foreign('room_id')->references('id')->on('rooms')->onDelete('cascade');
             $table->timestamps();
         });

@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Events;
-
+use App\Models\room;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -10,17 +10,13 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TestEvent implements ShouldBroadcast
+class SensorUpdateEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $room_id;
-    public $sensor_data;
-    public $device_data;
-    public function __construct($room_id,$sensor_data, $device_data)
-    {
+    public function __construct($room_id)
+    {   
         $this->room_id = $room_id;
-        $this->sensor_data = $sensor_data;
-        $this->device_data = $device_data;
     }
 
     /**
@@ -41,12 +37,18 @@ class TestEvent implements ShouldBroadcast
 
     public function broadcastWith(): array
     {
+        $sensorData = Room::with('tempSensor', 'humiditySensor', 'motionSensor')
+        ->where('id', $this->room_id)
+        ->get();
+    
+
         return [
-            'sensor_data' => [
-                'room_id' => $this->room_id,
-                'temperature' => $this->sensor_data['temperature'],
-                'humidity' => $this->sensor_data['humidity'],
-            ]
+            'sensor_data' => $sensorData,
         ];
     }
 }
+/*
+    $newRoomData = Room::with('devices', 'tempSensor', 'humiditySensor', 'motionSensor')
+    ->where('id', $this->room_id)
+    ->get();    
+*/ 

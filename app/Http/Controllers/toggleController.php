@@ -20,7 +20,7 @@ class ToggleController extends Controller
             ->update(['is_active' => $data['is_active']]);
 
         if($device){
-            return response()->json(['message' => 'Device state updated successfully'], 200);
+            return response()->json(['message' => $device], 200);
         } else {
             return response()->json(['message'=> 'Internal Server Error'],500);
         }

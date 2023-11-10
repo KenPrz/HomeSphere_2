@@ -14,7 +14,7 @@ import ToggleSwitch from '@/Components/ToggleSwitch.vue';
                     <v-img width="40" src="img-assets\vectors\Next-Button.svg" />
                 </button>
             </template>
-            <v-carousel-item v-for="room in $page.props.rooms" class="px-2">
+            <v-carousel-item v-for="room in rooms" class="px-2">
                 <div class="px-7 py-4">
                     <div class="h-screen">
                         <v-card height="260">
@@ -73,3 +73,13 @@ import ToggleSwitch from '@/Components/ToggleSwitch.vue';
         </v-carousel>
     </v-window>
 </template>
+<script>
+export default {
+    props: {
+        rooms: {
+            type: Object,
+            required: true,
+        },
+    },
+};
+</script>
