@@ -10,7 +10,7 @@ const { device, customClass } = defineProps({
 <template>
     <div>
         <div :class="[
-            'm-3 p-3 flex flex-col h-[170px] w-[170px] bg-gray-600 shadow-lg rounded-lg hover:scale-105 cursor-pointer transition duration-500 ease-in-out',
+            'm-3 p-3 flex flex-col h-[160px] w-[160px] bg-gray-600 shadow-lg rounded-lg hover:scale-105 cursor-pointer transition duration-500 ease-in-out',
             customClass,
             device.is_active ? 'bg-white text-black' : 'bg-gray-600 text-white',
         ]">

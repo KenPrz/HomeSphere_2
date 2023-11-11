@@ -7,9 +7,9 @@ import Device from '@/Pages/Rooms/Partials/Device.vue';
 </script>
 <template>
     <div class="container">
-        <div class="grid grid-cols-1 md:grid-cols-6 grid-rows-5 gap-2">
-            <div class="col-span-1 md:col-span-4 row-span-1 md:row-span-5 bg-white rounded-xl p-4">
-                <div class="flex flex-col">
+        <div class="flex">
+            <div class="md:w-2/3 bg-white rounded-xl me-5">
+                <div class="flex flex-col p-5">
                     <div class="flex justify-between w-full pb-3 px-1 border-gray-500 border-b-2">
                         <div class="sm:text-md md:text-2xl font-semibold">
                             Appliances in {{ room.room_name }}
@@ -17,12 +17,12 @@ import Device from '@/Pages/Rooms/Partials/Device.vue';
                         <div v-if="room.room_owner_id == $page.props.auth.id || $page.props.homeData.role == 'owner'"
                             class="flex">
                             <button @click="openEditRoomForm"
-                                class="flex items-center justify-center border-gray-500 border rounded-full px-3 mx-2">
+                                class="flex items-center justify-center border-gray-500 border rounded-full px-2 mx-2">
                                 <img class="h-4 w-auto" :src="'img-assets/vectors/Edit.svg'" />
                                 <span>Edit</span>
                             </button>
                             <button @click="openDeleteRoomDialog"
-                                class="flex items-center justify-center border-gray-500 border rounded-full px-3 mx-2">
+                                class="flex items-center justify-center border-gray-500 border rounded-full px-2 mx-2">
                                 <img class="h-4 w-auto" :src="'img-assets/vectors/Edit.svg'" />
                                 <span>Delete</span>
                             </button>
@@ -57,19 +57,18 @@ import Device from '@/Pages/Rooms/Partials/Device.vue';
                         </div>
                     </div>
                     <div v-if="devices.data !== null">
-                        <div class="mt-3 container flex flex-wrap sm:justify-around md:justify-between">
+                        <div class="mt-3 container flex flex-wrap sm:justify-around md:justify-around">
                             <Device v-for="device in devices.data" :key="device.id" :device="device" />
                         </div>
                     </div>
                     <div v-else>
-                        <div class="mt-3 container flex flex-wrap sm:justify-around md:justify-between">
+                        <div class="mt-3 container flex flex-wrap sm:justify-around">
                             <Device v-for="device in room.devices" :key="device.id" :device="device" />
                         </div>
                     </div>
                 </div>
             </div>
-            <div
-                class="col-span-1 md:col-span-2 row-span-1 md:row-span-5 col-start-1 md:col-start-5 bg-gray-500 rounded-xl mx-10">
+            <div class="hidden md:block md:w-1/3 bg-gray-500 rounded-2xl">
                 <div class="container p-5">
                     <div class="flex-col border-white border-2 rounded-md p-3 items-center justify-center w-full mb-3">
                         <div class="text-xl text-white text-center mb-2">
