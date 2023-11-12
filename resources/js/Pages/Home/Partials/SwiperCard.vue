@@ -20,10 +20,10 @@ import ToggleSwitch from '@/Components/ToggleSwitch.vue';
                         <v-card height="260">
                             <div class="container p-3 flex flex-col text-center">
                                 <h1 class="text-lg font-semibold text-slate-600">
-                                    {{ room.room_name }}
+                                    {{ room.room_name }} ID:{{ room.id }}
                                 </h1>
                                 <h3 class="text-xs font-light">
-                                    {{ room.device_count + ' ' }} Appliance(s)
+                                    {{ room.device_count + ' ' }} Appliance(s) 
                                 </h3>
                             </div>
                             <div class="px-7">
@@ -74,6 +74,7 @@ import ToggleSwitch from '@/Components/ToggleSwitch.vue';
     </v-window>
 </template>
 <script>
+import { watch } from 'vue';
 export default {
     props: {
         rooms: {

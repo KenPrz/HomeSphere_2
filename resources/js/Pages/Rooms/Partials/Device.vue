@@ -10,9 +10,10 @@ const { device, customClass } = defineProps({
 <template>
     <div>
         <div :class="[
-            'm-3 p-3 flex flex-col h-[160px] w-[160px] bg-gray-600 shadow-lg rounded-lg hover:scale-105 cursor-pointer transition duration-500 ease-in-out',
+            'm-3 p-3 flex flex-col bg-gray-600 shadow-lg rounded-lg hover:scale-105 cursor-pointer transition duration-500 ease-in-out',
             customClass,
             device.is_active ? 'bg-white text-black' : 'bg-gray-600 text-white',
+            'w-[115px] h-[115px] sm:h-[125px] sm:w-[125px] md:w-[140px] md:h-[140px] lg:w-[150px] lg:h-[150px]',
         ]">
             <div class="flex flex-1">
                 <div v-if="device.device_type === 'light'" class="flex-1">
@@ -31,13 +32,16 @@ const { device, customClass } = defineProps({
                 </div>
                 <div class="flex-1">
                     <div class="ms-5 mt-1">
-                        <ToggleSwitch v-model="device.is_active"/>
+                        <ToggleSwitch v-model="device.is_active" />
                     </div>
                 </div>
             </div>
             <div class="flex flex-col flex-1">
-                <h2 class="text-md">{{ device.device_name }}</h2>
-                <h1 class="text-xl font-ex">{{ device.is_active ? "ON" : "OFF" }}</h1>
+                <!-- Adjust text size based on screen size -->
+                <h2 class="text-sm sm:text-md lg:text-lg overflow-ellipsis">{{ device.device_name }}</h2>
+                <h1 class="text-lg sm:text-xl lg:text-2xl font-ex">
+                    {{ device.is_active ? 'ON' : 'OFF' }}
+                </h1>
             </div>
         </div>
     </div>
@@ -75,3 +79,10 @@ export default {
     }
 }
 </script>
+<style scoped>
+.overflow-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+</style>

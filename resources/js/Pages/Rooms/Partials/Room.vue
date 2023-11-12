@@ -17,14 +17,14 @@ import Device from '@/Pages/Rooms/Partials/Device.vue';
                         <div v-if="room.room_owner_id == $page.props.auth.id || $page.props.homeData.role == 'owner'"
                             class="flex">
                             <button @click="openEditRoomForm"
-                                class="flex items-center justify-center border-gray-500 border rounded-full px-2 mx-2">
-                                <img class="h-4 w-auto" :src="'img-assets/vectors/Edit.svg'" />
-                                <span>Edit</span>
+                                class="flex items-center justify-center border-gray-500 border rounded-full px-2 mx-2 text-sm sm:text-md">
+                                <img class="h-3 md:h-5 w-auto" :src="'img-assets/vectors/Edit.svg'" />
+                                <span class="text-sm">Edit</span>
                             </button>
                             <button @click="openDeleteRoomDialog"
-                                class="flex items-center justify-center border-gray-500 border rounded-full px-2 mx-2">
-                                <img class="h-4 w-auto" :src="'img-assets/vectors/Edit.svg'" />
-                                <span>Delete</span>
+                                class="flex items-center justify-center border-gray-500 border rounded-full px-2 mx-2 text-sm sm:text-md">
+                                <img class="h-3 md:h-5 w-auto" :src="'img-assets/vectors/Edit.svg'" />
+                                <span class="text-sm">Delete</span>
                             </button>
                         </div>
                     </div>
@@ -35,10 +35,10 @@ import Device from '@/Pages/Rooms/Partials/Device.vue';
                             </div>
                             <div class="text-sm font-light text-center">
                                 <span v-if="tempData.data !== null">
-                                    {{ tempData.data }}
+                                    {{ tempData.data + '°C'}}
                                 </span>
                                 <span v-else>
-                                    {{ room.temp_sensor.temperature }}
+                                    {{ room.temp_sensor.temperature + '°C'}}
                                 </span>
                             </div>
                         </div>
@@ -48,10 +48,10 @@ import Device from '@/Pages/Rooms/Partials/Device.vue';
                             </div>
                             <div class="text-sm font-light text-center">
                                 <span v-if="humidityData.data !== null">
-                                    {{ humidityData.data }}
+                                    {{ humidityData.data + '%'}}
                                 </span>
                                 <span v-else>
-                                    {{ room.humidity_sensor.humidity }}
+                                    {{ room.humidity_sensor.humidity + '%'}}
                                 </span>
                             </div>
                         </div>
