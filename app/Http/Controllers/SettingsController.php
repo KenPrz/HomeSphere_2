@@ -102,7 +102,8 @@ class SettingsController extends Controller
         if ($validated) {
             $user = auth()->user();
             $homeData = $this->appUtilities->findHomeData($user);
-            DB::transaction(function() use($homeData){
+            DB::transaction(function() use($homeData,$user){
+                DB::table('users')->where('id', $user->id)->update(['has_home' => 0]);
                 DB::table('homes')->where('id', $homeData->id)->delete();
                 DB::table('home_members')->where('home_id', $homeData->id)->delete();
             });
