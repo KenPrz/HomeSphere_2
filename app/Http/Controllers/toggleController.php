@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ToggleController extends Controller
 {
-    public function toggle(Request $request)
+    public function deviceToggle(Request $request)
     {
         $data = $this->validate($request, [
             'device_id' => 'required|integer',

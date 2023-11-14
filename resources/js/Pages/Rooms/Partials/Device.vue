@@ -56,7 +56,7 @@ export default {
     },
     methods: {
         submit() {
-            axios.post(`/api/toggle`, {
+            axios.post(`/api/device-toggle`, {
                 device_id: this.device.id,
                 is_active: this.device.is_active,
             })
