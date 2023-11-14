@@ -54,14 +54,14 @@ import ToggleSwitch from '@/Components/ToggleSwitch.vue';
                         <div v-if="humidityData.data !== null" class="col-span-3 row-span-5 col-start-3 py-1">
                             <div class="flex flex-col">
                                 <h3 class="text-sm font-medium">Humidity</h3>
-                                <span v-if="humidityData.data">{{ humidityData.data + ' °C' }}</span>
+                                <span v-if="humidityData.data">{{ humidityData.data + ' %' }}</span>
                                 <span v-else class="text-sm">no data</span>
                             </div>
                         </div>
                         <div v-else class="col-span-3 row-span-5 col-start-3 py-1">
                             <div class="flex flex-col">
                                 <h3 class="text-sm font-medium">Humidity</h3>
-                                <span v-if="room.humidity_sensor.humidity">{{ room.humidity_sensor.humidity + ' °C' }}</span>
+                                <span v-if="room.humidity_sensor.humidity">{{ room.humidity_sensor.humidity + ' %' }}</span>
                                 <span v-else class="text-sm">no data</span>
                             </div>
                         </div>
