@@ -26,7 +26,9 @@ class NodeMCUController extends Controller
             return response()->json(['errors' => $validationResult->errors()], 422);
         }
 
-        $home_id = DB::table('home_api_keys')->where('api_key', $request->key)->value('home_id');
+        $home_id = DB::table('home_api_keys')
+            ->whereRaw('BINARY api_key = ?', [$request->key])
+            ->value('home_id');
 
         if (!$home_id) {
             return response()->json(['errors' => ['key' => ['Invalid API key']]], 422);
