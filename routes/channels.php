@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Broadcast;
-
+use App\Models\User;
+use Illuminate\Support\Facades\DB;
 /*
 |--------------------------------------------------------------------------
 | Broadcast Channels
@@ -13,6 +14,21 @@ use Illuminate\Support\Facades\Broadcast;
 |
 */
 
-Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
+Broadcast::channel('App.Models.User.{id}', function (User $user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('room.{room_id}', function ($user, $room_id) {
+    if ($user->id && $room_id) {
+        $home_id = DB::table('home_members')->where('member_id', $user->id)->value('home_id');
+        if ($home_id) {
+            $is_member = DB::table('rooms')->where('home_id', $home_id)->exists();
+            if ($is_member) {
+                return true;
+            }
+        }
+    }
+    return false;
+});
+
+

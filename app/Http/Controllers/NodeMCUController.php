@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Device;
 use App\Models\humidity_sensor;
 use App\Models\temp_sensor;
+use App\Events\SensorUpdateEvent;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -44,9 +45,10 @@ class NodeMCUController extends Controller
         $sensorData = $request->sensor_data;
         $this->updateSensorData($room_id, $sensorData);
 
-        $myData = $request->all();
-        if (isset($myData['devices'])) {
-            $this->deviceUpdate($myData, $room_id);
+        $device_data = $request->all();
+        if (isset($device_data['devices'])) {
+            $this->deviceUpdate($device_data, $room_id);
+            event(new SensorUpdateEvent($room_id));
             // Final Reply to the node.//
             return $this->responseBuilder($room_id);
         } else {
@@ -101,9 +103,6 @@ class NodeMCUController extends Controller
             );
         }
     }
-    
-    
-
 /**
  * Update or insert devices for a given room.
  *
@@ -179,6 +178,7 @@ private function updateOrInsertDevice($deviceData, $room_id, $type)
                 "is_active"
             ]);
         if(($plugs && $lights)){
+
             return response()->json([
                 'lights' => $lights,
                 'plugs' => $plugs

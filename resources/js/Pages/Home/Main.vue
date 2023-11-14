@@ -66,7 +66,9 @@ import { Head } from "@inertiajs/vue3";
                 <div class="col-span-1 md:col-span-2 row-span-7 md:col-start-6">
                     <div class="grid grid-cols-2 grid-rows-6 gap-2">
                         <div class="col-span-2 md:col-span-2 row-span-3">
-                            <SwiperCard />
+                            <SwiperCard 
+                                :rooms="$page.props.rooms"
+                            />
                         </div>
                         <div class="col-span-2 md:col-span-2 row-span-3 row-start-4">
                             <div class="flex item-center p-3 my-2 mx-2">
@@ -82,9 +84,7 @@ import { Head } from "@inertiajs/vue3";
         </main>
     </AuthenticatedLayout>
 </template>
-
 <script>
-
 export default {
     components: {
         Table,

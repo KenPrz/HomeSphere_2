@@ -52,9 +52,9 @@ class User extends Authenticatable
         return $this->hasOne(Home::class, 'owner_id');
     }
 
-    public function homes()
+    public function home()
     {
-        return $this->belongsToMany(Home::class, 'home_member', 'member_id', 'home_id');
+        return $this->hasOne(Home::class);
     }
 
 }
