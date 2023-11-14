@@ -39,11 +39,18 @@ class AppliancesController extends Controller
                     ->orWhere('devices.is_active', '=', $searchTerm)
                     ->orWhere('rooms.room_name', 'like', "%$searchTerm%");
             });
-        }
     
+            // Add ORDER BY clause to sort by closeness
+            $query->orderBy(DB::raw("CASE 
+                WHEN devices.device_name LIKE '%$searchTerm%' THEN 1
+                WHEN rooms.room_name LIKE '%$searchTerm%' THEN 2
+                ELSE 3
+            END"));
+        }
         $appliances = $query->get();
         return $appliances;
     }
+    
     
 
     public function getAppliances($homeData){
