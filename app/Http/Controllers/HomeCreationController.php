@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\motion_sensor;
 use App\Models\room;
 use App\Models\User;
 use App\Http\Controllers\AppUtilities;
@@ -20,7 +21,7 @@ class HomeCreationController extends Controller
 
     /**
      * 
-     * Create a new home for the authenticated user.
+     * Redirect user to home creation screen
      *
      * @return \Inertia\Response
      */
@@ -136,6 +137,12 @@ class HomeCreationController extends Controller
         humidity_sensor::create([
             'room_id' => $room->id,
             'humidity' => null,
+        ]);
+
+        motion_sensor::create([
+            'room_id' => $room->id,
+            'is_active' => false,
+            'motion_detected' => false
         ]);
 
         DB::table('home_members')->insert([

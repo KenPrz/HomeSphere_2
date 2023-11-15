@@ -4,6 +4,7 @@ import EditRoomForm from './EditRoomForm.vue';
 import DeleteRoomDialog from './DeleteRoomDialog.vue';
 import ToggleSwitch from '@/Components/ToggleSwitch.vue';
 import Device from '@/Pages/Rooms/Partials/Device.vue';
+import MotionSensorToggle from '@/Components/MotionSensorToggle.vue';
 </script>
 <template>
     <div class="container">
@@ -71,12 +72,12 @@ import Device from '@/Pages/Rooms/Partials/Device.vue';
             <div class="hidden md:block md:w-1/3 bg-gray-500 rounded-2xl">
                 <div class="container p-5">
                     <div class="flex-col border-white border-2 rounded-md p-3 items-center justify-center w-full mb-3">
-                        <div class="text-xl text-white text-center mb-2">
-                            Motion Sensor
-                        </div>
-                        <div class="flex items-center justify-center">
-                            <ToggleSwitch />
-                        </div>
+                        <MotionSensorToggle
+                            :motionSensor="room.motion_sensor"
+                            :userId="$page.props.auth.user.id"
+                            :homeId="room.home_id"
+                            :roomId="room.id"
+                        />
                     </div>
                     <div class="flex-col border-white border-2 rounded-md p-3 items-center justify-center w-full mb-3">
                         <div class="text-xl text-white text-center mb-2">

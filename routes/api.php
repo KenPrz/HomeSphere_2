@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MotionSensorController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,4 +28,5 @@ Route::get('/test', function(){
 
 Route::post('/post-data', [NodeMCUController::class, 'receiveData']);
 
-Route::post('/device-toggle', [ToggleController::class, 'deviceToggle'])->name('toggleDeviceState');
+Route::post('/device-toggle', [ToggleController::class, 'deviceToggle'])->name('toggle.DeviceState');
+Route::put('/motion-sensor-toggle', [MotionSensorController::class,'toggleMotionSensor'])->name('toggle.MotionSensor');
