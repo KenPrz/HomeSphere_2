@@ -1,13 +1,15 @@
 <template>
     <Head title="Appliances" />
-    <AuthenticatedLayout>
+    <AuthenticatedLayout
+        :homeData="$page.props.homeData"
+    >
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 Appliances
             </h2>
         </template>
         <main>
-            <div class="container">
+            <div class="container"> 
                     <h1 class= "mx-10 py-3 text-3xl font-bold">
                         List of Appliances
                     </h1>

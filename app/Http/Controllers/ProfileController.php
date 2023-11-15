@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\AppUtilities;
 use App\Http\Requests\ProfileUpdateRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
@@ -10,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
-
 class ProfileController extends Controller
 {
     /**
@@ -18,7 +18,11 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): Response
     {
+        $appUtilities = New AppUtilities;
+        $user = auth()->user();
+        $homeData = $appUtilities->findHomeData($user);
         return Inertia::render('Profile/Main', [
+            'homeData'=> $homeData,
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),
         ]);

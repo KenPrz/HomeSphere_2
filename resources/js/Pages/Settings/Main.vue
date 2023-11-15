@@ -7,10 +7,12 @@ import HomeSettingsTab from "./Partials/HomeSettingsTab.vue";
 </script>
 <template>
     <Head title="Settings" />
-    <AuthenticatedLayout>
+    <AuthenticatedLayout
+        :homeData="$page.props.homeData"
+    >
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 space-y-6 leading-tight">
-                Settings
+                Settings 
             </h2>
         </template>
         <main>

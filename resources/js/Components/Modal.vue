@@ -37,7 +37,7 @@
                         :class="maxWidthClass"
                     >
                         <!-- Close button with an "X" icon -->
-                        <button
+                        <button v-if="hasClose"
                             @click="close"
                             class="absolute pt-2 mr-2 top-2 right-2 text-gray-600 hover:text-gray-800"
                         >
@@ -68,6 +68,10 @@
 import { computed, onMounted, onUnmounted, watch } from "vue";
 
 const props = defineProps({
+    hasClose: {
+        type: Boolean,
+        default: true
+    },
     show: {
         type: Boolean,
         default: false,

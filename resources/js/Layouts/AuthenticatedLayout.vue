@@ -6,7 +6,9 @@ import SideNav from "@/Layouts/SideNav.vue";
 <template>
     <div class="grid grid-cols-1 min-h-screen">
         <!-- Navbar -->
-            <TopNav/>
+            <TopNav
+                :homeData="homeData"
+            />
         <!-- End Navbar -->
         <div class="md:flex">
             <!-- Sidebar -->
@@ -22,6 +24,16 @@ import SideNav from "@/Layouts/SideNav.vue";
         </div>
     </div>
 </template>
+<script>
+    export default {
+        props: {
+            homeData: {
+                type: Object,
+                required: true
+            }
+        }
+    }
+</script>
 <style scoped>
 #mainDiv {
     margin-left: calc(1 / 6 * 100%);

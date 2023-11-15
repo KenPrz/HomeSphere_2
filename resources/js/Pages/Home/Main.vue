@@ -11,7 +11,9 @@ import { Head } from "@inertiajs/vue3";
 
 <template>
     <Head title="Dashboard" />
-    <AuthenticatedLayout>
+    <AuthenticatedLayout
+        :homeData="$page.props.homeData"
+    >
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 space-y-6 leading-tight">
                 Profile
@@ -25,7 +27,7 @@ import { Head } from "@inertiajs/vue3";
                         <div class="col-span-5 row-span-4">
                             <div class="Title">
                                 <h1 class="text-3xl mb-2 font-bold tracking-wide">
-                                    Welcome to {{ $page.props.userData.home_name }}
+                                    Welcome to {{ $page.props.homeData.home_name }}
                                 </h1>
                             </div>
                             <div class="mx-3">
@@ -92,7 +94,7 @@ export default {
         ModeCard,
     },
     props: {
-        userData: Object,
+        homeData: Object,
         userList: Object,
         appliances: Object,
     },

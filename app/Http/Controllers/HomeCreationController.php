@@ -78,7 +78,7 @@ class HomeCreationController extends Controller
                 $api_key = $appUtilities->getApiKey($homeData);
                 return Inertia::render('Dashboard', 
                 [   
-                    'userData' => $homeData,
+                    'homeData' => $homeData,
                     'userList' => $userList, 
                     'appliances' => $appliances,
                     'rooms' => $rooms,
@@ -87,7 +87,7 @@ class HomeCreationController extends Controller
         }
         else if ($homeData->role == 'pending') {
             return Inertia::render('Dashboard',[
-                'userData' => $homeData,
+                'homeData' => $homeData,
                 'userList' => null, 
                 'appliances' => null,
                 'rooms' => null,

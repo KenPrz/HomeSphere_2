@@ -13,14 +13,15 @@ class AppliancesController extends Controller
         $user = auth()->user();
         $homeData = $appUtilities->findHomeData($user);
         $searchData = Request::only('search');
-        $appliances = $this->getFilteredAppliances($homeData, $searchData);
+        $appliances = $this->getFilteredAppliances($homeData->id, $searchData);
         return Inertia::render('Appliances/Main', [
+            'homeData' => $homeData,
             'filters' => Request::only('search'),
             'appliances' => $appliances,
         ]);
     }
 
-    public function getFilteredAppliances($homeData, $searchData) {
+    public function getFilteredAppliances($home_id, $searchData) {
         $query = DB::table('devices')
             ->select(
                 'devices.id',
@@ -29,7 +30,7 @@ class AppliancesController extends Controller
                 'devices.device_name',
                 'devices.is_active'
             )
-            ->where('rooms.home_id', $homeData->id)
+            ->where('rooms.home_id', $home_id)
             ->join('rooms', 'devices.room_id', '=', 'rooms.id');
     
         if (!empty($searchData['search'])) {
