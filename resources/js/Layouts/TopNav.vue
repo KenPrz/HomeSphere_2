@@ -1,8 +1,10 @@
 <script setup>
+import Modal from "@/Components/Modal.vue";
 import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
 import NotificationMain from "@/Layouts/Notifications/NotificationMain.vue";
 import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
+import MotionDetectedPopup from "@/Components/MotionDetectedPopup.vue";
 </script>
 
 <template>
@@ -94,4 +96,23 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                 </div>
             </div>
         </nav>
+        <v-dialog width="500">
+        <template v-slot:activator="{ props }">
+            <v-btn v-bind="props" text="Open Dialog"> </v-btn>
+        </template>
+        <template v-slot:default="{ isActive }">
+            <v-card>
+                <v-card-text>
+                    <div class="text-2xl">
+                        Motion Detected!!!
+                    </div>
+                </v-card-text>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text="Close Dialog" @click="isActive.value = false"></v-btn>
+                </v-card-actions>
+            </v-card>
+        </template>
+    </v-dialog>
 </template>

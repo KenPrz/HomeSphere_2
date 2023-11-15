@@ -31,4 +31,14 @@ Broadcast::channel('room.{room_id}', function ($user, $room_id) {
     return false;
 });
 
+Broadcast::channel('home.{home_id', function($user, $home_id){
+    if ($user->id && $home_id) {
+        $is_member = DB::table('home_members')->where('home_id', $home_id)->where('member_id', $user->id)->exists();
+        if ($is_member) {
+            return true;
+        }
+    }
+    return false;
+});
+
 
