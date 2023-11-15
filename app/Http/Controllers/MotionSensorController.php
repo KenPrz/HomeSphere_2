@@ -7,6 +7,12 @@ use Illuminate\Http\Request;
 
 class MotionSensorController extends Controller
 {
+    /**
+     * Toggle the state of a motion sensor.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function toggleMotionSensor(Request $request)
     {
         $request->validate([
