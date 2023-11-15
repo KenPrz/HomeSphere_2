@@ -3,7 +3,7 @@ import ToggleSwitch from '@/Components/ToggleSwitch.vue';
 </script>
 <template>
     <div class="text-xl text-white text-center mb-2">
-        Motion Sensor 
+        Motion Sensor
     </div>
     <div class="flex items-center justify-center">
         <ToggleSwitch @update:modelValue="submit(!motionSensor.is_active)" v-model="motionSensor.is_active"/>
@@ -32,6 +32,9 @@ export default {
     methods: {
         submit(data) {
             axios.put(`api/motion-sensor-toggle`, {
+                roomId: this.roomId,
+                homeId: this.homeId,
+                userId: this.userId,
                 motionSensorId: this.motionSensor.id,
                 is_active: data,
             })
