@@ -8,7 +8,7 @@ import HomeSettingsTab from "./Partials/HomeSettingsTab.vue";
 <template>
     <Head title="Settings" />
     <AuthenticatedLayout
-        :homeData="$page.props.homeData"
+        :homeData="homeData"
     >
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 space-y-6 leading-tight">
@@ -56,6 +56,20 @@ import HomeSettingsTab from "./Partials/HomeSettingsTab.vue";
 </template>
 <script>
 export default {
+    props: {
+        homeData: {
+            type: Object,
+            required: true
+        },
+        homeMembers: {
+            type: Object,
+            required: true
+        },
+        api_key: {
+            type: Object,
+            required: true
+        },
+    },
     data: () => ({
         tab: null,
     }),

@@ -45,13 +45,9 @@ class HomeCreationController extends Controller
     }
     
     /**
-     * 
-     * Verify if the authenticated user has a home and the role of the user in the home.
-     * If the user has no home, redirect to the create home page.
-     * If the user has a role of 'member' or 'owner', retrieve the rooms, devices, sensors, appliances, and user list of the home.
-     * If the user has a role of 'pending', render the dashboard without the user list, appliances, rooms, and api key.
+     * Verify if the authenticated user has a home and render the Dashboard view with the necessary data.
      *
-     * @return \Inertia\Response
+     * @return \Inertia\Response|\Illuminate\Http\RedirectResponse
      */
     public function verify()
     {
@@ -85,7 +81,14 @@ class HomeCreationController extends Controller
                     'api_key' => $api_key,
                 ]);
         }
+        /**
+         * If the role of the home data is 'pending', set the invite code and owner id to null
+         * and render the Dashboard with null values for user list, appliances, rooms, and api key.
+         *
+         */
         else if ($homeData->role == 'pending') {
+            $homeData->invite_code=null;
+            $homeData->owner_id=null;
             return Inertia::render('Dashboard',[
                 'homeData' => $homeData,
                 'userList' => null, 

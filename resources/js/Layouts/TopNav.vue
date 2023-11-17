@@ -107,7 +107,7 @@ export default {
         };
     },
     mounted() {
-        if (this.homeData) {
+        if (this.homeData.role=='owner'||this.homeData.role=='member'){
             this.subscribeToRoomChannel(this.homeData.id);
         }
     },
