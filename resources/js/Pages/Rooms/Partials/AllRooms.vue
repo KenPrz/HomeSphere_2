@@ -17,13 +17,11 @@ const setActiveComponent = (componentName, room) => {
 <template>
     <div class="flex flex-col">
         <div class="container mx-auto">
-            <div class="flex item-center">
-                <div class="flex flex-wrap">
-                    <div class="w-full sm:w-1/2 p-2 relative" v-for="room in rooms" :key="room.id">
-                        <a @click="setActiveComponent(room.room_name + ' ' + room.id, room)">
-                            <RoomCard :room="room" />
-                        </a>
-                    </div>
+            <div class="flex item-center flex-wrap">
+                <div class="w-full sm:w-1/2 p-2 relative" v-for="room in rooms" :key="room.id">
+                    <a @click="setActiveComponent(room.room_name + ' ' + room.id, room)">
+                        <RoomCard :room="room" />
+                    </a>
                 </div>
             </div>
         </div>
