@@ -3,23 +3,23 @@
     <TopNav />
     <main class="flex items-center justify-center w-full h-screen bg-gray-100">
         <div class="bg-white p-8 w-8/12 rounded-lg shadow-md mx-auto">
-            <div class="my-9 text-5xl font-semibold text-black text-center">
+            <div class="mt-9 text-2xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold text-black text-center">
                 Start Your Home Automation Journey
             </div>
-            <div class="my-7 text-3xl font-medium text-black text-center">
+            <div class="my-1 sm:my-3 md:my-4 lg:my-7 text-lg sm:text-xl md:text-2xl lg:text-3xl font-medium text-black text-center">
                 Choose Your Home Setup Option
             </div>
-            <div class="flex flex-col sm:flex-row w-full h-48 my-5">
+            <div class="flex flex-col md:flex-row w-full h-48 my-5">
                 <a
                     @click="openCreateHomeModal"
-                    class="h-44 child flex-1 bg-green-500 m-2 rounded-3xl transition-colors duration-200 hover:bg-green-400 cursor-pointer"
+                    class="sm:h-12 md:h-32 lg:h-44 child flex-1 bg-green-500 m-2 rounded-3xl transition-colors duration-200 hover:bg-green-400 cursor-pointer"
                 >
                     <div class="h-full w-full flex items-center justify-center">
-                        <h1 class="text-2xl text-white font-semibold mr-4">
+                        <h1 class="md:text-xl lg:text-2xl text-white font-semibold mr-4">
                             Create Home
                         </h1>
                         <img
-                            class="h-12 w-auto"
+                            class="h-4 sm:h-8 lg:h-12 w-auto"
                             :src="'/img-assets/vectors/House.svg'"
                             alt="test"
                         />
@@ -27,14 +27,14 @@
                 </a>
                 <a
                     @click="openJoinHomeModal"
-                    class="h-44 child flex-1 bg-blue-900 m-2 rounded-3xl transition-colors duration-200 hover:bg-blue-600 cursor-pointer"
+                    class="sm:h-12 md:h-32 lg:h-44 child flex-1 bg-blue-900 m-2 rounded-3xl transition-colors duration-200 hover:bg-blue-600 cursor-pointer"
                 >
-                    <div class="h-full w-full flex items-center justify-center">
-                        <h1 class="text-2xl text-white font-semibold mr-4">
+                <div class="h-full w-full flex items-center justify-center">
+                        <h1 class="md:text-xl lg:text-2xl text-white font-semibold mr-4">
                             Join Home
                         </h1>
                         <img
-                            class="h-12 w-auto"
+                            class="h-4 sm:h-8 lg:h-12 w-auto"
                             :src="'/img-assets/vectors/join_home.svg'"
                             alt="test"
                         />

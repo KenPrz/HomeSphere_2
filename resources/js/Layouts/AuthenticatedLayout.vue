@@ -29,7 +29,7 @@ import SideNav from "@/Layouts/SideNav.vue";
         props: {
             homeData: {
                 type: Object,
-                required: true
+                default: null
             }
         }
     }
