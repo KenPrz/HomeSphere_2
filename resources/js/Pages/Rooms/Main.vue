@@ -34,12 +34,12 @@ const setActiveComponent = (componentName, room) => {
                     <div class="w-full font-bold text-3xl">
                         List of Rooms
                     </div>
-                    <div class="flex p-2 bg-white flex-wrap rounded-md shadow-md h-16 min-h-full text-sm md:text-md mb-4">
-                        <NavLink @click="setActiveComponent('AllRooms')" href="/rooms"
+                    <div class="flex p-2 bg-white flex-wrap rounded-md shadow-md text-sm md:text-md mb-4">
+                        <NavLink class="mb-1" @click="setActiveComponent('AllRooms')" href="/rooms"
                             :active="activeComponent === 'AllRooms'">
                             All Rooms
                         </NavLink>
-                        <NavButton v-for="room in rooms" class="w-auto px-4 mx-2 border-black border-2 rounded-2xl hover:bg-zinc-500 hover:text-white transition duration-300"
+                        <NavButton v-for="room in rooms" class="mb-1 text-[12px] sm:text-[16px] w-auto md:py-3 px-4 mx-2 border-black border-2 rounded-2xl hover:bg-zinc-500 hover:text-white transition duration-300"
                             @click="setActiveComponent(room.room_name + ' ' + room.id, room)"
                             :active="activeComponent === room.room_name + ' ' + room.id">
                             {{ room.room_name }}
@@ -47,7 +47,7 @@ const setActiveComponent = (componentName, room) => {
                         <button v-if="$page.props.homeData.role == 'owner' || $page.props.homeData.role == 'member'" @click="openAddRoomModal" type="button"
                             class="flex justify-center items-center rounded-2xl w-auto px-4 bg-zinc-600 text-white mx-1">
                             <img :src="'img-assets/vectors/plus-circle.svg'" alt="add" class="me-2 fill-white">
-                            <span>
+                            <span class="text-[12px] sm:text-[16px]">
                                 add room
                             </span>
                         </button>
@@ -82,3 +82,10 @@ export default {
     }
 };
 </script>
+<style scoped>
+.overflow-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+</style>

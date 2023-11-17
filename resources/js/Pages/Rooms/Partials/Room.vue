@@ -8,12 +8,12 @@ import MotionSensorToggle from '@/Components/MotionSensorToggle.vue';
 </script>
 <template>
     <div class="container">
-        <div class="flex">
-            <div class="md:w-2/3 bg-white rounded-xl me-5">
+        <div class="flex justify-center">
+            <div class="md:w-2/3 bg-white rounded-xl me-5 w-full">
                 <div class="flex flex-col p-5">
                     <div class="flex justify-between w-full pb-3 px-1 border-gray-500 border-b-2">
-                        <div class="sm:text-md md:text-2xl font-semibold">
-                            Appliances in {{ room.room_name }}
+                        <div class="flex sm:text-md md:text-2xl font-semibold">
+                            <span class="hidden me-2 sm:block">Appliances in</span> {{ room.room_name }}
                         </div>
                         <div v-if="room.room_owner_id == $page.props.auth.id || $page.props.homeData.role == 'owner'"
                             class="flex">
@@ -58,12 +58,12 @@ import MotionSensorToggle from '@/Components/MotionSensorToggle.vue';
                         </div>
                     </div>
                     <div v-if="devices.data !== null">
-                        <div class="mt-3 container flex flex-wrap sm:justify-around md:justify-around">
+                        <div class="mt-3 container items-center flex flex-wrap sm:justify-around max-h-[350px] md:max-h-[500px] md:justify-around overflow-y-scroll">
                             <Device v-for="device in devices.data" :key="device.id" :device="device" />
                         </div>
                     </div>
                     <div v-else>
-                        <div class="mt-3 container flex flex-wrap sm:justify-around">
+                        <div class="mt-3 container items-center flex flex-wrap sm:justify-around max-h-[350px] md:max-h-[500px] overflow-y-scroll">
                             <Device v-for="device in room.devices" :key="device.id" :device="device" />
                         </div>
                     </div>
