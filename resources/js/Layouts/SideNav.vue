@@ -28,7 +28,7 @@ import Modal from "@/Components/Modal.vue";
             </div>
         </div>
         <div class="sm:mt-0 lg:mt-4">
-            <ul class="flex flex-row md:flex-col items-start mx-3">
+            <ul class="flex flex-row md:flex-col items-start mx-3 h-full">
                 <SideNavLink :href="route('dashboard')" :active="route().current('verify') || route().current('dashboard')">
                     <li
                         class="flex p-1 py-2 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out">
@@ -85,17 +85,17 @@ import Modal from "@/Components/Modal.vue";
                         </div>
                     </li>
                 </SideNavLink>
+                <div class="hidden sm:block lg:text-md w-auto mt-5">
+                    <a @click="openLogoutModal"  href="#" class="bottom">
+                        <li class="flex mb-4 ms-4">
+                            <img :src="'/img-assets/nav-vectors/logout.svg'" alt="Settings" class="w-5 h-auto lg:mr-3 lg:ml-2" />
+                            <div class="hidden sm:block lg:text-md mt-1 hover:text-red-600 transition-colors duration-250">
+                                Logout
+                            </div>
+                        </li>
+                    </a>
+                </div>
             </ul>
-            <div class="hidden sm:block lg:text-md h-full w-auto">
-                <a @click="openLogoutModal"  href="#" class="absolute bottom-0">
-                    <li class="flex mb-4 ms-4">
-                        <img :src="'/img-assets/nav-vectors/logout.svg'" alt="Settings" class="w-5 h-auto lg:mr-3 lg:ml-5" />
-                        <div class="hidden sm:block lg:text-md mt-1 hover:text-red-600 transition-colors duration-250">
-                            Logout
-                        </div>
-                    </li>
-                </a>
-            </div>
         </div>
     </div>
     <Modal :maxWidth="'sm'" :show="showLogoutModal" @close="closeLogoutModal">
