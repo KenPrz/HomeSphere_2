@@ -160,6 +160,9 @@ export default {
             }
         );
     },
+    unmounted(){
+        this.unsubscribeFromRoomChannel(this.room.id);
+    },
     methods: {
         subscribeToRoomChannel(room_id) {
             // Subscribe to the new channel

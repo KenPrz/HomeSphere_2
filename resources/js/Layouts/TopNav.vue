@@ -4,7 +4,6 @@ import Dropdown from "@/Components/Dropdown.vue";
 import DropdownLink from "@/Components/DropdownLink.vue";
 import NotificationMain from "@/Layouts/Notifications/NotificationMain.vue";
 import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
-import MotionDetectedPopup from "@/Components/MotionDetectedPopup.vue";
 </script>
 
 <template>
@@ -112,6 +111,11 @@ export default {
             this.subscribeToRoomChannel(this.homeData.id);
         }
     },
+    unmounted() {
+        if(this.homeData){
+            this.unsubscribeFromRoomChannel(this.homeData.id);
+        }
+    },
     methods: {
         subscribeToRoomChannel(homeId) {
             // Subscribe to the new channel
@@ -123,6 +127,9 @@ export default {
                     this.showModal=true;
                 }
             });
+        },
+        unsubscribeFromRoomChannel(homeId) {
+            window.Echo.leave(`home.${homeId}`);
         },
         close(){
             this.showModal=false;
