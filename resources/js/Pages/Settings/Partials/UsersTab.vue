@@ -6,11 +6,17 @@ import UserListTable from './UserListTable.vue';
         <h1 class="text-md font-medium">List of Users</h1>
     </div>
     <v-container>
-        <UserListTable :homeMembers="$page.props.homeMembers" :headerText="tableHeaders" />
+        <UserListTable :homeMembers="homeMembers" :headerText="tableHeaders" />
     </v-container>
 </template>
 <script>
 export default {
+    props: {
+        homeMembers: {
+            type: Array,
+            required: true
+        }
+    },
     data: () => ({
         tab: null,
         tableHeaders: [

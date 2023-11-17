@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Http\Requests\HomeMembers\CheckMemberRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -21,7 +22,6 @@ class HomeMemberController extends Controller
     {
         $userData = $request->input('userData');
         $user = User::find($userData['id']);
-
         if ($user) {
             $homeData = $this->appUtilities->findHomeData($user);
             $this->updateUser($homeData, $user->id);

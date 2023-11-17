@@ -40,7 +40,8 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                                     cover></v-img>
                                 <v-img v-else
                                     class="rounded-full mx-auto transition duration-200 hover:scale-95 cursor-pointer"
-                                    width="38" :aspect-ratio="1" src="/img-assets/default_avatar.png" cover></v-img>
+                                    width="38" :aspect-ratio="1" src="/img-assets/default_avatar.png" cover>
+                                </v-img>
                             </template>
                             <template #content>
                                 <div>
@@ -67,7 +68,6 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                                 </DropdownLink>
                             </template>
                         </Dropdown>
-
                     </div>
                 </div>
             </div>
@@ -78,8 +78,8 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
             <div class="flex flex-col px-5 py-3 bg-blue-100">
                 <div class="flex">
                     <div>
-                        <v-img class="rounded-md mx-auto" width="75" :aspect-ratio="1" src="img-assets/vectors/info_icon.svg"
-                        cover></v-img>
+                        <v-img class="rounded-md mx-auto" width="75" :aspect-ratio="1"
+                            src="img-assets/vectors/info_icon.svg" cover></v-img>
                     </div>
                     <div class="flex items-center justify-center text-xl font-semibold w-full">
                         <span class="text">
@@ -99,6 +99,7 @@ export default {
             default: null,
         },
     },
+
     data() {
         return {
             homeChannel: null,
@@ -107,12 +108,14 @@ export default {
         };
     },
     mounted() {
-        if (this.homeData.role=='owner'||this.homeData.role=='member'){
-            this.subscribeToRoomChannel(this.homeData.id);
+        if (this.homeData) {
+            if (this.homeData.role == 'owner' || this.homeData.role == 'member') {
+                this.subscribeToRoomChannel(this.homeData.id);
+            }
         }
     },
     unmounted() {
-        if(this.homeData){
+        if (this.homeData) {
             this.unsubscribeFromRoomChannel(this.homeData.id);
         }
     },
@@ -123,16 +126,16 @@ export default {
             this.homeChannel.subscribed(() => {
             }).listen('.motion_detected', (eventData) => {
                 this.motionDetectedRoomName.data = eventData.room_name[0];
-                if(eventData.motion_detected==true){
-                    this.showModal=true;
+                if (eventData.motion_detected == true) {
+                    this.showModal = true;
                 }
             });
         },
         unsubscribeFromRoomChannel(homeId) {
             window.Echo.leave(`home.${homeId}`);
         },
-        close(){
-            this.showModal=false;
+        close() {
+            this.showModal = false;
         },
     },
 };

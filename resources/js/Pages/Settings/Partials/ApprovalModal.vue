@@ -11,10 +11,9 @@ const emit = defineEmits(['close']);
     });
 </script>
 <template>
-    <div class="bg-white p-6 rounded-lg shadow-md">
-        <!-- <button @click="close" class="bg-red-500 hover:bg-red-600 p-2 rounded-md text-white">TestEmit</button> -->
-        <h2 class="text-xl font-semibold mb-4">Approve User Membership Request?</h2>
+    <div class="rounded-lg mt-2 ms-4 mb-1">
         <p class="text-gray-600 mb-4 text-md">Do you want to approve this user's request to become a member?</p>
+
         <div class="flex justify-end">
             <button @click="approveUser(userData)"
                 class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg mr-4 hover-bg-gray-400 transition duration-300">

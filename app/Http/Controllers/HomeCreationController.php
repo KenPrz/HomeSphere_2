@@ -10,18 +10,21 @@ use App\Models\humidity_sensor;
 use App\Models\temp_sensor;
 use App\Http\Controllers\AppliancesController;
 use App\Http\Requests\HomeCreation\JoinHomeRequest;
+use App\Events\MemberJoinedEvent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
-
 class HomeCreationController extends Controller
 {
 
     /**
+     * FILEPATH: /c:/Users/Haru/Documents/GitHub/HomeSphere_2/app/Http/Controllers/HomeCreationController.php
      * 
-     * Redirect user to home creation screen
+     * This method is responsible for rendering the create home page.
+     * It checks if the user has a role in the home_members table, if not, it renders the create home page.
+     * If the user has a role or already has a home, it redirects to the home page.
      *
      * @return \Inertia\Response
      */
@@ -189,6 +192,7 @@ class HomeCreationController extends Controller
                     ]);
                     User::where('id', Auth::id())->update(['is_online' => true, 'has_home' => false]);
                 });
+                event(new MemberJoinedEvent($user_id, $home_id));
                 return redirect()->route('dashboard');
             } catch (\Exception $e) {
                 // Handle the exception here

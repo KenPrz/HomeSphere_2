@@ -34,18 +34,12 @@ defineProps({
                     </button>
                 </div>
                 <div v-else>
-                    <button @click="openUserApprovalModal(userData)"
-                        class="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg mt-2 transition duration-300">
-                        Approve
-                    </button>
+                    <ApprovalModal :userData="userData" @close="closeUserApprovalModal"/>
                 </div>
             </div>
         </div>
     </div>
     <div>
-        <Modal :maxWidth="'sm'" :show="showUserApproval" @close="closeUserApprovalModal">
-            <ApprovalModal :userData="userData" @close="closeUserApprovalModal"/>
-        </Modal>
         <Modal :maxWidth="'sm'" :show="showUserKickDialog" @close="closeUserKickDialog">
             <KickUserDialog :userData="userData" @close="closeUserKickDialog"/>
         </Modal>
