@@ -25,11 +25,11 @@ const form = useForm({
 
 <template>
     <section>
-        <div class="mx-10">
+        <div class="container">
             <header>
-                <h2 class="text-2xl font-medium text-gray-900">Name</h2>
+                <h2 class="text-2xl font-medium text-gray-900">Change Name</h2>
 
-                <p class="mt-1 text-md text-gray-600">
+                <p class="mt-1 text-sm text-gray-600">
                     If you change your name, you can't change it again for 60 days. Don't add any unusual capitalization, punctuation, characters or random words.
                 </p>
             </header>

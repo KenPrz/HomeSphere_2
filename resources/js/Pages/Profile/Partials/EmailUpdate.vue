@@ -27,11 +27,11 @@ const form = useForm({
             <h2 class="text-lg font-medium text-gray-900">Name</h2>
 
             <p class="mt-1 text-sm text-gray-600">
-                If you change your name, you can't change it again for 60 days. Don't add any unusual capitalization, punctuation, characters or random words.
+                To enter your new email. We will require you to verify your new email in after submitting.
             </p>
         </header>
 
-        <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6">
+        <form @submit.prevent="form.patch(route('profile.update'))" class="mt-3 space-y-6">
             <div>
                 <InputLabel for="email" value="Email" />
 
