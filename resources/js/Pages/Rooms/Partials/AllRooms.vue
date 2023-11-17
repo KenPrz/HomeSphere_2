@@ -27,4 +27,3 @@ const setActiveComponent = (componentName, room) => {
         </div>
     </div>
 </template>
-<!-- :active="activeComponent === room.room_name + ' ' + room.id"> -->
