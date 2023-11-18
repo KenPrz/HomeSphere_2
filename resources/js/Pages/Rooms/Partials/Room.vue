@@ -9,7 +9,7 @@ import MotionSensorToggle from '@/Components/MotionSensorToggle.vue';
 <template>
     <div class="container">
         <div class="flex justify-center">
-            <div class="md:w-2/3 bg-white rounded-xl me-5 w-full">
+            <div class="md:w-2/3 bg-white rounded-xl w-full">
                 <div class="flex flex-col p-5">
                     <div class="flex justify-between w-full pb-3 px-1 border-gray-500 border-b-2">
                         <div class="flex sm:text-md md:text-2xl font-semibold">
@@ -57,19 +57,15 @@ import MotionSensorToggle from '@/Components/MotionSensorToggle.vue';
                             </div>
                         </div>
                     </div>
-                    <div v-if="devices.data !== null">
-                        <div class="mt-3 container items-center flex flex-wrap sm:justify-around max-h-[350px] md:max-h-[500px] md:justify-around overflow-y-scroll">
-                            <Device v-for="device in devices.data" :key="device.id" :device="device" />
-                        </div>
+                    <div v-if="devices.data !== null" class="mt-3 container justify-center flex flex-wrap sm:justify-around max-h-[400px] md:max-h-[500px] md:justify-around overflow-y-scroll">
+                        <Device v-for="device in devices.data" :key="device.id" :device="device" />
                     </div>
-                    <div v-else>
-                        <div class="mt-3 container items-center flex flex-wrap sm:justify-around max-h-[350px] md:max-h-[500px] overflow-y-scroll">
-                            <Device v-for="device in room.devices" :key="device.id" :device="device" />
-                        </div>
+                    <div v-else class="mt-3 container justify-center flex flex-wrap sm:justify-around max-h-[400px] md:max-h-[500px] overflow-y-scroll">
+                        <Device v-for="device in room.devices" :key="device.id" :device="device" />
                     </div>
                 </div>
             </div>
-            <div class="hidden md:block md:w-1/3 bg-gray-500 rounded-2xl">
+            <div class="hidden md:block md:w-1/3 bg-gray-500 rounded-2xl ms-5 me-3">
                 <div class="container p-5">
                     <div class="flex-col border-white border-2 rounded-md p-3 items-center justify-center w-full mb-3">
                         <MotionSensorToggle
