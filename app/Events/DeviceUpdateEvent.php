@@ -14,15 +14,17 @@ class DeviceUpdateEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $device;
+    public $device_id;
     public $room_id;
+    public $is_active;
     /**
      * Create a new event instance.
      */
-    public function __construct($device, $room_id)
+    public function __construct($room_id,$device_id,$is_active)
     {
-        $this->device = $device;
         $this->room_id = $room_id;
+        $this->device_id = $device_id;
+        $this->is_active = $is_active;
     }
 
     /**
@@ -43,7 +45,10 @@ class DeviceUpdateEvent implements ShouldBroadcast
     public function broadcastWith(): array
     {
         return [
-            'device_data' => $devices,
+            'device_data' => [
+                'device_id' => $this->device_id,
+                'device_state' => $this->is_active,
+            ]
         ];
     }
 }

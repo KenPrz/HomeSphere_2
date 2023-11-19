@@ -168,9 +168,7 @@ export default {
                 this.roomId.ID = eventData.sensor_data[0].id;
                 this.tempData.data = eventData.sensor_data[0].temp_sensor.temperature;
                 this.humidityData.data = eventData.sensor_data[0].humidity_sensor.humidity;
-            }).listen('.device_update',(eventData)=>{
-                this.devices.data = eventData.device_data[0].devices;
-            });
+            })
         },
         unsubscribeFromRoomChannel(room_id) {
             window.Echo.leave(`room.${room_id}`);

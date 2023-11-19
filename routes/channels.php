@@ -41,4 +41,3 @@ Broadcast::channel('home.{home_id}', function($user, $home_id){
     return false;
 });
 
-

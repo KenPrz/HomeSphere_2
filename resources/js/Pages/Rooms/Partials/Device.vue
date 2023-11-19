@@ -32,7 +32,7 @@ const { device, customClass } = defineProps({
                 </div>
                 <div class="flex-1">
                     <div class="ms-5 mt-1">
-                        <ToggleSwitch v-model="device.is_active" />
+                        <ToggleSwitch @click="submit()" v-model="is_active.data" />
                     </div>
                 </div>
             </div>
@@ -54,20 +54,43 @@ export default {
         device: Object,
         customClass: String,
     },
+    data() {
+        return {
+            is_active: {data: this.device.is_active}
+        }
+    },
+    mounted() {
+        this.subscribeToRoomChannel(this.device.room_id);
+    },
+    unmounted(){
+        this.unsubscribeFromRoomChannel(this.device.room_id);
+    },
     methods: {
+        subscribeToRoomChannel(room_id) {
+            // Subscribe to the new channel
+            this.roomChannel = window.Echo.private(`room.${room_id}`);
+            this.roomChannel.subscribed(() => {
+            }).listen('.device_update', (eventData) => {
+                if(this.device.id==eventData.device_data.device_id)
+                {
+                    this.is_active.data=eventData.device_data.device_state;
+                }
+            });
+        },
+        unsubscribeFromRoomChannel(room_id) {
+            window.Echo.leave(`room.${room_id}`);
+        },
         submit() {
             axios.post(`/api/device-toggle`, {
                 device_id: this.device.id,
-                is_active: this.device.is_active,
+                room_id: this.device.room_id,
+                is_active: this.is_active.data,
             })
                 .then(response => {
                     // Handle the response as needed.
-
-                    console.log(response); //for debugging only remove at prod
+                    // console.log(response); //for debugging only remove at prod
                 })
                 .catch(error => {
-                    // Handle the error as needed.
-
                     console.log(error); //for debugging only remove at prod
                 });
         },
@@ -86,3 +109,22 @@ export default {
     white-space: nowrap;
 }
 </style>
+/**
+ * Component for displaying a device in a room.
+ * 
+ * @props {Object} device - The device object.
+ * @props {String} customClass - The custom CSS class for the device.
+ * 
+ * @data {Object} is_active - The data object for the device's active state.
+ * 
+ * @method subscribeToRoomChannel - Subscribes to the room channel for device updates.
+ * @param {Number} room_id - The ID of the room.
+ * 
+ * @method unsubscribeFromRoomChannel - Unsubscribes from the room channel.
+ * @param {Number} room_id - The ID of the room.
+ * 
+ * @method submit - Submits the device data to the server.
+ * @param {Object} data - The data object to be submitted.
+ * 
+ * @watch device.is_active - Watches for changes in the device's active state and triggers the submit method.
+ */
