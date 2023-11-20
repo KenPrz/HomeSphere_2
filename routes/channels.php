@@ -41,3 +41,6 @@ Broadcast::channel('home.{home_id}', function($user, $home_id){
     return false;
 });
 
+Broadcast::channel('user.{user_id}', function($user,$user_id){
+    return (int) $user->id === (int) $user_id;
+});

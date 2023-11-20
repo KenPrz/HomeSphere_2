@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Events\UserAcceptedEvent;
 use App\Http\Requests\HomeMembers\CheckMemberRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -24,7 +25,10 @@ class HomeMemberController extends Controller
         $user = User::find($userData['id']);
         if ($user) {
             $homeData = $this->appUtilities->findHomeData($user);
-            $this->updateUser($homeData, $user->id);
+            $data = $this->updateUser($homeData, $user->id);
+            if($data){
+                event(new UserAcceptedEvent($user->id));
+            }
         }
     }
 

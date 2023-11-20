@@ -91,9 +91,15 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
         </Modal>
     </div>
 </template>
+
 <script>
 export default {
     props: {
+        user: {
+            type: Object,
+            required: true,
+            default: null
+        },
         homeData: {
             type: Object,
             default: null,
@@ -108,19 +114,21 @@ export default {
         };
     },
     mounted() {
+        this.subToUserChannel(this.user)
         if (this.homeData) {
             if (this.homeData.role == 'owner' || this.homeData.role == 'member') {
-                this.subscribeToRoomChannel(this.homeData.id);
+                this.subscribeToHomeChannel(this.homeData.id);
             }
         }
     },
     unmounted() {
+        this.unsubscribeFromUserChannel(this.user)
         if (this.homeData) {
-            this.unsubscribeFromRoomChannel(this.homeData.id);
+            this.unsubscribeFromHomeChannel(this.homeData.id);
         }
     },
     methods: {
-        subscribeToRoomChannel(homeId) {
+        subscribeToHomeChannel(homeId) {
             // Subscribe to the new channel
             this.homeChannel = window.Echo.private(`home.${homeId}`);
             this.homeChannel.subscribed(() => {
@@ -129,10 +137,26 @@ export default {
                 if (eventData.motion_detected == true) {
                     this.showModal = true;
                 }
-            });
+            })
         },
-        unsubscribeFromRoomChannel(homeId) {
+        subToUserChannel(user){
+            this.userChannel = window.Echo.private(`user.${user.id}`);
+            this.userChannel.subscribed(()=>{
+            }).listen('.user_accepted', (eventData) => {
+                if(eventData.is_accepted==true){
+                    console.log(eventData);
+                    this.refreshPage();
+                }
+            })
+        },
+        unsubscribeFromHomeChannel(homeId) {
             window.Echo.leave(`home.${homeId}`);
+        },
+        unsubscribeFromUserChannel(user) {
+            window.Echo.leave(`user.${user.id}`);
+        },
+        refreshPage() {
+            window.location.reload();
         },
         close() {
             this.showModal = false;

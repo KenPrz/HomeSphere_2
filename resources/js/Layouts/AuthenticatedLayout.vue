@@ -7,6 +7,7 @@ import SideNav from "@/Layouts/SideNav.vue";
     <div class="grid grid-cols-1 min-h-screen">
         <!-- Navbar -->
             <TopNav
+                :user="$page.props.auth.user"
                 :homeData="homeData"
             />
         <!-- End Navbar -->
