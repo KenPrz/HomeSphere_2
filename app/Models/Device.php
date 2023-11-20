@@ -14,6 +14,7 @@ class Device extends Model
         'device_type',
         'device_name',
         'is_active',
+        'custom_name',
     ];
 
     public function find(){

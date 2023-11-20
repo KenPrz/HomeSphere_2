@@ -114,7 +114,7 @@ export default {
                     text: "Status",
                 },
             ],
-            tableData: this.$page.props.appliances, 
+            tableData: this.$page.props.appliances,
         };
     },
 };

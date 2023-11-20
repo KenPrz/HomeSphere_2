@@ -26,7 +26,9 @@ class AppliancesController extends Controller
             ->select(
                 'devices.id',
                 'rooms.room_name',
+                'rooms.id as room_id',
                 'devices.device_type',
+                'devices.custom_name',
                 'devices.device_name',
                 'devices.is_active'
             )
@@ -37,6 +39,7 @@ class AppliancesController extends Controller
             $searchTerm = $searchData['search'];
             $query->where(function ($query) use ($searchTerm) {
                 $query->where('devices.device_name', 'like', "%$searchTerm%")
+                    ->orWhere('devices.custom_name', 'like', "%$searchTerm%")
                     ->orWhere('devices.is_active', '=', $searchTerm)
                     ->orWhere('rooms.room_name', 'like', "%$searchTerm%");
             });
@@ -44,8 +47,9 @@ class AppliancesController extends Controller
             // Add ORDER BY clause to sort by closeness
             $query->orderBy(DB::raw("CASE 
                 WHEN devices.device_name LIKE '%$searchTerm%' THEN 1
-                WHEN rooms.room_name LIKE '%$searchTerm%' THEN 2
-                ELSE 3
+                WHEN devices.custom_name LIKE '%$searchTerm%' THEN 2
+                WHEN rooms.room_name LIKE '%$searchTerm%' THEN 3
+                ELSE 4
             END"));
         }
         $appliances = $query->get();
@@ -57,10 +61,12 @@ class AppliancesController extends Controller
     public function getAppliances($homeData){
         return DB::table('devices')
                 ->select(
+                    'rooms.id as room_id',
                     'rooms.room_name',
                     'devices.id',
                     'devices.device_type',
                     'devices.device_name',
+                    'devices.custom_name',
                     'devices.is_active'
                 )->where('rooms.home_id', $homeData->id)
                 ->join('rooms', 'devices.room_id', '=', 'rooms.id')

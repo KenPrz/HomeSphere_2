@@ -157,6 +157,7 @@ private function updateOrInsertDevice($deviceData, $room_id, $type)
             'room_id' => $room_id,
             'device_type' => $type,
             'device_name' => $deviceName,
+            'custom_name' => null,
             'is_active' => $deviceData['is_active']
         ]);
     }

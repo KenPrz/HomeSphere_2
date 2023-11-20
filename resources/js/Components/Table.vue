@@ -7,7 +7,7 @@ import Modal from './Modal.vue';
         <div class="overflow-x-auto lg:-mx-8">
             <div class="py-2 inline-block w-full lg:px-8">
                 <div
-                    class="min-w-full justify-between flex mx-0 mb-2 text-base text-left text-white rounded-tl-lg rounded-tr-lg bg-zinc-600">
+                    class="min-w-full justify-around flex mx-0 mb-2 text-base text-left text-white rounded-tl-lg rounded-tr-lg bg-zinc-600">
                     <div v-for="(header, index) in tableHeaders" :key="index"
                         class="w-1/5 py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">
                         {{ header.text }}
@@ -17,15 +17,20 @@ import Modal from './Modal.vue';
                     <div class="mx-0">
                         <!-- {{ paginatedData }} -->
                         <div @click="showDeviceModal(item)" v-for="item in paginatedData" :key="item.id"
-                            class="min-w-full flex justify-between mb-2 rounded-md text-sm text-left text-black bg-white hover:bg-gray-300 cursor-pointer">
-                            <div class="w-1/5 overflow-ellipsis py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">
+                            class="min-w-full flex justify-around mb-2 rounded-md text-sm text-left text-black bg-white hover:bg-gray-300 cursor-pointer">
+                            <div class="w-1/5  py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">
                                 {{ item.room_name }}
                             </div>
                             <div class="w-1/5 overflow-ellipsis py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">
                                 {{ item.device_type }}
                             </div>
                             <div class="w-1/5 overflow-ellipsis py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">
-                                {{ item.device_name }}
+                                <span v-if="item.custom_name==null">
+                                    {{ item.device_name }}
+                                </span>
+                                <span>
+                                    {{ item.custom_name }}
+                                </span>
                             </div>
                             <div class="w-1/5 overflow-ellipsis py-4 pl-4 sm:w-1/5 md:w-1/5 lg:w-1/5 xl:w-1/5">
                                 {{ item.is_active ? "Active" : "Inactive" }}

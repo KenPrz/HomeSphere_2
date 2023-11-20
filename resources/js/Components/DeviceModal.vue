@@ -3,7 +3,7 @@ import ToggleSwitch from './ToggleSwitch.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import { defineEmits } from "vue";
 
-const { device } = defineProps({
+const { device,room_id } = defineProps({
     device: Object
 });
 
@@ -48,6 +48,7 @@ function cancel() {
         submit() {
             axios.post(`/api/device-toggle`, {
                 device_id: this.device.id,
+                room_id: this.device.room_id,
                 is_active: this.device.is_active,
             })
                 .then(response => {
