@@ -5,7 +5,6 @@ import DropdownLink from "@/Components/DropdownLink.vue";
 import NotificationMain from "@/Layouts/Notifications/NotificationMain.vue";
 import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
 </script>
-
 <template>
     <nav class="px-10 bg-white border-b shadow-sm border-gray-100 sticky top-0 z-50">
         <!-- Primary Navigation Menu -->
@@ -91,14 +90,12 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
         </Modal>
     </div>
 </template>
-
 <script>
 export default {
     props: {
         user: {
             type: Object,
             required: true,
-            default: null
         },
         homeData: {
             type: Object,

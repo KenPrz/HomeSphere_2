@@ -1,6 +1,7 @@
 <template>
         <Head title="Create Home" />
-    <TopNav />
+        <TopNav
+            :user="$page.props.auth.user"/>
     <main class="flex items-center justify-center w-full h-screen bg-gray-100">
         <div class="bg-white p-8 w-8/12 rounded-lg shadow-md mx-auto">
             <div class="mt-9 text-2xl sm:text-2xl md:text-4xl lg:text-5xl font-semibold text-black text-center">
