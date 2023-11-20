@@ -147,6 +147,9 @@ export default {
                     console.log(eventData);
                     this.refreshPage();
                 }
+            }).listen('.user_kicked', (eventData) => {
+                console.log(eventData);
+                this.refreshPage();
             })
         },
         unsubscribeFromHomeChannel(homeId) {

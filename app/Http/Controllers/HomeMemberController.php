@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Events\UserAcceptedEvent;
+use App\Events\userKickedEvent;
 use App\Http\Requests\HomeMembers\CheckMemberRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -57,6 +58,7 @@ class HomeMemberController extends Controller
                 ->where('home_id', $homeData->id)
                 ->delete();
             });
+            event(new userKickedEvent($user['id']));
         }else{
             return response()->json(['message'=> 'User Not Found'],404);
         }
