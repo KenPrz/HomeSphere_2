@@ -38,7 +38,14 @@ const { device, customClass } = defineProps({
             </div>
             <div class="flex flex-col flex-1">
                 <!-- Adjust text size based on screen size -->
-                <h2 class="text-sm sm:text-md lg:text-lg overflow-ellipsis">{{ device.device_name }}</h2>
+                <h2 class="text-sm sm:text-md lg:text-lg overflow-ellipsis">
+                    <span v-if="device.custom_name!=null">
+                        {{ device.custom_name }}
+                    </span>
+                    <span v-else>
+                        {{ device.device_name }}
+                    </span>
+                </h2>
                 <h1 class="text-lg sm:text-xl lg:text-2xl font-ex">
                     {{ is_active.data ? 'ON' : 'OFF' }}
                 </h1>

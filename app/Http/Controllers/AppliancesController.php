@@ -26,6 +26,7 @@ class AppliancesController extends Controller
             ->select(
                 'devices.id',
                 'rooms.room_name',
+                'rooms.room_owner_id as room_owner_id',
                 'rooms.id as room_id',
                 'devices.device_type',
                 'devices.custom_name',

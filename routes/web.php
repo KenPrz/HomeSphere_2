@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AppliancesController;
 use App\Http\Controllers\CancelRequest;
+use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\ImageHandlerController;
 use App\Http\Controllers\HomeCreationController;
 use App\Http\Controllers\HomeDataController;
@@ -67,6 +68,9 @@ Route::middleware(['auth','checkHasHome'])->group(function () {
     Route::post('/rooms',[RoomsController::class, 'addRoom'])->name('rooms.addRoom');
     Route::post('/roomedit', [RoomsController::class,'editRoom'])->name('rooms.edit');
     Route::delete('/deleteroom', [RoomsController::class,'deleteRoom'])->name('rooms.delete');
+
+    Route::post('/device-update',[DeviceController::class, 'deviceUpdate'])->name('device.new-name');
+    Route::delete('/device-delete',[DeviceController::class, 'deviceDelete'])->name('device.delete');
     // Route::get('/room/{room}',[RoomsController::class, 'openRoom'])->name('rooms.getRoom');
 
     Route::get('/modes',[ModesController::class, 'index'])->name('modes.index');

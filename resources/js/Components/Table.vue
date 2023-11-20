@@ -66,8 +66,8 @@ import Modal from './Modal.vue';
             </div>
         </div>
     </div>
-    <Modal :hasClose="false" :maxWidth="'sm'" :show="isDeviceModalVisible" @close="closeDeviceModal">
-        <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+    <Modal :hasClose="false" :maxWidth="'xs'" :show="isDeviceModalVisible" @close="closeDeviceModal">
+        <div class="p-3 bg-white shadow sm:rounded-lg">
             <DeviceModal @close="closeDeviceModal" :device="selectedRow" />
         </div>
     </Modal>
