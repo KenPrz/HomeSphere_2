@@ -18,13 +18,43 @@ import MotionSensorToggle from '@/Components/MotionSensorToggle.vue';
                         <div v-if="room.room_owner_id == $page.props.auth.id || $page.props.homeData.role == 'owner'"
                             class="flex">
                             <button @click="openEditRoomForm"
-                                class="flex items-center justify-center border-gray-500 border rounded-full px-2 mx-2 text-sm sm:text-md">
-                                <img class="h-3 md:h-5 w-auto" :src="'img-assets/vectors/Edit.svg'" />
+                                class="group flex items-center justify-center transition-all duration-200 hover:bg-gray-500 hover:text-white border-gray-500 border rounded-full px-2 mx-2 text-sm sm:text-md">
+                                <svg class="group-hover:stroke-white transition-all duration-200 stroke-gray-500 h-3 md:h-5 w-auto"
+                                    viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+                                    <g id="SVGRepo_iconCarrier">
+                                        <title />
+                                        <g id="Complete">
+                                            <g id="edit">
+                                                <g>
+                                                    <path d="M20,16v4a2,2,0,0,1-2,2H4a2,2,0,0,1-2-2V6A2,2,0,0,1,4,4H8"
+                                                        fill="none" stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" />
+                                                    <polygon fill="none"
+                                                        points="12.5 15.8 22 6.2 17.8 2 8.3 11.5 8 16 12.5 15.8"
+                                                        stroke-linecap="round" stroke-linejoin="round" stroke-width="2" />
+                                                </g>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </svg>
                                 <span class="text-sm">Edit</span>
                             </button>
                             <button @click="openDeleteRoomDialog"
-                                class="flex items-center justify-center border-gray-500 border rounded-full px-2 mx-2 text-sm sm:text-md">
-                                <img class="h-3 md:h-5 w-auto" :src="'img-assets/vectors/Edit.svg'" />
+                                class="group flex items-center justify-center transition-all duration-200 hover:bg-red-500 hover:text-white border-gray-500 border rounded-full px-2 text-sm sm:text-md">                                
+                                <svg class="group-hover:stroke-white transition-all duration-200 stroke-gray-500 h-3 md:h-5 w-auto"
+                                    viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0" />
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" />
+                                    <g id="SVGRepo_iconCarrier">
+                                        <path d="M4 7H20" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M6 7V18C6 19.6569 7.34315 21 9 21H15C16.6569 21 18 19.6569 18 18V7"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                        <path d="M9 5C9 3.89543 9.89543 3 11 3H13C14.1046 3 15 3.89543 15 5V7H9V5Z"
+                                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                                    </g>
+                                </svg>
                                 <span class="text-sm">Delete</span>
                             </button>
                         </div>
@@ -36,10 +66,10 @@ import MotionSensorToggle from '@/Components/MotionSensorToggle.vue';
                             </div>
                             <div class="text-sm font-light text-center">
                                 <span v-if="tempData.data !== null">
-                                    {{ tempData.data + '°C'}}
+                                    {{ tempData.data + '°C' }}
                                 </span>
                                 <span v-else>
-                                    {{ room.temp_sensor.temperature + '°C'}}
+                                    {{ room.temp_sensor.temperature + '°C' }}
                                 </span>
                             </div>
                         </div>
@@ -49,18 +79,20 @@ import MotionSensorToggle from '@/Components/MotionSensorToggle.vue';
                             </div>
                             <div class="text-sm font-light text-center">
                                 <span v-if="humidityData.data !== null">
-                                    {{ humidityData.data + '%'}}
+                                    {{ humidityData.data + '%' }}
                                 </span>
                                 <span v-else>
-                                    {{ room.humidity_sensor.humidity + '%'}}
+                                    {{ room.humidity_sensor.humidity + '%' }}
                                 </span>
                             </div>
                         </div>
                     </div>
-                    <div v-if="devices.data !== null" class="mt-3 container justify-center flex flex-wrap sm:justify-around max-h-[400px] md:max-h-[500px] md:justify-around overflow-y-scroll">
+                    <div v-if="devices.data !== null"
+                        class="mt-3 container justify-center flex flex-wrap sm:justify-around max-h-[400px] md:max-h-[500px] md:justify-around overflow-y-scroll">
                         <Device v-for="device in devices.data" :key="device.id" :device="device" />
                     </div>
-                    <div v-else class="mt-3 container justify-center flex flex-wrap sm:justify-around max-h-[400px] md:max-h-[500px] overflow-y-scroll">
+                    <div v-else
+                        class="mt-3 container justify-center flex flex-wrap sm:justify-around max-h-[400px] md:max-h-[500px] overflow-y-scroll">
                         <Device v-for="device in room.devices" :key="device.id" :device="device" />
                     </div>
                 </div>
@@ -68,12 +100,8 @@ import MotionSensorToggle from '@/Components/MotionSensorToggle.vue';
             <div class="hidden md:block md:w-1/3 bg-gray-500 rounded-2xl ms-5 me-3">
                 <div class="container p-5">
                     <div class="flex-col border-white border-2 rounded-md p-3 items-center justify-center w-full mb-3">
-                        <MotionSensorToggle
-                            :motionSensor="room.motion_sensor"
-                            :userId="$page.props.auth.user.id"
-                            :homeId="room.home_id"
-                            :roomId="room.id"
-                        />
+                        <MotionSensorToggle :motionSensor="room.motion_sensor" :userId="$page.props.auth.user.id"
+                            :homeId="room.home_id" :roomId="room.id" />
                     </div>
                     <div class="flex-col border-white border-2 rounded-md p-3 items-center justify-center w-full mb-3">
                         <div class="text-xl text-white text-center mb-2">
@@ -140,7 +168,7 @@ export default {
             roomId: { ID: null },
             tempData: { data: null },
             humidityData: { data: null },
-            devices:{data: null},
+            devices: { data: null },
             showEditRoomForm: false,
             showDeleteRoomDialog: false,
             roomChannel: null,
@@ -156,7 +184,7 @@ export default {
             }
         );
     },
-    unmounted(){
+    unmounted() {
         this.unsubscribeFromRoomChannel(this.room.id);
     },
     methods: {
