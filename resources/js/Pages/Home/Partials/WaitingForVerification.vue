@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col items-center justify-center mt-24">
-        <h1 class="text-3xl font-semibold mb-4">Waiting for Verification</h1>
-        <p class="text-gray-600 mb-6">
+        <h1 class="text-3xl font-semibold mb-4 text-center">Waiting for Verification</h1>
+        <p class="text-gray-600 mb-6 text-center">
             Your request to be part of the house is pending verification by the homeowner.
         </p>
         <button class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-full w-64">

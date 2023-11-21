@@ -85,7 +85,7 @@ import Modal from "@/Components/Modal.vue";
                         </div>
                     </li>
                 </SideNavLink>
-                <div class="hidden sm:block lg:text-md w-auto mt-5">
+                <div class="hidden md:block lg:text-md w-auto mt-5">
                     <a @click="openLogoutModal"  href="#" class="bottom">
                         <li class="flex mb-4 ms-4">
                             <img :src="'/img-assets/nav-vectors/logout.svg'" alt="Settings" class="w-5 h-auto lg:mr-3 lg:ml-2" />

@@ -40,7 +40,10 @@ class HomeMemberController extends Controller
 
         if ($user) {
             $homeData = $this->appUtilities->findHomeData($user);
-            $this->deleteHomeMember($user->id, $homeData->id);
+            $data = $this->deleteHomeMember($user->id, $homeData->id);
+            if($data){
+                event(new userKickedEvent($userData['id']));
+            }
         } else {
             return response()->json(['message' => 'User not found'], 404);
         }
