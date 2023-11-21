@@ -12,7 +12,8 @@ class room extends Model
     protected $fillable = [
         'room_name',
         'home_id',
-        'room_owner_id'
+        'room_owner_id',
+        'room_icon',
     ];
 
     public function home()

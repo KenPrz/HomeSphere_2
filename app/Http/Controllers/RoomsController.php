@@ -41,7 +41,8 @@ class RoomsController extends Controller
         $homeData = $appUtilities->findHomeData($user);
 
         $roomName = $validated['room_name'];
-        $this->createRoom($roomName, $homeData->id, $user->id);
+        $roomIcon = $validated['room_icon'];
+        $this->createRoom($roomName,$roomIcon, $homeData->id, $user->id);
 
         return redirect()->back();
     }
@@ -84,12 +85,13 @@ class RoomsController extends Controller
         ]);
     }
 
-    private function createRoom($roomName, $homeID, $roomOwnerID)
+    private function createRoom($roomName, $roomIcon, $homeID, $roomOwnerID)
     {
         $room = Room::create([
             'room_name' => $roomName,
             'home_id' => $homeID,
             'room_owner_id' => $roomOwnerID,
+            'room_icon' => $roomIcon,
             'created_at' => now(),
         ]);
         temp_sensor::create([

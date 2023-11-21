@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('room_name');
             $table->unsignedBigInteger('home_id');
             $table->unsignedBigInteger('room_owner_id');
-            
+            $table->string('room_icon')->nullable();
             $table->foreign('home_id')->references('id')->on('homes')->onDelete('cascade');
             $table->foreign('room_owner_id')->references('id')->on('users');
             $table->timestamps();

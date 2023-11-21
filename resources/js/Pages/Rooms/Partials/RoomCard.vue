@@ -15,11 +15,14 @@ const props = defineProps({
         <div class="flex flex-col text-center">
             <div class="living-room-card rounded-lg bg-white p-8 shadow-md ">
                 <div class="living-room-settings flex">
-                    <div class="left-section mx-7">
+                    <div class="left-section mx-7 w-1/4">
                         <div id="bedroom">
-                            <img :src="'img-assets/vectors/Room Vectors/bathroom.svg'" alt="">
+                            <v-img v-if="room.room_icon!=null" class="rounded-md mx-auto" width="70" :aspect-ratio="1"
+                                :src="room.room_icon" cover></v-img>
+                            <v-img v-else class="rounded-md mx-auto" width="70" :aspect-ratio="1"
+                            :src="'img-assets/nav-vectors/rooms.svg'" cover></v-img>
                         </div>
-                        <h1 class="mt-4 text-xl font-medium">{{ room.room_name }}</h1>
+                        <h1 class="overflow-ellipsis mt-4 text-xl font-medium">{{ room.room_name }}</h1>
                         <p class="mt-1 text-sm">{{ room.device_count + ' Appliance(s)' }}</p>
                     </div>
                     <div class="right-section ml-4 flex-grow mr-2">
@@ -55,6 +58,11 @@ const props = defineProps({
     </div>
 </template>
 <style scoped>
+.overflow-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 .transition-width {
     transition-property: width;
 }</style>

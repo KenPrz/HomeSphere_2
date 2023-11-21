@@ -24,6 +24,7 @@ class CreateRoomRequest extends FormRequest
     {
         return [
             "room_name" => ['string', 'max:255', New RoomUniqueVerify],
+            "room_icon" => 'required',
         ];
     }
 }
