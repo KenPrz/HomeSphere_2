@@ -24,6 +24,7 @@ class EditRoomRequest extends FormRequest
     {
         return [
             'roomName' => ['string', New RoomUniqueVerify],
+            'room_icon' => 'required','string',
             'room_id' => 'required'
         ];
     }

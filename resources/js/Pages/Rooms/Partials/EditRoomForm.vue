@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
 import { defineEmits } from 'vue';
 import InputError from '@/Components/InputError.vue';
@@ -18,9 +19,27 @@ const emit = defineEmits(["close"]);
 
 const form = useForm({
     roomName: '',
+    room_icon: '',
     room_id: props.roomID,
 });
-
+const selectPicture = (pictureType) => {
+    if (pictureType === 'bedroom') {
+        form.room_icon = 'img-assets/vectors/Room Vectors/bedroom.svg';
+        selectedPictureName.value = 'Bedroom image';
+    } else if (pictureType === 'living_room') {
+        form.room_icon = 'img-assets/vectors/Room Vectors/living_room.svg';
+        selectedPictureName.value = 'Living Room image';
+    } else if (pictureType === 'dining_kitchen') {
+        form.room_icon = 'img-assets/vectors/Room Vectors/dining_kitchen.svg';
+        selectedPictureName.value = 'Dining Kitchen image';
+    } else if (pictureType === 'bathroom') {
+        form.room_icon = 'img-assets/vectors/Room Vectors/bathroom.svg';
+        selectedPictureName.value = 'Bathroom image';
+    }else if (pictureType=='default'){
+        form.room_icon = 'img-assets/nav-vectors/rooms.svg';
+        selectedPictureName.value = 'Default';
+    }
+};
 const submit = () => {
     form.post(route('rooms.edit'),
         {
@@ -29,11 +48,30 @@ const submit = () => {
         }
     )
 };
+const selectedPictureName = ref('');
 </script>
 <template>
     <div class="text-xl font-semibold mx-4 mt-4">
         Edit Room
     </div>
+    <h2 class="text-md mt-5 mx-5 py-4">Select a room icon</h2>
+        <div class="room-container mx-5 flex justify-between">
+            <div class="hover:bg-gray-400 p-3 rounded-xl transition-colors duration-300" id="default" @click="selectPicture('default')" style="cursor: pointer;">
+                <img class="h-14" :src="'img-assets/nav-vectors/rooms.svg'" alt="default">
+            </div>
+            <div class="hover:bg-gray-400 p-3 rounded-xl transition-colors duration-300" id="bedroom" @click="selectPicture('bedroom')" style="cursor: pointer;">
+                <img class="h-16" :src="'img-assets/vectors/Room Vectors/bedroom.svg'" alt="Bedroom">
+            </div>
+            <div class="hover:bg-gray-400 p-3 rounded-xl transition-colors duration-300" id="livingRoom" @click="selectPicture('living_room')" style="cursor: pointer;">
+                <img class="h-16" :src="'img-assets/vectors/Room Vectors/living_room.svg'" alt="Living Room">
+            </div>
+            <div class="hover:bg-gray-400 p-3 rounded-xl transition-colors duration-300" id="kitchen" @click="selectPicture('dining_kitchen')" style="cursor: pointer;">
+                <img class="h-16" :src="'img-assets/vectors/Room Vectors/dining_kitchen.svg'" alt="Dining Kitchen">
+            </div>
+            <div class="hover:bg-gray-400 p-3 rounded-xl transition-colors duration-300" id="bathroom" @click="selectPicture('bathroom')" style="cursor: pointer;">
+                <img class="h-16" :src="'img-assets/vectors/Room Vectors/bathroom.svg'" alt="Bathroom">
+            </div>
+        </div>
     <form @submit.prevent="submit">
         <div class="my-5 mx-4">
             <div class="my-3">
@@ -42,6 +80,12 @@ const submit = () => {
                     autocomplete="roomName" />
                 <InputError class="mt-2" :message="form.errors.roomName" />
             </div>
+            <div class="w-full flex-1 mb-1">
+                        <label for="selected_picture" class="text-sm font-medium">Selected Picture:</label>
+                        <input class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm mt-1 block w-full" type="text" id="selected_picture" v-model="selectedPictureName"
+                            readonly />
+                        <InputError class="mt-2" :message="form.errors.room_icon" readonly />
+                    </div>
             <div class="flex flex-col items-center w-full mt-4">
                 <PrimaryButton
                     :class="{ 'opacity-25': form.processing }"

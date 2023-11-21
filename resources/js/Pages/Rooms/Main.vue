@@ -60,8 +60,8 @@ const setActiveComponent = (componentName, room) => {
                     </div>
                 </div>
             </div>
-            <Modal :show="showAddRoomModal" @close="closeAddRoomModal">
-                <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
+            <Modal :maxWidth="'lg'" :show="showAddRoomModal" @close="closeAddRoomModal">
+                <div class="p-4 bg-white shadow sm:rounded-lg">
                     <AddRoomForm @close="closeAddRoomModal" />
                 </div>
             </Modal>

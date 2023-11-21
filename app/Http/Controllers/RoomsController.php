@@ -53,12 +53,11 @@ class RoomsController extends Controller
         $appUtilities = new AppUtilities;
         $user = auth()->user();
         $homeData = $appUtilities->findHomeData($user);
-
+        
         DB::table('rooms')
             ->where('home_id', $homeData->id)
             ->where('id', $validated['room_id'])
-            ->update(['room_name'=> $validated['roomName']]);
-        
+            ->update(['room_name'=> $validated['roomName'], 'room_icon' => $validated['room_icon']]);
     }
 
     public function deleteRoom(Request $request)

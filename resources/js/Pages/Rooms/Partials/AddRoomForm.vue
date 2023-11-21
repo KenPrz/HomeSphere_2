@@ -2,7 +2,7 @@
 import InputError from '@/Components/InputError.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const emit = defineEmits(["close"]);
@@ -49,7 +49,7 @@ function close() {
     <div>
         <h2 class="text-2xl mt-5 mx-5 py-4 font-semibold">Select a room icon</h2>
         
-        <div class="room-container mx-5 flex justify-around">
+        <div class="room-container mx-5 flex justify-between">
             <div class="hover:bg-gray-400 p-3 rounded-xl transition-colors duration-300" id="default" @click="selectPicture('default')" style="cursor: pointer;">
                 <img class="h-14" :src="'img-assets/nav-vectors/rooms.svg'" alt="default">
             </div>
