@@ -5,7 +5,9 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import ModeCard from "../Home/Partials/ModeCard.vue";
 import Modal from "@/Components/Modal.vue";
 import AddAppliance from "./Partials/AddAppliance.vue";
+import Modes from './Partials/Modes.vue';
 import EditMode from "./Partials/EditMode.vue";
+import CreateFirstMode from "./Partials/CreateFirstMode.vue";
 </script>
 <template>
     <Head title="Dashboard" />
@@ -16,38 +18,23 @@ import EditMode from "./Partials/EditMode.vue";
             </h2>
         </template>
         <main>
-            <div class="container py-2 mx-8">
+            <div class="container">
                 <div class="flex-row">
                     <h1 class="text-3xl font-bold mb-2">
                         List of Modes
                     </h1>
-                    <div class="flex">
-                        <div class="flex-col">
-                            <ModeCard />
-                            <ModeCard />
-                            <ModeCard />
+                    <div class="flex w-auto">
+                        <div v-if="modes!=null">
+                            <Modes
+                                :homeData="homeData"
+                                :modes="modes"
+                                :devices="devices"
+                            />
                         </div>
-                        <div class="bg-white rounded-md w-full me-10 p-5">
-                            <div class="flex justify-between w-full pb-3 px-1 border-gray-500 border-b-2">
-                        <div class="flex items-center">
-                            <div class="font-semibold text-xl me-2">
-                                ModeName
+                        <div v-else>
+                            <div class="w-full">
+                                <CreateFirstMode :user="$page.props.auth.user"/>
                             </div>
-                            <form>
-                                <input class="rounded-md" type="time" id="time1">
-                            </form>
-                        </div>
-                        <div class="flex">
-                            <button @click="openEditModeModal" class=" me-1 flex items-center justify-center border-gray-500 border rounded-full px-3 hover:bg-slate-500 hover:text-white transition-colors duration-200">
-                                <img class="h-4 w-auto me-1" :src="'img-assets/vectors/Edit.svg'" />
-                                <span>Edit</span>
-                            </button>
-                            <button @click="openAddApplianceModal" class="flex items-center justify-center border-gray-500 border rounded-full px-3 hover:bg-slate-500 hover:text-white transition-colors duration-200">
-                                <img class="h-4 w-auto me-1" :src="'img-assets/vectors/add.svg'" />
-                                <span>Add</span>
-                            </button>
-                        </div>
-                    </div>
                         </div>
                     </div>
                 </div>
@@ -84,4 +71,20 @@ import EditMode from "./Partials/EditMode.vue";
     const closeEditModeModal = () => {
         showEditModeModal.value = false;
     };
+    export default {
+        props: {
+            homeData: {
+                type: Object,
+                required: true
+            },
+            modes: {
+                type: Array,
+                default: null
+            },
+            devices: {
+                type: Array,
+                default: null
+            }
+        }
+    }
 </script>

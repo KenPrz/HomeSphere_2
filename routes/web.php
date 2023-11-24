@@ -74,7 +74,8 @@ Route::middleware(['auth','checkHasHome'])->group(function () {
     // Route::get('/room/{room}',[RoomsController::class, 'openRoom'])->name('rooms.getRoom');
 
     Route::get('/modes',[ModesController::class, 'index'])->name('modes.index');
-    Route::post('/modes',[ModesController::class, 'editMode'])->name('modes.editMode');
+    Route::post('/modes',[ModesController::class, 'createMode'])->name('modes.create');
+    // Route::post('/modes',[ModesController::class, 'editMode'])->name('modes.editMode');
 
     Route::get('/settings',[SettingsController::class, 'index'])->name('settings.index');
     Route::delete('/leave', [SettingsController::class,'leaveHome'])->name('settings.leave');

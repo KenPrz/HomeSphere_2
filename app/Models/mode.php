@@ -7,16 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mode extends Model
 {
+    
     use HasFactory;
-
     protected $fillable = [
         'mode_name',
-        'mode_type',
-        'is_active',
+        'mode_description'
     ];
 
-    public function devices()
-    {
-        return $this->belongsToMany(Device::class);
+    public function device(){
+        return $this->hasMany(Device::class);
     }
+
 }
