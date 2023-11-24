@@ -5,7 +5,7 @@ import Modal from "@/Components/Modal.vue";
 
 </script>
 <template>
-    <div class="flex ms-3 flex-col bg-white shadow-md rounded-md w-full">
+    <div class="flex ms-3 flex-col bg-white shadow-md rounded-md w-full min-h-[500px] overflow-y-auto">
         <section class="flex justify-between p-5">
             <div class="text-md md:text-2xl font-semibold">
                 {{ mode_name.value }}

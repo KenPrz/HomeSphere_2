@@ -6,7 +6,7 @@ import SelectedModeCard from './SelectedModeCard.vue';
 </script>
 <template>
         <div class="container flex p-4">
-            <div class="flex flex-col bg-white shadow-md rounded-md">
+            <div class="flex flex-col bg-white shadow-md rounded-md pt-2">
                 <section class="flex flex-col max-h-[500px] overflow-y-auto">
                     <div v-for="mode in modes" :key="mode.id">
                         <ClickableModeCard
@@ -24,6 +24,11 @@ import SelectedModeCard from './SelectedModeCard.vue';
             </div>
             <SelectedModeCard :selectedMode="modeData.data"/>
         </div>
+        <Modal :maxWidth="'md'" :show="showAddMode" @close="closeAddModeModal">
+            <div class="p-4">
+                <AddMode :title="'Add a Mode'" :modes="modes" :devices="devices" @close="closeAddModeModal"/>
+            </div>
+        </Modal>
 </template>
 <script>
 export default {

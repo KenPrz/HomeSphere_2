@@ -46,5 +46,10 @@ const submitForm1 = () => {
                 required: true
             },
         },
+        methods: {
+            close() {
+                this.$emit('close');
+            },
+        },
     }
 </script>
