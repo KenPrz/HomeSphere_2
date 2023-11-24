@@ -25,16 +25,16 @@ const form = useForm({
 const selectPicture = (pictureType) => {
     if (pictureType === 'bedroom') {
         form.room_icon = 'img-assets/vectors/Room Vectors/bedroom.svg';
-        selectedPictureName.value = 'Bedroom image';
+        selectedPictureName.value = 'Bedroom icon';
     } else if (pictureType === 'living_room') {
         form.room_icon = 'img-assets/vectors/Room Vectors/living_room.svg';
-        selectedPictureName.value = 'Living Room image';
+        selectedPictureName.value = 'Living Room icon';
     } else if (pictureType === 'dining_kitchen') {
         form.room_icon = 'img-assets/vectors/Room Vectors/dining_kitchen.svg';
-        selectedPictureName.value = 'Dining Kitchen image';
+        selectedPictureName.value = 'Dining Kitchen icon';
     } else if (pictureType === 'bathroom') {
         form.room_icon = 'img-assets/vectors/Room Vectors/bathroom.svg';
-        selectedPictureName.value = 'Bathroom image';
+        selectedPictureName.value = 'Bathroom icon';
     }else if (pictureType=='default'){
         form.room_icon = 'img-assets/nav-vectors/rooms.svg';
         selectedPictureName.value = 'Default';

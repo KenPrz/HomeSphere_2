@@ -2,24 +2,33 @@
 import InputError from '@/Components/InputError.vue';
 import SecondaryButton from '@/Components/SecondaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
-import { Head, Link, useForm } from '@inertiajs/vue3';
+import { Head, useForm } from '@inertiajs/vue3';
+import {ref} from 'vue';
 
+const mode_name = ref('');
 const emit = defineEmits(["close"]);
-
+const props = defineProps({
+    mode_id: {
+        type: Number,
+        required: true,
+    }
+});
 const form = useForm({
+    mode_id: props.mode_id,
     mode_name: '',
 });
 
 const submit = () => {
-    form.post(route('modes.editMode'), {
-        onFinish: () => {
+    mode_name.value = form.mode_name;
+    form.patch(route('modes.edit'), {
+        onSuccess: () => {
             form.reset('mode_name'),
-            close();
+            close(mode_name.value);
         }
     });
 };
-function close() {
-    emit("close");
+function close(data) {
+    emit("close", data);
 }
 </script>
 

@@ -39,7 +39,6 @@ import { Head } from "@inertiajs/vue3";
                                         <ModeCard
                                             :mode="mode"
                                         />
-                                        {{ mode.mode_name }}
                                     </div>
                                 </div>
                             </div>

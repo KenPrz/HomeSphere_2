@@ -56,20 +56,21 @@ class ModesController extends Controller
             'created_at' => now()
         ]);
     }
-
     /**
      * Update the mode.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return void
      */
-    public function updateMode(Request $request){
+    public function editMode(Request $request){
         $request -> validate([
+            'mode_id' => 'required | integer',
             'mode_name' => 'required | string | max:20',
         ]);
-        // dd($request->all());
-        $room_name = $request->input('mode_name');
-        dd($room_name);
+        DB::table('modes')->where('id',$request->mode_id)->update([
+            'mode_name' => $request->mode_name,
+            'updated_at' => now()
+        ]);
     }
     
 }

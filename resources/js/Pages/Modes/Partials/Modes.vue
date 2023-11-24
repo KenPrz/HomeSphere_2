@@ -24,25 +24,6 @@ import SelectedModeCard from './SelectedModeCard.vue';
             </div>
             <SelectedModeCard :selectedMode="modeData.data"/>
         </div>
-        <Modal
-            :show="showAddApplianceModal"
-            @close="closeAddApplianceModal"
-            :maxWidth="'md'"
-        >
-            <AddAppliance @close="closeAddApplianceModal"/>
-        </Modal>
-        <Modal
-            :maxWidth="'md'"
-            :show="showEditModeModal"
-            @close="closeEditModeModal"
-        >
-            <EditMode @close="closeEditModeModal"/>
-        </Modal>
-        <Modal :hasClose="false" :maxWidth="'sm'" :show="showAddMode" @close="closeAddModeModal()">
-            <div class="p-4">
-                <AddMode :title="'Add a mode'" :user_id="$page.props.auth.user.id"/>
-            </div>
-        </Modal>
 </template>
 <script>
 export default {

@@ -75,7 +75,8 @@ Route::middleware(['auth','checkHasHome'])->group(function () {
 
     Route::get('/modes',[ModesController::class, 'index'])->name('modes.index');
     Route::post('/modes',[ModesController::class, 'createMode'])->name('modes.create');
-    // Route::post('/modes',[ModesController::class, 'editMode'])->name('modes.editMode');
+    Route::patch('/modes',[ModesController::class, 'editMode'])->name('modes.edit');
+    Route::delete('/modes',[ModesController::class, 'deleteMode'])->name('modes.delete');
 
     Route::get('/settings',[SettingsController::class, 'index'])->name('settings.index');
     Route::delete('/leave', [SettingsController::class,'leaveHome'])->name('settings.leave');
