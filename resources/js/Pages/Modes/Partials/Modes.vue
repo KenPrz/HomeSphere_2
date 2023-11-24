@@ -1,17 +1,18 @@
 <script setup>
 import Modal from '@/Components/Modal.vue';
 import AddMode from './AddMode.vue';
-import ModeCard from '@/Pages/Home/Partials/ModeCard.vue';
+import ClickableModeCard from './ClickableModeCard.vue';
+import SelectedModeCard from './SelectedModeCard.vue';
 </script>
 <template>
-        <div class="flex">
+        <div class="container flex p-4">
             <div class="flex flex-col bg-white shadow-md rounded-md">
                 <section class="flex flex-col max-h-[500px] overflow-y-auto">
                     <div v-for="mode in modes" :key="mode.id">
-                        <ModeCard
+                        <ClickableModeCard
                             :mode="mode"
+                            @mode-selected="selectedMode"
                         />
-                        <!-- {{ mode.mode_name }} -->
                     </div>
                 </section>
                 <section class="flex items-center justify-center">
@@ -19,9 +20,24 @@ import ModeCard from '@/Pages/Home/Partials/ModeCard.vue';
                         <img class="h-[25px] me-1" :src="'img-assets/vectors/add_white.svg'" alt="">
                         <span>add mode</span>
                     </button>
-                </section> 
+                </section>
             </div>
+            <SelectedModeCard :selectedMode="modeData.data"/>
         </div>
+        <Modal
+            :show="showAddApplianceModal"
+            @close="closeAddApplianceModal"
+            :maxWidth="'md'"
+        >
+            <AddAppliance @close="closeAddApplianceModal"/>
+        </Modal>
+        <Modal
+            :maxWidth="'md'"
+            :show="showEditModeModal"
+            @close="closeEditModeModal"
+        >
+            <EditMode @close="closeEditModeModal"/>
+        </Modal>
         <Modal :hasClose="false" :maxWidth="'sm'" :show="showAddMode" @close="closeAddModeModal()">
             <div class="p-4">
                 <AddMode :title="'Add a mode'" :user_id="$page.props.auth.user.id"/>
@@ -46,7 +62,8 @@ export default {
         },
         data() {
             return {
-                showAddMode: false
+                showAddMode: false,
+                modeData: {data: this.modes[0]},
             }
         },
         methods: {
@@ -56,6 +73,9 @@ export default {
             closeAddModeModal(){
                 this.showAddMode=false;
             },
+            selectedMode(data){
+                this.modeData.data=data;
+            }
         }
 }
 </script>

@@ -23,37 +23,21 @@ import CreateFirstMode from "./Partials/CreateFirstMode.vue";
                     <h1 class="text-3xl font-bold mb-2">
                         List of Modes
                     </h1>
-                    <div class="flex w-auto">
-                        <div v-if="modes!=null">
-                            <Modes
-                                :homeData="homeData"
-                                :modes="modes"
-                                :devices="devices"
-                            />
-                        </div>
-                        <div v-else>
-                            <div class="w-full">
-                                <CreateFirstMode :user="$page.props.auth.user"/>
-                            </div>
+                    <div v-if="modes!=null">
+                        <Modes
+                            :homeData="homeData"
+                            :modes="modes"
+                            :devices="devices"
+                        />
+                    </div>
+                    <div v-else>
+                        <div class="w-full">
+                            <CreateFirstMode :user="$page.props.auth.user"/>
                         </div>
                     </div>
                 </div>
             </div>
         </main>
-        <Modal
-            :show="showAddApplianceModal"
-            @close="closeAddApplianceModal"
-            :maxWidth="'md'"
-        >
-            <AddAppliance @close="closeAddApplianceModal"/>
-        </Modal>
-        <Modal
-            :maxWidth="'md'"
-            :show="showEditModeModal"
-            @close="closeEditModeModal"
-        >
-            <EditMode @close="closeEditModeModal"/>
-        </Modal>
     </AuthenticatedLayout>
 </template>
 <script>
