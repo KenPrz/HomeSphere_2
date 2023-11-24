@@ -34,10 +34,13 @@ import { Head } from "@inertiajs/vue3";
                                 <h1 class="text-md font-medium">
                                     List of Modes
                                 </h1>
-                                <div class="flex flex-wrap">
-                                    <ModeCard />
-                                    <ModeCard />
-                                    <ModeCard />
+                                <div class="flex overflow-x-auto">
+                                    <div v-for="mode in $page.props.modes" :key="mode.id">
+                                        <ModeCard
+                                            :mode="mode"
+                                        />
+                                        {{ mode.mode_name }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -97,6 +100,7 @@ export default {
         homeData: Object,
         userList: Object,
         appliances: Object,
+        modes: Object,
     },
     data() {
         return {

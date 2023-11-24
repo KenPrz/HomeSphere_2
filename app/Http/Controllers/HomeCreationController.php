@@ -70,6 +70,7 @@ class HomeCreationController extends Controller
                 ->addSelect(DB::raw('(SELECT COUNT(*) FROM devices WHERE devices.room_id = rooms.id) as device_count'))
                 ->get();
             $appliances = $getAppliances->getAppliances($homeData);
+            $modes = DB::table('modes')->where('home_id',$homeData->id)->get();
             $userList = DB::table('home_members')->where('home_id', $homeData->id)
                 ->join('users', 'home_members.member_id', '=', 'users.id')
                 ->get(['users.firstName', 'users.lastName','users.profile_image', 'users.is_online']);
@@ -80,6 +81,7 @@ class HomeCreationController extends Controller
                     'homeData' => $homeData,
                     'userList' => $userList, 
                     'appliances' => $appliances,
+                    'modes'=> $modes,
                     'rooms' => $rooms,
                     'api_key' => $api_key,
                 ]);
