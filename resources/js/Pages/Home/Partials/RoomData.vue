@@ -1,5 +1,5 @@
 <script setup>
-import ToggleSwitch from '@/Components/ToggleSwitch.vue';
+import MotionSensorToggle from '@/Components/MotionSensorToggle.vue';
 </script>
 <template>
     <div class="px-7 py-4">
@@ -15,10 +15,11 @@ import ToggleSwitch from '@/Components/ToggleSwitch.vue';
                 </div>
                 <div class="px-7">
                     <div class="rounded-xl border border-slate-300 w-full flex flex-col items-center p-1">
-                        <div class="text-center text-sm font-medium">
+                        <div class="text-black text-center">
                             Motion Sensor
                         </div>
-                        <ToggleSwitch v-model="room.toggleState" />
+                        <MotionSensorToggle :motionSensor="room.motion_sensor" :userId="$page.props.auth.user.id"
+                            :homeId="room.home_id" :roomId="room.id" />
                     </div>
                 </div>
                 <div class="px-7 mt-2">
