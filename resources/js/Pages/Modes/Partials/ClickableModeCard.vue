@@ -15,7 +15,7 @@
                     </div>
                 </div>
             </div>
-            <div @click="modeSelected(mode)" class="flex flex-col h-3/4 pt-7">
+            <div @click="modeSelected(mode,devices)" class="flex flex-col h-3/4 pt-7">
                 <h2 class="text-1xl">{{ mode.mode_name }}</h2>
                 <h1 class="text-2xl font-ex">{{ is_active.data ? "ON" : "OFF" }}</h1>
             </div>
@@ -43,6 +43,10 @@ export default {
         mode: {
             type: Object,
             required: true
+        },
+        devices: {
+            type: Array,
+            required: true
         }
     },
     data(){
@@ -51,8 +55,8 @@ export default {
         }
     },
     methods: {
-        modeSelected(data){
-            this.$emit('mode-selected',data)
+        modeSelected(data,devices){
+            this.$emit('mode-selected',data,devices)
         }
     }
 };

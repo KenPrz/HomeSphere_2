@@ -132,6 +132,7 @@ export default {
             }).listen('.motion_detected', (eventData) => {
                 this.motionDetectedRoomName.data = eventData.room_name[0];
                 if (eventData.motion_detected == true) {
+                    this.playSound();
                     this.showModal = true;
                 }
             })
@@ -157,6 +158,10 @@ export default {
         },
         refreshPage() {
             window.location.reload();
+        },
+        playSound(){
+            const audio = new Audio('./notification.mp3');
+            audio.play();
         },
         close() {
             this.showModal = false;

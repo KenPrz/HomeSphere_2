@@ -11,6 +11,7 @@ import SelectedModeCard from './SelectedModeCard.vue';
                     <div v-for="mode in modes" :key="mode.id">
                         <ClickableModeCard
                             :mode="mode"
+                            :devices="devices"
                             @mode-selected="selectedMode"
                         />
                     </div>
@@ -22,7 +23,7 @@ import SelectedModeCard from './SelectedModeCard.vue';
                     </button>
                 </section>
             </div>
-            <SelectedModeCard :selectedMode="modeData.data"/>
+            <SelectedModeCard :selectedMode="modeData.data" :selectedDevices="devicesData.data"/>
         </div>
         <Modal :maxWidth="'md'" :show="showAddMode" @close="closeAddModeModal">
             <div class="p-4">
@@ -50,6 +51,7 @@ export default {
             return {
                 showAddMode: false,
                 modeData: {data: this.modes[0]},
+                devicesData: {data: this.devices}
             }
         },
         methods: {
@@ -59,8 +61,9 @@ export default {
             closeAddModeModal(){
                 this.showAddMode=false;
             },
-            selectedMode(data){
+            selectedMode(data,devices){
                 this.modeData.data=data;
+                this.devicesData.data=devices;
             }
         }
 }

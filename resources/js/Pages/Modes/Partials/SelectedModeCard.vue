@@ -13,7 +13,7 @@ import Modal from "@/Components/Modal.vue";
             <div class="flex">
                 <button
                     @click="openEditRoomForm"
-                    class="group flex items-center justify-center transition-all duration-200 hover:bg-red-500 hover:text-white border-gray-500 border rounded-xl md:rounded-full p-1 md:px-2 me-1"
+                    class="group flex items-center justify-center transition-all duration-200 hover:bg-slate-500 hover:text-white border-gray-500 border rounded-xl md:rounded-full p-1 md:px-2 me-1"
                 >
                     <svg
                         class="group-hover:stroke-white transition-all duration-200 stroke-gray-500 h-3 md:h-5 w-auto"
@@ -115,6 +115,10 @@ export default {
     props: {
         selectedMode: {
             type: Object,
+            required: true,
+        },
+        selectedDevices: {
+            type: Array,
             required: true,
         },
     },
