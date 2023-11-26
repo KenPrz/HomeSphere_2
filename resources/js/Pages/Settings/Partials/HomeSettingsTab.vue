@@ -8,14 +8,23 @@ const emit = defineEmits(['close']);
 <template>
     <v-card-text>
         <div class="mx-3 flex flex-col w-1/2">
-            <button @click="showDialog" v-if="$page.props.homeData.role == 'owner'"
-                class="w-32 my-2 text-white bg-red-500 hover:bg-red-600 transition-colors duration-600 py-2 px-3 rounded-md text-md font-medium">
-                Delete Home
-            </button>
-            <button @click="showDialog" v-else
-                class="w-32 bg-zinc-500 hover:bg-zinc-800 transition-colors duration-600 text-white text-md p-2 rounded-md mb-4">
-                Leave Home
-            </button>
+            <section>
+                <h2 class="text-xl font-semibold mb-2">Home Settings</h2>
+                <p class="text-gray-500 mb-2">Manage your home settings here.</p>
+            </section>
+            <section>
+                <button @click="showDialog" v-if="$page.props.homeData.role == 'owner'"
+                    class="flex w-auto my-2 text-white bg-red-500 hover:bg-red-600 transition-colors duration-600 py-2 px-3 rounded-md text-md font-medium">
+                    <img class="w-5 me-2" :src="'img-assets/vectors/Delete-white.svg'" alt="">
+                    <span>Delete Home</span>
+                </button>
+                <button @click="showDialog" v-else
+                    class="flex w-32 bg-zinc-500 hover:bg-zinc-800 transition-colors duration-600 text-white text-md p-2 rounded-md mb-4">
+                    <img class="w-5 me-2" :src="'img-assets/vectors/logout-white.svg'" alt="">
+                    <img class="w-5 me-2" :src="'img-assets/nav-vectors/logout-white.svg'" alt="">
+                    <span>Leave Home</span>
+                </button>
+            </section>
         </div>
     </v-card-text>
     <Modal maxWidth="sm" :show="homeSettingsDialog" @close="closeDialog">

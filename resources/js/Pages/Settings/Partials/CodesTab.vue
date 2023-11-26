@@ -5,7 +5,10 @@ import NewInviteKeyDialog from './NewInviteKeyDialog.vue';
 </script>
 <template>
     <div class="mx-3">
-        <h1 class="text-md font-medium">Home Codes</h1>
+        <section>
+            <h2 class="text-xl font-semibold mb-2">Codes</h2>
+            <p class="text-gray-500 mb-2">Manage your codes and keys here.</p>
+        </section>
     </div>
     <v-container class="flex flex-col">
         <v-card class="my-3" title="Invite Code" subtitle="This is your unique invite code">

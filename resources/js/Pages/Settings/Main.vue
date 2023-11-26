@@ -34,7 +34,6 @@ import HomeSettingsTab from "./Partials/HomeSettingsTab.vue";
                     </v-tabs>
                     <v-card-text>
                         <v-window v-model="tab">
-
                             <v-window-item value="user"> 
                                 <UsersTab
                                     :homeMembers="homeMembers"

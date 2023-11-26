@@ -3,7 +3,10 @@ import UserListTable from './UserListTable.vue';
 </script>
 <template>
     <div class="mx-3">
-        <h1 class="text-md font-medium">List of Users</h1>
+        <section>
+            <h2 class="text-xl font-semibold mb-2">Users</h2>
+            <p class="text-gray-500 mb-2">Manage the users in your home here.</p>
+        </section>
     </div>
     <v-container>
         <UserListTable :homeMembers="homeMembers" :headerText="tableHeaders" />
