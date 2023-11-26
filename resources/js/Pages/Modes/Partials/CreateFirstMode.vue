@@ -16,7 +16,7 @@ import AddMode from './AddMode.vue';
     </v-card>
     <Modal :hasClose="false" :maxWidth="'md'" :show="showAddModeModal" @close="closeAddModeModal">
         <div class="p-4 bg-white shadow sm:rounded-lg">
-            <AddMode :title="'Create your first mode'" :user_id="$page.props.auth.user.id" />
+            <AddMode @close="closeAddModeModal" :title="'Create your first mode'"/>
         </div>
     </Modal>
 </template>

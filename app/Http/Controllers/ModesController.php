@@ -72,5 +72,17 @@ class ModesController extends Controller
             'updated_at' => now()
         ]);
     }
-    
+
+    /**
+     * Delete a mode.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    public function deleteMode(Request $request){
+        $request -> validate([
+            'mode_id' => 'required | integer',
+        ]);
+        DB::table('modes')->where('id',$request->mode_id)->delete();
+    }
 }

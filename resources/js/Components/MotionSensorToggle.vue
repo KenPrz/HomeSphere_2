@@ -36,14 +36,8 @@ export default {
                 is_active: data,
             })
                 .then(response => {
-                    // Handle the response as needed.
-
-                    console.log(response); //for debugging only remove at prod
                 })
                 .catch(error => {
-                    // Handle the error as needed.
-
-                    console.log(error); //for debugging only remove at prod
                 });
         },
     },

@@ -23,11 +23,11 @@ import SelectedModeCard from './SelectedModeCard.vue';
                     </button>
                 </section>
             </div>
-            <SelectedModeCard :selectedMode="modeData.data" :selectedDevices="devicesData.data"/>
+            <SelectedModeCard @getData="getNewData"  :selectedMode="modeData.data" :selectedDevices="devicesData.data"/>
         </div>
         <Modal :maxWidth="'md'" :show="showAddMode" @close="closeAddModeModal">
             <div class="p-4">
-                <AddMode :title="'Add a Mode'" :modes="modes" :devices="devices" @close="closeAddModeModal"/>
+                <AddMode :title="'Add a Mode'"  @close="closeAddModeModal"/>
             </div>
         </Modal>
 </template>
@@ -64,6 +64,9 @@ export default {
             selectedMode(data,devices){
                 this.modeData.data=data;
                 this.devicesData.data=devices;
+            },
+            getNewData(){
+                this.modeData.data=this.modes[0];
             }
         }
 }

@@ -1,18 +1,20 @@
 <script setup>
 import { useForm } from '@inertiajs/vue3';
-import Dropdown from '@/Components/Dropdown.vue';
+import { defineEmits } from "vue";
 import TextInput from '@/Components/TextInput.vue';
 import InputError from '@/Components/InputError.vue';
 const modeForm = useForm({
     mode_name: '',
-    activation_type: '',
 });
-
+const emit = defineEmits(["close"]);
 const submitForm1 = () => {
     modeForm.post(route('modes.create'), {
         onSuccess: () => close(),
     });
 };
+function close() {
+    emit("close");
+}
 </script>
 <template>
     <div class="container flex flex-col items-center justify-center">
@@ -38,12 +40,8 @@ const submitForm1 = () => {
     export default {
         props: {
             title: {
-                type: Text,
+                type: String,
                 default: null
-            },
-            user_id: {
-                type: Number,
-                required: true
             },
         },
         methods: {
