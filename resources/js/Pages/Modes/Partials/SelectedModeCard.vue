@@ -1,4 +1,5 @@
 <script setup>
+import AppliancesInMode from "./AppliancesInMode.vue";
 import AddAppliance from "./AddAppliance.vue";
 import EditMode from "./EditMode.vue";
 import Modal from "@/Components/Modal.vue";
@@ -13,28 +14,6 @@ const emit = defineEmits(['getData']);
                 {{ mode_name.value }}
             </div>
             <div class="flex">
-                <button
-                    @click="openAddApplianceModal"
-                    class="group flex items-center justify-center transition-all duration-200 hover:bg-slate-500 hover:text-white border-gray-500 border rounded-xl md:rounded-full p-1 md:px-2 me-1"
-                >
-                    <svg
-                        class="group-hover:stroke-white transition-all duration-200 stroke-gray-500 h-3 md:h-5 w-auto"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <g id="Edit / Add_Plus_Circle">
-                            <path
-                                id="Vector"
-                                d="M8 12H12M12 12H16M12 12V16M12 12V8M12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21Z"
-                                stroke-width="2"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                            />
-                        </g>
-                    </svg>
-                    <span class="text-xs md:text-sm">Add Appliance</span>
-                </button>
                 <button
                     @click="openEditRoomForm"
                     class="group flex items-center justify-center transition-all duration-200 hover:bg-slate-500 hover:text-white border-gray-500 border rounded-xl md:rounded-full p-1 md:px-2 me-1"
@@ -126,7 +105,7 @@ const emit = defineEmits(['getData']);
             <v-card-text>
                 <v-window v-model="tab">
                     <v-window-item value="Appliances">
-                        
+                        <AppliancesInMode :roomsData="roomsData" :devices="selectedDevices" />
                     </v-window-item>
                     <v-window-item value="Activation">
                         {{}}
@@ -135,13 +114,6 @@ const emit = defineEmits(['getData']);
             </v-card-text>
         </v-card>
     </div>
-    <Modal
-        :show="showAddApplianceModal"
-        @close="closeAddApplianceModal"
-        :maxWidth="'md'"
-    >
-        <AddAppliance @close="closeAddApplianceModal" />
-    </Modal>
     <Modal
         :maxWidth="'md'"
         :show="showEditModeModal"
@@ -169,6 +141,10 @@ export default {
             type: Array,
             required: true,
         },
+        roomsData: {
+            type: Array,
+            required: true,
+        }
     },
     data() {
         return {

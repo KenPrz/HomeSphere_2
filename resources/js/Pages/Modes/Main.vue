@@ -24,6 +24,7 @@ import CreateFirstMode from "./Partials/CreateFirstMode.vue";
                             :homeData="homeData"
                             :modes="modes"
                             :devices="devices"
+                            :roomsData="roomsData"
                         />
                     </div>
                     <div v-else>
@@ -64,7 +65,11 @@ import CreateFirstMode from "./Partials/CreateFirstMode.vue";
             devices: {
                 type: Array,
                 default: null
-            }
+            },
+            roomsData: {
+                type: Array,
+                default: null
+            },
         }
     }
 </script>

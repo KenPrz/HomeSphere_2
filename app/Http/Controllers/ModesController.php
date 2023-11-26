@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
+use App\Models\room;
 class ModesController extends Controller
 {
     private $appUtilities;
@@ -25,6 +26,7 @@ class ModesController extends Controller
         $user = auth()->user();
         $homeData = $this->appUtilities->findHomeData($user);
         $modes = DB::table('modes')->where('home_id',$homeData->id)->get();
+        $roomsData = $this->getRooms($homeData->id);
         $appliances = $this->getAppliances->getAppliances($homeData);
         if(empty($modes[0])){
             $modes = null;
@@ -33,6 +35,7 @@ class ModesController extends Controller
         [
             'homeData' => $homeData,
             'modes' => $modes,
+            'roomsData' => $roomsData,
             'devices' => $appliances
         ]);
     }
@@ -84,5 +87,13 @@ class ModesController extends Controller
             'mode_id' => 'required | integer',
         ]);
         DB::table('modes')->where('id',$request->mode_id)->delete();
+    }
+
+    protected function getRooms($home_id){
+        return Room::with('devices', 'tempSensor', 'humiditySensor', 'motionSensor')
+                ->where('home_id', $home_id)
+                ->select(['rooms.*'])
+                ->addSelect(DB::raw('(SELECT COUNT(*) FROM devices WHERE devices.room_id = rooms.id) as device_count'))
+                ->get();
     }
 }
