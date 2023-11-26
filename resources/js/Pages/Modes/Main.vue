@@ -2,11 +2,7 @@
 import { ref } from "vue";
 import { Head } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import ModeCard from "../Home/Partials/ModeCard.vue";
-import Modal from "@/Components/Modal.vue";
-import AddAppliance from "./Partials/AddAppliance.vue";
 import Modes from './Partials/Modes.vue';
-import EditMode from "./Partials/EditMode.vue";
 import CreateFirstMode from "./Partials/CreateFirstMode.vue";
 </script>
 <template>

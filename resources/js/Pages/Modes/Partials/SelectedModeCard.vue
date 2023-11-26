@@ -33,7 +33,7 @@ const emit = defineEmits(['getData']);
                             />
                         </g>
                     </svg>
-                    <span class="text-xs md:text-sm">add</span>
+                    <span class="text-xs md:text-sm">Add Appliance</span>
                 </button>
                 <button
                     @click="openEditRoomForm"
@@ -126,7 +126,7 @@ const emit = defineEmits(['getData']);
             <v-card-text>
                 <v-window v-model="tab">
                     <v-window-item value="Appliances">
-                        {{ selectedDevices }}
+                        
                     </v-window-item>
                     <v-window-item value="Activation">
                         {{}}
