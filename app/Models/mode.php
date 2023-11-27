@@ -18,4 +18,11 @@ class Mode extends Model
         return $this->hasMany(Device::class);
     }
 
+    public function devices()
+    {
+        return $this->belongsToMany(Device::class, 'mode_device_activation')
+            ->withPivot('activation_type', 'activation_details')
+            ->withTimestamps();
+    }
+
 }

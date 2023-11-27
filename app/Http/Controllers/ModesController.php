@@ -77,6 +77,19 @@ class ModesController extends Controller
     }
 
     /**
+     * Schedule the mode.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
+    public function scheduleMode(Request $request){
+        dd($request->all());
+    }
+    public function environmentMode(Request $request){
+        dd($request->all());
+    }
+
+    /**
      * Delete a mode.
      *
      * @param  \Illuminate\Http\Request  $request

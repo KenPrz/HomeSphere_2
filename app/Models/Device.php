@@ -28,6 +28,8 @@ class Device extends Model
 
     public function modes()
     {
-        return $this->belongsToMany(Mode::class);
+        return $this->belongsToMany(Mode::class, 'mode_device_activation')
+            ->withPivot('activation_type', 'activation_details')
+            ->withTimestamps();
     }
 }

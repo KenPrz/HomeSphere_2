@@ -1,6 +1,6 @@
 <script setup>
 import AppliancesInMode from "./AppliancesInMode.vue";
-import AddAppliance from "./AddAppliance.vue";
+import ActivationTypeTab from "./ActivationTypeTab.vue";
 import EditMode from "./EditMode.vue";
 import Modal from "@/Components/Modal.vue";
 import DeleteMode from "./DeleteMode.vue";
@@ -108,7 +108,7 @@ const emit = defineEmits(['getData']);
                         <AppliancesInMode :roomsData="roomsData" :devices="selectedDevices" />
                     </v-window-item>
                     <v-window-item value="Activation">
-                        {{}}
+                        <ActivationTypeTab :roomsData="roomsData" :mode="selectedMode"/>
                     </v-window-item>
                 </v-window>
             </v-card-text>

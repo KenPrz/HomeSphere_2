@@ -76,6 +76,8 @@ Route::middleware(['auth','checkHasHome'])->group(function () {
     Route::get('/modes',[ModesController::class, 'index'])->name('modes.index');
     Route::post('/modes',[ModesController::class, 'createMode'])->name('modes.create');
     Route::patch('/modes',[ModesController::class, 'editMode'])->name('modes.edit');
+    Route::post('/modes/schedule',[ModesController::class, 'scheduleMode'])->name('modes.schedule');
+    Route::post('/modes/environment',[ModesController::class, 'environmentMode'])->name('modes.environment');
     Route::delete('/modes',[ModesController::class, 'deleteMode'])->name('modes.delete');
 
     Route::get('/settings',[SettingsController::class, 'index'])->name('settings.index');

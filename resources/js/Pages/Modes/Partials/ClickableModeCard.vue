@@ -47,22 +47,18 @@ export default {
         devices: {
             type: Array,
             required: true
-        }
+        },
     },
     data(){
         return{
-            is_active: {data: this.mode.is_active}
+            is_active: {data: this.mode.is_active},
+            is_selected: false
         }
     },
     methods: {
         modeSelected(data,devices){
-            this.$emit('mode-selected',data,devices)
+            this.$emit('mode-selected',data,devices);
         }
     }
 };
 </script>
-<!-- 
-function cancel() {
-    emit("close");
-}
--->
