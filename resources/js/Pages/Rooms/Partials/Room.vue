@@ -5,6 +5,8 @@ import DeleteRoomDialog from './DeleteRoomDialog.vue';
 import ToggleSwitch from '@/Components/ToggleSwitch.vue';
 import Device from '@/Pages/Rooms/Partials/Device.vue';
 import MotionSensorToggle from '@/Components/MotionSensorToggle.vue';
+import {defineEmits} from 'vue';
+const emit = defineEmits(['roomDeleted']);
 </script>
 <template>
     <div class="container">
@@ -13,7 +15,7 @@ import MotionSensorToggle from '@/Components/MotionSensorToggle.vue';
                 <div class="flex flex-col p-5">
                     <div class="flex justify-between w-full pb-3 px-1 border-gray-500 border-b-2">
                         <div class="flex sm:text-md md:text-2xl font-semibold">
-                            <span class="hidden me-2 sm:block">Appliances in</span> {{ room.room_name }}
+                            <span class="hidden me-2 sm:block">Appliances in</span> {{ room_name.data }}
                         </div>
                         <div v-if="room.room_owner_id == $page.props.auth.user.id || $page.props.homeData.role == 'owner'"
                             class="flex">
@@ -141,7 +143,7 @@ import MotionSensorToggle from '@/Components/MotionSensorToggle.vue';
                             <v-progress-circular :size="150" :width="15" :rotate="0"
                                 :model-value="room.humidity_sensor.humidity" color="white"
                                 background-color="rgba(255, 255, 255, 0.2)">
-                                <span v-if="!room.humidity_sensor.humidity" class="text">no</span>
+                                <span v-if="!room.humidity_sensor.humidity" class="text">no data</span>
                                 <span v-else class="text">{{ room.humidity_sensor.humidity }}%</span>
                             </v-progress-circular>
                         </div>
@@ -166,8 +168,17 @@ export default {
             required: true,
         },
     },
+    watch: {
+        room: {
+            handler: function (newVal, oldVal) {
+                this.room_name.data = newVal.room_name;
+            },
+            deep: true,
+        },
+    },
     data() {
         return {
+            room_name: {data: this.room.room_name},
             roomId: { ID: null },
             tempData: { data: null },
             humidityData: { data: null },
@@ -213,14 +224,23 @@ export default {
         openEditRoomForm() {
             this.showEditRoomForm = true;
         },
-        closeEditRoomForm() {
+        closeEditRoomForm(data) {
+            if (data) {
+                this.room_name.data = data;
+            }
             this.showEditRoomForm = false;
         },
         openDeleteRoomDialog() {
             this.showDeleteRoomDialog = true;
         },
-        closeDeleteRoomDialog() {
+        closeDeleteRoomDialog(data) {
+            if(data){
+                this.refreshPage();
+            }
             this.showDeleteRoomDialog = false;
+        },
+        refreshPage() {
+            window.location.reload();
         },
     },
 };

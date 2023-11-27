@@ -14,13 +14,16 @@ const deleteRoomForm = useForm({
     room_id: roomProps.roomID,
 });
 const deleteRoom = () => {
+    const data = roomProps.roomID;
     deleteRoomForm.delete(route('rooms.delete'), {
         onSuccess: () => {
-            close(true);
+            close(data);
         },
     });
 };
-
+function cancel(){
+    emit('close');
+}
 function close(data){
     emit('close',data);
 }
@@ -40,7 +43,7 @@ function close(data){
                 </button>
                 
             </form>
-            <button @click="close"
+            <button @click="cancel"
                 class="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg mr-4 hover-bg-gray-400 transition duration-300">
                 No, Cancel
             </button>

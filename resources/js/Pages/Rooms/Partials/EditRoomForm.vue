@@ -41,13 +41,17 @@ const selectPicture = (pictureType) => {
     }
 };
 const submit = () => {
+    const room_name = form.roomName;
     form.post(route('rooms.edit'),
         {
             onSuccess: () =>
-                emit('close'),
+                close(room_name),
         }
     )
 };
+function close(data) {
+    emit('close', data);
+}
 const selectedPictureName = ref('');
 </script>
 <template>
