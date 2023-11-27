@@ -62,14 +62,8 @@ class RoomsController extends Controller
 
     public function deleteRoom(Request $request)
     {   
-        $appUtilities = new AppUtilities;
-        $user = auth()->user();
-        $homeData = $appUtilities->findHomeData($user);
-
-        $roomID = $request->input('roomID');
+        $roomID = $request->input('room_id');
         $this->deleteRoomByID($roomID);
-
-        return redirect()->back();
     }
 
     public function openRoom($roomID)
