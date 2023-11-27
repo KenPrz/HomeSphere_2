@@ -15,7 +15,7 @@ import MotionSensorToggle from '@/Components/MotionSensorToggle.vue';
                         <div class="flex sm:text-md md:text-2xl font-semibold">
                             <span class="hidden me-2 sm:block">Appliances in</span> {{ room.room_name }}
                         </div>
-                        <div v-if="room.room_owner_id == $page.props.auth.id || $page.props.homeData.role == 'owner'"
+                        <div v-if="room.room_owner_id == $page.props.auth.user.id || $page.props.homeData.role == 'owner'"
                             class="flex">
                             <button @click="openEditRoomForm"
                                 class="group flex items-center justify-center transition-all duration-200 hover:bg-gray-500 hover:text-white border-gray-500 border rounded-full px-2 mx-2 text-sm sm:text-md">

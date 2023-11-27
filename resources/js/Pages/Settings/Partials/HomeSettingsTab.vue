@@ -19,8 +19,7 @@ const emit = defineEmits(['close']);
                     <span>Delete Home</span>
                 </button>
                 <button @click="showDialog" v-else
-                    class="flex w-32 bg-zinc-500 hover:bg-zinc-800 transition-colors duration-600 text-white text-md p-2 rounded-md mb-4">
-                    <img class="w-5 me-2" :src="'img-assets/vectors/logout-white.svg'" alt="">
+                    class="flex w-auto bg-zinc-500 hover:bg-zinc-800 transition-colors duration-600 text-white text-md p-2 rounded-md mb-4">
                     <img class="w-5 me-2" :src="'img-assets/nav-vectors/logout-white.svg'" alt="">
                     <span>Leave Home</span>
                 </button>

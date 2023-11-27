@@ -43,7 +43,6 @@ import HomeSettingsTab from "./Partials/HomeSettingsTab.vue";
                             <v-window-item value="codes"> 
                                 <CodesTab/>
                             </v-window-item>
-
                             <v-window-item value="Settings">
                                 <HomeSettingsTab/>
                             </v-window-item>
