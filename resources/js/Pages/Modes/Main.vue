@@ -38,20 +38,6 @@ import CreateFirstMode from "./Partials/CreateFirstMode.vue";
     </AuthenticatedLayout>
 </template>
 <script>
-    const showEditModeModal = ref(false);
-    const showAddApplianceModal = ref(false);
-    const openAddApplianceModal = () => {
-        showAddApplianceModal.value = true;
-    };
-    const closeAddApplianceModal = () => {
-        showAddApplianceModal.value = false;
-    };
-    const openEditModeModal = () => {
-        showEditModeModal.value = true;
-    };
-    const closeEditModeModal = () => {
-        showEditModeModal.value = false;
-    };
     export default {
         props: {
             homeData: {

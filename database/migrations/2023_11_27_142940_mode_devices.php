@@ -11,16 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('mode_device_activation', function (Blueprint $table) {
+        Schema::create('mode_devices', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('mode_id');
-            $table->unsignedBigInteger('device_id');
-            $table->enum('activation_type', ['schedule', 'sensor'])->default('schedule');
-            $table->json('activation_details')->nullable();
+            $table->json('device_list')->nullable();
             $table->timestamps();
-
             $table->foreign('mode_id')->references('id')->on('modes')->onDelete('cascade');
-            $table->foreign('device_id')->references('id')->on('devices')->onDelete('cascade');
         });
     }
 

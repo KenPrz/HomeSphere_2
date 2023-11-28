@@ -1,6 +1,7 @@
 <script setup>
 import Modal from '@/Components/Modal.vue';
 import AddAppliance from './AddAppliance.vue';
+import ModeDeviceCard from './ModeDeviceCard.vue';
 </script>
 <template>
     <div class="w-full container flex flex-col">
@@ -18,8 +19,14 @@ import AddAppliance from './AddAppliance.vue';
                 <span class="text-xs md:text-sm">Add Appliance</span>
             </button>
         </section>
+        <section  class="mt-3 flex flex-wrap max-h-[400px] md:max-h-[500px] overflow-y-scroll">
+                <ModeDeviceCard v-for="device in modeDevices.data" :key="device.id" :device="device" />
+        </section>
+        <section class="flex justify-end me-2">
+            <button v-if="oldDeviceArrayLength < modeDevices.data.length" class="bg-blue-500 h-8 text-white hover:bg-blue-600 transition-colors duration-200 w-32 rounded-full me-2 ">Save changes</button>
+        </section>
     </div>
-    <Modal :maxWidth="'md'" :show="showAddAppliance" @close="closeAddApplianceModal">
+    <Modal :maxWidth="'md'" :show="showAddAppliance" @close="justCloseMe">
         <div class="p-4">
             <AddAppliance :mode_id="mode.id"  :roomsData="roomsData" :title="'Add an Appliance'" @close="closeAddApplianceModal" />
         </div>
@@ -43,16 +50,37 @@ export default {
     },
     data() {
         return {
+            oldDeviceArrayLength: 0,
             showAddAppliance: false,
+            modeDevices: {data: this.mode.device_list},
         }
+    },
+    mounted() {
+        this.oldDeviceArrayLength = this.modeDevices.data.length;
     },
     methods: {
         openAddApplianceModal() {
             this.showAddAppliance = true;
         },
-        closeAddApplianceModal() {
-            this.showAddAppliance = false;
+        closeAddApplianceModal(data) {
+            if (data !== null) {
+                const isDuplicate = this.modeDevices.data.some(item =>
+                    item.room.room_id === data.room.room_id &&
+                    item.device.device_id === data.device.device_id
+                );
+                if (isDuplicate) {
+                    alert('This appliance is already in the mode!');
+                } else {
+                    this.modeDevices.data.push(data);
+                    this.showAddAppliance = false;
+                }
+            } else {
+                this.showAddAppliance = false;
+            }
         },
+        justCloseMe(){
+            this.showAddAppliance = false;
+        }
     }
 }
 </script>

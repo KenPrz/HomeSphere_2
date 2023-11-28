@@ -35,7 +35,7 @@ export default {
             default: "",
         },
         logo: {
-            type: Text,
+            type: String,
             default: 'Default'
         },
         mode: {

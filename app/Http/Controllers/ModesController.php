@@ -22,24 +22,36 @@ class ModesController extends Controller
         $this->getAppliances = $getAppliances;
     }
 
-    public function index(){
+    public function index()
+    {
         $user = auth()->user();
         $homeData = $this->appUtilities->findHomeData($user);
-        $modes = DB::table('modes')->where('home_id',$homeData->id)->get();
         $roomsData = $this->getRooms($homeData->id);
         $appliances = $this->getAppliances->getAppliances($homeData);
-        if(empty($modes[0])){
+        $homeId = $homeData->id;
+    
+        $modes = DB::table('modes')
+            ->select('modes.*', 'mode_devices.device_list')
+            ->join('mode_devices', 'modes.id', '=', 'mode_devices.mode_id')
+            ->where('modes.home_id', $homeId)
+            ->get();
+    
+        // Decode the device_list for each mode
+        foreach ($modes as $mode) {
+            $mode->device_list = json_decode($mode->device_list, true);
+        }
+    
+        if (empty($modes[0])) {
             $modes = null;
-        };
-        return Inertia::render('Modes/Main',
-        [
+        }
+    
+        return Inertia::render('Modes/Main', [
             'homeData' => $homeData,
             'modes' => $modes,
             'roomsData' => $roomsData,
-            'devices' => $appliances
+            'devices' => $appliances,
         ]);
     }
-
     /**
      * Create a new mode.
      *
@@ -52,12 +64,19 @@ class ModesController extends Controller
         ]);
         $user = auth()->user();
         $homeData = $this->appUtilities->findHomeData($user);
-        DB::table('modes')->insert([
-            'home_id' => $homeData->id,
-            'mode_name' => $request->mode_name, 
-            'created_by' => $user->id,
-            'created_at' => now()
-        ]);
+        DB::transaction(function () use ($homeData, $request, $user) {
+            $modeId = DB::table('modes')->insertGetId([
+                'home_id' => $homeData->id,
+                'mode_name' => $request->mode_name, 
+                'created_by' => $user->id,
+                'created_at' => now()
+            ]);
+            DB::table('mode_devices')->insert([
+                'mode_id' => $modeId,
+                'device_list' => null,
+                'created_at' => now()
+            ]);
+        });
     }
     /**
      * Update the mode.
@@ -77,10 +96,40 @@ class ModesController extends Controller
     }
 
     public function addDevice(Request $request){
-        dd($request->all());
+        $request -> validate([
+            'mode_id' => 'required | integer',
+            'device_id' => 'required | integer',
+            'room_id' => 'required | integer',
+        ]);
+        
+        $room_data = DB::table('rooms')->where('id',$request->room_id)->first();
+        $device_data = DB::table('devices')->where('id',$request->device_id)->first();
+        $modeDevice = DB::table('mode_devices')->where('mode_id',$request->mode_id)->first();
+        
+        $existingDeviceList = json_decode($modeDevice->device_list, true) ?? [];
+
+        $newDevice = [
+            'device' => [
+                'device_id' => $request->device_id,
+                'device_name' => $device_data->device_name,
+                'custom_name' => $device_data->custom_name,
+                'device_type' => $device_data->device_type,
+                'is_active' => false
+            ],
+            'room' => [
+                'room_id' => $request->room_id,
+                'room_name' => $room_data->room_name,
+            ],
+        ];
+
+        array_push($existingDeviceList, $newDevice);
+
+        $updatedModeDevices = json_encode($existingDeviceList);
+        DB::table('mode_devices')->where('id',$request->mode_id)->update([
+            'device_list' => $updatedModeDevices,
+            'updated_at' => now()
+        ]);
     }
-
-
     /**
      * Schedule the mode.
      *

@@ -2,13 +2,13 @@
 import { defineEmits } from "vue";
 const emit = defineEmits(["close"]);
 
-function cancel() {
-    emit("close");
+function cancel(data) {
+    emit("close",data);
 }
 </script>
 <template>
     <div class="container bg-white rounded-xl">
-        <div class="flex flex-col my-10 mx-10">
+        <div class="flex flex-col m-5 ">
             <div class="text-2xl font-semibold mb-3">
                 Add Appliance
             </div>
@@ -25,7 +25,7 @@ function cancel() {
                 <select required v-model="selectedAppliance" id="select2" name="select2"
                     class="w-full px-4 py-2 border rounded-lg appearance-none">
                     <option value="" disabled>Select an appliance</option>
-                    <option v-for="device in selectedRoomDevices" :key="device.id" :value="device.id">{{ device.device_name
+                    <option v-for="device in selectedRoomDevices" :key="device.id" :value="device">{{ device.device_name
                     }}</option>
                 </select>
             </div>
@@ -34,7 +34,7 @@ function cancel() {
                     class="flex-1 bg-gray-500 hover:bg-gray-400 transition-colors duration-200 text-white font-semibold py-2 px-4 rounded-full me-2">
                     Add
                 </button>
-                <button @click="cancel"
+                <button @click="close(null)"
                     class="flex-1 bg-white border-2 hover:bg-gray-200 transition-colors duration-200 text-slate-900 font-semibold py-2 px-4 rounded-full">
                     Cancel
                 </button>
@@ -56,7 +56,6 @@ export default {
     },
     data() {
         return {
-            mode_id: this.mode_id,
             selectedRoom: null,
             selectedAppliance: null,
         };
@@ -69,29 +68,33 @@ export default {
     },
     methods: {
         submit(){
-            if(this.selectedRoom !=null && this.selectedAppliance !=null){
-                this.$inertia.post(route('modes.addDevice'), {
-                    mode_id: this.mode_id,
-                    room_id: this.selectedRoom,
-                    device_id: this.selectedAppliance,
-                }, {
-                    onFinish: () => cancel(),
-                });
-            }else{
-                if(this.selectedRoom ==null && this.selectedAppliance ==null){
-                    alert("Please select a room and an appliance");
-                }
-                else if(this.selectedRoom ==null ){
-                    alert("Please select a room");
-                }else{
-                    alert("Please select an appliance");
-                }
+            const emitData = {
+                    room: {
+                        room_id: this.selectedRoom,
+                        room_name: this.roomsData.find(room => room.id === parseInt(this.selectedRoom)).room_name,
+                    },
+                    device: {
+                        device_id: this.selectedAppliance.id,
+                        is_active: false,
+                        custom_name: this.selectedAppliance.custom_name,
+                        device_name: this.selectedAppliance.device_name,
+                        device_type: this.selectedAppliance.device_type,
+                },
             }
+            this.close(emitData);
+        },
+        close(data) {
+            this.$emit("close", data);
         },
     },
 };
 </script>
-
+<!-- 
+    { 
+        "room": { "room_id": 1, "room_name": "sala" }, 
+        "device": { "device_id": 3, "is_active": false, "custom_name": null, "device_name": "phone_charger", "device_type": "plug" } 
+    }
+ -->
 
 <!-- 
     <script setup>
