@@ -45,6 +45,10 @@ function cancel() {
 <script>
 export default {
     props: {
+        mode_id: {
+            type: Number,
+            required: true,
+        },
         roomsData: {
             type: Array,
             default: null,
@@ -52,6 +56,7 @@ export default {
     },
     data() {
         return {
+            mode_id: this.mode_id,
             selectedRoom: null,
             selectedAppliance: null,
         };
@@ -66,6 +71,7 @@ export default {
         submit(){
             if(this.selectedRoom !=null && this.selectedAppliance !=null){
                 this.$inertia.post(route('modes.addDevice'), {
+                    mode_id: this.mode_id,
                     room_id: this.selectedRoom,
                     device_id: this.selectedAppliance,
                 }, {

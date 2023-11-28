@@ -21,7 +21,7 @@ import AddAppliance from './AddAppliance.vue';
     </div>
     <Modal :maxWidth="'md'" :show="showAddAppliance" @close="closeAddApplianceModal">
         <div class="p-4">
-            <AddAppliance  :roomsData="roomsData" :title="'Add an Appliance'" @close="closeAddApplianceModal" />
+            <AddAppliance :mode_id="mode.id"  :roomsData="roomsData" :title="'Add an Appliance'" @close="closeAddApplianceModal" />
         </div>
     </Modal>
 </template>
