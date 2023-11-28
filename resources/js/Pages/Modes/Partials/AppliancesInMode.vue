@@ -28,6 +28,10 @@ import AddAppliance from './AddAppliance.vue';
 <script>
 export default {
     props: {
+        mode: {
+            type: Object,
+            required: true
+        },
         devices: {
             type: Array,
             default: null

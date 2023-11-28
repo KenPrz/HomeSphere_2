@@ -35,7 +35,7 @@ const setActiveComponent = (componentName, room) => {
                         List of Rooms
                     </div>
                     <div class="flex p-2 bg-white flex-wrap rounded-md shadow-md text-sm md:text-md mb-4">
-                        <NavLink class="mb-1" @click="setActiveComponent('AllRooms')"
+                        <NavLink class="mb-1" @click="setActiveComponent('AllRooms')" href="/rooms"
                             :active="activeComponent === 'AllRooms'">
                             All Rooms
                         </NavLink>

@@ -71,14 +71,14 @@ Route::middleware(['auth','checkHasHome'])->group(function () {
 
     Route::post('/device-update',[DeviceController::class, 'deviceUpdate'])->name('device.new-name');
     Route::delete('/device-delete',[DeviceController::class, 'deviceDelete'])->name('device.delete');
-    // Route::get('/room/{room}',[RoomsController::class, 'openRoom'])->name('rooms.getRoom');
 
     Route::get('/modes',[ModesController::class, 'index'])->name('modes.index');
     Route::post('/modes',[ModesController::class, 'createMode'])->name('modes.create');
     Route::patch('/modes',[ModesController::class, 'editMode'])->name('modes.edit');
+    Route::delete('/modes',[ModesController::class, 'deleteMode'])->name('modes.delete');
+    Route::post('/modes/add-device',[ModesController::class,'addDevice'])->name('modes.addDevice');
     Route::post('/modes/schedule',[ModesController::class, 'scheduleMode'])->name('modes.schedule');
     Route::post('/modes/environment',[ModesController::class, 'environmentMode'])->name('modes.environment');
-    Route::delete('/modes',[ModesController::class, 'deleteMode'])->name('modes.delete');
 
     Route::get('/settings',[SettingsController::class, 'index'])->name('settings.index');
     Route::delete('/leave', [SettingsController::class,'leaveHome'])->name('settings.leave');

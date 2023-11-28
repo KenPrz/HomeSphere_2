@@ -76,6 +76,11 @@ class ModesController extends Controller
         ]);
     }
 
+    public function addDevice(Request $request){
+        dd($request->all());
+    }
+
+
     /**
      * Schedule the mode.
      *

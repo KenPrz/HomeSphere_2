@@ -105,7 +105,7 @@ const emit = defineEmits(['getData']);
             <v-card-text>
                 <v-window v-model="tab">
                     <v-window-item value="Appliances">
-                        <AppliancesInMode :roomsData="roomsData" :devices="selectedDevices" />
+                        <AppliancesInMode :mode="selectedMode" :roomsData="roomsData" :devices="selectedDevices" />
                     </v-window-item>
                     <v-window-item value="Activation">
                         <ActivationTypeTab :roomsData="roomsData" :mode="selectedMode"/>
