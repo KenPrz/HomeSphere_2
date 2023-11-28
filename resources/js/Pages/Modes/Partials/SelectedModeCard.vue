@@ -8,7 +8,7 @@ import { defineEmits } from "vue";
 const emit = defineEmits(['getData']);
 </script>
 <template>
-    <div class="flex ms-3 flex-col w-full min-h-[500px] overflow-y-auto">
+    <div class="flex md:ms-3 flex-col w-full min-h-[500px] overflow-y-auto">
         <section class="flex justify-between p-5 bg-white shadow-md rounded-md">
             <div class="text-md md:text-2xl font-semibold">
                 {{ mode_name.value }}
