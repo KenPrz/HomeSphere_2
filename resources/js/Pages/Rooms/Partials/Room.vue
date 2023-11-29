@@ -13,8 +13,8 @@ const emit = defineEmits(['roomDeleted']);
             <div class="md:w-2/3 bg-white rounded-xl w-full">
                 <div class="flex flex-col p-5">
                     <div class="flex justify-between w-full pb-3 px-1 border-gray-500 border-b-2">
-                        <div class="flex sm:text-md md:text-2xl font-semibold">
-                            <span class="hidden me-2 sm:block">Appliances in</span> {{ room_name.data }}
+                        <div class="w-full flex sm:text-md md:text-2xl font-semibold">
+                            <span class="hidden me-2 sm:block overflow-ellipsis">Appliances in</span> {{ room_name.data }}
                         </div>
                         <div v-if="room.room_owner_id == $page.props.auth.user.id || $page.props.homeData.role == 'owner'"
                             class="flex">
@@ -244,3 +244,10 @@ export default {
     },
 };
 </script>
+<style scoped>
+    .overflow-ellipsis {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>

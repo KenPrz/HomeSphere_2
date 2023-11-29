@@ -34,12 +34,12 @@ const setActiveComponent = (componentName, room) => {
                     <div class="w-full font-bold text-3xl">
                         List of Rooms
                     </div>
-                    <div class="flex p-2 bg-white flex-wrap rounded-md shadow-md text-sm md:text-md mb-4">
-                        <NavLink class="mb-1" @click="setActiveComponent('AllRooms')" href="/rooms"
+                    <div class="flex mx-2 p-2 bg-white flex-wrap overflow-ellipsis rounded-md shadow-md text-sm md:text-md mb-4">
+                        <NavLink class="max-w-[120px] overflow-ellipsis mb-1" @click="setActiveComponent('AllRooms')" href="/rooms"
                             :active="activeComponent === 'AllRooms'">
                             All Rooms
                         </NavLink>
-                        <NavButton v-for="room in rooms" class="mb-1 text-[12px] sm:text-[16px] w-auto md:py-3 px-4 mx-2 border-black border-2 rounded-2xl hover:bg-zinc-500 hover:text-white transition duration-300"
+                        <NavButton v-for="room in rooms" class="max-w-[120px] overflow-ellipsis mb-1 text-[12px] sm:text-[16px] w-auto md:py-3 px-4 mx-2 border-black border-2 rounded-2xl hover:bg-zinc-500 hover:text-white transition duration-300"
                             @click="setActiveComponent(room.room_name + ' ' + room.id, room)"
                             :active="activeComponent === room.room_name + ' ' + room.id">
                             {{ room.room_name }}
