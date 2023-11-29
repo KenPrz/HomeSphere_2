@@ -7,7 +7,7 @@ import SelectedModeCard from './SelectedModeCard.vue';
 <template>
         <div class="container md:flex p-4">
             <div class="flex flex-col-reverse md:flex-col shadow-md rounded-md pt-2 mb-2 bg-white">
-                <section class="flex items-center justify-center mb-auto">
+                <section class="flex items-center justify-center">
                     <button @click="showAddModeModal()" class="flex items-center justify-center bg-slate-500 hover:bg-slate-600 transition-colors duration-300 text-white w-full m-2 rounded-md h-10">
                         <img class="h-[25px] me-1" :src="'img-assets/vectors/add_white.svg'" alt="">
                         <span>add mode</span>

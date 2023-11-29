@@ -87,9 +87,7 @@ export default {
             // Subscribe to the new channel
             this.homeChannel = window.Echo.private(`home.${homeId}`);
             this.homeChannel.subscribed(() => {
-                console.log(this.homeMembers);
             }).listen('.member_joined', (eventData) => {
-                console.log(eventData.new_member[0]);
                 this.homeMembers.push(eventData.new_member[0]);
             })
         },
@@ -97,9 +95,7 @@ export default {
             window.Echo.leave(`home.${homeId}`);
         },
         removeMember(canceledMember) {
-        // Use the filter method to create a new array without the canceled member
         this.homeMembers = this.homeMembers.filter(member => {
-            // Check if each property of the member is equal to the corresponding property in the canceledMember
             return !Object.keys(canceledMember).every(prop => member[prop] === canceledMember[prop]);
         });
     },

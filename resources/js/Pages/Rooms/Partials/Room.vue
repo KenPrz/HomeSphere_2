@@ -2,7 +2,6 @@
 import Modal from '@/Components/Modal.vue';
 import EditRoomForm from './EditRoomForm.vue';
 import DeleteRoomDialog from './DeleteRoomDialog.vue';
-import ToggleSwitch from '@/Components/ToggleSwitch.vue';
 import Device from '@/Pages/Rooms/Partials/Device.vue';
 import MotionSensorToggle from '@/Components/MotionSensorToggle.vue';
 import {defineEmits} from 'vue';

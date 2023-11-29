@@ -8,7 +8,7 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
 <template>
     <nav class="px-10 bg-white border-b shadow-sm border-gray-100 sticky top-0 z-50">
         <!-- Primary Navigation Menu -->
-        <div class="mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto md:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex">
                     <!-- Logo -->
@@ -19,7 +19,7 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                         <h1 class="ml-3">HomeSphere</h1>
                     </a>
                 </div>
-                <div v-if="$page.props.auth.user" class="hidden sm:flex sm:items-center sm:ml-6">
+                <div v-if="$page.props.auth.user" class="flex items-center ml-6">
                     <!-- Settings Dropdown -->
                     <div class="w-full relative flex items-center ">
                         <Dropdown align="right" :width="'64'">
@@ -31,7 +31,7 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                                 <NotificationMain />
                             </template>
                         </Dropdown>
-                        <Dropdown align="right" :width="'64'">
+                        <Dropdown class="hidden md:block" align="right" :width="'64'">
                             <template #trigger>
                                 <v-img v-if="$page.props.auth.user.profile_image"
                                     class="rounded-full mx-auto transition duration-200 hover:scale-95 cursor-pointer"
