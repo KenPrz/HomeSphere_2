@@ -35,7 +35,7 @@ class ModesController extends Controller
             ->join('mode_devices', 'modes.id', '=', 'mode_devices.mode_id')
             ->where('modes.home_id', $homeId)
             ->get();
-    
+            
         // Decode the device_list for each mode
         foreach ($modes as $mode) {
             $mode->device_list = json_decode($mode->device_list, true);
@@ -74,6 +74,14 @@ class ModesController extends Controller
             DB::table('mode_devices')->insert([
                 'mode_id' => $modeId,
                 'device_list' => null,
+                'created_at' => now()
+            ]);
+            DB::table('mode_schedules')->insert([
+                'mode_id' => $modeId,
+                'frequency' => null,
+                'start_time' => null,
+                'end_time' => null,
+                'days_of_week' => null,
                 'created_at' => now()
             ]);
         });
