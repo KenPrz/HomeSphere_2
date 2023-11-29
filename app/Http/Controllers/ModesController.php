@@ -130,6 +130,20 @@ class ModesController extends Controller
             'updated_at' => now()
         ]);
     }
+    public function updateDeviceList(Request $request){
+        $request -> validate([
+            'mode_id' => 'required | integer',
+            'device_list' => 'array',
+        ]);
+        if(count($request->device_list)==0){
+            $request->device_list = null;
+        }
+        $updatedModeDevices = json_encode($request->device_list);
+        DB::table('mode_devices')->where('id',$request->mode_id)->update([
+            'device_list' => $updatedModeDevices,
+            'updated_at' => now()
+        ]);
+    }
     /**
      * Schedule the mode.
      *
@@ -164,3 +178,4 @@ class ModesController extends Controller
                 ->get();
     }
 }
+

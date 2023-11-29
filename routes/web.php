@@ -79,6 +79,7 @@ Route::middleware(['auth','checkHasHome'])->group(function () {
     Route::post('/modes/add-device',[ModesController::class,'addDevice'])->name('modes.addDevice');
     Route::post('/modes/schedule',[ModesController::class, 'scheduleMode'])->name('modes.schedule');
     Route::post('/modes/environment',[ModesController::class, 'environmentMode'])->name('modes.environment');
+    Route::put('/modes/update-list',[ModesController::class, 'updateDeviceList'])->name('mode.updateDeviceList');
 
     Route::get('/settings',[SettingsController::class, 'index'])->name('settings.index');
     Route::delete('/leave', [SettingsController::class,'leaveHome'])->name('settings.leave');

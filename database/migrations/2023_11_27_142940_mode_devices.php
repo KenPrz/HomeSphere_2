@@ -19,7 +19,6 @@ return new class extends Migration
             $table->foreign('mode_id')->references('id')->on('modes')->onDelete('cascade');
         });
     }
-
     /**
      * Reverse the migrations.
      */

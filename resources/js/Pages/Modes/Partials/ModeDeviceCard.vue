@@ -45,9 +45,12 @@ const { device, customClass } = defineProps({
                     </span>
                 </h2>
                 <p class="tex-xs font-light">{{ device.room.room_name }}</p>
-                <h1 class="text-lg sm:text-xl lg:text-2xl font-ex">
-                    {{ is_active.data ? 'ON' : 'OFF' }}
-                </h1>
+                <div class="flex">
+                    <h1 class="w-1/2 text-lg sm:text-xl lg:text-2xl font-ex">
+                        {{ is_active.data ? 'ON' : 'OFF' }}
+                    </h1>
+                    <button @click="deleteDevice" class="w-1/2 text-xs font-medium p-2" :class="[is_active.data ? 'hover:text-red-500': 'hover:text-red-400']">Delete</button>
+                </div>
             </div>
         </div>
     </div>
@@ -57,12 +60,25 @@ const { device, customClass } = defineProps({
         props: {
         device: Object,
         customClass: String,
-    },
-    data() {
-        return {
-            is_active: {data: this.device.device.is_active}
+        },
+        data() {
+            return {
+                is_active: {data: this.device.device.is_active}
+            }
+        },
+        watch: {
+            is_active: {
+                handler: function (val, oldVal) {
+                    this.$emit('update:device_state', this.device.device.device_id, val.data);
+                },
+                deep: true
+            }
+        },
+        methods: {
+            deleteDevice() {
+                this.$emit('delete:device', this.device.device.device_id);
+            }
         }
-    },
     }
 </script>
 <style scoped>

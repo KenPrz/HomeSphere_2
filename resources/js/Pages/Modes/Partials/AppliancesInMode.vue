@@ -5,7 +5,8 @@ import ModeDeviceCard from './ModeDeviceCard.vue';
 </script>
 <template>
     <div class="w-full container flex flex-col">
-        <section class="flex justify-end me-2">
+        <section class="flex justify-between me-2">
+            <span class="text-gray-500 text-xs md:text-sm ml-2">Hint: Toggle device state to set the state upon mode activation.</span>
             <button @click="openAddApplianceModal"
                 class="group flex items-center justify-center transition-all duration-200 hover:bg-slate-500 hover:text-white border-gray-500 border rounded-xl md:rounded-full p-1 md:px-2 me-1">
                 <svg class="group-hover:stroke-white transition-all duration-200 stroke-gray-500 h-3 md:h-5 w-auto"
@@ -20,10 +21,16 @@ import ModeDeviceCard from './ModeDeviceCard.vue';
             </button>
         </section>
         <section  class="mt-3 flex flex-wrap max-h-[400px] md:max-h-[500px] overflow-y-scroll">
-                <ModeDeviceCard v-for="device in modeDevices.data" :key="device.id" :device="device" />
+                <ModeDeviceCard
+                    @update:device_state="updateDeviceState"
+                    @delete:device="deleteDevice"
+                    v-for="device in modeDevices.data" 
+                    :key="device.id" 
+                    :device="device" 
+                />
         </section>
         <section class="flex justify-end me-2">
-            <button v-if="oldDeviceArrayLength < modeDevices.data.length" class="bg-blue-500 h-8 text-white hover:bg-blue-600 transition-colors duration-200 w-32 rounded-full me-2 ">Save changes</button>
+            <button @click="updateModeDevices" v-if="hasChanges==true" class="bg-blue-500 h-8 text-white hover:bg-blue-600 transition-colors duration-200 w-32 rounded-full me-2 ">Save changes</button>
         </section>
     </div>
     <Modal :maxWidth="'md'" :show="showAddAppliance" @close="justCloseMe">
@@ -51,12 +58,15 @@ export default {
     data() {
         return {
             oldDeviceArrayLength: 0,
+            hasChanges: false,
             showAddAppliance: false,
             modeDevices: {data: this.mode.device_list},
         }
     },
     mounted() {
-        this.oldDeviceArrayLength = this.modeDevices.data.length;
+        if(this.modeDevices.data !== null){
+            this.oldDeviceArrayLength = this.modeDevices.data.length;
+        }
     },
     methods: {
         openAddApplianceModal() {
@@ -64,15 +74,22 @@ export default {
         },
         closeAddApplianceModal(data) {
             if (data !== null) {
-                const isDuplicate = this.modeDevices.data.some(item =>
+                if(this.modeDevices.data === null){
+                    this.modeDevices.data = [data];
+                    this.showAddAppliance = false;
+                    this.hasChanges = true;
+                }else{
+                    const isDuplicate = this.modeDevices.data.some(item =>
                     item.room.room_id === data.room.room_id &&
                     item.device.device_id === data.device.device_id
-                );
-                if (isDuplicate) {
-                    alert('This appliance is already in the mode!');
-                } else {
-                    this.modeDevices.data.push(data);
-                    this.showAddAppliance = false;
+                    );
+                    if (isDuplicate) {
+                        alert('This appliance is already in the mode!');
+                    } else {
+                        this.modeDevices.data.push(data);
+                        this.hasChanges = true;
+                        this.showAddAppliance = false;
+                    }
                 }
             } else {
                 this.showAddAppliance = false;
@@ -80,6 +97,27 @@ export default {
         },
         justCloseMe(){
             this.showAddAppliance = false;
+        },
+        updateModeDevices(){
+            this.$inertia.put(route('mode.updateDeviceList'), {
+                mode_id: this.mode.id,
+                device_list: this.modeDevices.data,
+            }, {
+                onSuccess: () => {
+                    this.hasChanges = false;
+                    this.oldDeviceArrayLength = this.modeDevices.data.length;
+                },
+            });
+        },
+        updateDeviceState(device_id, state){
+            const deviceIndex = this.modeDevices.data.findIndex(device => device.device.device_id === device_id);
+            this.modeDevices.data[deviceIndex].device.is_active = state;
+            this.hasChanges = true;
+        },
+        deleteDevice(device_id){
+            const deviceIndex = this.modeDevices.data.findIndex(device => device.device.device_id === device_id);
+            this.modeDevices.data.splice(deviceIndex, 1);
+            this.hasChanges = true;
         }
     }
 }
