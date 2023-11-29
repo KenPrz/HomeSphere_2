@@ -67,6 +67,12 @@ const { device, customClass } = defineProps({
             }
         },
         watch: {
+            device: {
+                handler: function (val, oldVal) {
+                    this.is_active.data = val.device.is_active;
+                },
+                deep: true
+            },
             is_active: {
                 handler: function (val, oldVal) {
                     this.$emit('update:device_state', this.device.device.device_id, val.data);

@@ -16,7 +16,7 @@ const form1 = useForm({
 });
 const submitForm1 = () => {
     form1.post(route('device.new-name'), {
-        onFinish: () => cancel(),
+        onSuccess: () => cancel(),
     });
 };
 const form2 = useForm({
@@ -47,7 +47,7 @@ function cancel() {
                         autofocus
                         :placeHolder="device.device_name"
                     />
-                    <InputError class="mt-2" :message="form1.errors.device_name" />
+                    <InputError class="mt-2 text-xs font-light" :message="form1.errors.device_name" />
                 </form>
             </section>
             <section v-if="device.room_owner_id==$page.props.auth.user.id || $page.props.homeData.owner_id==$page.props.auth.user.id" class="w-1/4 flex justify-end items-center">

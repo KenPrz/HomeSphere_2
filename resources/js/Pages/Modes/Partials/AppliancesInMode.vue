@@ -68,6 +68,11 @@ export default {
             this.oldDeviceArrayLength = this.modeDevices.data.length;
         }
     },
+    watch: {
+            'mode.id': function(newVal, oldVal) {
+                this.modeDevices.data = this.mode.device_list;
+            }
+        },
     methods: {
         openAddApplianceModal() {
             this.showAddAppliance = true;
