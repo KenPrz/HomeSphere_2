@@ -8,9 +8,15 @@
             ]"
         >
             <div class="flex h-1/4">
-                <div class="flex-1">{{ logo }}</div>
                 <div class="flex-1">
-                    <div class="ms-5 mt-1">
+                    <span class="flex flex-col">
+                        <p class="text-xs">Trigger</p>
+                        <p class="text-sm overflow-ellipsis">{{ mode.activation_type }}</p>
+                        
+                    </span>
+                </div>
+                <div class="flex-1">
+                    <div class="ms-1 mt-3 rotate-90">
                         <ToggleSwitch v-model="is_active.data" />
                     </div>
                 </div>
@@ -36,10 +42,6 @@ export default {
             required: false,
             default: "",
         },
-        logo: {
-            type: String,
-            default: 'Default'
-        },
         mode: {
             type: Object,
             required: true
@@ -48,6 +50,10 @@ export default {
             type: Array,
             required: true
         },
+        homeData: {
+            type: Object,
+            required: true
+        }
     },
     data(){
         return{
@@ -62,3 +68,10 @@ export default {
     }
 };
 </script>
+<style scoped>
+    .overflow-ellipsis {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+</style>

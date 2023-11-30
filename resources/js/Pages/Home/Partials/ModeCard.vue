@@ -22,7 +22,6 @@
         </div>
     </div>
 </template>
-
 <script setup>
 import ToggleSwitch from "@/Components/ToggleSwitch.vue";
 </script>
@@ -41,12 +40,19 @@ export default {
         mode: {
             type: Object,
             required: true
+        },
+        homeData: {
+            type: Object,
+            required: true
         }
     },
     data(){
         return{
             is_active: {data: this.mode.is_active}
         }
-    }
+    },
+    mounted() {
+        
+    },
 };
 </script>

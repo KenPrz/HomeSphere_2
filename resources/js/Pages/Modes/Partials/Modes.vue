@@ -5,6 +5,7 @@ import ClickableModeCard from './ClickableModeCard.vue';
 import SelectedModeCard from './SelectedModeCard.vue';
 </script>
 <template>
+    
         <div class="container md:flex p-4">
             <div class="flex flex-col-reverse md:flex-col shadow-md rounded-md pt-2 mb-2 bg-white">
                 <section class="flex items-center justify-center">
@@ -16,6 +17,7 @@ import SelectedModeCard from './SelectedModeCard.vue';
                 <section class="mb-auto flex md:flex-col md:max-h-[600px] overflow-y-auto">
                     <div v-for="mode in modes" :key="mode.id">
                         <ClickableModeCard
+                            :homeData="homeData"
                             :mode="mode"
                             :devices="devices"
                             @mode-selected="selectedMode"

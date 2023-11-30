@@ -49,7 +49,7 @@ const submitForm = () => {
                         <option value="below">Is Below</option>
                         <option value="specifically">Just Specifically</option>
                     </select>
-                    <input v-model="form.activation.value.value" type="number" step="0.1" id="value" name="value" :disabled="props.disabled" required class="w-1/4 h-auto mb-2 border rounded-md">
+                    <input :placeholder="mode.value" v-model="form.activation.value.value" type="number" step="0.1" id="value" name="value" :disabled="props.disabled" required class="w-1/4 h-auto mb-2 border rounded-md">
                 </div>
                 <div class="flex flex-col w-full">
                     <h1 class="text-lg">On</h1>

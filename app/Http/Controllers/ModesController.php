@@ -31,11 +31,13 @@ class ModesController extends Controller
         $homeId = $homeData->id;
     
         $modes = DB::table('modes')
-            ->select('modes.*', 'mode_devices.device_list')
-            ->join('mode_devices', 'modes.id', '=', 'mode_devices.mode_id')
-            ->where('modes.home_id', $homeId)
-            ->get();
-            
+                ->select('modes.*', 'mode_devices.device_list', 'mode_schedules.*', 'mode_environments.*')
+                ->join('mode_devices', 'modes.id', '=', 'mode_devices.mode_id')
+                ->join('mode_schedules', 'modes.id', '=', 'mode_schedules.mode_id')
+                ->join('mode_environments', 'modes.id', '=', 'mode_environments.mode_id')
+                ->where('modes.home_id', $homeId)
+                ->get();
+
         // Decode the device_list for each mode
         foreach ($modes as $mode) {
             $mode->device_list = json_decode($mode->device_list, true);

@@ -37,6 +37,7 @@ import { Head } from "@inertiajs/vue3";
                                 <div class="flex overflow-x-auto">
                                     <div v-for="mode in $page.props.modes" :key="mode.id">
                                         <ModeCard
+                                            :homeData="$page.props.homeData"
                                             :mode="mode"
                                         />
                                     </div>
