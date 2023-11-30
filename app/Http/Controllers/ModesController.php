@@ -84,6 +84,14 @@ class ModesController extends Controller
                 'days_of_week' => null,
                 'created_at' => now()
             ]);
+            DB::table('mode_environments')->insert([
+                'mode_id' => $modeId,
+                'trigger_sensor' => null,
+                'threshold' => null,
+                'value' => null,
+                'room_id' => null,
+                'created_at' => now()
+            ]);
         });
     }
     /**
@@ -159,10 +167,64 @@ class ModesController extends Controller
      * @return void
      */
     public function scheduleMode(Request $request){
-        dd($request->all());
+        $request -> validate([
+            'mode_id' => 'required | integer',
+        ]);
+
+        if($request->activation['type'] == 'schedule'){
+            $schedule_data = $request->activation['repeat'];
+            if($schedule_data['frequency'] == 'weekly'){
+                // dd($schedule_data);
+                $daysOfWeek = json_encode($schedule_data['days']);
+                DB::table('mode_schedules')->where('mode_id',$request->mode_id)->update([
+                    'frequency' => $schedule_data['frequency'],
+                    'start_time' => $schedule_data['StartTime'],
+                    'end_time' => $schedule_data['EndTime'],
+                    'days_of_week' => $daysOfWeek,
+                    'updated_at' => now()
+                ]);
+                DB::table('modes')->where('id',$request->mode_id)->update([
+                    'activation_type'=>'schedule',
+                    'updated_at' => now()
+                ]);
+            }else if($schedule_data['frequency'] == 'daily'){
+                DB::table('mode_schedules')->where('mode_id',$request->mode_id)->update([
+                    'frequency' => $schedule_data['frequency'],
+                    'start_time' => $schedule_data['StartTime'],
+                    'end_time' => $schedule_data['EndTime'],
+                    'days_of_week' => null,
+                    'updated_at' => now()
+                ]);
+                DB::table('modes')->where('id',$request->mode_id)->update([
+                    'activation_type'=>'schedule',
+                    'updated_at' => now()
+                ]);
+            }
+        }
     }
     public function environmentMode(Request $request){
-        dd($request->all());
+        // dd($request->all());
+        $request -> validate([
+            'mode_id' => 'required | integer',
+        ]);
+        if($request->activation['type'] == 'environment'){
+            $environment_data = $request->activation['value'];
+            DB::transaction(function () use ($request, $environment_data) {
+                DB::table('mode_environments')
+                    ->where('mode_id', $request->mode_id)
+                    ->update([
+                        'trigger_sensor' => $environment_data['trigger_sensor'],
+                        'threshold' => $environment_data['threshold'],
+                        'value' => $environment_data['value'],
+                        'room_id' => $environment_data['room_id'],
+                        'updated_at' => now(),
+                    ]);
+                DB::table('modes')->where('id', $request->mode_id)->update([
+                    'activation_type'=>'environment',
+                    'updated_at' => now(),
+                ]);
+            });
+        }
     }
 
     /**

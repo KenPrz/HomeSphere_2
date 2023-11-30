@@ -34,5 +34,11 @@
         <button :disabled="props.disabled" type="submit" class="w-full p-2 bg-blue-500 hover:bg-blue-600 transition-colors duration-200 text-white rounded-md mt-2">
             Save
         </button>
+        <div class="text-center">
+            <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
+                leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
+                <p v-if="form.recentlySuccessful" class="text-sm text-green-600 mt-2">Saved.</p>
+            </Transition>
+        </div>
     </form>
 </template>

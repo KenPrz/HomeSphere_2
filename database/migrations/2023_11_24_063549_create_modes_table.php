@@ -16,8 +16,10 @@ return new class extends Migration
             $table->string('mode_name');
             $table->unsignedBigInteger('home_id');
             $table->unsignedBigInteger('created_by');
+            $table->enum('activation_type',['environment','schedule','manual'])->default('manual');
             $table->string('mode_description')->nullable();
             $table->boolean('is_active')->default(false);
+
             $table->foreign('created_by')->references('member_id')->on('home_members')->onDelete('cascade');
             $table->foreign('home_id')->references('id')->on('homes')->onDelete('cascade');
             $table->timestamps();
