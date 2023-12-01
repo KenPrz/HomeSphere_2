@@ -205,7 +205,6 @@ class ModesController extends Controller
         }
     }
     public function environmentMode(Request $request){
-        // dd($request->all());
         $request -> validate([
             'mode_id' => 'required | integer',
         ]);

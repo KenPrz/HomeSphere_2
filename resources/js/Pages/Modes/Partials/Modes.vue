@@ -73,7 +73,7 @@ export default {
             },
             getNewData(){
                 this.modeData.data=this.modes[0];
-            }
+            },
         }
 }
 </script>

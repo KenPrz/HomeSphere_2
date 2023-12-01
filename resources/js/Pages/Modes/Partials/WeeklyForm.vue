@@ -1,36 +1,3 @@
-<script setup>
-import InputError from '@/Components/InputError.vue';
-import { useForm } from '@inertiajs/vue3';
-const props = defineProps({
-    mode_id: Number,
-});
-const form = useForm({
-    mode_id: props.mode_id,
-    activation: {
-        type: 'schedule',
-        repeat: {
-            frequency: 'weekly',
-            days: [],
-            StartTime: '',
-            EndTime: '',
-        },
-    },
-});
-const submitForm = () => {
-    if (form.activation.repeat.days.length == 0) {
-        form.errors = 'Please select at least one day.';
-        return;
-    }
-    form.post(route('modes.schedule'), {
-        onFinish: () => {
-            form.recentlySuccessful = true;
-            setTimeout(() => {
-                form.recentlySuccessful = false;
-            }, 2000);
-        },
-    });
-};
-</script>
 <template>
     <form id="weekly_form" @submit.prevent="submitForm">
         <label for="StartTime" class="block">
@@ -98,8 +65,8 @@ const submitForm = () => {
                     </label>
                 </div>
             </div>
-            <span v-if="Object.keys(form.errors).length > 0" class="text-red-500 text-sm text-center">
-                {{ form.errors }}
+            <span v-if="Object.keys(errors).length > 0" class="text-red-500 text-sm text-center">
+                {{ errors }}
             </span>
         </div>
         <button type="submit"
@@ -114,3 +81,56 @@ const submitForm = () => {
         </div>
     </form>
 </template>
+<script>
+    export default {
+        props: {
+            mode_id: {
+                type: Number,
+                required: true
+            },
+            disabled: {
+                type: Boolean,
+                required: true
+            }
+        },
+        data() {
+            return {
+                form: {
+                    mode_id: this.mode_id,
+                    activation:{
+                        type: 'schedule',
+                        repeat: {
+                            frequency: 'weekly',
+                            days: [],
+                            StartTime: '',
+                            EndTime: '',
+                        },
+                    },
+                },
+                recentlySuccessful: false,
+                errors: '',
+            }
+        },
+        methods: {
+            submitForm() {
+                if (this.form.activation.repeat.days.length == 0) {
+                    this.errors = 'Please select at least one day.';
+                    return;
+                }
+                this.$inertia.post(route('modes.schedule'), this.form, {
+                    onSuccess: () => {
+                        this.recentlySuccessful = true;
+                        setTimeout(() => {
+                            this.recentlySuccessful = false;
+                        }, 2000);
+                    },
+                });
+            },
+        },
+        watch: {
+            'mode_id': function(){
+                this.form.mode_id=this.mode_id;
+            }
+        }
+    }
+</script>

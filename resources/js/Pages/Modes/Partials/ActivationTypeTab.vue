@@ -68,6 +68,6 @@ export default {
                 this.activatedBy=false;
             }
         }
-    }
+    },
 }
 </script>
