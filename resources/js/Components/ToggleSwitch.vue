@@ -2,11 +2,11 @@
     <div
         @click="toggle"
         :class="[isDeviceActive ? 'bg-blue-400' : 'bg-slate-400']"
-        class="w-9 md:w-10 flex rounded-full p-[3px] cursor-pointer"
+        class="w-9 md:w-10 flex rounded-full py-[3px] cursor-pointer"
     >
         <div
-            :class="[isDeviceActive ? 'translate-x-3 md:translate-x-4 lg:translate-x-5 bg-white' : 'bg-white']"
-            class="h-4 w-4 transition-all duration-500 transform  rounded-full shadow-md"
+            :class="[isDeviceActive ? 'translate-x-3 md:translate-x-3 lg:translate-x-4 bg-white' : 'bg-white']"
+            class="mx-1 h-4 w-4 transition-all duration-500 transform  rounded-full shadow-md"
         ></div>
     </div>
 </template>
