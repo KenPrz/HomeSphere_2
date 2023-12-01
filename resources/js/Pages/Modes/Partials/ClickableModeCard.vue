@@ -16,7 +16,7 @@
                     </span>
                 </div>
                 <div class="flex-1">
-                    <div class="ms-1 mt-3 rotate-90">
+                    <div class="ms-1 mt-3">
                         <ToggleSwitch v-model="is_active.data" />
                     </div>
                 </div>
