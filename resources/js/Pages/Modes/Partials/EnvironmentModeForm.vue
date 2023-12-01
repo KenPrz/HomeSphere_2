@@ -36,7 +36,7 @@ const submitForm = () => {
     <div class="container">
         <form id="daily_form" @submit.prevent="submitForm">
             <section class="md:ms-4 md:w-3/4">
-                <h1 class="text-lg font-medium mb-1">Activate this mode when</h1>
+                <h1 class="md:text-lg font-medium mb-1">Activate this mode when</h1>
                 <div class="flex">
                     <select v-model="form.activation.value.trigger_sensor" id="env" name="env" :disabled="props.disabled" required class="w-full h-auto mb-2 border rounded-md">
                         <option value="temperature">Temperature</option>

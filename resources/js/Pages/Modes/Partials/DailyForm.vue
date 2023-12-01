@@ -17,7 +17,12 @@
     });
     const submitForm = () => {
         form.post(route('modes.schedule'), {
-            onFinish: () => cancel(),
+            onFinish: () => {
+                form.recentlySuccessful = true;
+                setTimeout(() => {
+                    form.recentlySuccessful = false;
+                }, 2000);
+            },
         });
     };
 </script>

@@ -40,6 +40,34 @@ export default {
         return {
             activatedBy: false,
         }
+    },
+    mounted() {
+        if(this.mode.activation_type=='environment')
+        {
+            this.activatedBy=true;
+        }
+        else if(this.mode.activation_type=='schedule')
+        {
+            this.activatedBy=false;
+        }
+        else{
+            this.activatedBy=false;
+        }
+    },
+    watch: {
+        'mode.activation_type' : function(){
+            if(this.mode.activation_type=='environment')
+            {
+                this.activatedBy=true;
+            }
+            else if(this.mode.activation_type=='schedule')
+            {
+                this.activatedBy=false;
+            }
+            else{
+                this.activatedBy=false;
+            }
+        }
     }
 }
 </script>
