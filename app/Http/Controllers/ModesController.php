@@ -31,14 +31,17 @@ class ModesController extends Controller
         $homeId = $homeData->id;
     
         $modes = DB::table('modes')
-                ->select('modes.*', 'mode_devices.device_list', 'mode_schedules.*', 'mode_environments.*')
-                ->join('mode_devices', 'modes.id', '=', 'mode_devices.mode_id')
-                ->join('mode_schedules', 'modes.id', '=', 'mode_schedules.mode_id')
-                ->join('mode_environments', 'modes.id', '=', 'mode_environments.mode_id')
-                ->where('modes.home_id', $homeId)
-                ->get();
+            ->select('modes.*', 'mode_devices.device_list', 'mode_schedules.*', 'mode_environments.*')
+            ->join('mode_devices', 'modes.id', '=', 'mode_devices.mode_id')
+            ->join('mode_schedules', 'modes.id', '=', 'mode_schedules.mode_id')
+            ->join('mode_environments', 'modes.id', '=', 'mode_environments.mode_id')
+            ->where('modes.home_id', $homeId)
+            ->get();
+    
+        foreach ($modes as $mode) {
+            $mode->days_of_week = json_decode($mode->days_of_week);
+        }
 
-        // Decode the device_list for each mode
         foreach ($modes as $mode) {
             $mode->device_list = json_decode($mode->device_list, true);
         }
@@ -172,16 +175,15 @@ class ModesController extends Controller
         $request -> validate([
             'mode_id' => 'required | integer',
         ]);
-
+        // ['repeat']['StartTime']['data']
         if($request->activation['type'] == 'schedule'){
             $schedule_data = $request->activation['repeat'];
             if($schedule_data['frequency'] == 'weekly'){
-                // dd($schedule_data);
                 $daysOfWeek = json_encode($schedule_data['days']);
                 DB::table('mode_schedules')->where('mode_id',$request->mode_id)->update([
                     'frequency' => $schedule_data['frequency'],
-                    'start_time' => $schedule_data['StartTime'],
-                    'end_time' => $schedule_data['EndTime'],
+                    'start_time' => $schedule_data['StartTime']['data'],
+                    'end_time' => $schedule_data['EndTime']['data'],
                     'days_of_week' => $daysOfWeek,
                     'updated_at' => now()
                 ]);
@@ -192,8 +194,8 @@ class ModesController extends Controller
             }else if($schedule_data['frequency'] == 'daily'){
                 DB::table('mode_schedules')->where('mode_id',$request->mode_id)->update([
                     'frequency' => $schedule_data['frequency'],
-                    'start_time' => $schedule_data['StartTime'],
-                    'end_time' => $schedule_data['EndTime'],
+                    'start_time' => $schedule_data['StartTime']['data'],
+                    'end_time' => $schedule_data['EndTime']['data'],
                     'days_of_week' => null,
                     'updated_at' => now()
                 ]);

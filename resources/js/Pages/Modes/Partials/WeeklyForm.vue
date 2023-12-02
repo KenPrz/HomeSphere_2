@@ -3,18 +3,21 @@
         <label for="StartTime" class="block">
             Start Time:
         </label>
-        <input v-model="form.activation.repeat.StartTime" type="time" id="StartTime" name="StartTime" required
+        <input v-model="form.activation.repeat.StartTime.data" type="time" id="StartTime" name="StartTime" required
             class="w-full p-2 mb-2 border rounded-md">
         <label for="time" class="block">
             End Time:
         </label>
-        <input v-model="form.activation.repeat.EndTime" type="time" id="EndTime" name="EndTime" required
+        <input v-model="form.activation.repeat.EndTime.data" type="time" id="EndTime" name="EndTime" required
             class="w-full p-2 mb-2 border rounded-md">
         <div class="flex flex-col">
-            <label for="days" class="block">
-                Days:
+            <label for="days" class="flex justify-between">
+                <div class="flex">
+                    Triggered every: <span class="mx-1 font-semibold" v-for="day in days">{{ day +' ' }}</span>
+                </div>
+                <button type="button" class="me-2 text-blue-500 hover:text-blue-600 transition-all duration-200" @click="showEdit">Edit</button>
             </label>
-            <div class="flex justify-between">
+            <div v-if="editDays==true" class="flex justify-between">
                 <div class="flex flex-col items-center mx-2 my-2">
                     <input v-model="form.activation.repeat.days" type="checkbox" id="monday" name="monday" value="monday"
                         class="w-[15px] h-[15px] border rounded-md">
@@ -91,7 +94,19 @@
             disabled: {
                 type: Boolean,
                 required: true
-            }
+            },
+            days: {
+                type: Array,
+                required: true
+            },
+            start_time: {
+                type: String,
+                required: true
+            },
+            end_time: {
+                type: String,
+                required: true
+            },
         },
         data() {
             return {
@@ -102,24 +117,32 @@
                         repeat: {
                             frequency: 'weekly',
                             days: [],
-                            StartTime: '',
-                            EndTime: '',
+                            StartTime: {data: this.start_time},
+                            EndTime: {data: this.end_time},
                         },
                     },
                 },
                 recentlySuccessful: false,
                 errors: '',
+                editDays: false,
             }
         },
         methods: {
+            showEdit() {
+                this.editDays = !this.editDays;
+            },
             submitForm() {
-                if (this.form.activation.repeat.days.length == 0) {
+                if (this.form.activation.repeat.days.length == 0 && this.editDays == true)
+                {
                     this.errors = 'Please select at least one day.';
                     return;
+                }else if(this.form.activation.repeat.days.length == 0){
+                    this.form.activation.repeat.days = this.days;
                 }
                 this.$inertia.post(route('modes.schedule'), this.form, {
-                    onSuccess: () => {
+                    onFinish: () => {
                         this.recentlySuccessful = true;
+                        this.editDays = false;
                         setTimeout(() => {
                             this.recentlySuccessful = false;
                         }, 2000);
@@ -130,6 +153,8 @@
         watch: {
             'mode_id': function(){
                 this.form.mode_id=this.mode_id;
+                this.form.activation.repeat.StartTime.data=this.start_time;
+                this.form.activation.repeat.EndTime.data=this.end_time;
             }
         }
     }

@@ -3,24 +3,32 @@
     import WeeklyForm from './WeeklyForm.vue';
 </script>
 <template>
-    <span class="text-lg font-medium">Schedule {{ repeat.value  }}</span>
+    <span class="text-lg font-medium">Schedule {{ repeat.data  }}</span>
         <label for="repeat" class="block">Repeat</label>
-        <select v-model="repeat.value" id="repeat" name="repeat" :disabled="disabled" required class="w-full p-2 mb-2 border rounded-md">
-            <option value="Daily">Daily</option>
-            <option value="Weekly">Weekly</option>
+        <select v-model="repeat.data" id="repeat" name="repeat" :disabled="disabled" required class="w-full p-2 mb-2 border rounded-md">
+            <option value="daily">Daily</option>
+            <option value="weekly">Weekly</option>
         </select>
-        <section v-if="repeat.value=='Daily'">
-            <DailyForm :mode_id="mode.id" :disabled="disabled"/>
+        <section v-if="repeat.data=='daily'">
+            <DailyForm 
+                :end_time="mode.end_time" 
+                :start_time="mode.start_time" 
+                :mode_id="mode.id" 
+                :disabled="disabled"
+            />
         </section>
-        <section v-if="repeat.value=='Weekly'">
-            <WeeklyForm :mode_id="mode.id" :disabled="disabled"/>
+        <section v-if="repeat.data=='weekly'">
+            <WeeklyForm
+                :days="mode.days_of_week"
+                :end_time="mode.end_time" 
+                :start_time="mode.start_time" 
+                :mode_id="mode.id" 
+                :disabled="disabled"
+            />
         </section>
 </template>
 <script>
     export default {
-        mounted() {
-            this.repeat.value = 'Daily'
-        },
         props: {
             disabled: {
                 type: Boolean,
@@ -33,7 +41,20 @@
         },
         data() {
             return {
-                repeat: {data:''},
+                repeat: {data:this.mode.frequency},
+            }
+        },
+        watch:{
+            'mode.frequency': function(){
+                if(this.mode.frequency=='daily'){
+                    this.repeat.data = 'daily'
+                }
+                else if(this.mode.frequency=='weekly'){
+                    this.repeat.data = 'weekly'
+                }
+                else{
+                    this.repeat.data = 'daily'
+                }
             }
         }
     }

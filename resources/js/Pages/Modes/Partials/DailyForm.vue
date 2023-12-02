@@ -3,11 +3,11 @@
         <label for="StartTime" class="block">
             Start Time:
         </label>
-        <input :disabled="disabled" v-model="form.activation.repeat.StartTime" type="time" id="StartTime" name="StartTime" required class="w-full p-2 mb-2 border rounded-md">
+        <input :disabled="disabled" v-model="form.activation.repeat.StartTime.data" type="time" id="StartTime" name="StartTime" required class="w-full p-2 mb-2 border rounded-md">
         <label for="time" class="block">
             End Time:
         </label>
-        <input :disabled="disabled" v-model="form.activation.repeat.EndTime" type="time" id="EndTime" name="EndTime" required class="w-full p-2 mb-2 border rounded-md">
+        <input :disabled="disabled" v-model="form.activation.repeat.EndTime.data" type="time" id="EndTime" name="EndTime" required class="w-full p-2 mb-2 border rounded-md">
         <button :disabled="disabled" type="submit" class="w-full p-2 bg-blue-500 hover:bg-blue-600 transition-colors duration-200 text-white rounded-md mt-2">
             Save
         </button>
@@ -29,7 +29,15 @@
             disabled: {
                 type: Boolean,
                 required: true
-            }
+            },
+            start_time: {
+                type: String,
+                required: true
+            },
+            end_time: {
+                type: String,
+                required: true
+            },
         },
         data() {
             return {
@@ -39,8 +47,8 @@
                         type: 'schedule',
                         repeat: {
                             frequency: 'daily',
-                            StartTime: '',
-                            EndTime: '',
+                            StartTime: {data: this.start_time},
+                            EndTime: {data: this.end_time},
                         },
                     },
                 },
@@ -62,6 +70,8 @@
         watch: {
             mode_id: function(){
                 this.form.mode_id=this.mode_id;
+                this.form.activation.repeat.StartTime.data=this.start_time;
+                this.form.activation.repeat.EndTime.data=this.end_time;
             }
         }
     }
