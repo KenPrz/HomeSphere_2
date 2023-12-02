@@ -33,7 +33,18 @@ class ToggleModeEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('channel-name'),
+            new PrivateChannel('home.' . $this->homeId),
+        ];
+    }
+    public function broadcastAs(): string
+    {
+        return 'toggle-mode';
+    }
+    public function broadcastWith(): array
+    {
+        return [
+            'mode_id' => $this->modeId,
+            'is_active' => $this->isActive,
         ];
     }
 }

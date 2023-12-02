@@ -1,28 +1,27 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Events\DeviceUpdateEvent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-class ScheduledEventHandler extends Controller
+use App\Events\DeviceUpdateEvent;
+class ScheduledEventDeactivator extends Controller
 {
-    public function handleSchedule($scheduledMode){
-        if($scheduledMode->frequency=='daily'){
-            $this->handleDaily($scheduledMode->mode_id);
-        }else if($scheduledMode->frequency== 'weekly'){
-            $this->handleWeekly($scheduledMode);
+    public function deactivate($mode){
+        if($mode->frequency=='daily'){
+            $this->deactivateDaily($mode->mode_id);
+        }else if($mode->frequency== 'weekly'){
+            $this->deactivateWeekly($mode);
         }else{
             return response()->json(['status'=> 'error', 'message'=> 'Invalid frequency.']);
         }
     }
-    public function handleDaily($mode_id){
+    public function deactivateDaily($mode_id){
         $is_mode_active = DB::table('modes')->where('id', $mode_id)->value('is_active');
-        if($is_mode_active==false){
+        if($is_mode_active==true){
             DB::table('modes')->where('id', $mode_id)
                 ->update([
-                'is_active' => true,
+                'is_active' => false,
             ]);
             $data = DB::table('mode_devices')
                 ->where('mode_id', $mode_id)
@@ -44,25 +43,24 @@ class ScheduledEventHandler extends Controller
             }
         }
     }
-    private function handleWeekly($scheduledMode){
+    private function deactivateWeekly($scheduledMode){
         $currentDayOfWeek = Carbon::now('Asia/Manila')->dayName;
         $scheduledDays = json_decode($scheduledMode->days_of_week, true);
         if (is_array($scheduledDays) && in_array(strtolower($currentDayOfWeek), $scheduledDays)) {
-            $this->handleDaily($scheduledMode);
+            $this->deactivateDaily($scheduledMode);
         } else {
             echo "Today is not a scheduled day for.\n";
         }
     }
     private function deviceHandle($device_id, $is_active){
         $room_id = DB::table('devices')->where('id', $device_id)->value('room_id');
-        DB::table("devices")->where("id", $device_id)->update([
-            "is_active" => $is_active,
-            "updated_at" => now()
-        ]);
-        $this->fireEvent($room_id,$device_id, $is_active);
-    }
-    private function fireEvent($room_id,$device_id,$is_active){
-        event(new DeviceUpdateEvent($room_id, $device_id, $is_active));
-        echo 'Event fired.';
+        $liveState = DB::table('devices')->where('id', $device_id)->value('is_active');
+        if($liveState == $is_active){
+            DB::table("devices")->where("id", $device_id)->update([
+                "is_active" => !$is_active,
+                "updated_at" => now()
+            ]);
+            event(new DeviceUpdateEvent($room_id,$device_id,!$is_active));
+        }
     }
 }

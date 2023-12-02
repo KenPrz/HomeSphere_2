@@ -15,13 +15,11 @@ return new class extends Migration
             $table->unsignedBigInteger('home_id');
             $table->unsignedBigInteger('member_id');
             $table->primary(['home_id', 'member_id']);
-            $table->enum('role', ['owner', 'member', 'pending']);
+            $table->enum('role', ['owner','admin','member', 'pending']);
             $table->date('joined_on')->nullable();
             $table->date('applied_on')->nullable();
             $table->foreign('home_id')->references('id')->on('homes')->onDelete('cascade');
             $table->foreign('member_id')->references('id')->on('users');
-            //make user wait to be approved by owner
-            // Add any additional columns you might need for this pivot table
             
             $table->timestamps();
         });

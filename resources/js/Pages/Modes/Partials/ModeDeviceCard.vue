@@ -1,9 +1,5 @@
 <script setup>
 import ToggleSwitch from "@/Components/ToggleSwitch.vue";
-const { device, customClass } = defineProps({
-    device: Object,
-    customClass: String,
-});
 </script>
 <template>
     <div>
@@ -29,8 +25,11 @@ const { device, customClass } = defineProps({
                     </svg>
                 </div>
                 <div class="flex-1">
-                    <div class="ms-5 mt-1">
+                    <div v-if="homeData.role == 'owner' || created_by == $page.props.auth.user.id" class="ms-1 mt-3">
                         <ToggleSwitch v-model="is_active.data" />
+                    </div>
+                    <div v-else class="mt-3">
+                        <span :class="[is_active.data ? 'text-green-500 font-medium' : 'text-gray-300 font-medium']" class="text-xs">{{ is_active.data ? "• Active" : "• Inactive"  }}</span>
                     </div>
                 </div>
             </div>
@@ -49,7 +48,7 @@ const { device, customClass } = defineProps({
                     <h1 class="w-1/2 text-lg sm:text-xl lg:text-2xl font-ex">
                         {{ is_active.data ? 'ON' : 'OFF' }}
                     </h1>
-                    <button @click="deleteDevice" class="w-1/2 text-xs font-medium p-2" :class="[is_active.data ? 'hover:text-red-500': 'hover:text-red-400']">Delete</button>
+                    <button v-if="homeData.role == 'owner' || created_by == $page.props.auth.user.id" @click="deleteDevice" class="w-1/2 text-xs font-medium p-2" :class="[is_active.data ? 'hover:text-red-500': 'hover:text-red-400']">Delete</button>
                 </div>
             </div>
         </div>
@@ -58,8 +57,23 @@ const { device, customClass } = defineProps({
 <script>
     export default {
         props: {
-        device: Object,
-        customClass: String,
+            device: {
+                type: Object,
+                required: true
+            },
+            homeData: {
+                type: Object,
+                required: true
+            },
+            created_by: {
+                type: Number,
+                required: true
+            },
+            customClass:{
+                type: String,
+                required: false,
+                default: ""
+            }
         },
         data() {
             return {

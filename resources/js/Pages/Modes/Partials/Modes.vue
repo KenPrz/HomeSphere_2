@@ -5,7 +5,6 @@ import ClickableModeCard from './ClickableModeCard.vue';
 import SelectedModeCard from './SelectedModeCard.vue';
 </script>
 <template>
-    
         <div class="container md:flex p-4">
             <div class="flex flex-col-reverse md:flex-col shadow-md rounded-md pt-2 mb-2 bg-white">
                 <section class="flex items-center justify-center">
@@ -25,7 +24,12 @@ import SelectedModeCard from './SelectedModeCard.vue';
                     </div>
                 </section>
             </div>
-            <SelectedModeCard @getData="getNewData" :roomsData="roomsData"  :selectedMode="modeData.data" :selectedDevices="devicesData.data"/>
+            <SelectedModeCard @getData="getNewData"
+                :homeData="homeData"
+                :roomsData="roomsData"
+                :selectedMode="modeData.data" 
+                :selectedDevices="devicesData.data"
+            />
         </div>
         <Modal :maxWidth="'md'" :show="showAddMode" @close="closeAddModeModal">
             <div class="p-4">

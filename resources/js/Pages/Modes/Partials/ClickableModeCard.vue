@@ -32,8 +32,11 @@
                     </div>
                 </div>
                 <div class="flex-1">
-                    <div class="ms-1 mt-3">
+                    <div v-if="homeData.role == 'owner' || mode.created_by == $page.props.auth.user.id" class="ms-1 mt-3">
                         <ToggleSwitch v-model="is_active.data" />
+                    </div>
+                    <div v-else class="mt-3">
+                        <span :class="[is_active.data ? 'text-green-500 font-medium' : 'text-gray-300 font-medium']" class="text-xs">{{ is_active.data ? "• Active" : "• Inactive"  }}</span>
                     </div>
                 </div>
             </div>
@@ -46,7 +49,7 @@
 </template>
 
 <script setup>
-import ToggleSwitch from "@/Components/ToggleSwitch.vue";
+    import ToggleSwitch from "@/Components/ToggleSwitch.vue";
 </script>
 <script>
 export default {
@@ -78,6 +81,25 @@ export default {
     methods: {
         modeSelected(data,devices){
             this.$emit('mode-selected',data,devices);
+        },
+        submit() {
+            axios.put(`/api/toggle-mode`, {
+                mode_id: this.mode.id,
+                home_id: this.homeData.id,
+                is_active: this.is_active.data,
+            })
+                .then(response => {
+                    // Handle the response as needed.
+                    // console.log(response); //for debugging only remove at prod
+                })
+                .catch(error => {
+                    // console.log(error); //for debugging only remove at prod
+                });
+        },
+    },
+    watch: {
+        'is_active.data': function(){
+            this.submit();
         }
     }
 };

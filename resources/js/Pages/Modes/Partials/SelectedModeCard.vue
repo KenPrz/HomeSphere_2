@@ -15,6 +15,7 @@ const emit = defineEmits(['getData']);
             </div>
             <div class="flex">
                 <button
+                    v-if="homeData.role == 'owner' || selectedMode.created_by == $page.props.auth.user.id"
                     @click="openEditRoomForm"
                     class="group flex items-center justify-center transition-all duration-200 hover:bg-slate-500 hover:text-white border-gray-500 border rounded-xl md:rounded-full p-1 md:px-2 me-1"
                 >
@@ -57,6 +58,7 @@ const emit = defineEmits(['getData']);
                     <span class="text-sm">Edit</span>
                 </button>
                 <button
+                    v-if="homeData.role == 'owner' || selectedMode.created_by == $page.props.auth.user.id"
                     @click="openDeleteModeModal"
                     class="group flex items-center justify-center transition-all duration-200 hover:bg-red-500 hover:text-white border-gray-500 border rounded-xl md:rounded-full p-1 md:px-2"
                 >
@@ -100,15 +102,22 @@ const emit = defineEmits(['getData']);
         <v-card class="mt-3">
             <v-tabs bg-color="primary" color="secondary" v-model="tab">
                 <v-tab value="Appliances"> Appliances </v-tab>
-                <v-tab value="Activation"> Activation Type </v-tab>
+                <v-tab 
+                    v-if="homeData.role == 'owner' || selectedMode.created_by == $page.props.auth.user.id" 
+                    value="Activation"> 
+                    Activation Type 
+                </v-tab>
             </v-tabs>
             <v-card-text>
                 <v-window v-model="tab">
                     <v-window-item value="Appliances">
-                        <AppliancesInMode :mode="selectedMode" :roomsData="roomsData" :devices="selectedDevices" />
+                        <AppliancesInMode :homeData="homeData" :mode="selectedMode" :roomsData="roomsData" :devices="selectedDevices" />
                     </v-window-item>
                     <v-window-item value="Activation">
-                        <ActivationTypeTab :roomsData="roomsData" :mode="selectedMode"/>
+                        <ActivationTypeTab v-if="homeData.role == 'owner' || selectedMode.created_by == $page.props.auth.user.id" 
+                            :roomsData="roomsData" 
+                            :mode="selectedMode"
+                        />
                     </v-window-item>
                 </v-window>
             </v-card-text>
@@ -133,6 +142,10 @@ const emit = defineEmits(['getData']);
 <script>
 export default {
     props: {
+        homeData: {
+            type: Object,
+            required: true,
+        },
         selectedMode: {
             type: Object,
             required: true,

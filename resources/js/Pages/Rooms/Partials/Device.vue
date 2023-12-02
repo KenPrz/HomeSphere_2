@@ -80,6 +80,7 @@ export default {
             }).listen('.device_update', (eventData) => {
                 if(this.device.id==eventData.device_data.device_id)
                 {
+                    console.log(this.device.id+'  '+eventData.device_data.device_state);
                     this.is_active.data=eventData.device_data.device_state;
                 }
             });

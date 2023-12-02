@@ -7,7 +7,7 @@ import ModeDeviceCard from './ModeDeviceCard.vue';
     <div class="w-full container flex flex-col">
         <section class="flex justify-between me-2">
             <span class="text-gray-500 text-xs md:text-sm ml-2">Hint: Toggle device state to set the state upon mode activation.</span>
-            <button @click="openAddApplianceModal"
+            <button v-if="homeData.role == 'owner' || mode.created_by == $page.props.auth.user.id" @click="openAddApplianceModal"
                 class="group flex items-center justify-center transition-all duration-200 hover:bg-slate-500 hover:text-white border-gray-500 border rounded-xl md:rounded-full p-1 md:px-2 me-1">
                 <svg class="group-hover:stroke-white transition-all duration-200 stroke-gray-500 h-3 md:h-5 w-auto"
                     viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -20,17 +20,21 @@ import ModeDeviceCard from './ModeDeviceCard.vue';
                 <span class="text-xs md:text-sm">Add Appliance</span>
             </button>
         </section>
-        <section  class="mt-3 flex flex-wrap max-h-[400px] md:max-h-[500px] overflow-y-scroll">
+        <section class="mt-3 flex flex-wrap max-h-[400px] md:max-h-[500px] overflow-y-scroll">
                 <ModeDeviceCard
                     @update:device_state="updateDeviceState"
                     @delete:device="deleteDevice"
                     v-for="device in modeDevices.data" 
                     :key="device.id" 
-                    :device="device" 
+                    :device="device"
+                    :homeData="homeData"
+                    :created_by="mode.created_by"
                 />
         </section>
-        <section class="flex justify-end me-2">
-            <button @click="updateModeDevices" v-if="hasChanges==true" class="bg-blue-500 h-8 text-white hover:bg-blue-600 transition-colors duration-200 w-32 rounded-full me-2 ">Save changes</button>
+        <section v-if="homeData.role == 'owner' || mode.created_by == $page.props.auth.user.id" class="flex justify-end me-2">
+            <button @click="updateModeDevices" v-if="hasChanges==true" class="bg-blue-500 h-8 text-white hover:bg-blue-600 transition-colors duration-200 w-32 rounded-full me-2 ">
+                Save changes
+            </button>
         </section>
     </div>
     <Modal :maxWidth="'md'" :show="showAddAppliance" @close="justCloseMe">
@@ -42,6 +46,10 @@ import ModeDeviceCard from './ModeDeviceCard.vue';
 <script>
 export default {
     props: {
+        homeData: {
+            type: Object,
+            required: true
+        },
         mode: {
             type: Object,
             required: true
