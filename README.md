@@ -95,6 +95,18 @@ Local machine:
 ```
 php artisan serve
 ```
+npm
+```
+npm run dev
+```
+websockets
+```
+php artisan websockets:serve --debug
+```
+schedule
+```
+php artisan schedule:work
+```
 Local network (replace `[your_IP]` with your actual IP):
 ```
 php artisan serve --host [your_IP] --port 80
