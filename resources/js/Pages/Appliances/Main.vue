@@ -26,7 +26,7 @@
                     <div class="md:mx-10 mt-5">
                         <Table
                             :tableHeaders="tableHeaders"
-                            :tableData="this.$page.props.appliances"
+                            :tableData="appliances"
                             :maxHeight="maxHeight"
                             :itemsPerPage="7"
                             :Pagenated="true"
@@ -43,21 +43,27 @@ import Table from "@/Components/Table.vue";
 import throttle from 'lodash/throttle'
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
-defineProps({
-    mustVerifyEmail: {
-        type: Boolean,
-    },
-    status: {
-        type: String,
-    },
-    filters: {
-        type: Object, // Ensure filters is an object
-        default: () => ({ search: '' }) // Set a default value
-    },
-});
 </script>
 <script>
 export default {
+    props:{
+        mustVerifyEmail: {
+        type: Boolean,
+        },
+        status: {
+            type: String,
+        },
+        filters: {
+            type: Object,
+            default: () => ({ search: '' })
+        },
+        appliances: {
+            type: Array,
+        },
+        homeData: {
+            type: Object,
+        },
+    },
     components: {
         Table,
     },
