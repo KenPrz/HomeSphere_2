@@ -70,7 +70,20 @@ class HomeCreationController extends Controller
                 ->addSelect(DB::raw('(SELECT COUNT(*) FROM devices WHERE devices.room_id = rooms.id) as device_count'))
                 ->get();
             $appliances = $getAppliances->getAppliances($homeData);
-            $modes = DB::table('modes')->where('home_id',$homeData->id)->get();
+            
+            $modes = DB::table('modes')
+                ->select('modes.*', 'mode_devices.device_list', 'mode_schedules.*', 'mode_environments.*')
+                ->join('mode_devices', 'modes.id', '=', 'mode_devices.mode_id')
+                ->join('mode_schedules', 'modes.id', '=', 'mode_schedules.mode_id')
+                ->join('mode_environments', 'modes.id', '=', 'mode_environments.mode_id')
+                ->where('modes.home_id', $homeData->id)
+                ->get();
+            foreach ($modes as $mode) {
+                $mode->device_list = json_decode($mode->device_list, true);
+            }
+            if (empty($modes[0])) {
+                $modes = null;
+            }
             $userList = DB::table('home_members')->where('home_id', $homeData->id)
                 ->join('users', 'home_members.member_id', '=', 'users.id')
                 ->get(['users.firstName', 'users.lastName','users.profile_image', 'users.is_online']);

@@ -37,15 +37,10 @@ class ModesController extends Controller
             ->join('mode_environments', 'modes.id', '=', 'mode_environments.mode_id')
             ->where('modes.home_id', $homeId)
             ->get();
-    
-        foreach ($modes as $mode) {
-            $mode->days_of_week = json_decode($mode->days_of_week);
-        }
 
         foreach ($modes as $mode) {
             $mode->device_list = json_decode($mode->device_list, true);
         }
-    
         if (empty($modes[0])) {
             $modes = null;
         }

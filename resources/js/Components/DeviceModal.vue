@@ -50,7 +50,7 @@ function cancel() {
                     <InputError class="mt-2 text-xs font-light" :message="form1.errors.device_name" />
                 </form>
             </section>
-            <section v-if="device.room_owner_id==$page.props.auth.user.id || $page.props.homeData.owner_id==$page.props.auth.user.id" class="w-1/4 flex justify-end items-center">
+            <section v-if="device.room_owner_id==$page.props.auth.user.id || $page.props.homeData.role == 'owner' || $page.props.homeData.role == 'admin'" class="w-1/4 flex justify-end items-center">
                 <button @click="showEdit=!showEdit">
                     <img class="w-5 me-2" :src="'img-assets/vectors/Edit.svg'" alt="">
                 </button>

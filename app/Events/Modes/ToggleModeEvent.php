@@ -38,7 +38,7 @@ class ToggleModeEvent implements ShouldBroadcast
     }
     public function broadcastAs(): string
     {
-        return 'toggle-mode';
+        return 'toggle_mode';
     }
     public function broadcastWith(): array
     {

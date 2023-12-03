@@ -5,6 +5,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Events\DeviceUpdateEvent;
+use App\Events\Modes\ToggleModeEvent;
 class ScheduledEventDeactivator extends Controller
 {
     public function deactivate($mode){
@@ -23,6 +24,8 @@ class ScheduledEventDeactivator extends Controller
                 ->update([
                 'is_active' => false,
             ]);
+            $homeId = DB::table('modes')->where('id', $mode_id)->value('home_id');
+            event(new ToggleModeEvent($mode_id, false, $homeId));
             $data = DB::table('mode_devices')
                 ->where('mode_id', $mode_id)
                 ->get();

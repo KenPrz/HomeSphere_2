@@ -5,7 +5,7 @@ use App\Events\DeviceUpdateEvent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
+use App\Events\Modes\ToggleModeEvent;
 class ScheduledEventHandler extends Controller
 {
     public function handleSchedule($scheduledMode){
@@ -24,6 +24,10 @@ class ScheduledEventHandler extends Controller
                 ->update([
                 'is_active' => true,
             ]);
+            $homeId = DB::table('modes')->where('id', $mode_id)->value('home_id');
+            
+            event(new ToggleModeEvent($mode_id, true, $homeId));
+            
             $data = DB::table('mode_devices')
                 ->where('mode_id', $mode_id)
                 ->get();

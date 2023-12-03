@@ -33,7 +33,7 @@
                 </div>
                 <div class="flex-1">
                     <div v-if="homeData.role == 'owner' || homeData.role == 'admin' || mode.created_by == $page.props.auth.user.id" class="ms-1 mt-3">
-                        <ToggleSwitch v-model="is_active.data" />
+                        <ToggleSwitch @click="submit" v-model="is_active.data" />
                     </div>
                     <div v-else class="mt-3">
                         <span :class="[is_active.data ? 'text-green-500 font-medium' : 'text-gray-300 font-medium']" class="text-xs">{{ is_active.data ? "• Active" : "• Inactive"  }}</span>
@@ -95,13 +95,27 @@ export default {
                 .catch(error => {
                     // console.log(error); //for debugging only remove at prod
                 });
+        },subscribeToHomeChannel(homeId) {
+            // Subscribe to the new channel
+            this.homeChannel = window.Echo.private(`home.${homeId}`);
+            this.homeChannel.subscribed(() => {
+            }).listen('.toggle_mode', (eventData) => {
+                if(this.mode.id==eventData.mode_id)
+                {
+                    this.is_active.data=eventData.is_active;
+                }
+            });
+        },
+        unsubscribeFromHomeChannel(homeId) {
+            window.Echo.leave(`home.${homeId}`);
         },
     },
-    watch: {
-        'is_active.data': function(){
-            this.submit();
-        }
-    }
+    mounted(){
+        this.subscribeToHomeChannel(this.homeData.id);
+    },
+    unmounted(){
+        this.unsubscribeFromHomeChannel(this.homeData.id);
+    },
 };
 </script>
 <style scoped>
