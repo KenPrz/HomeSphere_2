@@ -11,10 +11,10 @@
         <button :disabled="disabled" type="submit" class="w-full p-2 bg-blue-500 hover:bg-blue-600 transition-colors duration-200 text-white rounded-md mt-2">
             Save
         </button>
-        <div class="text-center">
+        <div class="text-center mt-2">
             <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
                 leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
-                <p v-if="form.recentlySuccessful" class="text-sm text-green-600 mt-2">Saved.</p>
+                <span v-if="recentlySuccessful" class="text-green-500 text-md">Saved!</span>
             </Transition>
         </div>
     </form>
@@ -58,7 +58,7 @@
         methods: {
             submitForm() {
                 this.$inertia.post(route('modes.schedule'), this.form, {
-                    onSuccess: () => {
+                    onFinish: () => {
                         this.recentlySuccessful = true;
                         setTimeout(() => {
                             this.recentlySuccessful = false;

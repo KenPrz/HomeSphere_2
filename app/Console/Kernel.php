@@ -13,11 +13,14 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         $schedule->command('modes:check')
-        ->everyMinute()
-        ->appendOutputTo(storage_path('logs/activate_modes.log'));
+            ->everyMinute()
+            ->appendOutputTo(storage_path('logs/activate_modes.log'));
         $schedule->command('modes:deactivate')
-        ->everyMinute()
-        ->appendOutputTo(storage_path('logs/deactivate_modes.log'));
+            ->everyMinute()
+            ->appendOutputTo(storage_path('logs/deactivate_modes.log'));
+        $schedule->command('modes:env_check')
+            ->everyTenSeconds()
+            ->appendOutputTo(storage_path('logs/env_check.log'));
     }
 
     /**

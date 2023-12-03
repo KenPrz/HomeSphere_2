@@ -13,8 +13,13 @@
         <div class="flex flex-col">
             <label for="days" class="flex justify-between">
                 <div class="flex">
-                    Triggered every: <span class="mx-1 font-semibold" v-for="day in days">{{ day +' ' }}</span>
+                    Triggered every: 
+                    <span v-for="(day, index) in days" :key="index">
+                        {{ day.charAt(0).toUpperCase() + day.slice(1).toLowerCase() }}
+                        {{ index < days.length - 1 ? ', ' : '' }}
+                    </span>
                 </div>
+
                 <button type="button" class="me-2 text-blue-500 hover:text-blue-600 transition-all duration-200" @click="showEdit">Edit</button>
             </label>
             <div v-if="editDays==true" class="flex justify-between">
@@ -79,7 +84,7 @@
         <div class="text-center">
             <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
                 leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
-                <p v-if="form.recentlySuccessful" class="text-sm text-green-600 mt-2">Saved.</p>
+                <p v-if="recentlySuccessful" class="text-sm text-green-600 mt-2">Saved.</p>
             </Transition>
         </div>
     </form>
@@ -116,7 +121,7 @@
                         type: 'schedule',
                         repeat: {
                             frequency: 'weekly',
-                            days: [],
+                            days: this.days,
                             StartTime: {data: this.start_time},
                             EndTime: {data: this.end_time},
                         },

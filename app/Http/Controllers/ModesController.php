@@ -40,11 +40,11 @@ class ModesController extends Controller
 
         foreach ($modes as $mode) {
             $mode->device_list = json_decode($mode->device_list, true);
+            $mode->days_of_week = json_decode($mode->days_of_week, true);
         }
         if (empty($modes[0])) {
             $modes = null;
         }
-        // dd($modes, $homeData);
         return Inertia::render('Modes/Main', [
             'homeData' => $homeData,
             'modes' => $modes,
@@ -174,7 +174,8 @@ class ModesController extends Controller
         if($request->activation['type'] == 'schedule'){
             $schedule_data = $request->activation['repeat'];
             if($schedule_data['frequency'] == 'weekly'){
-                $daysOfWeek = json_encode($schedule_data['days']);
+                // dd($schedule_data['days']);
+                $daysOfWeek = json_encode($schedule_data['days'], true);
                 DB::table('mode_schedules')->where('mode_id',$request->mode_id)->update([
                     'frequency' => $schedule_data['frequency'],
                     'start_time' => $schedule_data['StartTime']['data'],
