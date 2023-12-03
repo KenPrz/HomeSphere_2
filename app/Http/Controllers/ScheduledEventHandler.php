@@ -48,7 +48,7 @@ class ScheduledEventHandler extends Controller
         $currentDayOfWeek = Carbon::now('Asia/Manila')->dayName;
         $scheduledDays = json_decode($scheduledMode->days_of_week, true);
         if (is_array($scheduledDays) && in_array(strtolower($currentDayOfWeek), $scheduledDays)) {
-            $this->handleDaily($scheduledMode);
+            $this->handleDaily($scheduledMode->id);
         } else {
             echo "Today is not a scheduled day for.\n";
         }
