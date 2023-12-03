@@ -7,7 +7,9 @@ import CreateFirstMode from "./Partials/CreateFirstMode.vue";
 </script>
 <template>
     <Head title="Dashboard" />
-    <AuthenticatedLayout>
+    <AuthenticatedLayout
+        :homeData="homeData"
+    >
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 space-y-6 leading-tight">
                 Modes

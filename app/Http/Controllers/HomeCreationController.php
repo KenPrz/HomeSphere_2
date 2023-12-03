@@ -40,7 +40,7 @@ class HomeCreationController extends Controller
             return Inertia::render('CreateHome/Create');
         }
     
-        if ($user->has_home || in_array($userRole, ['member', 'owner', 'pending'])) {
+        if ($user->has_home || in_array($userRole, ['member', 'owner','admin','pending'])) {
             return redirect("/");
         }
     
@@ -63,7 +63,7 @@ class HomeCreationController extends Controller
         if(!$homeData) {
             return redirect()->route('create_home');
         }
-        else if ($homeData->role == 'member' || $homeData->role == 'owner') {
+        else if ($homeData->role == 'member' || $homeData->role == 'owner' || $homeData->role == 'admin') {
             $rooms = Room::with('devices', 'tempSensor', 'humiditySensor', 'motionSensor')
                 ->where('home_id', $homeData->id)
                 ->select(['rooms.*'])

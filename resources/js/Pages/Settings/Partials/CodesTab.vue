@@ -30,13 +30,13 @@ import NewInviteKeyDialog from './NewInviteKeyDialog.vue';
                         </div>
                     </div>
                 </div>
-                <button @click="openInviteKeyGenDialog" v-if="$page.props.homeData.owner_id == $page.props.auth.user.id"
+                <button @click="openInviteKeyGenDialog" v-if="$page.props.homeData.role == 'admin' || $page.props.homeData.role == 'owner'"
                     class="bg-zinc-600 hover:bg-zinc-700 transition-colors duration-200 text-white text-md p-2 rounded-md mb-4 w-64">
                     Generate new invite code
                 </button>
             </v-card-text>
         </v-card>
-        <v-card title="Api Key" subtitle="Your hardware API key" v-if="$page.props.api_key">
+        <v-card title="Api Key" subtitle="Your hardware API key" v-if="$page.props.homeData.role == 'admin' || $page.props.homeData.role == 'owner'">
             <v-card-text>
                 <div class="flex flex-col">
                     <span class="font-medium p-1">
@@ -56,7 +56,7 @@ import NewInviteKeyDialog from './NewInviteKeyDialog.vue';
                     </div>
 
                 </div>
-                <button @click="openApiKeyGenDialog"
+                <button v-if="$page.props.homeData.role == 'owner'" @click="openApiKeyGenDialog"
                     class="bg-zinc-600 hover:bg-zinc-700 transition-colors duration-200 text-white text-md p-2 rounded-md w-64 mb-4">
                     Generate new API key
                 </button>

@@ -37,7 +37,7 @@ class SettingsController extends Controller
         $user = auth()->user();
         $homeData = $this->appUtilities->findHomeData($user);
         $homeMembers = $this->appUtilities->getHomeMembers($homeData->id);
-        $api_key = ($user->id == $homeData->owner_id) ? $this->appUtilities->getApiKey($homeData) : null;
+        $api_key = ($homeData->role == ('admin' || 'owner')) ? $this->appUtilities->getApiKey($homeData) : null;
 
         return Inertia::render('Settings/Main', [
             'homeData' => $homeData,

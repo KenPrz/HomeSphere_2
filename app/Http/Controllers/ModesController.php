@@ -49,7 +49,7 @@ class ModesController extends Controller
         if (empty($modes[0])) {
             $modes = null;
         }
-    
+        // dd($modes, $homeData);
         return Inertia::render('Modes/Main', [
             'homeData' => $homeData,
             'modes' => $modes,

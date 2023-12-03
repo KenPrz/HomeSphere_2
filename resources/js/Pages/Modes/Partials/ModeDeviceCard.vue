@@ -25,7 +25,7 @@ import ToggleSwitch from "@/Components/ToggleSwitch.vue";
                     </svg>
                 </div>
                 <div class="flex-1">
-                    <div v-if="homeData.role == 'owner' || created_by == $page.props.auth.user.id" class="ms-1 mt-3">
+                    <div v-if="homeData.role == 'owner' || homeData.role == 'admin' || mode.created_by == $page.props.auth.user.id" class="ms-1 mt-3">
                         <ToggleSwitch v-model="is_active.data" />
                     </div>
                     <div v-else class="mt-3">
@@ -48,7 +48,7 @@ import ToggleSwitch from "@/Components/ToggleSwitch.vue";
                     <h1 class="w-1/2 text-lg sm:text-xl lg:text-2xl font-ex">
                         {{ is_active.data ? 'ON' : 'OFF' }}
                     </h1>
-                    <button v-if="homeData.role == 'owner' || created_by == $page.props.auth.user.id" @click="deleteDevice" class="w-1/2 text-xs font-medium p-2" :class="[is_active.data ? 'hover:text-red-500': 'hover:text-red-400']">Delete</button>
+                    <button v-if="homeData.role == 'owner' || homeData.role == 'admin' || mode.created_by == $page.props.auth.user.id" @click="deleteDevice" class="w-1/2 text-xs font-medium p-2" :class="[is_active.data ? 'hover:text-red-500': 'hover:text-red-400']">Delete</button>
                 </div>
             </div>
         </div>

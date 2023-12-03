@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Http\Controllers\AppUtilities;
+use App\Events\UserPromotedEvent;
+use App\Events\UserDemotedEvent;
 
 class HomeMemberController extends Controller
 {
@@ -49,6 +51,41 @@ class HomeMemberController extends Controller
         }
     }
 
+    public function promoteUser(Request $request)
+    {
+        $request->validate([
+            'userData' => 'required',
+        ]);
+        $user = User::find($request->input('userData')['id']);
+        $homeData = $this->appUtilities->findHomeData($user);
+        if ($user) {
+            DB::table('home_members')
+                ->where('home_id', $homeData->id)
+                ->where('member_id', $user->id)
+                ->update(['role' => 'admin']);
+            event(new UserPromotedEvent($user->id));
+        } else {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+    }
+
+    public function demoteUser(Request $request)
+    {
+        $request->validate([
+            'userData' => 'required',
+        ]);
+        $user = User::find($request->input('userData')['id']);
+        $homeData = $this->appUtilities->findHomeData($user);
+        if ($user) {
+            DB::table('home_members')
+                ->where('home_id', $homeData->id)
+                ->where('member_id', $user->id)
+                ->update(['role' => 'member']);
+            event(new UserDemotedEvent($user->id));
+        } else {
+            return response()->json(['message' => 'User not found'], 404);
+        }
+    }
     public function kickUser(Request $request){
         $userData = $request->input('userData');
         $user = User::find($userData['id']);

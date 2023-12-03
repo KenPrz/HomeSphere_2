@@ -2,6 +2,8 @@
 import Modal from '@/Components/Modal.vue';
 import ApprovalModal from './ApprovalModal.vue';
 import KickUserDialog from './KickUserDialog.vue';
+import PromoteUserDialog from './PromoteUserDialog.vue';
+import DemoteUserDialog from './DemoteUserDialog.vue';
 import { defineEmits } from 'vue';
 
 const emit = defineEmits(["close"]);
@@ -27,9 +29,21 @@ defineProps({
                         capitalizeFirstLetter(userData.lastName) }}</h2>
                     <p class="text-gray-500 text-sm">{{ capitalizeFirstLetter(userData.role) }}</p>
                 </div>
-                <div v-if="userData.role == 'member' || userData.role == 'owner'">
+
+                <div v-if="userData.role == 'member' || userData.role == 'admin' || userData.role == 'owner'">
                     <p class="text-center text-gray-600 text-xs">Joined: {{ userData.joined_on }}</p>
-                    <button @click="openUserKickDialog(userData)" v-if="userData.role == 'member'" class="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg mt-2 transition duration-300">
+                    <button v-if="userData.role == 'member'" @click="openUserPromotionModal(userData)" class="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg mt-2 transition duration-300">
+                        Promote User
+                    </button>
+                    <div v-if="userData.role == 'admin'">
+                        <button v-if="userData.role == 'admin' && userData.id != $page.props.auth.user.id" @click="openUserDemotionDialog(userData)" class="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg mt-2 transition duration-300">
+                            Demote User
+                        </button>
+                        <button v-else-if="userData.role == 'admin' && userData.id == $page.props.auth.user.id" @click="openUserDemotionDialog(userData)" class="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg mt-2 transition duration-300">
+                            Demote Myself
+                        </button>
+                    </div>
+                    <button v-if="userData.role == 'member'" @click="openUserKickDialog(userData)" class="w-full bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg mt-2 transition duration-300">
                         Kick User
                     </button>
                 </div>
@@ -43,6 +57,12 @@ defineProps({
         <Modal :maxWidth="'sm'" :show="showUserKickDialog" @close="closeUserKickDialog">
             <KickUserDialog :userData="userData" @close="closeUserKickDialog"/>
         </Modal>
+        <Modal :maxWidth="'sm'" :show="showUserPromotion" @close="closeUserApprovalModal">
+            <PromoteUserDialog :userData="userData" @close="closeUserPromotionModal"/>
+        </Modal>
+        <Modal :maxWidth="'sm'" :show="showUserDemotionDialog" @close="closeUserDemotionDialog">
+            <DemoteUserDialog :userData="userData" @close="closeUserDemotionDialog"/>
+        </Modal>
     </div>
 </template>
 <script>
@@ -51,6 +71,8 @@ export default {
         return {
             showUserApproval: false,
             showUserKickDialog:false,
+            showUserPromotion: false,
+            showUserDemotionDialog:false,
         };
     },
     methods: {
@@ -60,6 +82,14 @@ export default {
         },
         close() {
             this.$emit('close');
+        },
+        openUserPromotionModal(userData) {
+            this.user = userData;
+            this.showUserPromotion = true;
+        },
+        openUserDemotionDialog(userData){
+            this.user = userData;
+            this.showUserDemotionDialog = true;
         },
         openUserKickDialog(userData){
             this.user = userData;
@@ -75,6 +105,12 @@ export default {
         closeUserApprovalModal() {
             this.close();
         },
+        closeUserPromotionModal() {
+            this.close();
+        },
+        closeUserDemotionDialog(){
+            this.close();
+        }
     },
 };
 </script>

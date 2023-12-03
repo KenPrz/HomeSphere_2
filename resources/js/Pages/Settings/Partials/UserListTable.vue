@@ -22,7 +22,7 @@ defineProps({
             </tr>
         </thead>
         <tbody>
-            <template v-if="$page.props.homeData.role == 'owner'">
+            <template v-if="$page.props.homeData.role == 'owner' || $page.props.homeData.role == 'admin'">
                 <tr @click="showUserSettingModal(member)" v-for="member in $page.props.homeMembers"
                     :key="`owner-${member.id}`" class="odd:bg-gray-100 even:bg-white hover:bg-gray-200 cursor-pointer">
                     <td class="px-6 py-4">{{ capitalizeFirstLetter(member.firstName) }}</td>

@@ -15,7 +15,7 @@ const emit = defineEmits(['getData']);
             </div>
             <div class="flex">
                 <button
-                    v-if="homeData.role == 'owner' || selectedMode.created_by == $page.props.auth.user.id"
+                    v-if="homeData.role == 'owner' || homeData.role == 'admin' || selectedMode.created_by == $page.props.auth.user.id"
                     @click="openEditRoomForm"
                     class="group flex items-center justify-center transition-all duration-200 hover:bg-slate-500 hover:text-white border-gray-500 border rounded-xl md:rounded-full p-1 md:px-2 me-1"
                 >
@@ -58,7 +58,7 @@ const emit = defineEmits(['getData']);
                     <span class="text-sm">Edit</span>
                 </button>
                 <button
-                    v-if="homeData.role == 'owner' || selectedMode.created_by == $page.props.auth.user.id"
+                    v-if="homeData.role == 'owner' || homeData.role == 'admin' || selectedMode.created_by == $page.props.auth.user.id"
                     @click="openDeleteModeModal"
                     class="group flex items-center justify-center transition-all duration-200 hover:bg-red-500 hover:text-white border-gray-500 border rounded-xl md:rounded-full p-1 md:px-2"
                 >
@@ -103,7 +103,7 @@ const emit = defineEmits(['getData']);
             <v-tabs bg-color="primary" color="secondary" v-model="tab">
                 <v-tab value="Appliances"> Appliances </v-tab>
                 <v-tab 
-                    v-if="homeData.role == 'owner' || selectedMode.created_by == $page.props.auth.user.id" 
+                    v-if="homeData.role == 'owner' || homeData.role == 'admin' || selectedMode.created_by == $page.props.auth.user.id" 
                     value="Activation"> 
                     Activation Type 
                 </v-tab>
@@ -114,7 +114,7 @@ const emit = defineEmits(['getData']);
                         <AppliancesInMode :homeData="homeData" :mode="selectedMode" :roomsData="roomsData" :devices="selectedDevices" />
                     </v-window-item>
                     <v-window-item value="Activation">
-                        <ActivationTypeTab v-if="homeData.role == 'owner' || selectedMode.created_by == $page.props.auth.user.id" 
+                        <ActivationTypeTab v-if="homeData.role == 'owner' || homeData.role == 'admin' || selectedMode.created_by == $page.props.auth.user.id" 
                             :roomsData="roomsData" 
                             :mode="selectedMode"
                         />

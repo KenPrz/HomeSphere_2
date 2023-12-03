@@ -13,7 +13,9 @@ import SideNav from "@/Layouts/SideNav.vue";
         <!-- End Navbar -->
         <div class="md:flex">
             <!-- Sidebar -->
-            <SideNav/>
+            <SideNav
+                :homeData="homeData"
+            />
             <!-- End Sidebar -->
             <!-- Main Content -->
             <div id="mainDiv" class="flex-1 min-h-screen bg-gray-100">

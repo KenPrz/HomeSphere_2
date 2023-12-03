@@ -32,7 +32,7 @@
                     </div>
                 </div>
                 <div class="flex-1">
-                    <div v-if="homeData.role == 'owner' || mode.created_by == $page.props.auth.user.id" class="ms-1 mt-3">
+                    <div v-if="homeData.role == 'owner' || homeData.role == 'admin' || mode.created_by == $page.props.auth.user.id" class="ms-1 mt-3">
                         <ToggleSwitch v-model="is_active.data" />
                     </div>
                     <div v-else class="mt-3">

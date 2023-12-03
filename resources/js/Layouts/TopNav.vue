@@ -118,7 +118,7 @@ export default {
     mounted() {
         this.subToUserChannel(this.user)
         if (this.homeData) {
-            if (this.homeData.role == 'owner' || this.homeData.role == 'member') {
+            if (this.homeData.role == 'owner' || this.homeData.role == 'member' || this.homeData.role == 'admin') {
                 this.subscribeToHomeChannel(this.homeData.id);
             }
         }
@@ -151,7 +151,10 @@ export default {
                     this.refreshPage();
                 }
             }).listen('.user_kicked', (eventData) => {
-                console.log(eventData);
+                this.refreshPage();
+            }).listen('.user_demoted', (eventData) => {
+                this.refreshPage();
+            }).listen('.user_promoted', (eventData) => {
                 this.refreshPage();
             })
         },

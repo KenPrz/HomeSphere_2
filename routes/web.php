@@ -85,6 +85,8 @@ Route::middleware(['auth','checkHasHome'])->group(function () {
     Route::delete('/leave', [SettingsController::class,'leaveHome'])->name('settings.leave');
 
     Route::post('/approve',[HomeMemberController::class,'approveUser'])->name('member.approve');
+    Route::put('/promote',[HomeMemberController::class,'promoteUser'])->name('member.promote');
+    Route::put('/demote',[HomeMemberController::class,'demoteUser'])->name('member.demote');
     Route::delete('/reject',[HomeMemberController::class, 'rejectUser'])->name('member.reject');
     Route::delete('/kick',[HomeMemberController::class,'kickUser'])->name('member.kick');
 
