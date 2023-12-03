@@ -9,6 +9,7 @@ import SideNav from "@/Layouts/SideNav.vue";
             <TopNav
                 :user="$page.props.auth.user"
                 :homeData="homeData"
+                :notifications="notifications"
             />
         <!-- End Navbar -->
         <div class="md:flex">
@@ -32,6 +33,10 @@ import SideNav from "@/Layouts/SideNav.vue";
         props: {
             homeData: {
                 type: Object,
+                default: null
+            },
+            notifications: {
+                type: Array,
                 default: null
             }
         }

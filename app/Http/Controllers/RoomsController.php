@@ -12,8 +12,17 @@ use App\Models\temp_sensor;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use App\Models\Home;
+use App\Models\User;
+use App\Notifications\RoomCreated;
+use Illuminate\Support\Facades\Notification;
 class RoomsController extends Controller
 {   
+    public $homeInstance;
+    public function __construct()
+    {
+        $this->homeInstance = new home;
+    }
     public function index()
     {
         $appUtilities = new AppUtilities;
@@ -101,6 +110,16 @@ class RoomsController extends Controller
             'is_active' => false,
             'motion_detected' => false
         ]);
+        $user = auth()->user();
+        $userName = $user->firstName . ' ' . $user->lastName;
+        $userProfile = $user->profile_image;
+        $notificationData = [
+            'title' => 'New Room Created',
+            'body'=> 'has created a new room',
+            'user_name' => $userName,
+            'icon' => $userProfile,
+        ];
+        $this->newRoomNotification($homeID,$notificationData);
     }
 
     private function deleteRoomByID($roomID)
@@ -116,5 +135,15 @@ class RoomsController extends Controller
     private function getDevicesInRoom($roomID)
     {
         return DB::table('devices')->where('room_id', $roomID)->get();
+    }
+
+    private function newRoomNotification($home_id,$notificationData)
+    {
+        $home = Home::find($home_id);
+        $members = $home->members;
+        foreach ($members as $member) {
+            $user = User::find($member->member_id);
+            $user->notify(new RoomCreated($notificationData));
+        }
     }
 }

@@ -19,14 +19,24 @@
                     cover
                 ></v-img>
             </div>
-            <div class="mx-1 flex items-center">
-                <div class="text-sm  text-slate-600">
-                    <span class="font-semibold">
-                    {{ $page.props.auth.user.firstName + " " + $page.props.auth.user.lastName }}
-                    </span>
-                    message here
+            <div class="mx-1 flex flex-col items-start">
+                <div class="text-sm font-semibold text-slate-600">
+                    {{ notification.data.notification.title }}
+                </div>
+                <div class="text-xs  text-slate-600">
+                    {{ notification.data.notification.body }}
                 </div>
             </div>
         </a>
     </div>
 </template>
+<script>
+export default {
+    props: {
+        notification: {
+            object: Object,
+            required: true,
+        },
+    },
+}
+</script>

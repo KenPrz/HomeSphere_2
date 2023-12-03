@@ -57,4 +57,13 @@ class User extends Authenticatable
         return $this->hasOne(Home::class);
     }
 
+    public function homes()
+    {
+        return $this->hasMany(Home::class, 'owner_id');
+    }
+
+    public function homeMembers()
+    {
+        return $this->hasMany(HomeMember::class, 'member_id');
+    }
 }

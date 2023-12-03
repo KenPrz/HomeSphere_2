@@ -6,6 +6,7 @@ use App\Models\Api_key;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Controllers\apiKeyController;
+use App\Models\User;
 class AppUtilities extends Controller
 {
     /**
@@ -22,7 +23,7 @@ class AppUtilities extends Controller
                 ->where('home_members.member_id', $user->id)
                 ->select('homes.*', 'home_members.role')
                 ->first();
-
+            
         return $homeData;
     }
     

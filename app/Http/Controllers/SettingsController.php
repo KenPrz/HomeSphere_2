@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\home;
 use Illuminate\Http\Request;
 use App\Http\Requests\Settings\NewKeyRequest;
 use Illuminate\Support\Str;
@@ -34,6 +34,9 @@ class SettingsController extends Controller
      */
     public function index()
     {
+        // $home = home::find(1);
+        // $members = $home->members->all();
+        // dd($members);
         $user = auth()->user();
         $homeData = $this->appUtilities->findHomeData($user);
         $homeMembers = $this->appUtilities->getHomeMembers($homeData->id);

@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-class home extends Model
+use Illuminate\Notifications\Notifiable;
+class Home extends Model
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     public function owner()
     {
@@ -16,7 +16,7 @@ class home extends Model
 
     public function members()
     {
-        return $this->belongsToMany(User::class, 'home_member', 'home_id', 'member_id');
+        return $this->hasMany(HomeMember::class, 'home_id');
     }
 
     public function rooms()

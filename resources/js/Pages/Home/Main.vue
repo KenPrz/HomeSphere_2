@@ -12,6 +12,7 @@ import { Head } from "@inertiajs/vue3";
 <template>
     <Head title="Dashboard" />
     <AuthenticatedLayout
+        :notifications="$page.props.notifications"
         :homeData="$page.props.homeData"
     >
         <template #header>
@@ -97,6 +98,7 @@ export default {
         ModeCard,
     },
     props: {
+        notifications: Array,
         homeData: Object,
         userList: Object,
         appliances: Object,

@@ -11,6 +11,7 @@ use App\Http\Controllers\HomeMemberController;
 use App\Http\Controllers\ModesController;
 use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\NotificationHandler;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -47,7 +48,6 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/home',[HomeCreationController::class, 'verify'])->name('verify');
-
     Route::get('/create_home',[HomeCreationController::class, 'create_home'])->name('create_home');
     Route::post('/create_home',[HomeCreationController::class, 'new_home'])->name('new_home');
     Route::post('/join_home',[HomeCreationController::class, 'join_home'])->name('join_home');

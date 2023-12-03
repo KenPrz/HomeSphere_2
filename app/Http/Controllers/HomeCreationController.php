@@ -37,7 +37,9 @@ class HomeCreationController extends Controller
             ->first();
     
         if (!$userRole) {
-            return Inertia::render('CreateHome/Create');
+            return Inertia::render('CreateHome/Create', [
+                'notifications' => $user->notifications,
+            ]);
         }
     
         if ($user->has_home || in_array($userRole, ['member', 'owner','admin','pending'])) {
@@ -57,6 +59,7 @@ class HomeCreationController extends Controller
         $getAppliances = new AppliancesController();
 
         $user = auth()->user();
+        $notifications = $user->notifications;
         $appUtilities = New AppUtilities;
         
         $homeData = $appUtilities->findHomeData($user);
@@ -89,8 +92,10 @@ class HomeCreationController extends Controller
                 ->get(['users.firstName', 'users.lastName','users.profile_image', 'users.is_online']);
                 // dd($appliances);
                 $api_key = $appUtilities->getApiKey($homeData);
+            
                 return Inertia::render('Dashboard', 
                 [   
+                    'notifications' => $notifications,
                     'homeData' => $homeData,
                     'userList' => $userList, 
                     'appliances' => $appliances,
@@ -108,6 +113,7 @@ class HomeCreationController extends Controller
             $homeData->invite_code=null;
             $homeData->owner_id=null;
             return Inertia::render('Dashboard',[
+                'notifications' => $notifications,
                 'homeData' => $homeData,
                 'userList' => null, 
                 'appliances' => null,
