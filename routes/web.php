@@ -11,6 +11,7 @@ use App\Http\Controllers\ModesController;
 use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\UserNotificationController;
+use App\Http\Controllers\ToggleController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -46,7 +47,8 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::put('notification/read', [UserNotificationController::class, 'markAsRead'])->name('notification.read');
+    Route::put('/notification/read', [UserNotificationController::class, 'markAsRead'])->name('notification.read');
+    Route::patch('/user/notification/all-read', [UserNotificationController::class,'markAllRead'])->name('notification.allRead');
     Route::get('/home',[HomeCreationController::class, 'verify'])->name('verify');
     Route::get('/create_home',[HomeCreationController::class, 'create_home'])->name('create_home');
     Route::post('/create_home',[HomeCreationController::class, 'new_home'])->name('new_home');
@@ -80,6 +82,7 @@ Route::middleware(['auth','checkHasHome'])->group(function () {
     Route::post('/modes/schedule',[ModesController::class, 'scheduleMode'])->name('modes.schedule');
     Route::post('/modes/environment',[ModesController::class, 'environmentMode'])->name('modes.environment');
     Route::put('/modes/update-list',[ModesController::class, 'updateDeviceList'])->name('mode.updateDeviceList');
+    Route::put('/toggle-mode', [ToggleController::class, 'toggleMode'])->name('toggle.ModeState');
 
     Route::get('/settings',[SettingsController::class, 'index'])->name('settings.index');
     Route::delete('/leave', [SettingsController::class,'leaveHome'])->name('settings.leave');

@@ -16,6 +16,7 @@ import SelectedModeCard from './SelectedModeCard.vue';
                 <section class="mb-auto flex md:flex-col md:max-h-[600px] overflow-y-auto">
                     <div v-for="mode in modes" :key="mode.id">
                         <ClickableModeCard
+                            :user="$page.props.auth.user"
                             :homeData="homeData"
                             :mode="mode"
                             :devices="devices"

@@ -43,18 +43,16 @@ class ToggleController extends Controller
     public function toggleMode(Request $request)
     {
         $data = $this->validate($request, [
+            'user_id' => 'required|integer',
             'home_id' => 'required|integer',
             'mode_id' => 'required|integer',
             'is_active' => 'required|boolean',
         ]);
-
         if($data['is_active'] == true){
             $this->scheduledEventHandler->handleDaily($data['mode_id']);
-            return response()->json(['message' => 'data sent'], 200);
         }
         else if($data['is_active'] == false){
             $this->scheduledEventDeactivator->deactivateDaily($data['mode_id']);
-            return response()->json(['message' => 'data sent'], 200);
         }
     }
 }

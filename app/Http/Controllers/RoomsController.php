@@ -14,14 +14,16 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Home;
 use App\Models\User;
-use App\Notifications\RoomCreated;
+use App\Notifications\RoomNotification;
 use Illuminate\Support\Facades\Notification;
 class RoomsController extends Controller
 {   
     public $homeInstance;
+    public $appUtilities;
     public function __construct()
     {
-        $this->homeInstance = new home;
+        $this->appUtilities = new AppUtilities;
+        $this->homeInstance = new Home;
     }
     public function index()
     {
@@ -46,14 +48,11 @@ class RoomsController extends Controller
     public function addRoom(CreateRoomRequest $request)
     {   
         $validated = $request->validated();
-        $appUtilities = new AppUtilities;
         $user = auth()->user();
-        $homeData = $appUtilities->findHomeData($user);
-
+        $homeData = $this->appUtilities->findHomeData($user);
         $roomName = $validated['room_name'];
         $roomIcon = $validated['room_icon'];
         $this->createRoom($roomName,$roomIcon, $homeData->id, $user->id);
-
         return redirect()->back();
     }
 
@@ -72,20 +71,20 @@ class RoomsController extends Controller
 
     public function deleteRoom(Request $request)
     {   
-        $roomID = $request->input('room_id');
-        $this->deleteRoomByID($roomID);
-    }
-
-    public function openRoom($roomID)
-    {
-        $roomData = $this->getRoomByID($roomID);
-        $deviceData = $this->getDevicesInRoom($roomID);
-
-        return Inertia::render('Rooms/Room', [
-            'activeComponent' => 'Room ' . $roomData->id,
-            'room' => $roomData,
-            'devices' => $deviceData,
+        $request -> validate([
+            'room_id' => 'required | integer'
         ]);
+        $roomName = DB::table('rooms')->where('id', $request->room_id)->value('room_name');
+        $user = auth()->user();
+        $homeData = $this->appUtilities->findHomeData($user);
+        $this->deleteRoomByID($request->room_id);
+        $notificationData = [
+            'title' => 'Room Deleted',
+            'body'=> 'has deleted room: '. $roomName,
+            'user_name' => $user->firstName . ' ' . $user->lastName,
+            'icon' => $user->profile_image,
+        ];
+        $this->roomNotification($homeData->id,$notificationData);
     }
 
     private function createRoom($roomName, $roomIcon, $homeID, $roomOwnerID)
@@ -120,31 +119,19 @@ class RoomsController extends Controller
             'user_name' => $userName,
             'icon' => $userProfile,
         ];
-        $this->newRoomNotification($homeID,$notificationData);
+        $this->roomNotification($homeID,$notificationData);
     }
-
     private function deleteRoomByID($roomID)
     {
         DB::table('rooms')->where('id', $roomID)->delete();
     }
-
-    private function getRoomByID($roomID)
-    {
-        return DB::table('rooms')->where('id', $roomID)->first();
-    }
-
-    private function getDevicesInRoom($roomID)
-    {
-        return DB::table('devices')->where('room_id', $roomID)->get();
-    }
-
-    private function newRoomNotification($home_id,$notificationData)
+    private function roomNotification($home_id,$notificationData)
     {
         $home = Home::find($home_id);
-        $members = $home->members;
+        $members = $home->members->where('role', '!=', 'pending')->where('member_id', '!=', auth()->user()->id);
         foreach ($members as $member) {
             $user = User::find($member->member_id);
-            $user->notify(new RoomCreated($notificationData));
+            $user->notify(new RoomNotification($notificationData));
         }
     }
 }

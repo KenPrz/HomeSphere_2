@@ -13,7 +13,7 @@ export default {
     props: {
         unreadNotifications: {
             type: Array,
-            required: true,
+            required: null,
         },
     },
     components: {

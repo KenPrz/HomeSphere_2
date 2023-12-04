@@ -13,7 +13,7 @@ export default {
     props: {
         allNotifications: {
             type: Array,
-            required: true,
+            default: null,
         },
     },
     components: {

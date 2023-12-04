@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use App\Models\room;
+use App\Notifications\ModesNotification;
+use App\Models\Home;
+use App\Models\User;
 class ModesController extends Controller
 {
     private $appUtilities;
@@ -94,6 +97,13 @@ class ModesController extends Controller
                 'created_at' => now()
             ]);
         });
+        $notificationData = [
+            'title' => 'New Mode Created',
+            'body'=> 'has created a mode: '.$request->mode_name,
+            'user_name' => $user->firstName . ' ' . $user->lastName,
+            'icon' => $user->profile_image,
+        ];
+        $this->modeNotification($homeData->id,$notificationData);
     }
     /**
      * Update the mode.
@@ -102,6 +112,7 @@ class ModesController extends Controller
      * @return void
      */
     public function editMode(Request $request){
+        $user = auth()->user();
         $request -> validate([
             'mode_id' => 'required | integer',
             'mode_name' => 'required | string | max:20',
@@ -110,6 +121,14 @@ class ModesController extends Controller
             'mode_name' => $request->mode_name,
             'updated_at' => now()
         ]);
+        $homeData = $this->appUtilities->findHomeData($user);
+        $notificationData = [
+            'title' => 'Mode Updated',
+            'body'=> 'has updated mode name: '.$request->mode_name,
+            'user_name' => $user->firstName . ' ' . $user->lastName,
+            'icon' => $user->profile_image,
+        ];
+        $this->notifyOnEdit($homeData->id,$notificationData);
     }
 
     public function addDevice(Request $request){
@@ -152,8 +171,9 @@ class ModesController extends Controller
             'mode_id' => 'required | integer',
             'device_list' => 'array',
         ]);
-        if(count($request->device_list)==0){
-            $request->device_list = null;
+        $device_list = $request -> device_list;
+        if(count($device_list)==0){
+            $device_list = null;
         }
         $updatedModeDevices = json_encode($request->device_list);
         DB::table('mode_devices')->where('id',$request->mode_id)->update([
@@ -234,18 +254,45 @@ class ModesController extends Controller
      * @return void
      */
     public function deleteMode(Request $request){
+        $user = auth()->user();
+        $homeData = $this->appUtilities->findHomeData($user);
         $request -> validate([
             'mode_id' => 'required | integer',
         ]);
+        $mode = DB::table('modes')->where('id',$request->mode_id)->first();
         DB::table('modes')->where('id',$request->mode_id)->delete();
+        $notificationData = [
+            'title' => 'Mode Deleted',
+            'body'=> 'has deleted mode: '.$mode->mode_name,
+            'user_name' => $user->firstName . ' ' . $user->lastName,
+            'icon' => $user->profile_image,
+        ];
+        $this->modeNotification($homeData->id,$notificationData);
     }
-
     protected function getRooms($home_id){
         return Room::with('devices', 'tempSensor', 'humiditySensor', 'motionSensor')
                 ->where('home_id', $home_id)
                 ->select(['rooms.*'])
                 ->addSelect(DB::raw('(SELECT COUNT(*) FROM devices WHERE devices.room_id = rooms.id) as device_count'))
                 ->get();
+    }
+    private function modeNotification($home_id,$notificationData)
+    {
+        $home = Home::find($home_id);
+        $members = $home->members->where('role', '!=', 'pending')->where('member_id', '!=', auth()->user()->id);
+        foreach ($members as $member) {
+            $user = User::find($member->member_id);
+            $user->notify(new ModesNotification($notificationData));
+        }
+    }
+
+    private function notifyOnEdit($home_id,$notificationData){
+        $home = Home::find($home_id);
+        $members = $home->members->where('role', 'admin','owner')->where('member_id','!=',auth()->user()->id);
+            foreach ($members as $member) {
+                $user = User::find($member->member_id);
+                $user->notify(new ModesNotification($notificationData));
+            }
     }
 }
 

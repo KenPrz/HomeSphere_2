@@ -35,6 +35,7 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                             <template #content>
                                 <NotificationMain
                                     :notifications="notifications"
+                                    :user="user"
                                 />
                             </template>
                         </Dropdown>
@@ -147,6 +148,8 @@ export default {
                     this.playSound();
                     this.showModal = true;
                 }
+            }).listen('home_notification', (eventData) => {
+                console.log(eventData);
             })
         },
         subToUserChannel(user){

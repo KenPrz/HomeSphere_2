@@ -1,11 +1,14 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\User;
+use App\Models\Home;
 use App\Events\DeviceUpdateEvent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Events\Modes\ToggleModeEvent;
+use App\Notifications\ModesNotification;
 class ScheduledEventHandler extends Controller
 {
     public function handleSchedule($scheduledMode){
@@ -27,7 +30,13 @@ class ScheduledEventHandler extends Controller
             $homeId = DB::table('modes')->where('id', $mode_id)->value('home_id');
             
             event(new ToggleModeEvent($mode_id, true, $homeId));
-            
+            $user = auth()->user();
+            if($user){
+                $this->modeActivateNotification($homeId, $user->id, $mode_id);
+            }
+            else{
+                $this->modeActivateNotification($homeId, null, $mode_id);
+            }
             $data = DB::table('mode_devices')
                 ->where('mode_id', $mode_id)
                 ->get();
@@ -68,5 +77,37 @@ class ScheduledEventHandler extends Controller
     private function fireEvent($room_id,$device_id,$is_active){
         event(new DeviceUpdateEvent($room_id, $device_id, $is_active));
         echo 'Event fired.';
+    }
+    private function modeActivateNotification($home_id, $data, $mode_id){
+        $mode = DB::table('modes')->where('id', $mode_id)->first();
+        if($data!=null){
+            $user = auth()->user();
+            $notificationData = [
+                'title' => 'Mode Activated',
+                'body'=> 'has activated '.$mode->mode_name.'.',
+                'user_name' => $user->firstName . ' ' . $user->lastName,
+                'icon' => $user->profile_image,
+            ];
+            $home = Home::find($home_id);
+            $members = $home->members->where('role', '!=', 'pending')->where('member_id', '!=', auth()->user()->id);
+            foreach ($members as $member) {
+                $user = User::find($member->member_id);
+                $user->notify(new ModesNotification($notificationData));
+            }
+        }else{
+            $notificationData = [
+                'title' => 'Mode Activated',
+                'body'=> 'has activated '.$mode->mode_name.'.',
+                'user_name' => 'System: ',
+                'icon' => 'https://i.imgur.com/7JbYq6j.png',
+            ];
+            $home = Home::find($home_id);
+            $members = $home->members->where('role', '!=', 'pending');
+            foreach ($members as $member) {
+                $user = User::find($member->member_id);
+                $user->notify(new ModesNotification($notificationData));
+            }
+        }
+
     }
 }

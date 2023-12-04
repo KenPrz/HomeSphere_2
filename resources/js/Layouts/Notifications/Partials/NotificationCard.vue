@@ -52,6 +52,7 @@ export default {
     },
     methods: {
         markAsRead(){
+            if(this.notification.read_at !== null) return;
             this.$inertia.put(route('notification.read'), {
                 notification_id: this.notification.id,
             });

@@ -25,7 +25,6 @@ import Modal from "@/Components/Modal.vue";
                         $page.props.auth.user.lastName.slice(1).toLowerCase()
                     }}
                 </h2>
-                <h3 class="text-xs font-light">{{ homeData.role }}</h3>
             </div>
         </div>
         <div class="sm:mt-0 lg:mt-4">

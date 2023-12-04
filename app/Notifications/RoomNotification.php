@@ -6,8 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-
-class RoomCreated extends Notification
+class RoomNotification extends Notification
 {
     use Queueable;
 

@@ -71,6 +71,10 @@ export default {
             type: Object,
             required: true
         },
+        user: {
+            type: Object,
+            required: true
+        },
     },
     data(){
         return{
@@ -83,18 +87,16 @@ export default {
             this.$emit('mode-selected',data,devices);
         },
         submit() {
-            axios.put(`/api/toggle-mode`, {
+            this.$inertia.put(route('toggle.ModeState'), {
+                user_id: this.user.id,
                 mode_id: this.mode.id,
                 home_id: this.homeData.id,
                 is_active: this.is_active.data,
-            })
-                .then(response => {
-                    // Handle the response as needed.
-                    // console.log(response); //for debugging only remove at prod
-                })
-                .catch(error => {
-                    // console.log(error); //for debugging only remove at prod
-                });
+            }, {
+                onSuccess: () => {
+                    console.log('success');
+                },
+            });
         },subscribeToHomeChannel(homeId) {
             // Subscribe to the new channel
             this.homeChannel = window.Echo.private(`home.${homeId}`);
