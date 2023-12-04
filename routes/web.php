@@ -6,12 +6,11 @@ use App\Http\Controllers\CancelRequest;
 use App\Http\Controllers\DeviceController;
 use App\Http\Controllers\ImageHandlerController;
 use App\Http\Controllers\HomeCreationController;
-use App\Http\Controllers\HomeDataController;
 use App\Http\Controllers\HomeMemberController;
 use App\Http\Controllers\ModesController;
 use App\Http\Controllers\RoomsController;
 use App\Http\Controllers\SettingsController;
-use App\Http\Controllers\NotificationHandler;
+use App\Http\Controllers\UserNotificationController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -47,6 +46,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::put('notification/read', [UserNotificationController::class, 'markAsRead'])->name('notification.read');
     Route::get('/home',[HomeCreationController::class, 'verify'])->name('verify');
     Route::get('/create_home',[HomeCreationController::class, 'create_home'])->name('create_home');
     Route::post('/create_home',[HomeCreationController::class, 'new_home'])->name('new_home');

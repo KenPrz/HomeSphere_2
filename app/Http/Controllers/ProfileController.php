@@ -17,11 +17,14 @@ class ProfileController extends Controller
      * Display the user's profile form.
      */
     public function edit(Request $request): Response
-    {
+    {   
+        $user = auth()->user();
+        $notifications = $user->notifications;
         $appUtilities = New AppUtilities;
         $user = auth()->user();
         $homeData = $appUtilities->findHomeData($user);
         return Inertia::render('Profile/Main', [
+            'notifications'=> $user->notifications,
             'homeData'=> $homeData,
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),

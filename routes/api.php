@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ToggleController;
 use App\Http\Controllers\NodeMCUController;
+use App\Http\Controllers\NotificationHandler;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -28,3 +29,4 @@ Route::post('/post-data', [NodeMCUController::class, 'receiveData']);
 Route::post('/device-toggle', [ToggleController::class, 'deviceToggle'])->name('toggle.DeviceState');
 Route::put('/motion-sensor-toggle', [MotionSensorController::class,'toggleMotionSensor'])->name('toggle.MotionSensor');
 Route::put('/toggle-mode', [ToggleController::class, 'toggleMode'])->name('toggle.ModeState');
+// Route::get('/user/notification', [NotificationHandler::class, 'getNotifications'])->name('user.notification');

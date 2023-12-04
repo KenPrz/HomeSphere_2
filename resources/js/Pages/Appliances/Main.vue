@@ -1,6 +1,7 @@
 <template>
     <Head title="Appliances" />
     <AuthenticatedLayout
+        :notifications="$page.props.notifications"
         :homeData="$page.props.homeData"
     >
         <template #header>

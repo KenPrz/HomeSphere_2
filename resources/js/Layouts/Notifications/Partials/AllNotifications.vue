@@ -2,7 +2,7 @@
     import NotificationCard from "./NotificationCard.vue";
 </script>
 <template>
-        <div v-for="notification in notifications" :key="notification.id">
+        <div v-for="notification in allNotifications" :key="notification.id">
             <NotificationCard
                 :notification="notification"
             />
@@ -11,9 +11,9 @@
 <script>
 export default {
     props: {
-        notifications: {
+        allNotifications: {
             type: Array,
-            default: null,
+            required: true,
         },
     },
     components: {

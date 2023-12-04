@@ -27,8 +27,8 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                                 <div class="relative transition duration-200 hover:scale-95 cursor-pointer">
                                     <img class="h-9 p-2 rounded-full w-auto bg-slate-500 mr-2"
                                     :src="'/img-assets/nav-vectors/notification.svg'" alt="" />
-                                    <div v-if="notifications > 0" class="absolute top-6 left-6 me-2 flex items-center justify-center border bg-red-500 text-white rounded-full w-[15px] h-[15px]">
-                                        <span class="text-xs font-extralight">{{ countNotifications }}</span>
+                                    <div v-if="countUnreadNotifications" class="absolute top-6 left-6 me-2 flex items-center justify-center border bg-red-500 text-white rounded-full w-[15px] h-[15px]">
+                                        <span class="text-xs font-extralight">{{ countUnreadNotifications }}</span>
                                     </div>
                                 </div>
                             </template>
@@ -119,6 +119,7 @@ export default {
             homeChannel: null,
             motionDetectedRoomName: { data: null },
             showModal: false,
+
         };
     },
     mounted() {
@@ -182,9 +183,11 @@ export default {
         },
     },
     computed: {
-        countNotifications() {
-            if (this.notifications != null){
-                return this.notifications.length;
+        countUnreadNotifications() {
+            if (this.notifications) {
+                return this.notifications.filter((notification) => {
+                    return notification.read_at == null;
+                }).length;
             }
         },
     }

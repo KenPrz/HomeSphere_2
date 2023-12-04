@@ -46,6 +46,7 @@ class ModesController extends Controller
             $modes = null;
         }
         return Inertia::render('Modes/Main', [
+            'notifications' => $user->notifications,
             'homeData' => $homeData,
             'modes' => $modes,
             'roomsData' => $roomsData,

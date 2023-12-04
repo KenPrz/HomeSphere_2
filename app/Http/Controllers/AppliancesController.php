@@ -15,6 +15,7 @@ class AppliancesController extends Controller
         $searchData = Request::only('search');
         $appliances = $this->getFilteredAppliances($homeData->id, $searchData);
         return Inertia::render('Appliances/Main', [
+            'notifications' => $user->notifications,
             'homeData' => $homeData,
             'filters' => Request::only('search'),
             'appliances' => $appliances,

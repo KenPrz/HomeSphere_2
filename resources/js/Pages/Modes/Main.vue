@@ -8,7 +8,8 @@ import CreateFirstMode from "./Partials/CreateFirstMode.vue";
 <template>
     <Head title="Dashboard" />
     <AuthenticatedLayout
-        :homeData="homeData"
+        :notifications="$page.props.notifications"
+        :homeData="$page.props.homeData"
     >
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 space-y-6 leading-tight">

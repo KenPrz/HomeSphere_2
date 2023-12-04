@@ -37,6 +37,7 @@ class RoomsController extends Controller
             ->get();
     
         return Inertia::render('Rooms/Main', [
+            'notifications' => $user->notifications,
             'homeData' => $homeData,
             'rooms' => $roomData,
         ]);

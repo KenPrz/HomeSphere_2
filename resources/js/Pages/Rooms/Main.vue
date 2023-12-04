@@ -21,7 +21,8 @@ const setActiveComponent = (componentName, room) => {
 <template>
     <Head title="Rooms" />
     <AuthenticatedLayout
-    :homeData="$page.props.homeData"
+        :notifications="$page.props.notifications"
+        :homeData="$page.props.homeData"
     >
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">

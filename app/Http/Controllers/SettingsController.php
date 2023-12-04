@@ -34,15 +34,13 @@ class SettingsController extends Controller
      */
     public function index()
     {
-        // $home = home::find(1);
-        // $members = $home->members->all();
-        // dd($members);
         $user = auth()->user();
         $homeData = $this->appUtilities->findHomeData($user);
         $homeMembers = $this->appUtilities->getHomeMembers($homeData->id);
         $api_key = ($homeData->role == ('admin' || 'owner')) ? $this->appUtilities->getApiKey($homeData) : null;
 
         return Inertia::render('Settings/Main', [
+            'notifications' => $user->notifications,
             'homeData' => $homeData,
             'homeMembers' => $homeMembers,
             'api_key' => $api_key,

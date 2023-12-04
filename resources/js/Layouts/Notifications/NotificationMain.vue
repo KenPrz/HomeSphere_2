@@ -11,12 +11,12 @@ import UnreadNotifications from "./Partials/UnreadNotifications.vue";
             </div>
             <div class="flex mb-2">
                 <button @click="selectAll" 
-                    :class="[selected.all == true ? 'bg-slate-500 text-slate-50' : 'bg-slate-200 text-slate-600']"
+                    :class="[selected.all == true ? 'bg-slate-500 text-white' : 'bg-slate-200 text-slate-600']"
                     class="p-1 px-3 text-sm font-medium tracking-wide me-2 bg-slate-200 rounded-2xl text-slate-600 hover:text-slate-50 hover:bg-slate-500 transition-colors duration-200">
                     All
                 </button>
                 <button
-                    :class="[selected.unread == true ? 'bg-slate-500 text-slate-50' : 'bg-slate-200 text-slate-600']"
+                    :class="[selected.unread == true ? 'bg-slate-500 text-white' : 'bg-slate-200 text-slate-600']"
                     @click="selectUnread" class="p-1 px-3 text-sm font-medium bg-slate-200 rounded-2xl text-slate-600 hover:text-slate-50 hover:bg-slate-500 transition-colors duration-200">
                     Unread
                 </button>
@@ -28,11 +28,13 @@ import UnreadNotifications from "./Partials/UnreadNotifications.vue";
             ">
             <div v-if="selected.all == true">
                 <AllNotifications
-                    :notifications="notifications"
+                    :allNotifications="allNotifications"
                 />
             </div>
             <div v-else>
-                <UnreadNotifications />
+                <UnreadNotifications 
+                    :unreadNotifications="unreadNotifications"
+                />
             </div>
             </section>
         </div>
@@ -44,7 +46,7 @@ export default {
     props: {
         notifications: {
             type: Array,
-            default: null,
+            required: true,
         },
     },
     components: {
@@ -64,6 +66,23 @@ export default {
             this.selected.unread = false;
         },
         selectUnread(){
+            this.selected.all = false;
+            this.selected.unread = true;
+        }
+    },
+    computed: {
+        allNotifications(){
+            return this.notifications;
+        },
+        unreadNotifications(){
+            return this.notifications.filter(notification => notification.read_at == null);
+        },
+        countUnreadNotifications(){
+            return this.unreadNotifications.length;
+        }
+    },
+    mounted(){
+        if(this.countUnreadNotifications > 0){
             this.selected.all = false;
             this.selected.unread = true;
         }
