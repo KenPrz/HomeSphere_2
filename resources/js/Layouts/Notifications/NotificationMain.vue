@@ -28,23 +28,33 @@ import UnreadNotifications from "./Partials/UnreadNotifications.vue";
                     mark all as read
                 </button>
             </div>
+            <div v-else-if="latestNotification.length > 0" class="w-full flex justify-end">
+                <button @click="clearArray" class="me-5 text-xs text-blue-500 hover:text-blue-600 hover:underline transition-all duration-300">
+                    mark all as read
+                </button>
+            </div>
         </div>
         <div class="max-h-72 overflow-y-scroll">
             <section class="py-1 px-2
             ">
             <div v-if="selected.all == true">
                 <AllNotifications
+                    :user_id="user.id"
                     :allNotifications="allNotifications"
+                    :latestNotification="latestNotification"
+                    @removeFromArray="removeFromArray"
                 />
             </div>
             <div v-else>
-                <UnreadNotifications 
+                <UnreadNotifications
+                    :user_id="user.id"
                     :unreadNotifications="unreadNotifications"
+                    :latestNotification="latestNotification"
+                    @removeFromArray="removeFromArray"
                 />
             </div>
             </section>
         </div>
-
     </div>
 </template>
 <script>
@@ -55,6 +65,10 @@ export default {
             required: true,
         },
         notifications: {
+            type: Array,
+            default: null,
+        },
+        latestNotification: {
             type: Array,
             default: null,
         },
@@ -87,6 +101,12 @@ export default {
         },
         countUnreadNotifications() {
             return this.unreadNotifications.length;
+        },
+        removeFromArray(notificationId){
+            this.$emit('removeFromArray', notificationId);
+        },
+        clearArray(){
+            this.$emit('clearArray');
         }
     },
     computed: {

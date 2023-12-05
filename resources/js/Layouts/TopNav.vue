@@ -28,14 +28,20 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                                     <img class="h-9 p-2 rounded-full w-auto bg-slate-500 mr-2"
                                     :src="'/img-assets/nav-vectors/notification.svg'" alt="" />
                                     <div v-if="countNullReadAt > 0" class="absolute top-6 left-6 me-2 flex items-center justify-center border bg-red-500 text-white rounded-full w-[15px] h-[15px]">
-                                        <span class="text-xs font-light">{{ countNullReadAt }}</span>
+                                        <span class="text-xs font-light">{{ countNullReadAt + latestNotification.length }}</span>
+                                    </div>
+                                    <div v-else-if="latestNotification.length > 0" class="absolute top-6 left-6 me-2 flex items-center justify-center border bg-red-500 text-white rounded-full w-[15px] h-[15px]">
+                                        <span class="text-xs font-light">{{ latestNotification.length }}</span>
                                     </div>
                                 </div>
                             </template>
                             <template #content>
                                 <NotificationMain
                                     :notifications="notifications"
+                                    :latestNotification="latestNotification"
                                     :user="user"
+                                    @clearArray="clearArray"
+                                    @removeFromArray="removeFromArray"
                                 />
                             </template>
                         </Dropdown>
@@ -63,7 +69,6 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                                             alt="">
                                         <h1>Settings</h1>
                                     </div>
-
                                 </DropdownLink>
                                 <DropdownLink :href="route('logout')" method="post" as="button"
                                     class="transition duration-500 hover:text-red-500">
@@ -120,7 +125,7 @@ export default {
             homeChannel: null,
             motionDetectedRoomName: { data: null },
             showModal: false,
-
+            latestNotification: [],
         };
     },
     mounted() {
@@ -148,13 +153,12 @@ export default {
                     this.playSound();
                     this.showModal = true;
                 }
-            }).listen('home_notification', (eventData) => {
-                console.log(eventData);
             })
         },
         subToUserChannel(user){
-            this.userChannel = window.Echo.private(`user.${user.id}`);
+            this.userChannel = window.Echo.private(`App.Models.User.${user.id}`);
             this.userChannel.subscribed(()=>{
+                console.log('subscribed to user channel');
             }).listen('.user_accepted', (eventData) => {
                 if(eventData.is_accepted==true){
                     console.log(eventData);
@@ -166,7 +170,9 @@ export default {
                 this.refreshPage();
             }).listen('.user_promoted', (eventData) => {
                 this.refreshPage();
-            })
+            }).notification((notification) => {
+                this.latestNotification.unshift(notification);
+            });
         },
         unsubscribeFromHomeChannel(homeId) {
             window.Echo.leave(`home.${homeId}`);
@@ -183,6 +189,18 @@ export default {
         },
         close() {
             this.showModal = false;
+        },
+        clearArray() {
+            const notificationIds = this.latestNotification.map(item => item.id);
+            if (notificationIds.length > 0) {
+                this.$inertia.put(route('notification.bulkRead'), {
+                    notification_ids: notificationIds,
+                });
+            }
+            this.latestNotification = [];
+        },
+        removeFromArray(notificationId) {
+            this.latestNotification = this.latestNotification.filter(item => item.id !== notificationId);
         },
     },
     computed: {

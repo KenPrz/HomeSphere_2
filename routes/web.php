@@ -48,6 +48,7 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::put('/notification/read', [UserNotificationController::class, 'markAsRead'])->name('notification.read');
+    Route::put('/notification/mark-all-read/bulk', [UserNotificationController::class,'markAsReadBulk'])->name('notification.bulkRead');
     Route::patch('/user/notification/all-read', [UserNotificationController::class,'markAllRead'])->name('notification.allRead');
     Route::get('/home',[HomeCreationController::class, 'verify'])->name('verify');
     Route::get('/create_home',[HomeCreationController::class, 'create_home'])->name('create_home');

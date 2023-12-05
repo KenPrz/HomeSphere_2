@@ -3,10 +3,12 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
-class RoomNotification extends Notification
+use App\Models\User;
+class RoomNotification extends Notification implements ShouldBroadcast
 {
     use Queueable;
 
@@ -26,7 +28,7 @@ class RoomNotification extends Notification
      */
     public function via(object $notifiable): array
     {
-        return ['database'];
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -55,4 +57,30 @@ class RoomNotification extends Notification
             ]
         ];
     }
+
+
+    /**
+     * Get the array representation of the notification for broadcasting.
+     *
+     * @param  object  $notifiable
+     * @return array<string, mixed>
+     */
+    public function toBroadcast(object $notifiable): array
+    {
+        $userDetails = User::find($this->roomData['user']);
+        return [
+            'data' => [
+                'notification' => [
+                    'title' => $this->roomData['title'],
+                    'body' => $this->roomData['body'],
+                    'user' => [
+                        'name' => $userDetails->firstName . ' ' . $userDetails->lastName,
+                        'photo' => $userDetails->profile_image,
+                    ],
+                    'type' => $this->roomData['type'],
+                ],
+            ],
+        ];
+    }
+
 }

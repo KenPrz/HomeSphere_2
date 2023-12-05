@@ -31,7 +31,7 @@ class userKickedEvent implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new PrivateChannel('user.'.$this->user_id)
+            new PrivateChannel('App.Models.User.'.$this->user_id)
         ];
     }
     public function broadcastAs(){
