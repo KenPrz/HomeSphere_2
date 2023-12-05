@@ -205,10 +205,16 @@ export default {
     },
     computed: {
         countNullReadAt() {
-            const nullReadAtNotifications = this.notifications.filter(
-                (notification) => notification.notification.read_at === null
-            );
-            return nullReadAtNotifications.length;
+            if (this.notifications == null) {
+                return 0;
+            }else if(this.notifications.length == 0){
+                return 0;
+            }else if(this.notifications.length > 0){
+                const nullReadAtNotifications = this.notifications.filter(
+                    (notification) => notification.notification.read_at === null
+                );
+                return nullReadAtNotifications.length;
+            }
         },
     }
 };

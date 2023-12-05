@@ -23,7 +23,7 @@ import UnreadNotifications from "./Partials/UnreadNotifications.vue";
                     </button>
                 </div>
             </div>
-            <div v-if="this.notifications.filter(notification => notification.notification.read_at === null).length > 0" class="w-full flex justify-end">
+            <div v-if="counter > 0" class="w-full flex justify-end">
                 <button @click="markAllAsRead" class="me-5 text-xs text-blue-500 hover:text-blue-600 hover:underline transition-all duration-300">
                     mark all as read
                 </button>
@@ -107,7 +107,7 @@ export default {
         },
         clearArray(){
             this.$emit('clearArray');
-        }
+        },
     },
     computed: {
         allNotifications() {
@@ -116,6 +116,10 @@ export default {
         unreadNotifications() {
             return this.notifications.filter(notification => notification.notification.read_at === null);
         },
+        counter(){
+            if(this.notifications == null) return;
+            return this.notifications.filter(notification => notification.notification.read_at === null).length
+        }
     },
     mounted(){
         if(this.countUnreadNotifications > 0){
