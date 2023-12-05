@@ -84,8 +84,8 @@ class ScheduledEventDeactivator extends Controller
             $notificationData = [
                 'title' => 'Mode Deactivated',
                 'body'=> 'has deactivated '.$mode->mode_name.'.',
-                'user_name' => $user->firstName . ' ' . $user->lastName,
-                'icon' => $user->profile_image,
+                'user' => $user->id,
+                'type' => 'deactivate',
             ];
             $home = Home::find($home_id);
             $members = $home->members->where('role', '!=', 'pending')->where('member_id', '!=', auth()->user()->id);
@@ -97,8 +97,8 @@ class ScheduledEventDeactivator extends Controller
             $notificationData = [
                 'title' => 'Mode Deactivated',
                 'body'=> 'has deactivated '.$mode->mode_name.'.',
-                'user_name' => 'System: ',
-                'icon' => 'https://i.imgur.com/7JbYq6j.png',
+                'user' => 'System: ',
+                'type' => 'deactivate',
             ];
             $home = Home::find($home_id);
             $members = $home->members->where('role', '!=', 'pending');

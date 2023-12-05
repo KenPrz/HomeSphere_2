@@ -11,20 +11,27 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Http\Controllers\NotificationHandler;
 class ProfileController extends Controller
 {
+    public $notificationHandler;
+    public function __construct(NotificationHandler $notificationHandler)
+    {
+        $this->notificationHandler = $notificationHandler;
+    }
     /**
      * Display the user's profile form.
      */
     public function edit(Request $request): Response
     {   
+
         $user = auth()->user();
-        $notifications = $user->notifications;
+        $notifications = $this->notificationHandler->getNotifications($user);
         $appUtilities = New AppUtilities;
         $user = auth()->user();
         $homeData = $appUtilities->findHomeData($user);
         return Inertia::render('Profile/Main', [
-            'notifications'=> $user->notifications,
+            'notifications'=> $notifications,
             'homeData'=> $homeData,
             'mustVerifyEmail' => $request->user() instanceof MustVerifyEmail,
             'status' => session('status'),

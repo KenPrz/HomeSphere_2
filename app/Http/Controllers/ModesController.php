@@ -9,8 +9,10 @@ use App\Models\room;
 use App\Notifications\ModesNotification;
 use App\Models\Home;
 use App\Models\User;
+use App\Http\Controllers\NotificationHandler;
 class ModesController extends Controller
 {
+    private $notificationHandler;
     private $appUtilities;
     private $getAppliances;
     /**
@@ -19,8 +21,9 @@ class ModesController extends Controller
      * @param AppUtilities $appUtilities The AppUtilities instance.
      * @param AppliancesController $getAppliances The AppliancesController instance.
      */
-    public function __construct(AppUtilities $appUtilities, AppliancesController $getAppliances)
+    public function __construct(AppUtilities $appUtilities, AppliancesController $getAppliances, NotificationHandler $notificationHandler)
     {
+        $this->notificationHandler = $notificationHandler;
         $this->appUtilities = $appUtilities;
         $this->getAppliances = $getAppliances;
     }
@@ -28,6 +31,7 @@ class ModesController extends Controller
     public function index()
     {
         $user = auth()->user();
+        $notifications = $this->notificationHandler->getNotifications($user);
         $homeData = $this->appUtilities->findHomeData($user);
         $roomsData = $this->getRooms($homeData->id);
         $appliances = $this->getAppliances->getAppliances($homeData);
@@ -49,7 +53,7 @@ class ModesController extends Controller
             $modes = null;
         }
         return Inertia::render('Modes/Main', [
-            'notifications' => $user->notifications,
+            'notifications' => $notifications,
             'homeData' => $homeData,
             'modes' => $modes,
             'roomsData' => $roomsData,
@@ -100,8 +104,8 @@ class ModesController extends Controller
         $notificationData = [
             'title' => 'New Mode Created',
             'body'=> 'has created a mode: '.$request->mode_name,
-            'user_name' => $user->firstName . ' ' . $user->lastName,
-            'icon' => $user->profile_image,
+            'user' => $user->id,
+            'type' => 'create',
         ];
         $this->modeNotification($homeData->id,$notificationData);
     }
@@ -125,8 +129,8 @@ class ModesController extends Controller
         $notificationData = [
             'title' => 'Mode Updated',
             'body'=> 'has updated mode name: '.$request->mode_name,
-            'user_name' => $user->firstName . ' ' . $user->lastName,
-            'icon' => $user->profile_image,
+            'user' => $user->id,
+            'type' => 'edit',
         ];
         $this->notifyOnEdit($homeData->id,$notificationData);
     }
@@ -264,8 +268,8 @@ class ModesController extends Controller
         $notificationData = [
             'title' => 'Mode Deleted',
             'body'=> 'has deleted mode: '.$mode->mode_name,
-            'user_name' => $user->firstName . ' ' . $user->lastName,
-            'icon' => $user->profile_image,
+            'user' => $user->id,
+            'type' => 'delete',
         ];
         $this->modeNotification($homeData->id,$notificationData);
     }
@@ -285,7 +289,6 @@ class ModesController extends Controller
             $user->notify(new ModesNotification($notificationData));
         }
     }
-
     private function notifyOnEdit($home_id,$notificationData){
         $home = Home::find($home_id);
         $members = $home->members->where('role', 'admin','owner')->where('member_id','!=',auth()->user()->id);

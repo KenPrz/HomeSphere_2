@@ -84,21 +84,18 @@ export default {
             this.$inertia.patch(route('notification.allRead'), {
                 user_id: this.user.id,
             });
+        },
+        countUnreadNotifications() {
+            return this.unreadNotifications.length;
         }
     },
     computed: {
-        allNotifications(){
+        allNotifications() {
             return this.notifications;
         },
-        unreadNotifications(){
-            if(this.notifications == null){
-                return [];
-            }
-            return this.notifications.filter(notification => notification.read_at == null);
+        unreadNotifications() {
+            return this.notifications.filter(notification => notification.notification.read_at === null);
         },
-        countUnreadNotifications(){
-            return this.unreadNotifications.length;
-        }
     },
     mounted(){
         if(this.countUnreadNotifications > 0){

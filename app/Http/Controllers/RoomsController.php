@@ -16,12 +16,15 @@ use App\Models\Home;
 use App\Models\User;
 use App\Notifications\RoomNotification;
 use Illuminate\Support\Facades\Notification;
+use App\Http\Controllers\NotificationHandler;
 class RoomsController extends Controller
 {   
+    public $notificationHandler;
     public $homeInstance;
     public $appUtilities;
     public function __construct()
     {
+        $this->notificationHandler = new NotificationHandler;
         $this->appUtilities = new AppUtilities;
         $this->homeInstance = new Home;
     }
@@ -29,6 +32,7 @@ class RoomsController extends Controller
     {
         $appUtilities = new AppUtilities;
         $user = auth()->user();
+        $notifications = $this->notificationHandler->getNotifications($user);
         $homeData = $appUtilities->findHomeData($user);
         
         // Retrieve the rooms and their sensor data
@@ -39,7 +43,7 @@ class RoomsController extends Controller
             ->get();
     
         return Inertia::render('Rooms/Main', [
-            'notifications' => $user->notifications,
+            'notifications' => $notifications,
             'homeData' => $homeData,
             'rooms' => $roomData,
         ]);
@@ -81,12 +85,11 @@ class RoomsController extends Controller
         $notificationData = [
             'title' => 'Room Deleted',
             'body'=> 'has deleted room: '. $roomName,
-            'user_name' => $user->firstName . ' ' . $user->lastName,
-            'icon' => $user->profile_image,
+            'user' => $user->id,
+            'type' => 'delete',
         ];
         $this->roomNotification($homeData->id,$notificationData);
     }
-
     private function createRoom($roomName, $roomIcon, $homeID, $roomOwnerID)
     {
         $room = Room::create([
@@ -111,13 +114,11 @@ class RoomsController extends Controller
             'motion_detected' => false
         ]);
         $user = auth()->user();
-        $userName = $user->firstName . ' ' . $user->lastName;
-        $userProfile = $user->profile_image;
         $notificationData = [
             'title' => 'New Room Created',
             'body'=> 'has created a new room',
-            'user_name' => $userName,
-            'icon' => $userProfile,
+            'user' => $user->id,
+            'type' => 'create',
         ];
         $this->roomNotification($homeID,$notificationData);
     }

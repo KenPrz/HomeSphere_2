@@ -45,7 +45,7 @@ const setActiveComponent = (componentName, room) => {
                             :active="activeComponent === room.room_name + ' ' + room.id">
                             {{ room.room_name }}
                         </NavButton>
-                        <button v-if="$page.props.homeData.role == 'owner' || $page.props.homeData.role == 'member'" @click="openAddRoomModal" type="button"
+                        <button v-if="$page.props.homeData.role == 'owner' || $page.props.homeData.role == 'member' || $page.props.homeData.role == 'admin'" @click="openAddRoomModal" type="button"
                             class="flex justify-center items-center rounded-2xl w-auto px-4 bg-zinc-600 text-white mx-1">
                             <img :src="'img-assets/vectors/plus-circle.svg'" alt="add" class="me-2 fill-white">
                             <span class="text-[12px] sm:text-[16px]">

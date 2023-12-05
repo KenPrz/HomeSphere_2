@@ -10,6 +10,7 @@ use App\Http\Controllers\ApiKeyController;
 use App\Http\Controllers\AppUtilities;
 use App\Http\Requests\Settings\HomeDeleteRequest;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\NotificationHandler;
 class SettingsController extends Controller
 {
     /**
@@ -18,11 +19,13 @@ class SettingsController extends Controller
      * @param AppUtilities $appUtilities
      * @param ApiKeyController $apiKeyController
      */
+    private $notificationHandler;
     private $appUtilities;
     private $apiKeyController;
 
-    public function __construct(AppUtilities $appUtilities, ApiKeyController $apiKeyController)
+    public function __construct(AppUtilities $appUtilities, ApiKeyController $apiKeyController, NotificationHandler $notificationHandler)
     {
+        $this->notificationHandler = $notificationHandler;
         $this->appUtilities = $appUtilities;
         $this->apiKeyController = $apiKeyController;
     }
@@ -35,12 +38,13 @@ class SettingsController extends Controller
     public function index()
     {
         $user = auth()->user();
+        $notifications = $this->notificationHandler->getNotifications($user);
         $homeData = $this->appUtilities->findHomeData($user);
         $homeMembers = $this->appUtilities->getHomeMembers($homeData->id);
         $api_key = ($homeData->role == ('admin' || 'owner')) ? $this->appUtilities->getApiKey($homeData) : null;
 
         return Inertia::render('Settings/Main', [
-            'notifications' => $user->notifications,
+            'notifications' => $notifications,
             'homeData' => $homeData,
             'homeMembers' => $homeMembers,
             'api_key' => $api_key,

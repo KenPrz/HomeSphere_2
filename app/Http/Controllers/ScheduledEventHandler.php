@@ -85,8 +85,8 @@ class ScheduledEventHandler extends Controller
             $notificationData = [
                 'title' => 'Mode Activated',
                 'body'=> 'has activated '.$mode->mode_name.'.',
-                'user_name' => $user->firstName . ' ' . $user->lastName,
-                'icon' => $user->profile_image,
+                'user' => $user->id,
+                'type' => 'activate'
             ];
             $home = Home::find($home_id);
             $members = $home->members->where('role', '!=', 'pending')->where('member_id', '!=', auth()->user()->id);
@@ -98,8 +98,8 @@ class ScheduledEventHandler extends Controller
             $notificationData = [
                 'title' => 'Mode Activated',
                 'body'=> 'has activated '.$mode->mode_name.'.',
-                'user_name' => 'System: ',
-                'icon' => 'https://i.imgur.com/7JbYq6j.png',
+                'user' => 'System: ',
+                'type' => 'activate',
             ];
             $home = Home::find($home_id);
             $members = $home->members->where('role', '!=', 'pending');

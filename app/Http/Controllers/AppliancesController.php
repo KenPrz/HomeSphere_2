@@ -5,17 +5,24 @@ use Illuminate\Support\Facades\Request;
 use App\Http\Controllers\AppUtilities;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
+use App\Http\Controllers\NotificationHandler;
 class AppliancesController extends Controller
 {
+    public $notificationHandler;
+    public function __construct(NotificationHandler $notificationHandler)
+    {
+        $this->notificationHandler = $notificationHandler;
+    }
     public function index()
     {
         $appUtilities = new AppUtilities();
         $user = auth()->user();
+        $notifications = $this->notificationHandler->getNotifications($user);
         $homeData = $appUtilities->findHomeData($user);
         $searchData = Request::only('search');
         $appliances = $this->getFilteredAppliances($homeData->id, $searchData);
         return Inertia::render('Appliances/Main', [
-            'notifications' => $user->notifications,
+            'notifications' => $notifications,
             'homeData' => $homeData,
             'filters' => Request::only('search'),
             'appliances' => $appliances,

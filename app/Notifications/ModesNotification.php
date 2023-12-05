@@ -53,8 +53,8 @@ class ModesNotification extends Notification
             'notification' =>  [
                 'title' => $this->modeData['title'],
                 'body' => $this->modeData['body'],
-                'user_name' => $this->modeData['user_name'],
-                'icon' => $this->modeData['icon'],
+                'user' => $this->modeData['user'],
+                'type' => $this->modeData['type'],
             ]
         ];
     }

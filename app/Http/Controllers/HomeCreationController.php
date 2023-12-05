@@ -16,8 +16,16 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
+use App\Http\Controllers\NotificationHandler;
 class HomeCreationController extends Controller
 {
+    public $notificationHandler;
+    public $applianceController;
+    public function __construct(NotificationHandler $notificationHandler, AppliancesController $applianceController)
+    {
+        $this->applianceController = $applianceController;
+        $this->notificationHandler = $notificationHandler;
+    }
 
     /**
      * FILEPATH: /c:/Users/Haru/Documents/GitHub/HomeSphere_2/app/Http/Controllers/HomeCreationController.php
@@ -31,6 +39,7 @@ class HomeCreationController extends Controller
     public function create_home()
     {   
         $user = auth()->user();
+        $notifications = $this->notificationHandler->getNotifications($user);
         $userRole = DB::table('home_members')
             ->where('member_id', $user->id)
             ->pluck('role')
@@ -38,7 +47,7 @@ class HomeCreationController extends Controller
     
         if (!$userRole) {
             return Inertia::render('CreateHome/Create', [
-                'notifications' => $user->notifications,
+                'notifications' => $notifications,
             ]);
         }
     
@@ -56,10 +65,10 @@ class HomeCreationController extends Controller
      */
     public function verify()
     {
-        $getAppliances = new AppliancesController();
 
         $user = auth()->user();
-        $notifications = $user->notifications;
+
+        $notifications = $this->notificationHandler->getNotifications($user);
         $appUtilities = New AppUtilities;
         
         $homeData = $appUtilities->findHomeData($user);
@@ -72,7 +81,7 @@ class HomeCreationController extends Controller
                 ->select(['rooms.*'])
                 ->addSelect(DB::raw('(SELECT COUNT(*) FROM devices WHERE devices.room_id = rooms.id) as device_count'))
                 ->get();
-            $appliances = $getAppliances->getAppliances($homeData);
+            $appliances = $this->applianceController->getAppliances($homeData);
             
             $modes = DB::table('modes')
                 ->select('modes.*', 'mode_devices.device_list', 'mode_schedules.*', 'mode_environments.*')

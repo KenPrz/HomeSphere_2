@@ -50,8 +50,8 @@ class RoomNotification extends Notification
             'notification' =>  [
                 'title' => $this->roomData['title'],
                 'body' => $this->roomData['body'],
-                'user_name' => $this->roomData['user_name'],
-                'icon' => $this->roomData['icon'],
+                'user' => $this->roomData['user'],
+                'type' => $this->roomData['type'],
             ]
         ];
     }

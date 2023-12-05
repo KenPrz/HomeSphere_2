@@ -9,14 +9,14 @@ const calculateTimeDifference = (createdAt) => {
 <template>
     <div class="container text-md">
         <div @click="markAsRead()"
-            :class="[notification.read_at !== null ? 'text-slate-600' : 'bg-slate-200']"
+            :class="[notification.notification.read_at !== null ? 'text-slate-600' : 'bg-slate-200']"
             class="container my-1 px-1 py-1 rounded-md flex justify-around items-center cursor-pointer hover:bg-slate-300 transition-colors duration-200">
             <div class="flex item-center ms-2 me-1">
-                <v-img v-if="$page.props.auth.user.profile_image"
+                <v-img v-if="notification.user_details.photo"
                     class="rounded-full mx-auto"
                     width="60"
                     :aspect-ratio="1"
-                    :src="'storage/' + $page.props.auth.user.profile_image"
+                    :src="'storage/'+notification.user_details.photo"
                     cover
                 ></v-img>
                 <v-img v-else
@@ -25,18 +25,20 @@ const calculateTimeDifference = (createdAt) => {
                     :aspect-ratio="1"
                     src="/img-assets/default_avatar.png"
                     cover
-                ></v-img>            </div>
+                >
+                </v-img>            
+            </div>
             <div class="mx-1 flex flex-col items-start">
                 <div
                     class="text-sm font-semibold text-slate-600">
-                    {{ notification.data.notification.user_name }}
+                    {{ notification.user_details.name }}
                 </div>
                 <div class="text-xs  text-slate-600">
-                    {{ notification.data.notification.body }}
+                    {{ notification.notification.data.body  }}
                 </div>
                 <div class="text-[10px] text-slate-600"
                 >
-                    <span>{{ calculateTimeDifference(notification.created_at) }}</span>
+                    <span>{{ calculateTimeDifference(notification.timestamps.created_at) }}</span>
                 </div>
             </div>
         </div>
@@ -52,9 +54,9 @@ export default {
     },
     methods: {
         markAsRead(){
-            if(this.notification.read_at !== null) return;
+            if(this.notification.notification.read_at !== null) return;
             this.$inertia.put(route('notification.read'), {
-                notification_id: this.notification.id,
+                notification_id: this.notification.notification.id,
             });
         }
     }
