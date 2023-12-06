@@ -3,23 +3,22 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use App\Models\User;
-class ModesNotification extends Notification implements ShouldBroadcast
+class HasLeft extends Notification implements ShouldBroadcast
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public $modeData;
-
-    public function __construct($modeData)
+    public $hasLeftData;
+    public function __construct($hasLeftData)
     {
-        $this->modeData = $modeData;
+        $this->hasLeftData = $hasLeftData;
     }
 
     /**
@@ -38,9 +37,9 @@ class ModesNotification extends Notification implements ShouldBroadcast
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('Has Left the home')
+                    ->line('The introduction to the notification.')
                     ->action('Notification Action', url('/'))
-                    ->line('Please check your home');
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -52,27 +51,27 @@ class ModesNotification extends Notification implements ShouldBroadcast
     {
         return [
             'notification' =>  [
-                'title' => $this->modeData['title'],
-                'body' => $this->modeData['body'],
-                'user' => $this->modeData['user'],
-                'type' => $this->modeData['type'],
+                'title' => $this->hasLeftData['title'],
+                'body' => $this->hasLeftData['body'],
+                'user' => $this->hasLeftData['user'],
+                'type' => $this->hasLeftData['type'],
             ]
         ];
     }
 
     public function toBroadcast(object $notifiable): array
     {
-        $userDetails = User::find($this->modeData['user']);
+        $userDetails = User::find($this->hasLeftData['user']);
         return [
             'data' => [
                 'notification' => [
-                    'title' => $this->modeData['title'],
-                    'body' => $this->modeData['body'],
+                    'title' => $this->hasLeftData['title'],
+                    'body' => $this->hasLeftData['body'],
                     'user' => [
                         'name' => $userDetails->firstName . ' ' . $userDetails->lastName,
                         'photo' => $userDetails->profile_image,
                     ],
-                    'type' => $this->modeData['type'],
+                    'type' => $this->hasLeftData['type'],
                 ],
             ],
         ];

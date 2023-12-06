@@ -8,18 +8,17 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 use App\Models\User;
-class ModesNotification extends Notification implements ShouldBroadcast
+class WantsToJoin extends Notification implements ShouldBroadcast
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public $modeData;
-
-    public function __construct($modeData)
+    public $wantsToJoinData;
+    public function __construct($wantsToJoinData)
     {
-        $this->modeData = $modeData;
+        $this->wantsToJoinData = $wantsToJoinData;
     }
 
     /**
@@ -29,7 +28,7 @@ class ModesNotification extends Notification implements ShouldBroadcast
      */
     public function via(object $notifiable): array
     {
-        return ['database','broadcast'];
+        return ['database', 'broadcast'];
     }
 
     /**
@@ -38,9 +37,9 @@ class ModesNotification extends Notification implements ShouldBroadcast
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-                    ->line('Has Left the home')
+                    ->line('The introduction to the notification.')
                     ->action('Notification Action', url('/'))
-                    ->line('Please check your home');
+                    ->line('Thank you for using our application!');
     }
 
     /**
@@ -52,27 +51,27 @@ class ModesNotification extends Notification implements ShouldBroadcast
     {
         return [
             'notification' =>  [
-                'title' => $this->modeData['title'],
-                'body' => $this->modeData['body'],
-                'user' => $this->modeData['user'],
-                'type' => $this->modeData['type'],
+                'title' => $this->wantsToJoinData['title'],
+                'body' => $this->wantsToJoinData['body'],
+                'user' => $this->wantsToJoinData['user'],
+                'type' => $this->wantsToJoinData['type'],
             ]
         ];
     }
 
     public function toBroadcast(object $notifiable): array
     {
-        $userDetails = User::find($this->modeData['user']);
+        $userDetails = User::find($this->wantsToJoinData['user']);
         return [
             'data' => [
                 'notification' => [
-                    'title' => $this->modeData['title'],
-                    'body' => $this->modeData['body'],
+                    'title' => $this->wantsToJoinData['title'],
+                    'body' => $this->wantsToJoinData['body'],
                     'user' => [
                         'name' => $userDetails->firstName . ' ' . $userDetails->lastName,
                         'photo' => $userDetails->profile_image,
                     ],
-                    'type' => $this->modeData['type'],
+                    'type' => $this->wantsToJoinData['type'],
                 ],
             ],
         ];

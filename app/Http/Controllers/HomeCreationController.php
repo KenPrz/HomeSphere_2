@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\motion_sensor;
 use App\Models\room;
 use App\Models\User;
+use App\Models\Home;
 use App\Http\Controllers\AppUtilities;
 use App\Models\humidity_sensor;
 use App\Models\temp_sensor;
@@ -17,12 +18,17 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 use App\Http\Controllers\NotificationHandler;
+use App\Notifications\HasJoined;
+use App\Notifications\WantsToJoin;
+
 class HomeCreationController extends Controller
 {
     public $notificationHandler;
     public $applianceController;
-    public function __construct(NotificationHandler $notificationHandler, AppliancesController $applianceController)
+    public $appUtilities;
+    public function __construct(NotificationHandler $notificationHandler, AppliancesController $applianceController, AppUtilities $appUtilities)
     {
+        $this->appUtilities = $appUtilities;
         $this->applianceController = $applianceController;
         $this->notificationHandler = $notificationHandler;
     }
@@ -222,12 +228,30 @@ class HomeCreationController extends Controller
                     ]);
                     User::where('id', Auth::id())->update(['is_online' => true, 'has_home' => false]);
                 });
+
+                $notificationData = [
+                    'title' => 'Wants to join',
+                    'body'=> 'wants to join this home.',
+                    'user' => $user_id,
+                    'type' => 'update',
+                ];
+                $this->wantsToJoin($notificationData);
                 event(new MemberJoinedEvent($user_id, $home_id));
                 return redirect()->route('dashboard');
             } catch (\Exception $e) {
-                // Handle the exception here
                 return back()->route('/welcome')->with('error', 'An error occurred while joining the home. Please try again later.');
             }
         }
+    }
+    public function wantsToJoin($notificationData){
+        $user = auth()->user();
+        $homeData = $this->appUtilities->findHomeData($user);
+        $home_id = $homeData->id;
+        $home = Home::find($home_id);
+        $members = $home->members->where('role','admin','owner')->where('member_id','!=',auth()->user()->id);
+            foreach ($members as $member) {
+                $user = User::find($member->member_id);
+                $user->notify(new WantsToJoin($notificationData));
+            }
     }
 }

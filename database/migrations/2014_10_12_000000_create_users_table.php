@@ -18,6 +18,8 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->boolean('has_changed_email')->default(false);
             $table->timestamp('email_verified_at')->nullable();
+            $table->boolean('has_2fa')->default(false);
+            $table->boolean('has_login_alerts')->default(false);
             $table->string('password');
             $table->string('profile_image')->nullable();
             $table->boolean('has_home')->default(false);

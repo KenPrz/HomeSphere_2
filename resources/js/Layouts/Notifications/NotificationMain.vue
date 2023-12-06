@@ -2,6 +2,9 @@
 import NotificationCard from "./Partials/NotificationCard.vue";
 import AllNotifications from "./Partials/AllNotifications.vue";
 import UnreadNotifications from "./Partials/UnreadNotifications.vue";
+import { defineEmits } from 'vue';
+
+const emits = defineEmits(['removeFromArray', 'clearArray']);
 </script>
 <template>
     <div class="container flex-col">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Home;
 use App\Models\User;
 use App\Events\UserAcceptedEvent;
 use App\Events\userKickedEvent;
@@ -12,6 +13,10 @@ use Inertia\Inertia;
 use App\Http\Controllers\AppUtilities;
 use App\Events\UserPromotedEvent;
 use App\Events\UserDemotedEvent;
+use App\Notifications\HasJoined;
+use App\Notifications\WasDemoted;
+use App\Notifications\WasKicked;
+use App\Notifications\WasPromoted;
 
 class HomeMemberController extends Controller
 {
@@ -30,11 +35,17 @@ class HomeMemberController extends Controller
             $homeData = $this->appUtilities->findHomeData($user);
             $data = $this->updateUser($homeData, $user->id);
             if($data){
+                $notificationData = [
+                    'title' => 'User Joined',
+                    'body'=> $user->firstName.' has joined this home approved by '. auth()->user()->firstName . ' ' . auth()->user()->lastName .'.' ,
+                    'user' => $user->id,
+                    'type' => 'update',
+                ];
+                $this->notifyOnJoin($homeData->id, $notificationData);
                 event(new UserAcceptedEvent($user->id));
             }
         }
     }
-
     public function rejectUser(Request $request)
     {
         $userData = $request->input('userData');
@@ -63,7 +74,14 @@ class HomeMemberController extends Controller
                 ->where('home_id', $homeData->id)
                 ->where('member_id', $user->id)
                 ->update(['role' => 'admin']);
-            event(new UserPromotedEvent($user->id));
+                $notificationData = [
+                    'title' => 'User Promoted',
+                    'body'=> 'has promoted '. $user->firstName . ' to admin.',
+                    'user' => auth()->user()->id,
+                    'type' => 'update',
+                ];
+                $this->notifyOnPromote($homeData->id, $notificationData);
+                event(new UserPromotedEvent($user->id));
         } else {
             return response()->json(['message' => 'User not found'], 404);
         }
@@ -81,6 +99,13 @@ class HomeMemberController extends Controller
                 ->where('home_id', $homeData->id)
                 ->where('member_id', $user->id)
                 ->update(['role' => 'member']);
+                $notificationData = [
+                    'title' => 'User Demoted',
+                    'body'=> 'has demoted '. $user->firstName . ' to member.',
+                    'user' => auth()->user()->id,
+                    'type' => 'update',
+                ];
+                $this->notifyOnDemote($homeData->id, $notificationData);
             event(new UserDemotedEvent($user->id));
         } else {
             return response()->json(['message' => 'User not found'], 404);
@@ -89,8 +114,17 @@ class HomeMemberController extends Controller
     public function kickUser(Request $request){
         $userData = $request->input('userData');
         $user = User::find($userData['id']);
+        $authenticatedUser = auth()->user();
         $homeData = $this->appUtilities->findHomeData($user);
         if ($user) {
+            $notificationData = [
+                'title' => 'User Kicked',
+                'body'=> 'has kicked '. $user->firstName . ' ' . $user->lastName .'.',
+                'user' => $authenticatedUser->id,
+                'type' => 'delete',
+            ];
+            $this->notifyOnKick($homeData->id, $notificationData);
+
             DB::transaction(function () use ($user, $homeData) {
                 User::where('id', $user->id)->update(['has_home' => false]);
                 DB::table('home_members')
@@ -132,5 +166,38 @@ class HomeMemberController extends Controller
             ->where('member_id', $userId)
             ->where('home_id', $homeId)
             ->delete();
+    }
+
+    private function notifyOnKick($home_id,$notificationData){
+        $home = Home::find($home_id);
+        $members = $home->members->where('role','!=','pending')->where('member_id','!=',auth()->user()->id);
+            foreach ($members as $member) {
+                $user = User::find($member->member_id);
+                $user->notify(new WasKicked($notificationData));
+            }
+    }
+    private function notifyOnPromote($home_id,$notificationData){
+        $home = Home::find($home_id);
+        $members = $home->members->where('role','!=', 'pending')->where('member_id','!=',auth()->user()->id);
+            foreach ($members as $member) {
+                $user = User::find($member->member_id);
+                $user->notify(new WasPromoted($notificationData));
+            }
+    }
+    private function notifyOnDemote($home_id,$notificationData){
+        $home = Home::find($home_id);
+        $members = $home->members->where('role','!=', 'pending')->where('member_id','!=',auth()->user()->id);
+            foreach ($members as $member) {
+                $user = User::find($member->member_id);
+                $user->notify(new WasDemoted($notificationData));
+            }
+    }
+    private function notifyOnJoin($home_id,$notificationData){
+        $home = Home::find($home_id);
+        $members = $home->members->where('role','!=', 'pending')->where('member_id','!=',auth()->user()->id);
+            foreach ($members as $member) {
+                $user = User::find($member->member_id);
+                $user->notify(new HasJoined($notificationData));
+            }
     }
 }

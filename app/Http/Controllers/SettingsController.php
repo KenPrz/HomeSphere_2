@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\home;
+use App\Models\User;
+use App\Models\Home;
 use Illuminate\Http\Request;
 use App\Http\Requests\Settings\NewKeyRequest;
 use Illuminate\Support\Str;
@@ -11,6 +12,8 @@ use App\Http\Controllers\AppUtilities;
 use App\Http\Requests\Settings\HomeDeleteRequest;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\NotificationHandler;
+use App\Notifications\HasLeft;
+
 class SettingsController extends Controller
 {
     /**
@@ -78,7 +81,6 @@ class SettingsController extends Controller
         DB::table('homes')->where('id', $request->homeData['id'])
             ->update(['invite_code'=>$new_invite_code,'updated_at'=>now()]);
     }
-
     /**
      * Leave the user's home and remove them from the home_members table.
      *
@@ -89,10 +91,19 @@ class SettingsController extends Controller
         $request ->validate([
                 'user'=> 'required',
             ]);
+        $user = auth()->user();
+        $homeData = $this->appUtilities->findHomeData($user);
         DB::transaction(function () use ($request) {
             DB::table('users')->where('id', $request->user['id']) -> update(['has_home' => false]);
             DB::table('home_members')->where('member_id', $request->user['id'] )->delete();
         });
+        $notificationData = [
+            'title' => 'User Left',
+            'body'=> 'has has left the home.',
+            'user' => $user->id,
+            'type' => 'delete',
+        ];
+        $this->notifyOnLeft($homeData->id, $notificationData);
         return redirect()->route('verify')->with('success','test');
     }
 
@@ -118,5 +129,14 @@ class SettingsController extends Controller
         }
     }
     
+    private function notifyOnLeft($home_id,$notificationData){
+        // dd($home_id);
+        $home = Home::find($home_id);
+        $members = $home->members->where('role','admin','owner')->where('member_id','!=',auth()->user()->id);
+            foreach ($members as $member) {
+                $user = User::find($member->member_id);
+                $user->notify(new HasLeft($notificationData));
+            }
+    }
 
 }
