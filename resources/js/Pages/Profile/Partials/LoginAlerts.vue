@@ -1,5 +1,6 @@
 <script setup>
     import PrimaryButton from '@/Components/PrimaryButton.vue';
+    import ToggleSwitch from '@/Components/ToggleSwitch.vue';
 </script>
 <template>
         <div class="container flex flex-col">
@@ -13,16 +14,48 @@
                         Email
                     </div>
                     <div class="text-sm font-light">
-                        {{ $page.props.auth.user.email }}
+                        {{ auth.user.email }}
                     </div>
                 </div>
                 <div class="flex items-center">
-                    <input type="radio" class="mr-5 cursor-pointer">
+                    <span class="me-2">{{ loginAlerts ? 'Enabled' : 'Disabled'  }}</span>
+                    <ToggleSwitch v-model="loginAlerts" />
                 </div>
             </div>
         </div>
-        <PrimaryButton>
-            Enable
+        <PrimaryButton @click="submit">
+            {{ loginAlerts ? 'Enable' : 'Disable'  }}
         </PrimaryButton>
     </div>
 </template>
+<script>
+    export default {
+        props: {
+            auth: {
+                type: Object,
+                required: true
+            }
+        },
+        data() {
+            return {
+                loginAlerts: this.auth.user.has_login_alerts
+            }
+        },
+        methods: {
+            submit(){
+                this.$inertia.put(route('profile.toggleAlerts'), {
+                    user_id: this.auth.user.id,
+                    loginAlerts: this.loginAlerts,
+                }),{
+                    preserveState: true,
+                    onSuccess: () => {
+                        this.$emit('close');
+                    },
+                    onError: () => {
+                        this.$toast.error('Something went wrong');
+                    }
+                }
+            }
+        }
+    }
+</script>

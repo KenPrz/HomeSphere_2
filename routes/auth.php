@@ -58,4 +58,5 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
                 ->name('logout');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::put('/profile/alerts', [ProfileController::class, 'toggleAlerts'])->name('profile.toggleAlerts');
 });

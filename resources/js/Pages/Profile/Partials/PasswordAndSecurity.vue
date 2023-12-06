@@ -48,7 +48,7 @@ import LoginAlerts from "./LoginAlerts.vue";
             @close="closeLoginAlertsModal"
         >
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <LoginAlerts class="max-w-xl" />
+                <LoginAlerts :auth="$page.props.auth" class="max-w-xl" />
             </div>
         </Modal>
     </div>

@@ -87,4 +87,9 @@ class ProfileController extends Controller
         $user->save();
         return Redirect::route('profile.edit');
     }
+
+    public function toggleAlerts(Request $request){
+        $user = auth()->user();
+        $result =User::where('id', $user->id)->update(['has_login_alerts' => $request->loginAlerts]);
+    }
 }
