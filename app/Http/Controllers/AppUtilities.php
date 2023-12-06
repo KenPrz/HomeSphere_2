@@ -48,7 +48,7 @@ class AppUtilities extends Controller
     public function getHomeMembers($homeId){
         $homeMembers = DB::table('home_members')
                 ->join('users', 'home_members.member_id', '=', 'users.id')
-                ->select('users.id', 'users.firstName', 'users.lastName','users.profile_image', 'home_members.role', 'home_members.joined_on')
+                ->select('users.id', 'users.firstName', 'users.lastName','users.profile_image', 'users.email_verified_at','home_members.role', 'home_members.joined_on')
                 ->where('home_members.home_id', $homeId)
                 ->orderBy('home_members.role','asc')
                 ->get();

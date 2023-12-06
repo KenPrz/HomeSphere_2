@@ -12,7 +12,7 @@ const emit = defineEmits(['close']);
 </script>
 <template>
     <div class="rounded-lg mt-2 ms-4 mb-1">
-        <p class="text-gray-600 mb-4 text-md">Do you want to approve this user's request to become a member?</p>
+        <p class="text-gray-600 mb-4 text-md text-center">Do you want to approve this user's request to become a member?</p>
 
         <div class="flex justify-end">
             <button @click="approveUser(userData)"

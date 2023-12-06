@@ -5,9 +5,12 @@ import KickUserDialog from './KickUserDialog.vue';
 import PromoteUserDialog from './PromoteUserDialog.vue';
 import DemoteUserDialog from './DemoteUserDialog.vue';
 import { defineEmits } from 'vue';
-
+import { formatDistanceToNow } from 'date-fns';
 const emit = defineEmits(["close"]);
-
+const calculateTimeDifference = (createdAt) => {
+    const createdTime = new Date(createdAt);
+    return formatDistanceToNow(createdTime, { addSuffix: true });
+};
 defineProps({
     userData: {
         type: Object,
@@ -28,8 +31,13 @@ defineProps({
                     <h2 class="text-xl font-semibold mt-4">{{ capitalizeFirstLetter(userData.firstName) + ' ' +
                         capitalizeFirstLetter(userData.lastName) }}</h2>
                     <p class="text-gray-500 text-sm">{{ capitalizeFirstLetter(userData.role) }}</p>
+                <div v-if="userData.email_verified_at == null">
+                    <p class="text-red-500 text-sm">This user is not verified</p>
                 </div>
-
+                <div v-else class="text-sm">
+                    <p>Verified: {{ calculateTimeDifference(userData.email_verified_at) }}</p>
+                </div>
+                </div>
                 <div v-if="userData.role == 'member' || userData.role == 'admin' || userData.role == 'owner'">
                     <p class="text-center text-gray-600 text-xs">Joined: {{ userData.joined_on }}</p>
                     <button v-if="userData.role == 'member'" @click="openUserPromotionModal(userData)" class="w-full bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg mt-2 transition duration-300">
