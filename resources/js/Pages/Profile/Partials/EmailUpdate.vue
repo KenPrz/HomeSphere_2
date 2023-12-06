@@ -31,7 +31,7 @@ const form = useForm({
             </p>
         </header>
 
-        <form @submit.prevent="form.patch(route('profile.update'))" class="mt-3 space-y-6">
+        <form @submit.prevent="form.patch(route('profile.updateEmail'))" class="mt-3 space-y-6">
             <div>
                 <InputLabel for="email" value="Email" />
 
@@ -48,13 +48,13 @@ const form = useForm({
             </div>
 
             <div v-if="mustVerifyEmail && user.email_verified_at === null">
-                <p class="text-sm mt-2 text-gray-800">
+                <p class="text-sm mt-2 text-gray-800 flex flex-col items-start">
                     Your email address is unverified.
                     <Link
                         :href="route('verification.send')"
                         method="post"
                         as="button"
-                        class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        class="underline text-sm text-blue-500 hover:text-blue-600 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                     >
                         Click here to re-send the verification email.
                     </Link>
@@ -68,7 +68,7 @@ const form = useForm({
                 </div>
             </div>
 
-            <div class="flex items-center gap-4">
+            <div class="flex flex-col items-center gap-4">
                 <PrimaryButton :disabled="form.processing">Update Email</PrimaryButton>
 
                 <Transition

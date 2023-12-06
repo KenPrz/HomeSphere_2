@@ -19,7 +19,6 @@ const user = usePage().props.auth.user;
 const form = useForm({
     firstName: user.firstName,
     lastName: user.lastName,
-    email: user.email,
 });
 </script>
 
@@ -34,7 +33,7 @@ const form = useForm({
                 </p>
             </header>
 
-            <form @submit.prevent="form.patch(route('profile.update'))" class="mt-6 space-y-6">
+            <form @submit.prevent="form.patch(route('profile.updateName'))" class="mt-6 space-y-6">
                 <div>
                     <InputLabel for="firstName" value="First Name" />
 

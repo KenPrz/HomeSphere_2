@@ -26,12 +26,6 @@ use Inertia\Inertia;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-// Route::get('/test-event',function(){
-//     event(new \App\Events\TestEvent());
-// return null;
-// });
-
 Route::get('/', function () {
     if (auth()->check()) {
         return redirect()->route('dashboard');
@@ -46,7 +40,7 @@ Route::get('/dashboard', function () {
     return redirect()->route('verify');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth','verified'])->group(function () {
     Route::put('/notification/read', [UserNotificationController::class, 'markAsRead'])->name('notification.read');
     Route::put('/notification/mark-all-read/bulk', [UserNotificationController::class,'markAsReadBulk'])->name('notification.bulkRead');
     Route::patch('/user/notification/all-read', [UserNotificationController::class,'markAllRead'])->name('notification.allRead');
@@ -56,15 +50,15 @@ Route::middleware('auth')->group(function () {
     Route::post('/join_home',[HomeCreationController::class, 'join_home'])->name('join_home');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::patch('/profile/update-name', [ProfileController::class, 'updateName'])->name('profile.updateName');
+    Route::patch('profile/update-email', [ProfileController::class, 'updateEmail'])->name('profile.updateEmail');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/profile', [ImageHandlerController::class, 'imageUpload'])->name('image.upload');
     Route::delete('/profile', [ImageHandlerController::class, 'deleteImage'])->name('image.delete');
-
     Route::delete('/cancel',[CancelRequest::class, 'cancel'])->name('cancel.request');
 });
 
-Route::middleware(['auth','checkHasHome'])->group(function () {
+Route::middleware(['auth','checkHasHome','verified'])->group(function () {
     Route::get('/appliances', [AppliancesController::class, 'index'])->name('appliances.index');
 
     Route::get('/rooms', [RoomsController::class, 'index'])->name('rooms.index');

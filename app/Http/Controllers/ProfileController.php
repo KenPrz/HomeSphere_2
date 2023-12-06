@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\User;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\AppUtilities;
-use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\ProfileUserNameRequest;
+use App\Http\Requests\ProfileUserEmailRequest;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -41,13 +43,9 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function updateName(ProfileUserNameRequest $request): RedirectResponse
     {
         $request->user()->fill($request->validated());
-
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
         $request->user()->name_updated_at = now();
         $request->user()->save();
 
@@ -73,5 +71,15 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function updateEmail(ProfileUserEmailRequest $request): RedirectResponse
+    {   
+        $user = $request->user();
+        $user->email = $request->email;
+        $user->email_verified_at = null;
+        $user->has_changed_email = true;
+        $user->save();
+        return Redirect::route('profile.edit');
     }
 }

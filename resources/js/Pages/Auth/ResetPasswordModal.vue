@@ -12,7 +12,6 @@
 <script setup>
 import { ref } from "vue";
 import Modal from "@/Components/Modal.vue";
-import SecondaryButton from "@/Components/SecondaryButton.vue";
 import ForgotPassword from "@/Pages/Auth/ForgotPassword.vue";
 
 const isModalVisible = ref(false);

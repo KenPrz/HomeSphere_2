@@ -20,9 +20,11 @@ class VerifyEmailController extends Controller
         }
 
         if ($request->user()->markEmailAsVerified()) {
+            $user = $request->user();
+            $user->has_changed_email = false;
+            $user->save();
             event(new Verified($request->user()));
         }
-
         return redirect()->intended(RouteServiceProvider::HOME.'?verified=1');
     }
 }

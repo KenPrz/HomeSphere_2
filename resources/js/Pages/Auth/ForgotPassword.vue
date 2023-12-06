@@ -17,7 +17,7 @@ const form = useForm({
 });
 
 const submit = () => {
-    form.post(route('password.email'));
+    form.post(route('password.email'))
 };
 </script>
 
@@ -30,8 +30,8 @@ const submit = () => {
             link that will allow you to choose a new one.
         </div>
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
-            {{ status }}
+        <div v-if="form.recentlySuccessful" class="mb-4 font-medium text-sm text-green-600">
+            An email has been sent!
         </div>
 
         <form @submit.prevent="submit">
