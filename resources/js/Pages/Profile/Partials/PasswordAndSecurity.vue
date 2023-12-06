@@ -23,9 +23,9 @@ import LoginAlerts from "./LoginAlerts.vue";
         </div>
         <div class="section flex flex-col">
             <div class="my-2 text-md font-light">
-                Security Check
+                Deletion
             </div>
-            <ButtonLarge @click="openExtraSecurity" label="Extra Security"/>
+            <ButtonLarge @click="openExtraSecurity" label="Account Deletion"/>
         </div>
         <Modal
             :show="showPasswordEditModal"
