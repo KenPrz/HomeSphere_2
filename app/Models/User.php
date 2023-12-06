@@ -29,7 +29,6 @@ class User extends Authenticatable implements MustVerifyEmail
         'is_online',
         'name_updated_at',
         'has_login_alerts',
-        'has_2fa',
     ];
 
     /**

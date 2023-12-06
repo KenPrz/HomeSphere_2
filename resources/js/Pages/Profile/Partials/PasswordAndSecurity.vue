@@ -4,7 +4,7 @@ import { ref } from "vue";
 import Modal from "@/Components/Modal.vue";
 import ButtonLarge from "@/Components/ButtonLarge.vue";
 import UpdatePasswordForm from "./UpdatePasswordForm.vue";
-import TwoFactorAuthenticationForm from "./TwoFactorAuthenticationForm.vue";
+import ExtraSecurity from "./ExtraSecurity.vue";
 import LoginAlerts from "./LoginAlerts.vue";
 </script>
 <template>
@@ -18,16 +18,14 @@ import LoginAlerts from "./LoginAlerts.vue";
             </div>
             <div>
                 <ButtonLarge @click="openPasswordEditModal" label="Change Password"/>
-                <ButtonLarge @click="openTwoFactorAuthModal" label="Two-factor Authentication"/>
+                <ButtonLarge @click="openLoginAlertsModal" label="Login Alerts"/>
             </div>
         </div>
         <div class="section flex flex-col">
             <div class="my-2 text-md font-light">
                 Security Check
             </div>
-            <div>
-                <ButtonLarge @click="openLoginAlertsModal" label="Login Alerts"/>
-            </div>
+            <ButtonLarge @click="openExtraSecurity" label="Extra Security"/>
         </div>
         <Modal
             :show="showPasswordEditModal"
@@ -38,11 +36,11 @@ import LoginAlerts from "./LoginAlerts.vue";
             </div>
         </Modal>
         <Modal
-            :show="showTwoFactorAuthModal"
-            @close="closeTwoFactorAuthModal"
+            :show="showExtraSecurityModal"
+            @close="closeExtraSecurityModal"
         >
             <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <TwoFactorAuthenticationForm class="max-w-xl" />
+                <ExtraSecurity/>
             </div>
         </Modal>
         <Modal
@@ -56,15 +54,15 @@ import LoginAlerts from "./LoginAlerts.vue";
     </div>
 </template>
 <script>
-const showTwoFactorAuthModal = ref(false);
 const showPasswordEditModal = ref(false);
 const showLoginAlertsModal = ref(false);
+const showExtraSecurityModal = ref(false);
 
-const openTwoFactorAuthModal = () => {
-    showTwoFactorAuthModal.value = true;
+const openExtraSecurity = () => {
+    showExtraSecurityModal.value = true;
 };
-const closeTwoFactorAuthModal = () => {
-    showTwoFactorAuthModal.value = false;
+const closeExtraSecurityModal = () => {
+    showExtraSecurityModal.value = false;
 };
 
 const openPasswordEditModal = () => {

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('invite_code')->unique();
             $table->unsignedBigInteger('owner_id');
             $table->timestamps();
-
             $table->foreign('owner_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 use Inertia\Response;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\NotificationHandler;
 class ProfileController extends Controller
 {
@@ -61,6 +62,10 @@ class ProfileController extends Controller
             'password' => ['required', 'current_password'],
         ]);
 
+        $user = auth()->user();
+        $home_id = DB::table('homes')->where('owner_id', $user->id)->value('id');
+        DB::table('home_members')->where('home_id', $home_id)->delete();
+        
         $user = $request->user();
 
         Auth::logout();

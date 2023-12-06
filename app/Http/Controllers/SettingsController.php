@@ -128,7 +128,6 @@ class SettingsController extends Controller
             return redirect()->back()->with('error', 'error validation');
         }
     }
-    
     private function notifyOnLeft($home_id,$notificationData){
         // dd($home_id);
         $home = Home::find($home_id);

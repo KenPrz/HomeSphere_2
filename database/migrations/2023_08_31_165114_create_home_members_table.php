@@ -19,8 +19,7 @@ return new class extends Migration
             $table->date('joined_on')->nullable();
             $table->date('applied_on')->nullable();
             $table->foreign('home_id')->references('id')->on('homes')->onDelete('cascade');
-            $table->foreign('member_id')->references('id')->on('users');
-            
+            $table->foreign('member_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
