@@ -7,7 +7,7 @@ use App\Models\Room;
 use App\Models\User;
 use App\Models\Home;
 use App\Http\Controllers\AppUtilities;
-use App\Models\humidity_sensor;
+use App\Models\Humidity_sensor;
 use App\Models\Temp_sensor;
 use App\Http\Controllers\AppliancesController;
 use App\Http\Requests\HomeCreation\JoinHomeRequest;
@@ -176,7 +176,7 @@ class HomeCreationController extends Controller
             'temperature' => null,
         ]);
     
-        humidity_sensor::create([
+        Humidity_sensor::create([
             'room_id' => $room->id,
             'humidity' => null,
         ]);

@@ -7,7 +7,7 @@ use App\Models\motion_sensor;
 use App\Models\Room;
 use App\Http\Controllers\AppUtilities;
 use App\Http\Requests\Room\CreateRoomRequest;
-use App\Models\humidity_sensor;
+use App\Models\Humidity_sensor;
 use App\Models\Temp_sensor;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -104,7 +104,7 @@ class RoomsController extends Controller
             'temperature' => null,
         ]);
     
-        humidity_sensor::create([
+        Humidity_sensor::create([
             'room_id' => $room->id,
             'humidity' => null,
         ]);

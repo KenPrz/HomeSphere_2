@@ -28,7 +28,7 @@ class ModeEventActivator extends Controller
         $this->mainHandler($data, $getCurrentTemperature);
     }
     private function handleHumidity($data){
-        $getCurrentHumidity = DB::table('humidity_sensors')
+        $getCurrentHumidity = DB::table('Humidity_sensors')
             ->where('room_id', $data->room_id)
             ->value('humidity');
         $this->mainHandler($data, $getCurrentHumidity);
