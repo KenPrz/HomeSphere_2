@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Device;
 use App\Models\humidity_sensor;
-use App\Models\temp_sensor;
+use App\Models\Temp_sensor;
 use App\Models\motion_sensor;
 use App\Events\SensorUpdateEvent;
 use App\Events\MotionDetectedEvent;
@@ -92,7 +92,7 @@ class NodeMCUController extends Controller
     private function updateSensorData($room_id, $sensorData, $home_id)
     {
         if (isset($sensorData['temperature'])) {
-            temp_sensor::updateOrInsert(
+            Temp_sensor::updateOrInsert(
                 ['room_id' => $room_id],
                 ['temperature' => $sensorData['temperature']]
             );

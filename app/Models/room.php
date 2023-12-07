@@ -32,7 +32,7 @@ class room extends Model
 
     public function tempSensor()
     {
-        return $this->hasOne(temp_sensor::class);
+        return $this->hasOne(Temp_sensor::class);
     }
 
     public function humiditySensor()

@@ -8,7 +8,7 @@ use App\Models\Room;
 use App\Http\Controllers\AppUtilities;
 use App\Http\Requests\Room\CreateRoomRequest;
 use App\Models\humidity_sensor;
-use App\Models\temp_sensor;
+use App\Models\Temp_sensor;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -99,7 +99,7 @@ class RoomsController extends Controller
             'room_icon' => $roomIcon,
             'created_at' => now(),
         ]);
-        temp_sensor::create([
+        Temp_sensor::create([
             'room_id' => $room->id,
             'temperature' => null,
         ]);

@@ -22,7 +22,7 @@ class ModeEventActivator extends Controller
         }
     }
     private function handleTemperature($data){
-        $getCurrentTemperature = DB::table('temp_sensors')
+        $getCurrentTemperature = DB::table('Temp_sensors')
             ->where('room_id', $data->room_id)
             ->value('temperature');
         $this->mainHandler($data, $getCurrentTemperature);
