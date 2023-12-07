@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Room\EditRoomRequest;
-use App\Models\motion_sensor;
+use App\Models\Motion_sensor;
 use App\Models\Room;
 use App\Http\Controllers\AppUtilities;
 use App\Http\Requests\Room\CreateRoomRequest;
@@ -108,7 +108,7 @@ class RoomsController extends Controller
             'room_id' => $room->id,
             'humidity' => null,
         ]);
-        motion_sensor::create([
+        Motion_sensor::create([
             'room_id' => $room->id,
             'is_active' => false,
             'motion_detected' => false

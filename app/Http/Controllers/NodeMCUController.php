@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Device;
 use App\Models\Humidity_sensor;
 use App\Models\Temp_sensor;
-use App\Models\motion_sensor;
+use App\Models\Motion_sensor;
 use App\Events\SensorUpdateEvent;
 use App\Events\MotionDetectedEvent;
 use Illuminate\Http\Request;
@@ -72,7 +72,7 @@ class NodeMCUController extends Controller
             'room_name' => ['required', 'string', 'max:255'],
             'sensor_data.temperature' => ['numeric'],
             'sensor_data.humidity' => ['numeric'],
-            'sensor_data.motion_sensor' => ['boolean'],
+            'sensor_data.Motion_sensor' => ['boolean'],
             'devices.lights.*.name' => 'required|string|distinct:strict',
             'devices.lights.*.is_active' => 'required|boolean',
             'devices.plugs.*.name' => 'required|string|distinct:strict',
@@ -104,9 +104,9 @@ class NodeMCUController extends Controller
                 ['humidity' => $sensorData['humidity']]
             );
         }
-        if(isset($sensorData['motion_sensor'])) {
-            $data = motion_sensor::where('room_id', $room_id)->pluck('is_active')->toArray();
-            if($data[0] == (1||true) && $sensorData['motion_sensor'] == true) //honestly idk wtf im doing here but it works... i guess...
+        if(isset($sensorData['Motion_sensor'])) {
+            $data = Motion_sensor::where('room_id', $room_id)->pluck('is_active')->toArray();
+            if($data[0] == (1||true) && $sensorData['Motion_sensor'] == true) //honestly idk wtf im doing here but it works... i guess...
             { 
                 event(new MotionDetectedEvent($home_id, $room_id));
             }

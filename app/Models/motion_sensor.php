@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class motion_sensor extends Model
+class Motion_sensor extends Model
 {
     use HasFactory;
 

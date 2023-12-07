@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\motion_sensor;
+use App\Models\Motion_sensor;
 use App\Models\Room;
 use App\Models\User;
 use App\Models\Home;
@@ -181,7 +181,7 @@ class HomeCreationController extends Controller
             'humidity' => null,
         ]);
 
-        motion_sensor::create([
+        Motion_sensor::create([
             'room_id' => $room->id,
             'is_active' => false,
             'motion_detected' => false

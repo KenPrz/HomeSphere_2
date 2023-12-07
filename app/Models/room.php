@@ -42,6 +42,6 @@ class room extends Model
 
     public function motionSensor()
     {
-        return $this->hasOne(motion_sensor::class);
+        return $this->hasOne(Motion_sensor::class);
     }
 }
