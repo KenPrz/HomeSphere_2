@@ -72,7 +72,7 @@ class NodeMCUController extends Controller
             'room_name' => ['required', 'string', 'max:255'],
             'sensor_data.temperature' => ['numeric'],
             'sensor_data.humidity' => ['numeric'],
-            'sensor_data.Motion_sensor' => ['boolean'],
+            'sensor_data.motion_sensor' => ['boolean'],
             'devices.lights.*.name' => 'required|string|distinct:strict',
             'devices.lights.*.is_active' => 'required|boolean',
             'devices.plugs.*.name' => 'required|string|distinct:strict',
@@ -104,9 +104,9 @@ class NodeMCUController extends Controller
                 ['humidity' => $sensorData['humidity']]
             );
         }
-        if(isset($sensorData['Motion_sensor'])) {
+        if(isset($sensorData['motion_sensor'])) {
             $data = Motion_sensor::where('room_id', $room_id)->pluck('is_active')->toArray();
-            if($data[0] == (1||true) && $sensorData['Motion_sensor'] == true) //honestly idk wtf im doing here but it works... i guess...
+            if($data[0] == (1||true) && $sensorData['motion_sensor'] == true)
             { 
                 event(new MotionDetectedEvent($home_id, $room_id));
             }
