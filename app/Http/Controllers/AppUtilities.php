@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Api_key;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
-use App\Http\Controllers\apiKeyController;
+use App\Http\Controllers\ApiKeyController;
 use App\Models\User;
 class AppUtilities extends Controller
 {
@@ -34,7 +34,7 @@ class AppUtilities extends Controller
      * @return string The API key.
      */
     public function getApiKey($homeData){
-        $apiKey = New apiKeyController;
+        $apiKey = New ApiKeyController;
         $key = $apiKey->getMyKey($homeData);
         return $key;
     }

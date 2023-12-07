@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-class apiKeyController extends Controller
+class ApiKeyController extends Controller
 {
     public function getMyKey($homeData){
         return DB::table("home_api_keys")

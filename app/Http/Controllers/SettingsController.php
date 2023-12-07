@@ -20,17 +20,17 @@ class SettingsController extends Controller
      * SettingsController constructor.
      *
      * @param AppUtilities $appUtilities
-     * @param ApiKeyController $apiKeyController
+     * @param ApiKeyController $ApiKeyController
      */
     private $notificationHandler;
     private $appUtilities;
-    private $apiKeyController;
+    private $ApiKeyController;
 
-    public function __construct(AppUtilities $appUtilities, ApiKeyController $apiKeyController, NotificationHandler $notificationHandler)
+    public function __construct(AppUtilities $appUtilities, ApiKeyController $ApiKeyController, NotificationHandler $notificationHandler)
     {
         $this->notificationHandler = $notificationHandler;
         $this->appUtilities = $appUtilities;
-        $this->apiKeyController = $apiKeyController;
+        $this->ApiKeyController = $ApiKeyController;
     }
 
     /**
@@ -66,7 +66,7 @@ class SettingsController extends Controller
         if($validated){
             $user = auth()->user();
             $homeData = $this->appUtilities->findHomeData($user);
-            $this->apiKeyController->generateNewKey($homeData);
+            $this->ApiKeyController->generateNewKey($homeData);
         }
     }
 
