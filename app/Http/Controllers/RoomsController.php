@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Room\EditRoomRequest;
 use App\Models\motion_sensor;
-use App\Models\room;
+use App\Models\Room;
 use App\Http\Controllers\AppUtilities;
 use App\Http\Requests\Room\CreateRoomRequest;
 use App\Models\humidity_sensor;

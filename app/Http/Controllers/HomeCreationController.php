@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\motion_sensor;
-use App\Models\room;
+use App\Models\Room;
 use App\Models\User;
 use App\Models\Home;
 use App\Http\Controllers\AppUtilities;

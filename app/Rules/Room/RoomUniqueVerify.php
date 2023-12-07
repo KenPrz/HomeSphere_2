@@ -3,7 +3,7 @@
 namespace App\Rules\Room;
 
 use App\Http\Controllers\AppUtilities;
-use App\Models\room;
+use App\Models\Room;
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 

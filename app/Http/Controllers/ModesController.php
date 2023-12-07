@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
-use App\Models\room;
+use App\Models\Room;
 use App\Notifications\ModesNotification;
 use App\Models\Home;
 use App\Models\User;
