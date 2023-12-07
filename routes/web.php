@@ -52,7 +52,6 @@ Route::middleware(['auth','verified','auth.session'])->group(function () {
     Route::patch('/profile/update-name', [ProfileController::class, 'updateName'])->name('profile.updateName');
     Route::patch('profile/update-email', [ProfileController::class, 'updateEmail'])->name('profile.updateEmail');
     Route::post('/profile', [ImageHandlerController::class, 'imageUpload'])->name('image.upload');
-    Route::delete('/profile', [ImageHandlerController::class, 'deleteImage'])->name('image.delete');
     Route::delete('/cancel',[CancelRequest::class, 'cancel'])->name('cancel.request');
 });
 

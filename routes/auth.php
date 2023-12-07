@@ -11,7 +11,7 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\ImageHandlerController;
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
                 ->name('register');
@@ -59,4 +59,5 @@ Route::middleware('auth')->group(function () {
                 ->name('logout');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::put('/profile/alerts', [ProfileController::class, 'toggleAlerts'])->name('profile.toggleAlerts');
+    Route::delete('/profile', [ImageHandlerController::class, 'deleteImage'])->name('image.delete');
 });
