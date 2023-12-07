@@ -22,19 +22,24 @@
                         ></v-img>
                 </div>
                 <div class="ms-4 flex flex-col justify-center">
-                    <h1 class="text-md font-semibold">
-                        {{
-                            user.firstName.charAt(0).toUpperCase() +
-                            user.firstName.slice(1).toLowerCase() +
-                            ' ' +
-                            user.lastName.charAt(0).toUpperCase() +
-                            user.lastName.slice(1).toLowerCase()
-                        }}
-                    </h1>
-                    <h2 class="text-md font-light">
-                        <span class="text-green-600" v-if="user.is_online === 1">• online</span>
-                        <span class="text-slate-500" v-else-if="user.is_online === 0">• offline</span>
-                    </h2>
+                    <div class="flex w-full">
+                        <h2 class="text-md font-light me-2">
+                            <span class="text-green-600 font-bold" v-if="user.is_online === 1">•</span>
+                            <span class="text-slate-500 font-bold" v-else-if="user.is_online === 0">•</span>
+                        </h2>
+                        <div class="flex flex-col">
+                            <h1 :class="[user.is_online ? 'text-black' : 'text-gray-500']" class="text-md font-semibold">
+                                {{
+                                    user.firstName.charAt(0).toUpperCase() +
+                                    user.firstName.slice(1).toLowerCase() +
+                                    ' ' +
+                                    user.lastName.charAt(0).toUpperCase() +
+                                    user.lastName.slice(1).toLowerCase()
+                                }}
+                            </h1>
+                            <h2 class="text-xs">{{ user.role }}</h2>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
