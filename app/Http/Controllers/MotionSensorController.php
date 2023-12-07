@@ -28,7 +28,7 @@ class MotionSensorController extends Controller
             DB::beginTransaction();
 
             // Check if the motion sensor exists
-            $motionSensorExists = DB::table("Motion_sensors")
+            $motionSensorExists = DB::table("motion_sensors")
                 ->where("id", $request->motionSensorId)
                 ->where("room_id", $request->roomId) // Add a check for the room if needed
                 ->exists();
@@ -48,7 +48,7 @@ class MotionSensorController extends Controller
             }
 
             // Update motion sensor state
-            $result = DB::table('Motion_sensors')
+            $result = DB::table('motion_sensors')
                 ->where('id', $request->motionSensorId)
                 ->update(['is_active' => $request->is_active]);
 
