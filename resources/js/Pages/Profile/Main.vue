@@ -76,7 +76,7 @@
                                         class="flex-1 text-sm bg-gray-300 text-gray-700 px-4 py-2 rounded-lg mr-4 hover:bg-gray-400 transition duration-300">
                                         No, cancel
                                     </button>
-                                    <Link :href="route('sessions.kill')" method="post" as="button"
+                                    <Link :href="route('logout')" method="post" as="button"
                                         class="flex-1 text-sm bg-red-500 text-white mr-6 px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300">
                                         Yes, logout
                                     </Link>
@@ -99,7 +99,6 @@ import DeleteAndUpload from "./Partials/DeleteAndUpload.vue";
 import EmailUpdate from "./Partials/EmailUpdate.vue";
 import ButtonLarge from "@/Components/ButtonLarge.vue";
 import UpdateProfileInformationForm from "./Partials/UpdateProfileInformationForm.vue";
-import ImageContainer from "@/Components/ImageContainer.vue";
 import { Head } from "@inertiajs/vue3";
 import PasswordAndSecurity from "./Partials/PasswordAndSecurity.vue";
 
