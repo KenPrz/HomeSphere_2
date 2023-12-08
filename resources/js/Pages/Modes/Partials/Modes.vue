@@ -6,14 +6,14 @@ import SelectedModeCard from './SelectedModeCard.vue';
 </script>
 <template>
         <div class="container md:flex p-4">
-            <div class="flex flex-col-reverse md:flex-col shadow-md rounded-md pt-2 mb-2 bg-white">
-                <section class="flex items-center justify-center">
+            <div class="flex flex-col-reverse md:flex-col rounded-md pt-2 mb-2">
+                <section class="flex items-center justify-center bg-white">
                     <button @click="showAddModeModal()" class="flex items-center justify-center bg-slate-500 hover:bg-slate-600 transition-colors duration-300 text-white w-full m-2 rounded-md h-10">
                         <img class="h-[25px] me-1" :src="'img-assets/vectors/add_white.svg'" alt="">
                         <span>add mode</span>
                     </button>
                 </section>
-                <section class="mb-auto flex md:flex-col md:max-h-[600px] overflow-y-auto">
+                <section class="mb-auto flex md:flex-col overflow-y-auto lg:max-h-[600px] md:max-h-[450px] bg-white shadow-md rounded-b-md">
                     <div v-for="mode in modes" :key="mode.id">
                         <ClickableModeCard
                             :user="$page.props.auth.user"

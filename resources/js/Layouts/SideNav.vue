@@ -13,7 +13,7 @@ import Modal from "@/Components/Modal.vue";
                 cover></v-img>
 
             <div class="image-text mt-4">
-                <h5 class="mb-1">Welcome Back!!</h5>
+                <h5 class="mb-1">Welcome Back!</h5>
                 <h2 class="font-bold text-md">
                     {{
                         $page.props.auth.user.firstName
