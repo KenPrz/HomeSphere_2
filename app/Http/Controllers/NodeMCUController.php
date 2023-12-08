@@ -201,4 +201,16 @@ private function updateOrInsertDevice($deviceData, $room_id, $type)
         }
         
     }
+    public function test(Request $request){
+        if($request){
+            return response()->json([
+                'message' => 'success'
+            ],200);
+        }
+        else{
+            return response()->json([
+                'message' => 'failed'
+            ],500);
+        }
+    }
 }
