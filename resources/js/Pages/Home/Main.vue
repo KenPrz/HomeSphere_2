@@ -78,7 +78,11 @@ import { Head } from "@inertiajs/vue3";
                         </div>
                         <div class="col-span-2 md:col-span-2 row-span-3 row-start-4">
                             <div class="flex item-center p-3 my-2 mx-2">
-                                <UserList/>
+                                <UserList 
+                                    :userList="$page.props.userList"
+                                    :userId="$page.props.auth.user.id"
+                                    :homeId="$page.props.homeData.id"
+                                />
                             </div>
                         </div>
                     </div>

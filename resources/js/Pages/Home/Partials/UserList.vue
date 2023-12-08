@@ -4,7 +4,7 @@
             <div class="text-white text-lg font-medium ms-5">All Users</div>
         </div>
         <div class="flex flex-col p-3 bg-white h-48 rounded-b-xl shadow-md overflow-auto">
-            <div class="flex h-20 items-center w-full p-3" v-for="user in $page.props.userList" :key="user.id">
+            <div class="flex h-20 items-center w-full p-3" v-for="user in userList" :key="user.id">
                 <div class="self">
                         <v-img v-if="user.profile_image"
                             class="rounded-md mx-auto"
@@ -48,8 +48,18 @@
 <script>
 export default {
     props: {
-        filters: Object,
-        users: Object,
-    }
+        userList: {
+            type: Array,
+            default: null,
+        },
+        userId: {
+            type: Number,
+            required: true,
+        },
+        homeId: {
+            type: Number,
+            required: true,
+        },
+    },
 };
 </script>

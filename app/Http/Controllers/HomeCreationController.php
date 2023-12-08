@@ -104,7 +104,7 @@ class HomeCreationController extends Controller
             }
             $userList = DB::table('home_members')->where('home_id', $homeData->id)
                 ->join('users', 'home_members.member_id', '=', 'users.id')
-                ->get(['users.firstName', 'users.lastName','users.profile_image', 'users.is_online','home_members.role']);
+                ->get(['users.id','users.firstName', 'users.lastName','users.profile_image', 'users.is_online','home_members.role']);
                 // dd($appliances);
                 $api_key = $appUtilities->getApiKey($homeData);
             
