@@ -59,5 +59,5 @@ Route::middleware('auth')->group(function () {
                 ->name('logout');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::put('/profile/alerts', [ProfileController::class, 'toggleAlerts'])->name('profile.toggleAlerts');
-    Route::delete('/profile', [ImageHandlerController::class, 'deleteImage'])->name('image.delete');
+    Route::delete('/image', [ImageHandlerController::class, 'deleteImage'])->name('image.delete');
 });
