@@ -15,10 +15,10 @@ return new class extends Migration
             $table->id();
             $table->string('room_name');
             $table->unsignedBigInteger('home_id');
-            $table->unsignedBigInteger('room_owner_id');
+            $table->unsignedBigInteger('room_owner_id')->nullable();
             $table->string('room_icon')->nullable();
             $table->foreign('home_id')->references('id')->on('homes')->onDelete('cascade');
-            $table->foreign('room_owner_id')->references('id')->on('users');
+            $table->foreign('room_owner_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
             // Add a unique constraint for room_name and home_id
             $table->unique(['room_name', 'home_id']);
