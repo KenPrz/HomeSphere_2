@@ -13,64 +13,23 @@
         <div class="flex flex-col">
             <label for="days" class="flex justify-between">
                 <div class="flex">
-                    Triggered every: 
-                    <span v-for="(day, index) in days" :key="index">
-                        {{ day.charAt(0).toUpperCase() + day.slice(1).toLowerCase() }}
-                        {{ index < days.length - 1 ? ', ' : '' }}
+                    Triggered every:
+                    <span class="ms-1" v-for="(day, index) in days" :key="index">
+                        {{ day.slice(0, 3).charAt(0).toUpperCase() + day.slice(0, 3).slice(1) + ','+' ' }}
                     </span>
                 </div>
-
                 <button type="button" class="me-2 text-blue-500 hover:text-blue-600 transition-all duration-200" @click="showEdit">Edit</button>
             </label>
-            <div v-if="editDays==true" class="flex justify-between">
-                <div class="flex flex-col items-center mx-2 my-2">
-                    <input v-model="form.activation.repeat.days" type="checkbox" id="monday" name="monday" value="monday"
-                        class="w-[15px] h-[15px] border rounded-md">
-                    <label for="monday" class="block">
-                        Mon
-                    </label>
-                </div>
-                <div class="flex flex-col items-center mx-2 my-2">
-                    <input v-model="form.activation.repeat.days" type="checkbox" id="tuesday" name="tuesday" value="tuesday"
-                        class="w-[15px] h-[15px] border rounded-md">
-                    <label for="tuesday" class="block">
-                        Tue
-                    </label>
-                </div>
-                <div class="flex flex-col items-center mx-2 my-2">
-                    <input v-model="form.activation.repeat.days" type="checkbox" id="wednesday" name="wednesday"
-                        value="wednesday" class="w-[15px] h-[15px] border rounded-md">
-                    <label for="wednesday" class="block">
-                        Wed
-                    </label>
-                </div>
-                <div class="flex flex-col items-center mx-2 my-2">
-                    <input v-model="form.activation.repeat.days" type="checkbox" id="thursday" name="thursday"
-                        value="thursday" class="w-[15px] h-[15px] border rounded-md">
-                    <label for="thursday" class="block">
-                        Thu
-                    </label>
-                </div>
-                <div class="flex flex-col items-center mx-2 my-2">
-                    <input v-model="form.activation.repeat.days" type="checkbox" id="friday" name="friday" value="friday"
-                        class="w-[15px] h-[15px] border rounded-md">
-                    <label for="friday" class="block">
-                        Fri
-                    </label>
-                </div>
-                <div class="flex flex-col items-center mx-2 my-2">
-                    <input v-model="form.activation.repeat.days" type="checkbox" id="saturday" name="saturday"
-                        value="saturday" class="w-[15px] h-[15px] border rounded-md">
-                    <label for="saturday" class="block">
-                        Sat
-                    </label>
-                </div>
-                <div class="flex flex-col items-center mx-2 my-2">
-                    <input v-model="form.activation.repeat.days" type="checkbox" id="sunday" name="sunday" value="sunday"
-                        class="w-[15px] h-[15px] border rounded-md">
-                    <label for="sunday" class="block">
-                        Sun
-                    </label>
+            <div v-if="editDays==true" class="flex justify-between mt-2">
+                <div class="flex flex-col items-center" v-for="(day, index) in daysList" :key="index">
+                    <input
+                        class="rounded-md"
+                        type="checkbox"
+                        :id="day"
+                        :value="day"
+                        v-model="form.activation.repeat.days"
+                    />
+                    <label :for="day">{{ day.slice(0, 3) }}</label>
                 </div>
             </div>
             <span v-if="Object.keys(errors).length > 0" class="text-red-500 text-sm text-center">
@@ -102,7 +61,7 @@
             },
             days: {
                 type: Array,
-                required: true
+                default: null
             },
             start_time: {
                 type: String,
@@ -121,7 +80,7 @@
                         type: 'schedule',
                         repeat: {
                             frequency: 'weekly',
-                            days: this.days,
+                            days: [],
                             StartTime: {data: this.start_time},
                             EndTime: {data: this.end_time},
                         },
@@ -130,6 +89,8 @@
                 recentlySuccessful: false,
                 errors: '',
                 editDays: false,
+                daysList: ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'],
+                selectedDays: []
             }
         },
         methods: {
@@ -156,11 +117,13 @@
             },
         },
         watch: {
-            'mode_id': function(){
-                this.form.mode_id=this.mode_id;
-                this.form.activation.repeat.StartTime.data=this.start_time;
-                this.form.activation.repeat.EndTime.data=this.end_time;
-            }
+            'mode_id': function() {
+                this.form.mode_id = this.mode_id;
+                this.form.activation.repeat.StartTime.data = this.start_time;
+                this.form.activation.repeat.EndTime.data = this.end_time;
+                this.selectedDays = this.days;
+                this.form.activation.repeat.days = this.selectedDays;
+            },
         }
     }
 </script>
