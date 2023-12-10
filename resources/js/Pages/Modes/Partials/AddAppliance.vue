@@ -25,7 +25,7 @@ function cancel(data) {
                 <select required v-model="selectedAppliance" id="select2" name="select2"
                     class="w-full px-4 py-2 border rounded-lg appearance-none">
                     <option value="" disabled>Select an appliance</option>
-                    <option v-for="device in selectedRoomDevices" :key="device.id" :value="device">{{ device.device_name
+                    <option v-for="device in selectedRoomDevices" :key="device.id" :value="device">{{ device.custom_name ?? device.device_name
                     }}</option>
                 </select>
             </div>

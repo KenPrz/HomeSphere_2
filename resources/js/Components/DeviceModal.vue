@@ -34,7 +34,10 @@ function cancel() {
 <template>
     <div class="container flex flex-col">
         <div class="flex border-b-2 py-2 ps-2 text-lg font-semibold">
-            <section v-if="showEdit==false" class="w-3/4">{{ device.device_name }}</section>
+            <section v-if="showEdit==false" class="w-3/4 flex flex-col">
+                <span>{{ device.custom_name ?? device.device_name }}</span>
+                <span v-if="device.custom_name !== null" class="font-light text-xs">{{ 'System Name: '+device.device_name }}</span>
+            </section>
             <section v-else class="w-3/4">
                 <form id="new_device_name" @submit.prevent="submitForm1">
                     <label for="device_name" class="text-sm font-light">New device name</label>
