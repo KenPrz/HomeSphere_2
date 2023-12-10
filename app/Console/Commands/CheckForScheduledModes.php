@@ -41,18 +41,24 @@ class CheckForScheduledModes extends Command
         
         $scheduledModes = ModeSchedule::where(function ($query) use ($currentTimeFormatted) {
             $query->where('start_time', '<=', $currentTimeFormatted)
-                    ->where('end_time', '>=', $currentTimeFormatted);
+                ->where('end_time', '>=', $currentTimeFormatted);
         })
         ->orWhere(function ($query) use ($currentTimeFormatted) {
             // Handle schedules that span midnight
-            $query->where('start_time', '>', '00:00:00')
-                    ->where('end_time', '<=', $currentTimeFormatted);
+            $query->where(function ($query) use ($currentTimeFormatted) {
+                $query->where('start_time', '>', '00:00:00')
+                    ->where('end_time', '>=', $currentTimeFormatted);
+            })
+            ->orWhere(function ($query) use ($currentTimeFormatted) {
+                $query->where('start_time', '<=', $currentTimeFormatted)
+                    ->where('end_time', '<', '00:00:00');
+            });
         })
         ->get();
         
         foreach ($scheduledModes as $mode) {
             $this->eventHandler->handleSchedule($mode);
-        }
+        }        
     }
     
 }
