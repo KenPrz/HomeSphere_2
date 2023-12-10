@@ -38,8 +38,11 @@ class DeactivateScheduledModes extends Command
         $currentTime = Carbon::now('Asia/Manila');
         $currentTimeWithoutSeconds = $currentTime->format('H:i');
         
-        $scheduledModes = ModeSchedule::where('start_time', '<=', $currentTimeWithoutSeconds)
-            ->where('end_time', '>=', $currentTimeWithoutSeconds)
+        $scheduledModes = DB::table('mode_schedules')
+            ->join('modes', 'mode_schedules.mode_id', '=', 'modes.id')
+            ->select('mode_schedules.*')
+            ->where('mode_schedules.end_time', '>=', $currentTimeWithoutSeconds)
+            ->where('modes.is_active', true)
             ->get();
     
         foreach ($scheduledModes as $mode) {

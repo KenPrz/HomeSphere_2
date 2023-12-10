@@ -60,9 +60,9 @@ class ScheduledEventDeactivator extends Controller
         $currentDayOfWeek = Carbon::now('Asia/Manila')->dayName;
         $scheduledDays = json_decode($scheduledMode->days_of_week, true);
         if (is_array($scheduledDays) && in_array(strtolower($currentDayOfWeek), $scheduledDays)) {
-            $this->deactivateDaily($scheduledMode);
+            $this->deactivateDaily($scheduledMode->mode_id);
         } else {
-            echo "Today is not a scheduled day for.\n";
+            echo "Today is not a scheduled day\n";
         }
     }
     private function deviceHandle($device_id, $is_active){

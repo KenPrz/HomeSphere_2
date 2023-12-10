@@ -37,9 +37,19 @@ class CheckForScheduledModes extends Command
     public function handle()
     {
         $currentTime = Carbon::now('Asia/Manila');
-        $scheduledModes = ModeSchedule::where('start_time', '<=', $currentTime->format('H:i:s'))
-            ->where('end_time', '>=', $currentTime->format('H:i:s'))
-            ->get();    
+        $currentTimeFormatted = $currentTime->format('H:i:s');
+        
+        $scheduledModes = ModeSchedule::where(function ($query) use ($currentTimeFormatted) {
+            $query->where('start_time', '<=', $currentTimeFormatted)
+                    ->where('end_time', '>=', $currentTimeFormatted);
+        })
+        ->orWhere(function ($query) use ($currentTimeFormatted) {
+            // Handle schedules that span midnight
+            $query->where('start_time', '>', '00:00:00')
+                    ->where('end_time', '<=', $currentTimeFormatted);
+        })
+        ->get();
+        
         foreach ($scheduledModes as $mode) {
             $this->eventHandler->handleSchedule($mode);
         }
