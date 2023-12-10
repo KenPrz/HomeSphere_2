@@ -11,23 +11,35 @@ const calculateTimeDifference = (now) => {
 <template>
     <div class="container text-md">
         <div @click="markAsRead()"
-            class="bg-slate-200 container my-1 px-1 py-1 rounded-md flex justify-around items-center cursor-pointer hover:bg-slate-300 transition-colors duration-200">
+            class="bg-slate-200 container my-1 px-1 py-1 rounded-md flex justify-right items-center cursor-pointer hover:bg-slate-300 transition-colors duration-200">
             <div class="flex item-center ms-2 me-1">
-                <v-img v-if="notification.data.notification.user.photo"
-                    class="rounded-full mx-auto"
-                    width="60"
-                    :aspect-ratio="1"
-                    :src="'storage/'+notification.data.notification.user.photo"
-                    cover
-                ></v-img>
-                <v-img v-else
-                    class="rounded-full mx-auto"
-                    width="60"
-                    :aspect-ratio="1"
-                    src="/img-assets/default_avatar.png"
-                    cover
-                >
-                </v-img>            
+                <div v-if="notification.user_details">
+                    <v-img v-if="notification.user_details.photo"
+                        class="rounded-full mx-auto"
+                        width="60"
+                        :aspect-ratio="1"
+                        :src="'storage/'+notification.user_details.photo"
+                        cover
+                    ></v-img>
+                    <v-img v-else
+                        class="rounded-full mx-auto"
+                        width="60"
+                        :aspect-ratio="1"
+                        src="/img-assets/default_avatar.png"
+                        cover
+                    >
+                    </v-img>
+                </div>
+                <div v-else>
+                    <v-img
+                        class="rounded-full mx-auto p-1"
+                        width="60"
+                        :aspect-ratio="1"
+                        src="/img-assets/System-Icon.png"
+                        cover
+                    >
+                    </v-img>
+                </div>       
             </div>
             <div class="mx-1 flex flex-col items-start">
                 <div

@@ -98,7 +98,7 @@ class ScheduledEventHandler extends Controller
             $notificationData = [
                 'title' => 'Mode Activated',
                 'body'=> 'has activated '.$mode->mode_name.'.',
-                'user' => 'System: ',
+                'user' => null,
                 'type' => 'activate',
             ];
             $home = Home::find($home_id);

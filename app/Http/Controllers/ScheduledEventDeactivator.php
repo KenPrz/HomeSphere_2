@@ -97,7 +97,7 @@ class ScheduledEventDeactivator extends Controller
             $notificationData = [
                 'title' => 'Mode Deactivated',
                 'body'=> 'has deactivated '.$mode->mode_name.'.',
-                'user' => 'System: ',
+                'user' => null,
                 'type' => 'deactivate',
             ];
             $home = Home::find($home_id);

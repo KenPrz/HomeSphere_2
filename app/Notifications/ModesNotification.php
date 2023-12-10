@@ -63,18 +63,35 @@ class ModesNotification extends Notification implements ShouldBroadcast
     public function toBroadcast(object $notifiable): array
     {
         $userDetails = User::find($this->modeData['user']);
-        return [
-            'data' => [
-                'notification' => [
-                    'title' => $this->modeData['title'],
-                    'body' => $this->modeData['body'],
-                    'user' => [
-                        'name' => $userDetails->firstName . ' ' . $userDetails->lastName,
-                        'photo' => $userDetails->profile_image,
+        if (!$userDetails) {
+            return [
+                'data' => [
+                    'notification' => [
+                        'title' => $this->modeData['title'],
+                        'body' => $this->modeData['body'],
+                        'user' => [
+                            'name' => 'System',
+                            'photo' => 'default-system-image',
+                        ],
+                        'type' => $this->modeData['type'],
                     ],
-                    'type' => $this->modeData['type'],
                 ],
-            ],
-        ];
+            ];
+        }
+        else{
+            return [
+                'data' => [
+                    'notification' => [
+                        'title' => $this->modeData['title'],
+                        'body' => $this->modeData['body'],
+                        'user' => [
+                            'name' => $userDetails->firstName . ' ' . $userDetails->lastName,
+                            'photo' => $userDetails->profile_image,
+                        ],
+                        'type' => $this->modeData['type'],
+                    ],
+                ],
+            ];
+        }
     }
 }
