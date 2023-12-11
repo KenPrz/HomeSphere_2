@@ -99,6 +99,9 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                         </span>
                     </div>
                 </div>
+                <div class="flex justify-end">
+                    <button @click="muteNotification" class="text-xs text-blue-500 hover:underline rounded-lg">Mute this notification.</button>
+                </div>
             </div>
         </Modal>
     </div>
@@ -150,8 +153,10 @@ export default {
             }).listen('.motion_detected', (eventData) => {
                 this.motionDetectedRoomName.data = eventData.room_name[0];
                 if (eventData.motion_detected == true) {
-                    this.playSound();
-                    this.showModal = true;
+                    if(this.user.receive_motion_alerts == 1){
+                        this.playSound();
+                        this.showModal = true;
+                    }
                 }
             })
         },
@@ -201,6 +206,12 @@ export default {
         },
         removeFromArray(notificationId) {
             this.latestNotification = this.latestNotification.filter(item => item.id !== notificationId);
+        },
+        muteNotification() {
+            this.$inertia.put(route('notification.toggle', {
+                receive_motion_alerts: !this.user.receive_motion_alerts,
+            }));
+            this.close();
         },
     },
     computed: {

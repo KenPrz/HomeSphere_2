@@ -138,4 +138,10 @@ class SettingsController extends Controller
             }
     }
 
+    public function toggleMotionNotifications(Request $request){
+        $user = auth()->user();
+        $user->receive_motion_alerts = $request->receive_motion_alerts;
+        $user->save();
+    }
+
 }

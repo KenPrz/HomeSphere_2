@@ -24,6 +24,7 @@ return new class extends Migration
             $table->boolean('has_home')->default(false);
             $table->boolean('is_online')->default(false);
             $table->dateTime('name_updated_at')->nullable();
+            $table->boolean('receive_motion_alerts')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -44,7 +44,10 @@ import HomeSettingsTab from "./Partials/HomeSettingsTab.vue";
                                 <CodesTab/>
                             </v-window-item>
                             <v-window-item value="Settings">
-                                <HomeSettingsTab/>
+                                <HomeSettingsTab
+                                    :user="$page.props.auth.user"
+                                    :homeData="$page.props.homeData"
+                                />
                             </v-window-item>
 
                         </v-window>

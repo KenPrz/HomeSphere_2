@@ -89,5 +89,6 @@ Route::middleware(['auth','checkHasHome','verified','auth.session'])->group(func
     Route::post('/generate-invite-code',[SettingsController::class,'generateNewInviteKey'])->name('generate.newInviteKey');
 
     Route::delete('/deletehome',[SettingsController::class,'deleteHome'])->name('home.delete');
+    Route::put('/toggle-home-notifications',[SettingsController::class,'toggleMotionNotifications'])->name('notification.toggle');
 });
 require __DIR__.'/auth.php';
