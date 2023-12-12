@@ -47,12 +47,24 @@ const { device, customClass } = defineProps({
                         {{ device.device_name }}
                     </span>
                 </h2>
-                <h1 v-if="is_online.data == false" class="text-lg sm:text-xl lg:text-2xl font-ex">
-                    Offline
-                </h1>
-                <h1 v-else class="text-lg sm:text-xl lg:text-2xl font-ex">
-                    {{ is_active.data ? 'ON' : 'OFF' }}
-                </h1>
+                <div class="flex w-full">
+                    <h1 v-if="is_online.data == false" class="text-sm font-ex w-1/2">
+                        Offline
+                    </h1>
+                    <h1 v-else class="text-lg sm:text-xl lg:text-2xl font-ex w-1/2">
+                        {{ is_active.data ? 'ON' : 'OFF' }}
+                    </h1>
+                    <h1 class="w-1/2 flex justify-end me-2">
+                        <span
+                            :class="[
+                                'text-2xl font-ex shadow-xl',
+                                is_online.data ? 'text-green-400' : 'text-red-500',
+                            ]"
+                        >
+                            •
+                        </span>
+                    </h1>
+                </div>
             </div>
         </div>
     </div>
