@@ -1,11 +1,13 @@
 <script setup>
+import ToggleSwitch from "@/Components/ToggleSwitch.vue";
+import ModeToggleModal from "./ModeToggleModal.vue";
 import AppliancesInMode from "./AppliancesInMode.vue";
 import ActivationTypeTab from "./ActivationTypeTab.vue";
 import EditMode from "./EditMode.vue";
 import Modal from "@/Components/Modal.vue";
 import DeleteMode from "./DeleteMode.vue";
 import { defineEmits } from "vue";
-const emit = defineEmits(['getData']);
+const emit = defineEmits(['getData','reloadData']);
 </script>
 <template>
     <div class="flex md:ms-3 flex-col w-full min-h-[500px] overflow-y-auto">
@@ -107,6 +109,13 @@ const emit = defineEmits(['getData']);
                     value="Activation"> 
                     Activation Type 
                 </v-tab>
+                <section v-if="selectedMode.activation_type != 'manual'" class="w-full flex justify-end items-center me-2 sm:me-6">
+                    <div @click="openDisableModeModal" 
+                        :class="selectedMode.is_enabled ? 'bg-slate-400 text-white' : 'bg-white text-black'"
+                        class="text-xs md:text-sm rounded-xl border py-1 px-3 hover:bg-white hover:text-black transition-colors duration:200 cursor-pointer">
+                        {{ selectedMode.is_enabled ? 'Disable' : 'Enable' }}
+                    </div>
+                </section>
             </v-tabs>
             <v-card-text>
                 <v-window v-model="tab">
@@ -138,6 +147,18 @@ const emit = defineEmits(['getData']);
     >
         <DeleteMode @close="closeDeleteModeModal" :mode="selectedMode"/>
     </Modal>
+    <Modal
+        :maxWidth="'sm'"
+        :hasClose="false"
+        :show="showToggleModeModal"
+        @close="closeDisableModeModal"    
+    >
+        <ModeToggleModal
+            :mode_id="selectedMode.id"
+            :is_enabled="selectedMode.is_enabled"
+            @toggle_enabled="reload"
+            @close="closeDisableModeModal"/>
+    </Modal>
 </template>
 <script>
 export default {
@@ -165,6 +186,7 @@ export default {
             showDeleteModeModal: false,
             showAddApplianceModal: false,
             showEditModeModal: false,
+            showToggleModeModal: false,
             mode_name: { value: this.selectedMode.mode_name },
         };
     },
@@ -179,9 +201,12 @@ export default {
             }
             this.showDeleteModeModal = false;
         },
-        // getNewData(){
-        //     this.$emit('modeDeleted');
-        // },
+        openDisableModeModal() {
+            this.showToggleModeModal = true;
+        },
+        closeDisableModeModal() {
+            this.showToggleModeModal = false;
+        },
         openAddApplianceModal() {
             this.showAddApplianceModal = true;
         },
@@ -197,6 +222,9 @@ export default {
             }
             this.showEditModeModal = false;
         },
+        reload(){
+            this.$emit('reloadData', this.selectedMode.id);
+        }
     },
     watch: {
         selectedMode: function (val) {

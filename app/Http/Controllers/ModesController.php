@@ -10,22 +10,26 @@ use App\Notifications\ModesNotification;
 use App\Models\Home;
 use App\Models\User;
 use App\Http\Controllers\NotificationHandler;
+use App\Http\Controllers\ScheduledEventDeactivator;
 class ModesController extends Controller
 {
     private $notificationHandler;
     private $appUtilities;
     private $getAppliances;
+
+    private $scheduledEventDeactivator;
     /**
      * ModesController constructor.
      *
      * @param AppUtilities $appUtilities The AppUtilities instance.
      * @param AppliancesController $getAppliances The AppliancesController instance.
      */
-    public function __construct(AppUtilities $appUtilities, AppliancesController $getAppliances, NotificationHandler $notificationHandler)
+    public function __construct(AppUtilities $appUtilities, AppliancesController $getAppliances, NotificationHandler $notificationHandler, ScheduledEventDeactivator $scheduledEventDeactivator)
     {
         $this->notificationHandler = $notificationHandler;
         $this->appUtilities = $appUtilities;
         $this->getAppliances = $getAppliances;
+        $this->scheduledEventDeactivator = $scheduledEventDeactivator;
     }
 
     public function index()
@@ -296,6 +300,17 @@ class ModesController extends Controller
                 $user = User::find($member->member_id);
                 $user->notify(new ModesNotification($notificationData));
             }
+    }
+    public function toggleModeActivity(Request $request){
+        $request -> validate([
+            'mode_id' => 'required | integer',
+            'is_enabled' => 'required | boolean',
+        ]);
+        DB::table('modes')->where('id',$request->mode_id)->update([
+            'is_enabled' => $request->is_enabled,
+            'updated_at' => now()
+        ]);
+        $this->scheduledEventDeactivator->deactivateDaily($request->mode_id);
     }
 }
 

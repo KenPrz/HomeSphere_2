@@ -25,7 +25,9 @@ import SelectedModeCard from './SelectedModeCard.vue';
                     </div>
                 </section>
             </div>
-            <SelectedModeCard @getData="getNewData"
+            <SelectedModeCard 
+                @getData="getNewData"
+                @reloadData="reloadData"
                 :homeData="homeData"
                 :roomsData="roomsData"
                 :selectedMode="modeData.data" 
@@ -79,6 +81,9 @@ export default {
             getNewData(){
                 this.modeData.data=this.modes[0];
             },
+            reloadData(){
+                window.location.reload();
+            }
         }
 }
 </script>

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->enum('activation_type',['environment','schedule','manual'])->default('manual');
             $table->string('mode_description')->nullable();
             $table->boolean('is_active')->default(false);
+            $table->boolean('is_enabled')->default(true);
 
             $table->foreign('created_by')->references('member_id')->on('home_members')->onDelete('cascade');
             $table->foreign('home_id')->references('id')->on('homes')->onDelete('cascade');
