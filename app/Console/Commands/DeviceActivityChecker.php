@@ -31,9 +31,10 @@ class DeviceActivityChecker extends Command
             $last_access = Carbon::parse($device->last_access);
             if ($last_access->diffInMinutes(Carbon::now()) > 1) {
                 event(new DeviceIsOnline($device->room_id,$device->id,false));
-            } else {
-                event(new DeviceIsOnline($device->room_id,$device->id,true));
             }
+            //  else {
+            //     event(new DeviceIsOnline($device->room_id,$device->id,true));
+            // }
         }
     }
 }
