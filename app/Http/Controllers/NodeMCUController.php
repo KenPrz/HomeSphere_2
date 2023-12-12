@@ -8,9 +8,11 @@ use App\Models\Temp_sensor;
 use App\Models\Motion_sensor;
 use App\Events\SensorUpdateEvent;
 use App\Events\MotionDetectedEvent;
+use App\Events\DeviceIsOnline;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Carbon\Carbon;
 
 class NodeMCUController extends Controller
 {
@@ -151,13 +153,20 @@ private function updateOrInsertDevice($deviceData, $room_id, $type)
         ->where('device_type', $type)
         ->where('device_name', $deviceName)
         ->first();
-
-    if (!$device) {
+    if ($device) {
+        $last_access = Carbon::parse($device->last_access);
+        if ($last_access->diffInMinutes(Carbon::now()) > 1){
+            event(new DeviceIsOnline($room_id,$device->id,true));
+        }
+        $device->last_access = now();
+        $device->save();
+    }else{
         Device::create([
             'room_id' => $room_id,
             'device_type' => $type,
             'device_name' => $deviceName,
             'custom_name' => null,
+            'last_access' => now(),
             'is_active' => $deviceData['is_active']
         ]);
     }

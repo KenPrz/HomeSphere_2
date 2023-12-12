@@ -12,6 +12,7 @@ const { device, customClass } = defineProps({
         <div :class="[
             'm-3 p-3 flex flex-col bg-gray-600 shadow-lg rounded-lg hover:scale-105 cursor-pointer transition duration-500 ease-in-out',
             customClass,
+            is_online.data ? '' : 'bg-gray-400 important:text-black',
             is_active.data ? 'bg-white text-black' : 'bg-gray-600 text-white',
             'w-[115px] h-[115px] sm:h-[125px] sm:w-[125px] md:w-[140px] md:h-[140px] lg:w-[150px] lg:h-[150px]',
         ]">
@@ -32,7 +33,7 @@ const { device, customClass } = defineProps({
                 </div>
                 <div class="flex-1">
                     <div class="ms-5 mt-1">
-                        <ToggleSwitch @click="submit()" v-model="is_active.data" />
+                        <ToggleSwitch v-if="is_online.data" @click="submit()" v-model="is_active.data" />
                     </div>
                 </div>
             </div>
@@ -46,7 +47,10 @@ const { device, customClass } = defineProps({
                         {{ device.device_name }}
                     </span>
                 </h2>
-                <h1 class="text-lg sm:text-xl lg:text-2xl font-ex">
+                <h1 v-if="is_online.data == false" class="text-lg sm:text-xl lg:text-2xl font-ex">
+                    Offline
+                </h1>
+                <h1 v-else class="text-lg sm:text-xl lg:text-2xl font-ex">
                     {{ is_active.data ? 'ON' : 'OFF' }}
                 </h1>
             </div>
@@ -63,10 +67,12 @@ export default {
     },
     data() {
         return {
-            is_active: {data: this.device.is_active}
+            is_active: {data: this.device.is_active},
+            is_online: {data: true},
         }
     },
     mounted() {
+        this.verifyIfDeviceIsOnline(this.device.last_access);
         this.subscribeToRoomChannel(this.device.room_id);
     },
     unmounted(){
@@ -80,8 +86,12 @@ export default {
             }).listen('.device_update', (eventData) => {
                 if(this.device.id==eventData.device_data.device_id)
                 {
-                    console.log(this.device.id+'  '+eventData.device_data.device_state);
                     this.is_active.data=eventData.device_data.device_state;
+                }
+            }).listen('.device_online', (eventData) => {
+                if(this.device.id==eventData.device_data.device_id)
+                {
+                    this.monitorDeviceActivity(eventData.device_data.is_online);
                 }
             });
         },
@@ -102,12 +112,32 @@ export default {
                     console.log(error); //for debugging only remove at prod
                 });
         },
+        monitorDeviceActivity(isDeviceOnline){
+            if(isDeviceOnline){
+                this.is_online.data=true;
+            }
+            else{
+                this.is_online.data=false;
+            }
+        },
+        verifyIfDeviceIsOnline(last_access){
+            var last_access_date = new Date(last_access);
+            var current_date = new Date();
+            var time_difference = current_date.getTime() - last_access_date.getTime();
+            var seconds_difference = time_difference / 1000;
+            if(seconds_difference>60){
+                this.is_online.data=false;
+            }
+            else{
+                this.is_online.data=true;
+            }
+        }
     },
     watch: {
         'device.is_active': function () {
             this.submit();
-        },
-    }
+        },  
+    },
 }
 </script>
 <style scoped>

@@ -1,14 +1,3 @@
-<script setup>
-import { ref, defineProps } from 'vue';
-import { Link } from "@inertiajs/vue3";
-import ToggleSwitch from '@/Components/ToggleSwitch.vue';
-const props = defineProps({
-    room: {
-        type: Object,
-    }
-});
-
-</script>
 <template>
     <div
         class="wrapper cursor-pointer shadow-md rounded-lg hover:scale-[1.01] transition duration-500 ease-in-out relative">
@@ -32,10 +21,10 @@ const props = defineProps({
                             </div>
                             <div class="flex w-full border border-gray-600 mt-1 h-6 rounded-full relative mb-2">
                                 <span class="z-30 absolute right-1 pe-2">
-                                    {{ room.temp_sensor.temperature + '°C' }}
+                                    {{ tempData.data + '°C' }}
                                 </span>
                                 <div class="rounded-full z-0 transition-width duration-500 ease-in-out"
-                                    :style="{ width: room.temp_sensor.temperature + '%', backgroundColor: '#A9A9A9' }">
+                                    :style="{ width: tempData.data + '%', backgroundColor: '#A9A9A9' }">
                                 </div>
                             </div>
 
@@ -44,10 +33,10 @@ const props = defineProps({
                             </div>
                             <div class="flex w-full border border-gray-600 mt-1 h-6 rounded-full relative mb-2">
                                 <span class="z-30 absolute right-1 pe-2">
-                                    {{ room.humidity_sensor.humidity + '%' }}
+                                    {{ humidityData.data + '%' }}
                                 </span>
                                 <div class="rounded-full z-0 transition-width duration-500 ease-in-out"
-                                    :style="{ width: room.humidity_sensor.humidity + '%', backgroundColor: '#A9A9A9' }">
+                                    :style="{ width: humidityData.data + '%', backgroundColor: '#A9A9A9' }">
                                 </div>
                             </div>
                         </div>
@@ -57,6 +46,36 @@ const props = defineProps({
         </div>
     </div>
 </template>
+<script>
+    export default {
+        props: {
+            room: {
+                type: Object,
+                required: true,
+            },
+        },
+        data(){
+            return {
+                tempData: { data: this.room.temp_sensor.temperature },
+                humidityData: { data: this.room.humidity_sensor.humidity },
+            }
+        },
+        mounted() {
+            this.subscribeToRoomChannel(this.room.id);
+        },
+        methods: {
+            subscribeToRoomChannel(room_id) {
+            // Subscribe to the new channel
+            this.roomChannel = window.Echo.private(`room.${room_id}`);
+            this.roomChannel.subscribed(() => {
+            }).listen('.sensor_update', (eventData) => {
+                this.tempData.data = eventData.sensor_data[0].temp_sensor.temperature;
+                this.humidityData.data = eventData.sensor_data[0].humidity_sensor.humidity;
+            })
+        },
+        }
+    }
+</script>
 <style scoped>
 .overflow-ellipsis {
     overflow: hidden;

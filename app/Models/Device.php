@@ -15,6 +15,7 @@ class Device extends Model
         'device_name',
         'is_active',
         'custom_name',
+        'last_access'
     ];
 
     public function find(){

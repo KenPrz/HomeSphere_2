@@ -19,8 +19,11 @@ class Kernel extends ConsoleKernel
             ->everyMinute()
             ->appendOutputTo(storage_path('logs/deactivate_modes.log'));
         $schedule->command('modes:env_check')
-            ->everyTenSeconds()
+            ->everyMinute()
             ->appendOutputTo(storage_path('logs/env_check.log'));
+        $schedule->command('devices:check')
+            ->everyMinute()
+            ->appendOutputTo(storage_path('logs/devices_check.log'));
     }
 
     /**
