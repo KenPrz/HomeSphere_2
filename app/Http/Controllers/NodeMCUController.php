@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Device;
 use App\Models\Humidity_sensor;
 use App\Models\Temp_sensor;
+use App\Models\Gas_sensor;
 use App\Models\Motion_sensor;
 use App\Events\SensorUpdateEvent;
 use App\Events\MotionDetectedEvent;
@@ -75,6 +76,7 @@ class NodeMCUController extends Controller
             'sensor_data.temperature' => ['numeric'],
             'sensor_data.humidity' => ['numeric'],
             'sensor_data.motion_sensor' => ['boolean'],
+            'sensor_data.gas_levels' => ['numeric'],
             'devices.lights.*.name' => 'required|string|distinct:strict',
             'devices.lights.*.is_active' => 'required|boolean',
             'devices.plugs.*.name' => 'required|string|distinct:strict',
@@ -104,6 +106,12 @@ class NodeMCUController extends Controller
             Humidity_sensor::updateOrInsert(
                 ['room_id' => $room_id],
                 ['humidity' => $sensorData['humidity']]
+            );
+        }
+        if (isset($sensorData['gas_levels'])) {
+            Gas_sensor::updateOrInsert(
+                ['room_id' => $room_id],
+                ['gas_levels' => $sensorData['gas_levels']]
             );
         }
         if(isset($sensorData['motion_sensor'])) {

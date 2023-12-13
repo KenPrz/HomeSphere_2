@@ -106,6 +106,34 @@ const emit = defineEmits(['roomDeleted']);
                         </div>
                         <MotionSensorToggle :motionSensor="room.motion_sensor" :userId="$page.props.auth.user.id"
                             :homeId="room.home_id" :roomId="room.id" />
+                        <div v-if="gasData.data !== null" class="mt-2 flex flex-col text-center text-white">
+                            <span class="my-2 flex justify-center text-sm">
+                                <h1>Gas Levels</h1>
+                                <h2 v-if="!gasData.data" class="ms-1">null</h2>
+                                <h2 v-else class="ms-1">{{ gasData.data }}%</h2>
+                            </span>
+                            <v-progress-linear
+                                :model-value="gasData.data"
+                                rounded
+                                background-color="rgba(255, 255, 255, 0.2)"
+                                color="rgba(255, 255, 255,)"
+                            >
+                            </v-progress-linear>
+                        </div>
+                        <div v-else class="mt-2 flex flex-col text-center text-white">
+                            <span v-if="room.gas_sensor.gas_levels !== null" class="my-2 flex justify-center text-sm">
+                                <h1>Gas Levels</h1>
+                                <h2 class="ms-1">{{ room.gas_sensor.gas_levels }}%</h2>
+                            </span>
+                            <v-progress-linear
+                                v-if="room.gas_sensor.gas_levels!==null"
+                                :model-value="room.gas_sensor.gas_levels"
+                                rounded
+                                background-color="rgba(255, 255, 255, 0.2)"
+                                color="rgba(255, 255, 255,)"
+                            >
+                            </v-progress-linear>
+                        </div>
                     </div>
                     <div class="flex-col border-white border-2 rounded-md p-3 items-center justify-center w-full mb-3">
                         <div class="text-xl text-white text-center mb-2">
@@ -127,7 +155,7 @@ const emit = defineEmits(['roomDeleted']);
                             </v-progress-circular>
                         </div>
                     </div>
-                    <div class="flex-col border-white border-2 rounded-md p-3 items-center justify-center w-full">
+                    <div class="flex-col border-white border-2 rounded-md p-3 mb-3 items-center justify-center w-full">
                         <div class="text-xl text-white text-center mb-2">
                             Humidity
                         </div>
@@ -181,6 +209,7 @@ export default {
             roomId: { ID: null },
             tempData: { data: null },
             humidityData: { data: null },
+            gasData: { data: null },
             devices: { data: null },
             showEditRoomForm: false,
             showDeleteRoomDialog: false,
@@ -208,6 +237,7 @@ export default {
             }).listen('.sensor_update', (eventData) => {
                 this.roomId.ID = eventData.sensor_data[0].id;
                 this.tempData.data = eventData.sensor_data[0].temp_sensor.temperature;
+                this.gasData.data = eventData.sensor_data[0].gas_sensor.gas_levels;
                 this.humidityData.data = eventData.sensor_data[0].humidity_sensor.humidity;
             })
         },
@@ -216,6 +246,7 @@ export default {
             this.tempData.data = null;
             this.humidityData.data = null;
             this.devices.data = null;
+            this.gasData.data = null;
         },
         close() {
             this.$emit('close');

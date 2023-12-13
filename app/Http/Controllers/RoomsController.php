@@ -9,6 +9,7 @@ use App\Http\Controllers\AppUtilities;
 use App\Http\Requests\Room\CreateRoomRequest;
 use App\Models\Humidity_sensor;
 use App\Models\Temp_sensor;
+use App\Models\Gas_sensor;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -36,7 +37,7 @@ class RoomsController extends Controller
         $homeData = $appUtilities->findHomeData($user);
         
         // Retrieve the rooms and their sensor data
-        $roomData = Room::with('devices', 'tempSensor', 'humiditySensor', 'motionSensor')
+        $roomData = Room::with('devices', 'tempSensor', 'humiditySensor', 'motionSensor', 'gasSensor')
             ->where('home_id', $homeData->id)
             ->select(['rooms.*'])
             ->addSelect(DB::raw('(SELECT COUNT(*) FROM devices WHERE devices.room_id = rooms.id) as device_count'))
@@ -112,6 +113,10 @@ class RoomsController extends Controller
             'room_id' => $room->id,
             'is_active' => false,
             'motion_detected' => false
+        ]);
+        Gas_sensor::create([
+            'room_id' => $room->id,
+            'gas_levels' => null,
         ]);
         $user = auth()->user();
         $notificationData = [

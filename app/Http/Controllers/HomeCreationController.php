@@ -9,6 +9,7 @@ use App\Models\Home;
 use App\Http\Controllers\AppUtilities;
 use App\Models\Humidity_sensor;
 use App\Models\Temp_sensor;
+use App\Models\Gas_sensor;
 use App\Http\Controllers\AppliancesController;
 use App\Http\Requests\HomeCreation\JoinHomeRequest;
 use App\Events\MemberJoinedEvent;
@@ -185,6 +186,10 @@ class HomeCreationController extends Controller
             'room_id' => $room->id,
             'is_active' => false,
             'motion_detected' => false
+        ]);
+        Gas_sensor::create([
+            'room_id' => $room->id,
+            'gas_levels' => null,
         ]);
 
         DB::table('home_members')->insert([

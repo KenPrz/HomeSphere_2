@@ -37,11 +37,9 @@ class SensorUpdateEvent implements ShouldBroadcast
 
     public function broadcastWith(): array
     {
-        $sensorData = Room::with('tempSensor', 'humiditySensor', 'motionSensor')
+        $sensorData = Room::with('tempSensor', 'humiditySensor', 'motionSensor', 'gasSensor')
         ->where('id', $this->room_id)
         ->get();
-    
-
         return [
             'sensor_data' => $sensorData,
         ];

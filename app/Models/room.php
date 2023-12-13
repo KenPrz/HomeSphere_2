@@ -44,4 +44,9 @@ class room extends Model
     {
         return $this->hasOne(Motion_sensor::class);
     }
+
+    public function gasSensor()
+    {
+        return $this->hasOne(Gas_sensor::class);
+    }
 }
