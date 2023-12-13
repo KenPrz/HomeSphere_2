@@ -7,7 +7,6 @@ use App\Models\Humidity_sensor;
 use App\Models\Temp_sensor;
 use App\Models\Gas_sensor;
 use App\Models\Motion_sensor;
-use App\Events\SensorUpdateEvent;
 use App\Events\MotionDetectedEvent;
 use App\Events\DeviceIsOnline;
 use Illuminate\Http\Request;
@@ -53,7 +52,6 @@ class NodeMCUController extends Controller
         $device_data = $request->all();
         if (isset($device_data['devices'])) {
             $this->deviceUpdate($device_data, $room_id);
-            event(new SensorUpdateEvent($room_id));
             // Final Reply to the node.//
             return $this->responseBuilder($room_id);
         } else {

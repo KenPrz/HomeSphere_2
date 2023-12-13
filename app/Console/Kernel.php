@@ -24,6 +24,9 @@ class Kernel extends ConsoleKernel
         $schedule->command('devices:check')
             ->everyMinute()
             ->appendOutputTo(storage_path('logs/devices_check.log'));
+        $schedule->command('sensor:update')
+            ->everyThirtySeconds()
+            ->appendOutputTo(storage_path('logs/sensor_update.log'));
     }
 
     /**
