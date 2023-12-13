@@ -137,7 +137,7 @@ export default {
             var current_date = new Date();
             var time_difference = current_date.getTime() - last_access_date.getTime();
             var seconds_difference = time_difference / 1000;
-            if(seconds_difference>60){
+            if(seconds_difference>120){
                 this.is_online.data=false;
             }
             else{
