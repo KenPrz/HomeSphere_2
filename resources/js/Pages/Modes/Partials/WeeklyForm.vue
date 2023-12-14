@@ -13,6 +13,7 @@
         <div class="flex flex-col">
             <label for="days" class="flex justify-between">
                 <div class="flex">
+                    
                     Triggered every:
                     <span class="ms-1" v-for="(day, index) in days" :key="index">
                         {{ day.slice(0, 3).charAt(0).toUpperCase() + day.slice(0, 3).slice(1) + ','+' ' }}
@@ -98,11 +99,11 @@
                 this.editDays = !this.editDays;
             },
             submitForm() {
-                if (this.form.activation.repeat.days.length == 0 && this.editDays == true)
+                if (this.form.activation.repeat.days.length == 0)
                 {
                     this.errors = 'Please select at least one day.';
                     return;
-                }else if(this.form.activation.repeat.days.length == 0){
+                }else if(this.form.activation.repeat.days.length == 0 && this.editDays == false){
                     this.form.activation.repeat.days = this.days;
                 }
                 this.$inertia.post(route('modes.schedule'), this.form, {
@@ -111,6 +112,7 @@
                         this.editDays = false;
                         setTimeout(() => {
                             this.recentlySuccessful = false;
+                            this.errors = '';
                         }, 2000);
                     },
                 });

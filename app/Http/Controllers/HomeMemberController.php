@@ -168,6 +168,8 @@ class HomeMemberController extends Controller
             ->delete();
     }
 
+
+    // Notify methods
     private function notifyOnKick($home_id,$notificationData){
         $home = Home::find($home_id);
         $members = $home->members->where('role','!=','pending')->where('member_id','!=',auth()->user()->id);

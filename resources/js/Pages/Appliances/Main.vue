@@ -32,7 +32,7 @@
                             :itemsPerPage="7"
                             :Pagenated="true"
                         >
-                    </Table>
+                        </Table>
                     </div>
             </div>
             

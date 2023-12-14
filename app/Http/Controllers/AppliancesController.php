@@ -39,7 +39,8 @@ class AppliancesController extends Controller
                 'devices.device_type',
                 'devices.custom_name',
                 'devices.device_name',
-                'devices.is_active'
+                'devices.is_active',
+                'devices.last_access'
             )
             ->where('rooms.home_id', $home_id)
             ->join('rooms', 'devices.room_id', '=', 'rooms.id');

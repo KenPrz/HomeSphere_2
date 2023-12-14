@@ -135,12 +135,12 @@ function cancel() {
                 .then(response => {
                     // Handle the response as needed.
 
-                    console.log(response);
+                    // console.log(response);ss
                 })
                 .catch(error => {
                     // Handle the error as needed.
 
-                    console.log(error);
+                    // console.log(error);
                 });
         },
     },
