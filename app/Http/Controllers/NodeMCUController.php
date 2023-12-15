@@ -107,9 +107,10 @@ class NodeMCUController extends Controller
             );
         }
         if (isset($sensorData['gas_levels'])) {
+            $gas_levels = $this->calculatePercentage($sensorData['gas_levels'], 1024);
             Gas_sensor::updateOrInsert(
                 ['room_id' => $room_id],
-                ['gas_levels' => $sensorData['gas_levels']]
+                ['gas_levels' => $gas_levels]
             );
         }
         if(isset($sensorData['motion_sensor'])) {
@@ -226,6 +227,15 @@ private function updateOrInsertDevice($deviceData, $room_id, $type)
             return response()->json([
                 'message' => 'failed'
             ],500);
+        }
+    }
+
+    private function calculatePercentage($value, $total) {
+        if ($total != 0) {
+            $percentage = ($value / $total) * 100;
+            return $percentage;
+        } else {
+            return 0;
         }
     }
 }
