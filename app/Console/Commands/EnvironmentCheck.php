@@ -35,7 +35,6 @@ class EnvironmentCheck extends Command
     public function handle()
     {
         $modesToCheck = DB::table('modes')
-            ->where('is_active', false)
             ->where('activation_type', 'environment')
             ->get();
             if (count($modesToCheck) > 0) {
