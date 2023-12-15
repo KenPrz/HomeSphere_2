@@ -41,7 +41,7 @@
                 </div>
             </div>
             <div class="flex flex-col h-3/4 pt-10">
-                <h2 class="text-1xl">{{ mode.mode_name }}</h2>
+                <h2 class="text-1xl overflow-ellipsis">{{ mode.mode_name }}</h2>
                 <h1 class="text-2xl font-ex">{{ is_active.data ? "ON" : "OFF" }}</h1>
             </div>
         </div>

@@ -51,18 +51,18 @@ import { Head } from "@inertiajs/vue3";
                                 <Table
                                     :tableHeaders="tableHeaders"
                                     :tableData="tableData"
-                                    :Pagenated="true"
+                                    :Pagenated="false"
                                     :itemsPerPage="4"
                                 >
-                                <div class="bg-white rounded-md w-full flex justify-end shadow-sm mb-1">
-                                    <Link :href="route('appliances.index')">
-                                        <button
-                                            class="bg-zinc-600 hover:bg-zinc-700 text-white font-semibold py-2 my-1 mx-1 px-6 border border-gray-300 rounded-xl"
-                                        >
-                                            View List of Appliances
-                                        </button>
-                                    </Link>
-                                </div>
+                                    <div class="bg-white rounded-md w-full flex justify-end shadow-sm mb-1">
+                                        <Link :href="route('appliances.index')">
+                                            <button
+                                                class="bg-zinc-600 hover:bg-zinc-700 text-white font-semibold py-2 my-1 mx-1 px-6 border border-gray-300 rounded-xl"
+                                            >
+                                                View List of Appliances
+                                            </button>
+                                        </Link>
+                                    </div>
                                 </Table>
                             </div>
                         </div>

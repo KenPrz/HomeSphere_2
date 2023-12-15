@@ -34,7 +34,7 @@ function cancel() {
 <template>
     <div class="container flex flex-col">
         <div class="flex border-b-2 py-2 ps-2 text-lg font-semibold">
-            <section v-if="showEdit==false" class="w-3/4 flex flex-col">
+            <section v-if="showEdit==false" class="overflow-ellipsis w-3/4 flex flex-col">
                 <span>{{ device.custom_name ?? device.device_name }}</span>
                 <span v-if="device.custom_name !== null" class="font-light text-xs">{{ 'System Name: '+device.device_name }}</span>
             </section>
@@ -65,10 +65,10 @@ function cancel() {
         <div class="flex flex-col ms-2">
             <div class="flex flex-col">
                 <section class="pt-2">
-                    Type: <span class="fond-semibold">{{ device.device_type }}</span>
+                    <span class="font-semibold">Type:</span> <span class="fond-semibold">{{ device.device_type }}</span>
                 </section>
                 <section>
-                    Room: <span class="fond-semibold">{{ device.room_name }}</span>
+                    <span class="font-semibold">Room:</span> <span class="fond-semibold">{{ device.room_name }}</span>
                 </section>
             </div>
             <div class="flex">
@@ -163,4 +163,9 @@ function cancel() {
             color: #999;
             font-weight: 400;
         }
+    .overflow-ellipsis {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
 </style>
