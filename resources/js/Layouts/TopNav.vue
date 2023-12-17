@@ -86,7 +86,7 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
         </div>
     </nav>
     <div>
-        <Modal @close="close()" :hasClose="false" :show="showModal" :maxWidth="'md'">
+        <Modal @close="closeMotionModal()" :hasClose="false" :show="showMotionModal" :maxWidth="'md'">
             <div class="flex flex-col px-5 py-3 bg-blue-100">
                 <div class="flex">
                     <div>
@@ -101,6 +101,21 @@ import NavbarProfile from "@/Layouts/partials/NavbarProfile.vue";
                 </div>
                 <div class="flex justify-end">
                     <button @click="muteNotification" class="text-xs text-blue-500 hover:underline rounded-lg">Mute this notification.</button>
+                </div>
+            </div>
+        </Modal>
+        <Modal @close="closeGasModal()" :hasClose="false" :show="showGasModal" :maxWidth="'md'">
+            <div class="flex flex-col px-5 py-3 bg-blue-100">
+                <div class="flex">
+                    <div>
+                        <v-img class="rounded-md mx-auto" width="75" :aspect-ratio="1"
+                            src="img-assets/vectors/info_icon.svg" cover></v-img>
+                    </div>
+                    <div class="flex items-center justify-center text-xl font-semibold w-full">
+                        <span class="text">
+                            High Gas Levels in {{ gasLevelsRoomName.data }}!!
+                        </span>
+                    </div>
                 </div>
             </div>
         </Modal>
@@ -127,7 +142,9 @@ export default {
         return {
             homeChannel: null,
             motionDetectedRoomName: { data: null },
-            showModal: false,
+            gasLevelsRoomName: { data: null },
+            showMotionModal: false,
+            showGasModal: false,
             latestNotification: [],
         };
     },
@@ -154,8 +171,18 @@ export default {
                 this.motionDetectedRoomName.data = eventData.room_name[0];
                 if (eventData.motion_detected == true) {
                     if(this.user.receive_motion_alerts == 1){
-                        this.playSound();
-                        this.showModal = true;
+                        if(this.showMotionModal == false){
+                            this.playMotionSound();
+                            this.showMotionModal = true;
+                        }
+                    }
+                }
+            }).listen('.gas_levels',(eventData)=>{
+                this.gasLevelsRoomName.data = eventData.room_name[0];
+                if(eventData.gas_levels == true){
+                    if(this.showGasModal == false){
+                        this.playGasSound();
+                        this.showGasModal = true;
                     }
                 }
             })
@@ -188,12 +215,19 @@ export default {
         refreshPage() {
             window.location.reload();
         },
-        playSound(){
+        playMotionSound(){
             const audio = new Audio('./notification.mp3');
             audio.play();
         },
-        close() {
-            this.showModal = false;
+        playGasSound(){
+            const audio = new Audio('./gas_levels_warning.mp3');
+            audio.play();
+        },
+        closeMotionModal() {
+            this.showMotionModal = false;
+        },
+        closeGasModal() {
+            this.showGasModal = false;
         },
         clearArray() {
             const notificationIds = this.latestNotification.map(item => item.id);

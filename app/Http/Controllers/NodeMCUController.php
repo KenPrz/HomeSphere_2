@@ -8,6 +8,7 @@ use App\Models\Temp_sensor;
 use App\Models\Gas_sensor;
 use App\Models\Motion_sensor;
 use App\Events\MotionDetectedEvent;
+use App\Events\HighGasLevelsEvent;
 use App\Events\DeviceIsOnline;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -112,6 +113,9 @@ class NodeMCUController extends Controller
                 ['room_id' => $room_id],
                 ['gas_levels' => $gas_levels]
             );
+            if($gas_levels > 50){
+                event(new HighGasLevelsEvent($home_id, $room_id));
+            }
         }
         if(isset($sensorData['motion_sensor'])) {
             $data = Motion_sensor::where('room_id', $room_id)->pluck('is_active')->toArray();
