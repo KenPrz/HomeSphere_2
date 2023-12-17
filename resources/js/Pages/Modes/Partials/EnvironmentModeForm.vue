@@ -31,7 +31,7 @@
                     <div class="text-center">
                         <Transition enter-active-class="transition ease-in-out" enter-from-class="opacity-0"
                             leave-active-class="transition ease-in-out" leave-to-class="opacity-0">
-                            <p v-if="form.recentlySuccessful" class="text-sm text-green-600 mt-2">Saved.</p>
+                            <p v-if="recentlySuccessful" class="text-sm text-green-600 mt-2">Saved.</p>
                         </Transition>
                     </div>
                     <div class="flex justify-end">
@@ -45,10 +45,15 @@
         <div v-else>
             <div class="container">
                 <div class="flex flex-col">
-                    <h1 class="text-lg">Activate this mode when:{{ " "+mode.trigger_sensor.charAt(0).toUpperCase()+mode.trigger_sensor.slice(1).toLowerCase() }}</h1>
-                    <div class="flex">
-                        <p class="text-lg">{{ "is "+mode.threshold +" "}}</p>
-                        <p class="text-lg font-semibold ms-1">{{ " "+mode.value }}</p>
+                    <div v-if="mode.trigger_sensor !== null">
+                        <h1 class="text-lg">Activate this mode when:{{ " "+mode.trigger_sensor }}</h1>
+                        <div class="flex">
+                            <p class="text-lg">{{ "is "+mode.threshold +" "}}</p>
+                            <p class="text-lg font-semibold ms-1">{{ " "+mode.value }}</p>
+                        </div>
+                    </div>
+                    <div v-else>
+                        <h1 class="text-lg">This mode is not yet set.</h1>
                     </div>
                     <div class="flex">
                         <button class="text-blue-500 mt-2 text-md" @click="editMode = true">
