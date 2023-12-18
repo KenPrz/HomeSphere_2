@@ -38,9 +38,9 @@ Route::get('/welcome', fn() => Inertia::render('Welcome'))->name('welcome');
 
 Route::get('/dashboard', function () {
     return redirect()->route('verify');
-})->middleware(['auth', 'verified','auth.session'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware(['auth','verified','auth.session'])->group(function () {
+Route::middleware(['auth','verified'])->group(function () {
     Route::put('/notification/read', [UserNotificationController::class, 'markAsRead'])->name('notification.read');
     Route::put('/notification/mark-all-read/bulk', [UserNotificationController::class,'markAsReadBulk'])->name('notification.bulkRead');
     Route::patch('/user/notification/all-read', [UserNotificationController::class,'markAllRead'])->name('notification.allRead');
@@ -55,7 +55,7 @@ Route::middleware(['auth','verified','auth.session'])->group(function () {
     Route::delete('/cancel',[CancelRequest::class, 'cancel'])->name('cancel.request');
 });
 
-Route::middleware(['auth','checkHasHome','verified','auth.session'])->group(function () {
+Route::middleware(['auth','checkHasHome','verified'])->group(function () {
     Route::get('/appliances', [AppliancesController::class, 'index'])->name('appliances.index');
 
     Route::get('/rooms', [RoomsController::class, 'index'])->name('rooms.index');
