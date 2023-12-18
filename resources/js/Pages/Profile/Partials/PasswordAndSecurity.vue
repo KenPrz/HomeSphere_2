@@ -18,7 +18,6 @@ import LoginAlerts from "./LoginAlerts.vue";
             </div>
             <div>
                 <ButtonLarge @click="openPasswordEditModal" label="Change Password"/>
-                <ButtonLarge @click="openLoginAlertsModal" label="Login Alerts"/>
             </div>
         </div>
         <div class="section flex flex-col">
@@ -43,19 +42,10 @@ import LoginAlerts from "./LoginAlerts.vue";
                 <ExtraSecurity/>
             </div>
         </Modal>
-        <Modal
-            :show="showLoginAlertsModal"
-            @close="closeLoginAlertsModal"
-        >
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <LoginAlerts :auth="$page.props.auth" class="max-w-xl" />
-            </div>
-        </Modal>
     </div>
 </template>
 <script>
 const showPasswordEditModal = ref(false);
-const showLoginAlertsModal = ref(false);
 const showExtraSecurityModal = ref(false);
 
 const openExtraSecurity = () => {
@@ -70,11 +60,5 @@ const openPasswordEditModal = () => {
 };
 const closePasswordEditModal = () => {
     showPasswordEditModal.value = false;
-};
-const openLoginAlertsModal = () => {
-    showLoginAlertsModal.value = true;
-};
-const closeLoginAlertsModal = () => {
-    showLoginAlertsModal.value = false;
 };
 </script>
