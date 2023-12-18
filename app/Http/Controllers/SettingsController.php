@@ -88,23 +88,24 @@ class SettingsController extends Controller
      * @return \Illuminate\Http\RedirectResponse
      */
     public function leaveHome(Request $request){
-        $request ->validate([
-                'user'=> 'required',
-            ]);
-        $user = auth()->user();
-        $homeData = $this->appUtilities->findHomeData($user);
-        DB::transaction(function () use ($request) {
-            DB::table('users')->where('id', $request->user['id']) -> update(['has_home' => false]);
-            DB::table('home_members')->where('member_id', $request->user['id'] )->delete();
-        });
-        $notificationData = [
-            'title' => 'User Left',
-            'body'=> 'has has left the home.',
-            'user' => $user->id,
-            'type' => 'delete',
-        ];
-        $this->notifyOnLeft($homeData->id, $notificationData);
-        return redirect()->route('verify')->with('success','test');
+        dd($request->all());
+        // $request ->validate([
+        //         'user'=> 'required',
+        //     ]);
+        // $user = auth()->user();
+        // $homeData = $this->appUtilities->findHomeData($user);
+        // DB::transaction(function () use ($request) {
+        //     DB::table('users')->where('id', $request->user['id']) -> update(['has_home' => false]);
+        //     DB::table('home_members')->where('member_id', $request->user['id'] )->delete();
+        // });
+        // $notificationData = [
+        //     'title' => 'User Left',
+        //     'body'=> 'has has left the home.',
+        //     'user' => $user->id,
+        //     'type' => 'delete',
+        // ];
+        // $this->notifyOnLeft($homeData->id, $notificationData);
+        // return redirect()->route('verify')->with('success','test');
     }
 
     /**
