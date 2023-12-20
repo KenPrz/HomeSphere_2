@@ -81,7 +81,7 @@ export default {
                     text: "Type",
                 },
                 {
-                    text: "Device Name",
+                    text: "Appliance Name",
                 },
                 {
                     text: "Status",

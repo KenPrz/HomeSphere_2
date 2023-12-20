@@ -73,8 +73,8 @@ function cancel() {
             </div>
             <div class="flex">
                 <section class="flex flex-col py-1 w-3/4">
-                    <span class="text-md font-medium">Device State</span>
-                    <span class="text-xs font-light text-gray-500">toggle the device state</span>
+                    <span class="text-md font-medium">Appliance State</span>
+                    <span class="text-xs font-light text-gray-500">toggle the appliance state</span>
                 </section>
                 <section class="flex items-center justify-center w-1/4">
                     <ToggleSwitch v-model:modelValue="device.is_active" />
@@ -93,7 +93,7 @@ function cancel() {
     <Modal :hasClose="false" :maxWidth="'sm'" :show="showModal" @close="showModal=false">
         <div class="bg-white p-6 rounded-lg shadow-md w-auto">
         <h2 class="text-xl font-semibold mb-4">Delete?</h2>
-        <p class="mb-4">Are you sure you want to delete this device?</p>
+        <p class="mb-4">Are you sure you want to delete this appliance?</p>
         <div class="flex">
             <form id="delete_device_form" @submit.prevent="submitForm2">
                 <button

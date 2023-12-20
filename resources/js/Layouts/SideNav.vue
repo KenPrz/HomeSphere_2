@@ -11,7 +11,6 @@ import Modal from "@/Components/Modal.vue";
                 :src="'storage/' + $page.props.auth.user.profile_image" cover></v-img>
             <v-img v-else class="rounded-md mx-auto" width="150" :aspect-ratio="1" src="/img-assets/default_avatar.png"
                 cover></v-img>
-
             <div class="image-text mt-4">
                 <h5 class="mb-1">Welcome Back!</h5>
                 <h2 class="font-bold text-md">
@@ -66,7 +65,8 @@ import Modal from "@/Components/Modal.vue";
                         <div class="hidden sm:block lg:text-md mt-1">Rooms</div>
                     </li>
                 </SideNavLink>
-                <SideNavLink v-if="$page.props.auth.user.has_home === 1" :href="route('modes.index')"
+                <SideNavLink v-if="$page.props.auth.user.has_home === 1 && 
+                    ($page.props.homeData.role== 'owner' || $page.props.homeData.role== 'admin')" :href="route('modes.index')"
                     :active="route().current('modes.index')">
                     <li
                         class="flex p-1 py-2 hover:bg-slate-400 rounded-md w-full lg:items-center lg:justify-start items-center justify-center transition-colors duration-500 ease-in-out">
