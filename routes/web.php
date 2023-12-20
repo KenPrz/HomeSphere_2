@@ -66,16 +66,6 @@ Route::middleware(['auth','checkHasHome','verified'])->group(function () {
     Route::post('/device-update',[DeviceController::class, 'deviceUpdate'])->name('device.new-name');
     Route::delete('/device-delete',[DeviceController::class, 'deviceDelete'])->name('device.delete');
 
-    Route::get('/modes',[ModesController::class, 'index'])->name('modes.index');
-    Route::post('/modes',[ModesController::class, 'createMode'])->name('modes.create');
-    Route::patch('/modes',[ModesController::class, 'editMode'])->name('modes.edit');
-    Route::put('/mode-toggle',[ModesController::class, 'toggleModeActivity'])->name('mode.toggle');
-    Route::delete('/modes',[ModesController::class, 'deleteMode'])->name('modes.delete');
-    Route::post('/modes/add-device',[ModesController::class,'addDevice'])->name('modes.addDevice');
-    Route::post('/modes/schedule',[ModesController::class, 'scheduleMode'])->name('modes.schedule');
-    Route::post('/modes/environment',[ModesController::class, 'environmentMode'])->name('modes.environment');
-    Route::put('/modes/update-list',[ModesController::class, 'updateDeviceList'])->name('mode.updateDeviceList');
-    Route::put('/toggle-mode', [ToggleController::class, 'toggleMode'])->name('toggle.ModeState');
 
     Route::get('/settings',[SettingsController::class, 'index'])->name('settings.index');
     Route::delete('/leave', [SettingsController::class,'leaveHome'])->name('settings.leave');
@@ -91,5 +81,18 @@ Route::middleware(['auth','checkHasHome','verified'])->group(function () {
 
     Route::delete('/deletehome',[SettingsController::class,'deleteHome'])->name('home.delete');
     Route::put('/toggle-home-notifications',[SettingsController::class,'toggleMotionNotifications'])->name('notification.toggle');
+});
+
+Route::middleware(['auth','checkHasHome','checkIfOwnerOrAdmin','verified'])->group(function () {
+    Route::get('/modes',[ModesController::class, 'index'])->name('modes.index');
+    Route::post('/modes',[ModesController::class, 'createMode'])->name('modes.create');
+    Route::patch('/modes',[ModesController::class, 'editMode'])->name('modes.edit');
+    Route::put('/mode-toggle',[ModesController::class, 'toggleModeActivity'])->name('mode.toggle');
+    Route::delete('/modes',[ModesController::class, 'deleteMode'])->name('modes.delete');
+    Route::post('/modes/add-device',[ModesController::class,'addDevice'])->name('modes.addDevice');
+    Route::post('/modes/schedule',[ModesController::class, 'scheduleMode'])->name('modes.schedule');
+    Route::post('/modes/environment',[ModesController::class, 'environmentMode'])->name('modes.environment');
+    Route::put('/modes/update-list',[ModesController::class, 'updateDeviceList'])->name('mode.updateDeviceList');
+    Route::put('/toggle-mode', [ToggleController::class, 'toggleMode'])->name('toggle.ModeState');
 });
 require __DIR__.'/auth.php';

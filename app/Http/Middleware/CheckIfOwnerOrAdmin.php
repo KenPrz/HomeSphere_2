@@ -21,10 +21,11 @@ class checkIfOwnerOrAdmin
     public function handle(Request $request, Closure $next): Response
     {
         $homeData = $this->appUtilities->findHomeData(auth()->user());
-        if($homeData->role !== 'admin' || $homeData->role !== 'owner')
-        {
-            return redirect('/');
+        if ($homeData){
+            if ($homeData->id != auth()->user()->id && auth()->user()->role != ('owner' || 'admin')){
+                return redirect('/');
         }
         return $next($request);
     }
+    return redirect('/');}
 }
