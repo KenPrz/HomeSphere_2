@@ -22,10 +22,10 @@ class checkIfOwnerOrAdmin
     {
         $homeData = $this->appUtilities->findHomeData(auth()->user());
         if ($homeData){
-            if ($homeData->id != auth()->user()->id && auth()->user()->role != ('owner' || 'admin')){
-                return redirect('/');
+            if($homeData->role == 'admin' || $homeData->role == 'owner'){
+                return $next($request);
+            }
         }
-        return $next($request);
+        return redirect('/');
     }
-    return redirect('/');}
 }
