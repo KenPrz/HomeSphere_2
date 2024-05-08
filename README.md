@@ -115,3 +115,5 @@ php artisan serve --host [your_IP] --port 80
 ## License
 
 HomeSphere 2 is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+defended!! we did it <3
