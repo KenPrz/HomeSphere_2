@@ -22,7 +22,7 @@ window.Pusher = Pusher;
 
 window.Echo = new Echo({
     broadcaster: 'pusher',
-    key: 'd0a30bea271e95f75562',
-    cluster: 'ap1',
+    key: '#',
+    cluster: '#',
     forceTLS: true  
 });
